@@ -1,4 +1,10 @@
+<div align="center">
+  <img src="https://github.com/black-belt/black-belt/blob/main/README.assets/logo.png?raw=true"/>
+</div>
+
 ![logo](README.assets/logo.png)
+
+
 
 ---
 
@@ -8,7 +14,7 @@
 
 ## Contents
 
-0️⃣ [멤버 소개](#0️⃣ 멤버 소개)
+- [멤버 소개](#0️⃣ 멤버 소개)
 
 <br>
 
