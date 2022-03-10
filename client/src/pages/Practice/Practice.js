@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 function Practice() {
   return (
     <div className="Practice">
-      Practice
+      {/* Practice */}
       <div className="outlet">
         <Outlet />
       </div>
