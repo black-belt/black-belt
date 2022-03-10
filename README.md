@@ -4,17 +4,15 @@
 
 <br>
 
-검은띠 휘날리며.... (소개글 예정)
-
 <br>
 
 ## Contents
 
-- [멤버 소개](# 0️⃣ 멤버 소개)
+- Memebers
 
 <br>
 
-## 0️⃣ 멤버 소개
+## 0️⃣ Members
 
 <table>
   <thead>
