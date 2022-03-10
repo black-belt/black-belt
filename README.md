@@ -22,6 +22,7 @@
           <img src="https://avatars.githubusercontent.com/u/70363530?v=4" width="300px"/>
         </a>
         <p>
+          <br />
           <b>연승은</b>
           <br/>
           <span>Frontend | Leader | Design</span>
@@ -32,6 +33,7 @@
           <img src="https://avatars.githubusercontent.com/u/55391944?v=4" width="300px"/>
         </a>
         <p>
+          <br />
           <b>정지영</b>
           <br/>
           <span>Frontend | Design</span>
@@ -42,6 +44,7 @@
           <img src="https://avatars.githubusercontent.com/u/87463835?v=4" width="300px"/>
         </a>
         <p>
+          <br />
           <b>최영운</b>
           <br/>
           <span>Frontend | AI</span>
@@ -86,6 +89,7 @@
           <img src="https://avatars.githubusercontent.com/u/68536095?v=4" width="300px"/>
         </a>
         <p>
+          <br />
           <b>이지우</b>
           <br/>
           <span>Backend | AI</span>
@@ -96,6 +100,7 @@
           <img src="https://avatars.githubusercontent.com/u/80087763?v=4" width="300px"/>
         </a>
         <p>
+          <br />
           <b>임영택</b>
           <br/>
           <span>Backend</span>
@@ -106,6 +111,7 @@
           <img src="https://avatars.githubusercontent.com/u/67628725?v=4" width="300px"/>
         </a>
         <p>
+          <br />
           <b>최윤수</b>
           <br/>
           <span>Backend</span>
