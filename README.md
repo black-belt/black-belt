@@ -2,11 +2,7 @@
   <img src="https://github.com/black-belt/black-belt/blob/main/README.assets/logo.png?raw=true"/>
 </div>
 
-![logo](README.assets/logo.png)
-
-
-
----
+<br>
 
 검은띠 휘날리며.... (소개글 예정)
 
@@ -14,7 +10,7 @@
 
 ## Contents
 
-- [멤버 소개](#0️⃣ 멤버 소개)
+- [멤버 소개](# 0️⃣ 멤버 소개)
 
 <br>
 
