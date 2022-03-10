@@ -18,7 +18,6 @@ function UserVideo() {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    //api 통신해서 title, description, 몇번째 basic인지, sessionToken받아옴
     getWebcam((stream) => {
       videoRef.current.srcObject = stream;
     });
