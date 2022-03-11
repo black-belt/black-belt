@@ -1,9 +1,15 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { colors, fontSize, fontWeight } from "_foundation";
+import Icon from "../Icons/Icon";
 
 function InButton({ children }) {
-  return <StyledBtn>{children}</StyledBtn>;
+  return (
+    <StyledBtn>
+      {children}
+      <Icon icon="inPointer" />
+    </StyledBtn>
+  );
 }
 export default InButton;
 
@@ -14,7 +20,7 @@ const StyledBtn = styled.button`
 
   width: ${(props) => props.width};
   height: 48px;
-  padding: 0.6rem 1.75rem;
+  padding: 0.6rem 1.5rem;
 
   border-radius: 4rem;
   border: 1px solid ${colors.gray0};
@@ -37,9 +43,9 @@ const StyledBtn = styled.button`
     `}
 
   svg {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
+    width: 22px;
+    height: 22px;
+    margin-left: 20px;
     vertical-align: top;
   }
 `;
