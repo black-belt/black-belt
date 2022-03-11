@@ -35,8 +35,9 @@ const Container = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   // background-color: #000000;
-  height: 100%;
-  width: 100%;
+  height: calc(100% - 70px);
+  width: calc(100% - 200px);
+  padding: 50px 100px 20px 100px;
   // background-image: linear-gradient(black, black), url("../../images/practiceBackground.jpg");
   // background-size: 100% 100%;
   // background-repeat: no-repeat;
