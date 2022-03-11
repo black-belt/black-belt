@@ -5,6 +5,8 @@ import UserVideo from "../../components/atoms/UserVideo";
 
 function BasicStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
 
   useEffect(() => {
     //받기: api 통신해서 title, description, 몇번째 basic인지, sessionToken받아옴
@@ -13,13 +15,15 @@ function BasicStage() {
     //  여기서 또받아? 합격/불합격여부를?
     //  기본동작에서는 합격/불합격을 프론트에서 판단가능할듯 -> 서버로 합격/불합격을 보내면 될거같은데
     const basicNumber = 3;
+    setTitle("기본동작");
+    setDesc("동작설명");
     setVideoSelected(`../../videos/basics${basicNumber}.MP4`);
   }, []);
 
   return (
     <PracticeStageTemplate
-      title={<h1>Title</h1>}
-      desc={<div>description</div>}
+      title={title}
+      desc={desc}
       video={<LocalVideo url={videoSelected} />}
       camera={<UserVideo />}
     />

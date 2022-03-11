@@ -29,6 +29,7 @@ function UserVideo() {
 export default UserVideo;
 
 const VideoContainer = styled.video`
-  width: 100%;
-  height: 50%;
+  height: 22vw;
+  margin-bottom: 60px;
+  border-radius: 10px;
 `;
