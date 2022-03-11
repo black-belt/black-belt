@@ -3,15 +3,10 @@ import styled, { css } from "styled-components";
 import { colors, fontSize, fontWeight } from "_foundation";
 import Icon from "../Icons/Icon";
 
-function InButton({ children }) {
-  return (
-    <StyledBtn>
-      {children}
-      <Icon icon="inPointer" />
-    </StyledBtn>
-  );
+function LangBtn({ children }) {
+  return <StyledBtn>{children}</StyledBtn>;
 }
-export default InButton;
+export default LangBtn;
 
 const StyledBtn = styled.button`
   display: flex;
@@ -19,15 +14,15 @@ const StyledBtn = styled.button`
   align-items: center;
 
   width: ${(props) => props.width};
-  height: 48px;
-  padding: 0.6rem 1.5rem;
+  height: 36px;
+  padding: 1rem 1rem 1rem 0.6rem;
 
   border-radius: 4rem;
   border: 1px solid ${colors.gray0};
   color: ${colors.gray0};
   background-color: transparent;
 
-  font-size: ${fontSize.xl};
+  font-size: ${fontSize.lg};
   line-height: 1.75rem;
   text-align: center;
   text-decoration: none;
@@ -43,9 +38,9 @@ const StyledBtn = styled.button`
     `}
 
   svg {
-    width: 22px;
-    height: 22px;
-    margin-left: 20px;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
     vertical-align: top;
   }
 `;
