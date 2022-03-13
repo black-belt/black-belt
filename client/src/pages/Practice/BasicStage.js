@@ -26,6 +26,10 @@ function BasicStage() {
         setAnswer("chickadee");
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
+
+    return () => {
+      fetch("https://jsonplaceholder.typicode.com/posts");
+    };
   }, []);
 
   const updateIsPass = () => {
