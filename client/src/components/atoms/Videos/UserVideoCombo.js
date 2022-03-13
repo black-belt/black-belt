@@ -3,9 +3,11 @@ import styled from "styled-components";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 
-function UserVideo({ answer, updateIsPass, testResult }) {
+function UserVideoCombo({ answer, updateIsPass, testResult, setNextAction }) {
   const videoRef = useRef(null);
   let net;
+  let nextAction = 0;
+  let testAvg = 0.0;
   const [webCamElement, setWebCamElement] = useState();
 
   const getWebcam = (callback) => {
@@ -27,15 +29,28 @@ function UserVideo({ answer, updateIsPass, testResult }) {
       resizeWidth: 220,
       resizeHeight: 227,
     });
-    while (answer !== "") {
+    while (answer !== "" && answer.length > 0) {
       const img = await webcam.capture();
       const result = await net.classify(img);
       console.log(result[0].className, result[0].probability);
       img.dispose();
-      if (answer === result[0].className.split(",")[0]) {
-        testResult(result[0].probability);
-        updateIsPass();
-        break;
+      const curActionIdx = answer.indexOf(result[0].className.split(",")[0]);
+      if (curActionIdx >= 0 && curActionIdx !== nextAction - 1) {
+        if (nextAction === curActionIdx) {
+          setNextAction(nextAction);
+          nextAction++;
+          testAvg += result[0].probability;
+          if (nextAction === answer.length) {
+            testResult(testAvg / answer.length);
+            updateIsPass();
+            break;
+          }
+        } else {
+          // 원래 다음동작이 아닌 동작을 했으면 처음부터 다시하게 하려했는데 실제로 안될거같음.. 프레임별로 계속 따는거라서 중간에 한부분을 인식했을경우 진행이안될듯
+          // nextAction = 0;
+          // setNextAction(nextAction);
+          // testAvg = 0;
+        }
       }
       await tf.nextFrame();
     }
@@ -60,7 +75,7 @@ function UserVideo({ answer, updateIsPass, testResult }) {
   );
 }
 
-export default UserVideo;
+export default UserVideoCombo;
 
 const VideoContainer = styled.video`
   height: 22vw;
