@@ -9,25 +9,28 @@ function BasicStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [basicNumber, setBasicNumber] = useState(1);
+  const [answer, setAnswer] = useState("");
   const [isPass, setIsPass] = useState(false);
   const [grade, setGrade] = useState("Try Again");
   const [gradeNum, setGradeNum] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    //받기: api 통신해서 title, description, 몇번째 basic인지받음
-    // 비디오 자체를 받을지도
-    //보내기: 서버로 합격/불합격을 보냄
-    setBasicNumber(5);
-    setTitle("기본동작");
-    setDesc("동작설명");
-    setVideoSelected(`../../videos/basics${basicNumber}.MP4`);
-  }, [basicNumber]);
+    //받기: api 통신해서 title, description, 비디오(Streaming이나 youtube link), 답안 받음
+    //보내기: 서버로 통과 단계를 보냄
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((res) => res.json())
+      .then((json) => {
+        setTitle("기본동작");
+        setDesc("동작설명");
+        setAnswer("chickadee");
+        setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
+      });
+  }, []);
 
   const updateIsPass = () => {
     setIsPass(true);
-    console.log("통과!", isPass);
+    // console.log("통과!", isPass);
     setTimeout(() => navigate("/"), 3000);
   };
 
@@ -50,18 +53,10 @@ function BasicStage() {
         title={title}
         desc={desc}
         video={<LocalVideo url={videoSelected} />}
-        camera={
-          <UserVideo
-            basicNumber={"chickadee"}
-            updateIsPass={updateIsPass}
-            testResult={testResult}
-          />
-        }
+        camera={<UserVideo answer={answer} updateIsPass={updateIsPass} testResult={testResult} />}
       />
 
-      {isPass ? (
-        <EvaluationTemplate grade={grade} gradeNum={gradeNum} visibility="visible" d="100" />
-      ) : null}
+      {isPass ? <EvaluationTemplate grade={grade} gradeNum={gradeNum} /> : null}
     </>
   );
 }

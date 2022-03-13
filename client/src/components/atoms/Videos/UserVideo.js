@@ -3,7 +3,7 @@ import styled from "styled-components";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 
-function UserVideo({ basicNumber, updateIsPass, testResult }) {
+function UserVideo({ answer, updateIsPass, testResult }) {
   const videoRef = useRef(null);
   let net;
   const [webCamElement, setWebCamElement] = useState();
@@ -27,12 +27,12 @@ function UserVideo({ basicNumber, updateIsPass, testResult }) {
       resizeWidth: 220,
       resizeHeight: 227,
     });
-    while (true) {
+    while (answer !== "") {
       const img = await webcam.capture();
       const result = await net.classify(img);
       console.log(result[0].className, result[0].probability);
       img.dispose();
-      if (basicNumber === result[0].className.split(",")[0]) {
+      if (answer === result[0].className.split(",")[0]) {
         updateIsPass();
         testResult(result[0].probability);
         break;
@@ -45,9 +45,13 @@ function UserVideo({ basicNumber, updateIsPass, testResult }) {
     getWebcam((stream) => {
       videoRef.current.srcObject = stream;
       setWebCamElement(videoRef.current);
-      run();
+      // run();
     });
   }, []);
+
+  useEffect(() => {
+    run();
+  }, [answer]);
 
   return (
     <>

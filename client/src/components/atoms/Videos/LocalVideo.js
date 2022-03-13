@@ -6,8 +6,10 @@ function LocalVideo({ url }) {
     <ReactPlayer
       // className="react-player"
       url={url}
-      width="90%"
-      height="100%"
+      // width="90%"
+      // height="100%"
+      width="39.5vw"
+      height="22vw"
       style={{
         display: "flex",
         justifyContent: "center",
