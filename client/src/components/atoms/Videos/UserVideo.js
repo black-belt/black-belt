@@ -49,13 +49,6 @@ function UserVideo({ basicNumber, updateIsPass, testResult }) {
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (isCamReady) {
-  //     console.log("빰!");
-  //     run();
-  //   }
-  // }, [isCamReady]);
-
   return (
     <>
       <VideoContainer ref={videoRef} autoPlay />
