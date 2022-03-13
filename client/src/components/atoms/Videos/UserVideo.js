@@ -35,6 +35,10 @@ function UserVideo({ answer, updateIsPass, testResult }) {
       if (answer === result[0].className.split(",")[0]) {
         testResult(result[0].probability);
         updateIsPass();
+        const s = videoRef.current.srcObject;
+        s.getTracks().forEach((track) => {
+          track.stop();
+        });
         break;
       }
       await tf.nextFrame();

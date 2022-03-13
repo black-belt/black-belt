@@ -1,7 +1,6 @@
 import PracticeStageTemplate from "../../components/templates/PracticeStageTemplate";
 import { useEffect, useState } from "react";
 import LocalVideo from "../../components/atoms/Videos/LocalVideo";
-import UserVideo from "../../components/atoms/Videos/UserVideo";
 import { useNavigate } from "react-router-dom";
 import EvaluationTemplate from "components/templates/EvaluationTemplate";
 import UserVideoCombo from "components/atoms/Videos/UserVideoCombo";

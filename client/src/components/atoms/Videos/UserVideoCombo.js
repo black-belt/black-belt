@@ -43,6 +43,10 @@ function UserVideoCombo({ answer, updateIsPass, testResult, setNextAction }) {
           if (nextAction === answer.length) {
             testResult(testAvg / answer.length);
             updateIsPass();
+            const s = videoRef.current.srcObject;
+            s.getTracks().forEach((track) => {
+              track.stop();
+            });
             break;
           }
         } else {
