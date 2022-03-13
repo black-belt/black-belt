@@ -3,7 +3,7 @@ import styled from "styled-components";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 
-function UserVideo({ basicNumber, updateIsPass }) {
+function UserVideo({ basicNumber, updateIsPass, testResult }) {
   const videoRef = useRef(null);
   let net;
   const [webCamElement, setWebCamElement] = useState();
@@ -34,6 +34,7 @@ function UserVideo({ basicNumber, updateIsPass }) {
       img.dispose();
       if (basicNumber === result[0].className.split(",")[0]) {
         updateIsPass();
+        testResult(result[0].probability);
         break;
       }
       await tf.nextFrame();
