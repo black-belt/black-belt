@@ -1,5 +1,11 @@
+import Icon from "components/atoms/Icons/Icon";
 import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
+import {
+  GoogleContent,
+  GoogleLoginBtn,
+  GoogleWrapper,
+} from "./GoogleButton.styled";
 
 // const clientId = process.env.GOOGLE_CLIENT_ID;
 const clientId =
@@ -14,12 +20,12 @@ export default function GoogleButton({ onSocial }) {
       profileObj: { email, name },
     } = response;
 
-    await onSocial({
-      socialId: googleId,
-      socialType: "google",
-      email,
-      nickname: name,
-    });
+    // await onSocial({
+    //   socialId: googleId,
+    //   socialType: "google",
+    //   email,
+    //   nickname: name,
+    // });
   };
 
   const onFailure = (error) => {
@@ -30,9 +36,19 @@ export default function GoogleButton({ onSocial }) {
     <div>
       <GoogleLogin
         clientId={clientId}
-        responseType={"id_token"}
+        // responseType={"id_token"}
         onSuccess={onSuccess}
         onFailure={onFailure}
+        render={(renderProps) => (
+          <GoogleLoginBtn onClick={renderProps.onClick}>
+            <GoogleWrapper>
+              <GoogleContent>
+                <Icon icon="google" />
+                <span>Sign in with Google Account</span>
+              </GoogleContent>
+            </GoogleWrapper>
+          </GoogleLoginBtn>
+        )}
       />
     </div>
   );

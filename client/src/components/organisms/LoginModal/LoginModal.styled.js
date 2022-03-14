@@ -21,6 +21,8 @@ export const ModalBox = styled.div`
   bottom: 0;
   left: 0;
   z-index: 10000;
+
+  text-align: center;
 `;
 
 export const ModalSection = styled.div`
@@ -64,11 +66,11 @@ export const ModalContent = styled.div`
 `;
 
 export const Logo = styled.div`
-  padding: 1.8rem 0;
+  padding: 1.8rem 0 2.5rem 0;
   text-align: center;
   img {
-    width: 215px;
-    height: 76px;
+    width: 245px;
+    height: 94px;
   }
 `;
 
