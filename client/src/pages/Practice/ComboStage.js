@@ -11,6 +11,7 @@ function ComboStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState([]);
+  const [answerOrigin, setAnswerOrigin] = useState([]);
   const [answer, setAnswer] = useState([]);
   const [answerIndex, setAnswerIndex] = useState([]);
   const [isPass, setIsPass] = useState(false);
@@ -20,21 +21,36 @@ function ComboStage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //받기: api 통신해서 title, description[], 비디오(Streaming이나 youtube link), 답안, 답안의 인덱스 받음
+    //받기: api 통신해서 title, description[], 비디오(Streaming이나 youtube link), 답안[], 답안의 인덱스[] 받음
     //보내기: 서버로 통과 단계를 보냄
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((json) => {
         setTitle("연결동작");
         setDesc([
-          "기본 준비 서기",
-          "아래 막기",
-          "기본 준비 서기",
-          "아래 막기",
-          "기본 준비 서기",
-          "아래 막기",
+          "왼 아래(내려)막기",
+          "오른 (몸통)지르기",
+          "오른 아래(내려)막기",
+          "왼 (몸통)지르기",
+          "왼 아래(내려)막기",
+          "오른 (몸통)지르기",
+          // "왼 손날 아래(내려)막기",
+          // "오른 아금손 앞치기",
+          // "오른 앞차기",
+          // "오른 손날 아래(내려)막기",
+          // "왼 아금손 앞치기",
+          // "왼 앞차기",
+          // "왼 손날 아래(내려)막기",
+          // "오른 아금손 앞치기",
+          // "오른 앞차기",
+          // "왼 (무릎)눌러꺾기",
+          // "안팔목 (몸통)헤쳐막기",
+          // "왼 앞차기",
+          // "오른 (무릎)눌러꺾기",
+          // "안팔목 (몸통)헤쳐막기",
         ]);
-        setAnswer(["chickadee", "goldfinch", "hummingbird"]);
+        setAnswerOrigin(["chickadee", "goldfinch", "hummingbird"]);
+        setAnswer(["chickadee", "goldfinch", "hummingbird", "he"]);
         setAnswerIndex([0, 2, 4]);
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
@@ -45,8 +61,8 @@ function ComboStage() {
   }, []);
 
   const updateIsPass = () => {
-    // setAnswer([]);
-    setNextAction(answer.length);
+    setAnswer([]);
+    setNextAction(0);
     setIsPass(true);
   };
 
@@ -73,6 +89,7 @@ function ComboStage() {
 
   const restartFunc = () => {
     setIsPass(false);
+    setAnswer(answerOrigin);
   };
   const homeFunc = () => {
     navigate("/");

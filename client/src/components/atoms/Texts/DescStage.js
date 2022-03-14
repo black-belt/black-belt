@@ -16,6 +16,7 @@ export default DescStage;
 
 const Container = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   font-family: ${fontFamily.sans};
   color: ${colors.gray0};
@@ -24,12 +25,12 @@ const Container = styled.div`
 const Desc = styled.div`
   font-size: ${fontSize.lg};
   font-weight: ${fontWeight.regular};
-  margin-right: 20px;
+  margin: 10px 20px 10px 0;
 `;
 
 const CurDesc = styled.div`
   font-size: ${fontSize.h2};
   font-weight: ${fontWeight.medium};
   color: ${colors.star};
-  margin-right: 20px;
+  margin: 0 20px 0 0;
 `;

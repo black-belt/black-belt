@@ -50,7 +50,7 @@ const Container = styled.div`
 `;
 
 const TextContainer = styled.div`
-  width: 100%;
+  width: 93%;
   height: 200px;
   flex-wrap: wrap;
   font-weight: ${fontWeight.regular};
