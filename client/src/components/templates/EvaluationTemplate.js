@@ -4,22 +4,26 @@ import { colors } from "../../_foundation/colors";
 import { icons } from "_foundation";
 // import { ReactComponent as.div} from "public\icons\star.svg";
 
-function EvaluationTemplate({ grade, gradeNum }) {
+function EvaluationTemplate({ grade, gradeNum, restart, home }) {
   return (
     <Background>
       <Middle>
         <Grade>{grade}</Grade>
         <StarContainer>
-          <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 70 70">
+          <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 60 60">
             {gradeNum > 0 ? icons["goldStar"] : icons["blackStar"]}
           </Svg>
-          <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 70 70">
+          <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 60 60">
             {gradeNum > 1 ? icons["goldStar"] : icons["blackStar"]}
           </Svg>
-          <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 70 70">
+          <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 60 60">
             {gradeNum > 2 ? icons["goldStar"] : icons["blackStar"]}
           </Svg>
         </StarContainer>
+        <ButtonContainer>
+          <RestartButton>{restart}</RestartButton>
+          <HomeButton>{home}</HomeButton>
+        </ButtonContainer>
       </Middle>
     </Background>
   );
@@ -35,7 +39,7 @@ const breatheAnimation = keyframes`
 40% { opacity: 0.4; }
 50% { opacity: 0.5; }
 60% { opacity: 0.6; }
-70% { opacity: 0.7; }
+60% { opacity: 0.7; }
 80% { opacity: 0.8; }
 90% { opacity: 0.9; }
 100% { opacity: 1; }
@@ -47,7 +51,7 @@ const Background = styled.div`
   z-index: 2;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.75);
   animation-name: ${breatheAnimation};
   animation-duration: 0.5s;
 `;
@@ -63,7 +67,7 @@ const Middle = styled.div`
   z-index: 2;
   width: 100%;
   height: 50%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.75);
   // opacity: 0;
   transition: 1s linear;
 `;
@@ -85,10 +89,25 @@ const Svg = styled.svg`
   vertical-align: middle;
   shape-rendering: inherit;
   transform: translate3d(0, 0, 0);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  // stroke-width: 2;
+  // stroke-linecap: round;
+  // stroke-linejoin: round;
   width: 60px;
   height: 60px;
   padding: 0 5px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  margin-top: 60px;
+`;
+
+const RestartButton = styled.div`
+  font-family: ${fontFamily.sans};
+  margin-right: 20px;
+`;
+
+const HomeButton = styled.div`
+  font-family: ${fontFamily.sans};
+  margin-left: 20px;
 `;

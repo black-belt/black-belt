@@ -4,6 +4,7 @@ import LocalVideo from "../../components/atoms/Videos/LocalVideo";
 import UserVideo from "../../components/atoms/Videos/UserVideo";
 import { useNavigate } from "react-router-dom";
 import EvaluationTemplate from "components/templates/EvaluationTemplate";
+import StageBtn from "components/atoms/Buttons/stage-btn";
 
 function BasicStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
@@ -50,16 +51,41 @@ function BasicStage() {
     }
   };
 
+  const restartFunc = () => {
+    setIsPass(false);
+  };
+  const homeFunc = () => {
+    navigate("/");
+  };
+
   return (
     <>
       <PracticeStageTemplate
         title={title}
         desc={desc}
         video={<LocalVideo url={videoSelected} />}
-        camera={<UserVideo answer={answer} updateIsPass={updateIsPass} testResult={testResult} />}
+        camera={
+          <UserVideo
+            answer={answer}
+            updateIsPass={updateIsPass}
+            testResult={testResult}
+            isPass={isPass}
+          />
+        }
       />
 
-      {isPass ? <EvaluationTemplate grade={grade} gradeNum={gradeNum} /> : null}
+      {isPass ? (
+        <EvaluationTemplate
+          grade={grade}
+          gradeNum={gradeNum}
+          restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
+          home={
+            <StageBtn onClick={homeFunc} isHome>
+              홈으로 이동
+            </StageBtn>
+          }
+        />
+      ) : null}
     </>
   );
 }

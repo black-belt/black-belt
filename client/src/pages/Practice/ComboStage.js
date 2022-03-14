@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import EvaluationTemplate from "components/templates/EvaluationTemplate";
 import UserVideoCombo from "components/atoms/Videos/UserVideoCombo";
 import DescStage from "components/atoms/Texts/DescStage";
+import StageBtn from "components/atoms/Buttons/stage-btn";
 
 function ComboStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
@@ -70,6 +71,13 @@ function ComboStage() {
     }
   };
 
+  const restartFunc = () => {
+    setIsPass(false);
+  };
+  const homeFunc = () => {
+    navigate("/");
+  };
+
   return (
     <>
       <PracticeStageTemplate
@@ -82,11 +90,23 @@ function ComboStage() {
             updateIsPass={updateIsPass}
             testResult={testResult}
             setNextAction={setNextAction}
+            isPass={isPass}
           />
         }
       />
 
-      {isPass ? <EvaluationTemplate grade={grade} gradeNum={gradeNum} /> : null}
+      {isPass ? (
+        <EvaluationTemplate
+          grade={grade}
+          gradeNum={gradeNum}
+          restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
+          home={
+            <StageBtn onClick={homeFunc} isHome>
+              홈으로 이동
+            </StageBtn>
+          }
+        />
+      ) : null}
     </>
   );
 }
