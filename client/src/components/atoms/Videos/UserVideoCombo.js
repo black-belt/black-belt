@@ -49,7 +49,6 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
           break;
         }
       }
-      // }
       await tf.nextFrame();
     }
   };

@@ -12,7 +12,6 @@ function PoomsaeStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState([[]]);
-  const [answerOrigin, setAnswerOrigin] = useState([[]]);
   const [answer, setAnswer] = useState([[]]);
   const [answerIndex, setAnswerIndex] = useState([[]]);
   const [isPass, setIsPass] = useState(false);
@@ -64,23 +63,17 @@ function PoomsaeStage() {
             "4오른 (몸통)지르기",
           ],
         ]);
-        setAnswerOrigin([
-          ["coffee mug", "coffee mug", "coffee mug"],
-          ["coffee mug", "coffee mug", "coffee mug"],
-          ["coffee mug", "coffee mug", "coffee mug"],
-          ["coffee mug", "coffee mug", "coffee mug"],
-        ]);
         setAnswer([
-          ["coffee mug", "coffee mug", "coffee mug"],
-          ["coffee mug", "coffee mug", "coffee mug"],
-          ["coffee mug", "coffee mug", "coffee mug"],
-          ["coffee mug", "coffee mug", "coffee mug"],
+          ["chickadee", "chickadee", "chickadee"],
+          ["chickadee", "chickadee", "chickadee"],
+          ["chickadee", "chickadee", "chickadee"],
+          ["chickadee", "chickadee", "chickadee"],
         ]);
         setAnswerIndex([
-          [0, 2, 4, 5],
-          [0, 2, 4, 5],
-          [0, 2, 4, 5],
-          [0, 2, 4, 5],
+          [0, 2, 4],
+          [1, 3, 5],
+          [0, 2, 4],
+          [1, 3, 5],
         ]);
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
@@ -91,18 +84,26 @@ function PoomsaeStage() {
   }, []);
 
   const updateIsPass = () => {
-    setNextAction(0);
-    setPartIndex(0);
-    // setAnswer([[]]);
+    setNextAction(answer[3].length - 1);
+    setPartIndex(3);
     setIsPass(true);
   };
 
+  const updateNextAction = (value) => {
+    setNextAction(value);
+  };
+
+  const updatePartIndex = (value) => {
+    setPartIndex(value);
+  };
+
   const testResult = (result) => {
-    let num = 0;
+    updateIsPass();
+    let len = 0;
     answer.forEach((ans) => {
-      num += ans.length;
+      len += ans.length;
     });
-    result /= num;
+    result /= len;
     if (result >= 0.8) {
       setGrade("Perfect!");
       setGradeNum(3);
@@ -112,32 +113,20 @@ function PoomsaeStage() {
     } else if (result >= 0.6) {
       setGrade("Good");
       setGradeNum(1);
+    } else {
+      setGrade("Try Again");
+      setGradeNum(0);
     }
   };
 
-  // const updatePartIndex = (props) => {
-  //   if (props === 1) setPartIndex((current) => current + 1);
-  //   else setPartIndex(0);
-  // };
-
   const restartFunc = () => {
+    setNextAction(0);
+    setPartIndex(0);
     setIsPass(false);
-    setAnswer(answerOrigin);
   };
   const homeFunc = () => {
     navigate("/");
   };
-
-  // console.log(
-  //   "part",
-  //   partIndex,
-  //   "nextAc",
-  //   nextAction,
-  //   "answerIndex",
-  //   answerIndex
-  //   // "value",
-  //   // answerIndex[partIndex][nextAction]
-  // );
 
   return (
     <>
@@ -148,12 +137,10 @@ function PoomsaeStage() {
         video={<LocalVideo url={videoSelected} />}
         camera={
           <UserVideoPoomsae
-            answer={answer[partIndex]}
-            updateIsPass={updateIsPass}
+            answer={answer}
             testResult={testResult}
-            setNextAction={setNextAction}
-            setPartIndex={setPartIndex}
-            partIndex={partIndex}
+            updateNextAction={updateNextAction}
+            updatePartIndex={updatePartIndex}
             isPass={isPass}
           />
         }

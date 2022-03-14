@@ -59,6 +59,7 @@ function ComboStage() {
   }, []);
 
   const updateIsPass = () => {
+    setNextAction(answer.length - 1);
     setIsPass(true);
   };
 
@@ -68,6 +69,7 @@ function ComboStage() {
 
   const testResult = (result) => {
     updateIsPass();
+    result /= answer.length;
     if (result >= 0.8) {
       setGrade("Perfect!");
       setGradeNum(3);
