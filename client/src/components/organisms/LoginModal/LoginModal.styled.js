@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { colors } from "_foundation";
+import { colors, fontSize } from "_foundation";
 
 export const Overlay = styled.div`
   position: fixed;
@@ -33,7 +34,7 @@ export const ModalSection = styled.div`
   position: relative;
   top: 50%;
 
-  width: 427px;
+  width: 400px;
   height: 360px;
   margin: auto;
   padding: 1rem;
@@ -66,13 +67,18 @@ export const ModalContent = styled.div`
 `;
 
 export const Logo = styled.div`
-  padding: 1.8rem 0 2.5rem 0;
+  padding: 2.8rem 0 2.5rem 0;
   text-align: center;
   img {
-    width: 245px;
-    height: 94px;
+    width: 240px;
+    height: 85px;
   }
 `;
 
-// export const Button = styled.button`
-// `
+export const Footer = styled.div`
+  margin: 2.5rem 0;
+  color: ${colors.gray5};
+  font-size: ${fontSize.standard};
+`;
+
+export const FooterLink = styled(Link)``;

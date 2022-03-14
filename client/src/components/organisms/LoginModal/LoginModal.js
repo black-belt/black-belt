@@ -8,6 +8,7 @@ import {
   ModalContent,
   ModalHeader,
   Logo,
+  Footer,
 } from "./LoginModal.styled";
 
 const LoginModal = ({ ...props }) => {
@@ -24,6 +25,7 @@ const LoginModal = ({ ...props }) => {
                 <img src="/images/logo.png" alt="" />
               </Logo>
               <GoogleButton />
+              <Footer>Already have an account?</Footer>
             </ModalBox>
           </ModalContent>
         </ModalSection>
