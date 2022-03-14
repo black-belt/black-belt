@@ -41,7 +41,7 @@ export default function GoogleButton({ onSocial }) {
         onFailure={onFailure}
         render={(renderProps) => (
           <GoogleLoginBtn onClick={renderProps.onClick}>
-            <GoogleWrapper>
+            <GoogleWrapper className="googlewrapper">
               <GoogleContent>
                 <Icon icon="google" />
                 <span>Sign in with Google Account</span>

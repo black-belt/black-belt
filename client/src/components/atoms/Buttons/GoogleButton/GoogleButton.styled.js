@@ -1,12 +1,24 @@
 import styled from "styled-components";
 import { colors, fontSize } from "_foundation";
 
+// export const GoogleLoginBtn = styled.button`
+//   width: 305px;
+//   height: 55px;
+
+//   background-color: ${colors.gray0};
+//   align-items: center;
+
+//   border-radius: 8px;
+//   border: 1px solid ${colors.gray5};
+
+//   cursor: pointer;
+// `;
+
 export const GoogleLoginBtn = styled.button`
   width: 305px;
   height: 55px;
 
-  background-color: ${colors.gray1}
-  display: flex;
+  background-color: ${colors.gray1};
   align-items: center;
 
   border-radius: 8px;
@@ -18,13 +30,12 @@ export const GoogleLoginBtn = styled.button`
 
 export const GoogleWrapper = styled.div`
   width: 240px;
-  height: 36px;
 
   display: flex;
   align-items: center;
   justify-content: space-around;
 
-  margin: 12px 104px 12px 28px;
+  margin: 15px 28px 12px 28px;
 `;
 
 export const GoogleContent = styled.div`
