@@ -38,7 +38,7 @@ function UserVideo({ answer, testResult, isPass }) {
       if (isFindMax) {
         if (++frameCnt > 60) {
           isFindMax = false;
-          console.log("최대:", maxProbability);
+          frameCnt = 0;
           testResult(maxProbability);
           break;
         }
@@ -47,7 +47,6 @@ function UserVideo({ answer, testResult, isPass }) {
           result[0].probability > maxProbability
         ) {
           maxProbability = result[0].probability;
-          console.log(result[0].probability);
         }
       } else if (answer === result[0].className.split(",")[0]) {
         isFindMax = true;
