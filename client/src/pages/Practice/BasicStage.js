@@ -34,8 +34,7 @@ function BasicStage() {
 
   const updateIsPass = () => {
     setIsPass(true);
-    // console.log("통과!", isPass);
-    setTimeout(() => navigate("/"), 3000);
+    // setTimeout(() => navigate("/"), 3000);
   };
 
   const testResult = (result) => {

@@ -53,7 +53,6 @@ const TextContainer = styled.div`
   width: 100%;
   height: 200px;
   flex-wrap: wrap;
-  font-size: ${fontSize.large};
   font-weight: ${fontWeight.regular};
   padding: 0 0 90px 50px;
 `;
@@ -73,6 +72,7 @@ const DescContainer = styled.div`
   height: 60px;
   padding-top: 40px;
   display: flex;
+  font-size: ${fontSize.lg};
   align-items: flex-start;
 `;
 
