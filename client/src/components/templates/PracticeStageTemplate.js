@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { colors } from "../../_foundation/colors";
+import { fontFamily, fontSize, fontWeight } from "../../_foundation/typography";
 
 function PracticeStageTemplate({ title, desc, video, camera }) {
   return (
@@ -20,7 +22,7 @@ function PracticeStageTemplate({ title, desc, video, camera }) {
 export default PracticeStageTemplate;
 
 const BackgroundImage = styled.img`
-  filter: grayscale(100%) brightness(60%);
+  filter: grayscale(100%) brightness(70%);
   filter: gray;
   position: absolute;
   top: 0;
@@ -34,10 +36,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  // background-color: #000000;
-  height: calc(100% - 70px);
+  height: calc(100% - 120px);
   width: calc(100% - 200px);
-  padding: 50px 100px 20px 100px;
+  padding: 100px 100px 0 100px;
+  font-family: ${fontFamily.sans};
+  color: ${colors.gray0};
   // background-image: linear-gradient(black, black), url("../../images/practiceBackground.jpg");
   // background-size: 100% 100%;
   // background-repeat: no-repeat;
@@ -47,20 +50,30 @@ const Container = styled.div`
 `;
 
 const TextContainer = styled.div`
-  width: 100%;
+  width: 93%;
   height: 200px;
   flex-wrap: wrap;
-  // background-color: #ff0000;
+  font-weight: ${fontWeight.regular};
+  padding: 0 0 90px 50px;
 `;
 
 const TitleContainer = styled.div`
   width: 100%;
-  // background-color: #ff0000;
+  height: 90px;
+  margin-top: 10px;
+  font-weight: ${fontWeight.extrabold};
+  font-size: ${fontSize.h1};
+  display: flex;
+  align-items: center;
 `;
 
 const DescContainer = styled.div`
   width: 100%;
-  // background-color: #ff0000;
+  height: 60px;
+  padding-top: 40px;
+  display: flex;
+  font-size: ${fontSize.lg};
+  align-items: flex-start;
 `;
 
 const VideoContainer = styled.div`
@@ -69,7 +82,8 @@ const VideoContainer = styled.div`
   flex-wrap: wrap;
   height: 100%;
   width: 100%;
-  // background-color: #00ffff;
+  justify-content: center;
+  align-items: center;
 `;
 
 const DemonContainer = styled.div`
@@ -77,7 +91,8 @@ const DemonContainer = styled.div`
   height: 100%;
   min-height: 300px;
   min-width: 500px;
-  // background-color: #00ff00;
+  display: flex;
+  justify-content: center;
 `;
 
 const UserContainer = styled.div`
@@ -85,5 +100,7 @@ const UserContainer = styled.div`
   height: 100%;
   min-height: 300px;
   min-width: 500px;
-  // background-color: #0000ff;
+  display: flex;
+  // margin-bottom: 60px;
+  justify-content: center;
 `;
