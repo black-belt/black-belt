@@ -35,7 +35,7 @@ export const ModalSection = styled.div`
   top: 50%;
 
   width: 400px;
-  height: 360px;
+  height: 350px;
   margin: auto;
   padding: 1rem;
   border-radius: 10px;
@@ -76,9 +76,14 @@ export const Logo = styled.div`
 `;
 
 export const Footer = styled.div`
-  margin: 2.5rem 0;
+  margin: 3.2rem 0;
   color: ${colors.gray5};
   font-size: ${fontSize.standard};
 `;
 
-export const FooterLink = styled(Link)``;
+export const FooterLink = styled(Link)`
+  margin-left: 10px;
+  color: ${colors.gray7};
+  font-size: ${fontSize.standard};
+  text-decoration: none;
+`;

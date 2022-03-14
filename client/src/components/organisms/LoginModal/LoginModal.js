@@ -9,6 +9,7 @@ import {
   ModalHeader,
   Logo,
   Footer,
+  FooterLink,
 } from "./LoginModal.styled";
 
 const LoginModal = ({ ...props }) => {
@@ -25,7 +26,10 @@ const LoginModal = ({ ...props }) => {
                 <img src="/images/logo.png" alt="" />
               </Logo>
               <GoogleButton />
-              <Footer>Already have an account?</Footer>
+              <Footer>
+                New to BlackBelt?
+                <FooterLink to="/main">Create an Account</FooterLink>
+              </Footer>
             </ModalBox>
           </ModalContent>
         </ModalSection>
