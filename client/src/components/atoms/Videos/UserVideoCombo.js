@@ -41,12 +41,10 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
         if (++frameCnt > 60) {
           isFindMax = false;
           frameCnt = 0;
-          // console.log("최대:", maxProbability);
 
-          nextAction++;
-          updateNextAction(nextAction);
+          updateNextAction(++nextAction);
           testSum += maxProbability;
-          // console.log("최대 합:", testSum);
+          maxProbability = 0.0;
           if (nextAction === answer.length) {
             testResult(testSum);
             testSum = 0;
@@ -62,7 +60,6 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
           result[0].probability > maxProbability
         ) {
           maxProbability = result[0].probability;
-          // console.log(result[0].probability);
         }
       } else if (answer[nextAction] === result[0].className.split(",")[0]) {
         isFindMax = true;

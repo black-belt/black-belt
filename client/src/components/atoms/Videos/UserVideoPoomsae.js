@@ -9,6 +9,9 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
   let testSum = 0.0;
   let nextAction = 0;
   let partIndex = 0;
+  let isFindMax = false;
+  let maxProbability = 0.0;
+  let frameCnt = 0;
   const [webCamElement, setWebCamElement] = useState();
 
   const getWebcam = (callback) => {
@@ -41,27 +44,41 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
         result[0].probability
       );
       img.dispose();
-      if (answer[partIndex][nextAction] === result[0].className.split(",")[0]) {
-        updateNextAction(++nextAction);
-        testSum += result[0].probability;
-        if (nextAction === answer[partIndex].length) {
-          //현단락에서 마지막동작
-          nextAction = 0;
-          updateNextAction(nextAction);
-          if (partIndex === 3) {
-            //마지막 단락
-            testResult(testSum);
-            partIndex = 0;
-            testSum = 0;
-            // const s = videoRef.current.srcObject;
-            // s.getTracks().forEach((track) => {
-            //   track.stop();
-            // });
-            break;
-          } else {
-            updatePartIndex(++partIndex);
+      if (isFindMax) {
+        if (++frameCnt > 60) {
+          isFindMax = false;
+          frameCnt = 0;
+
+          updateNextAction(++nextAction);
+          testSum += maxProbability;
+          maxProbability = 0.0;
+          if (nextAction === answer[partIndex].length) {
+            //현단락에서 마지막동작
+            nextAction = 0;
+            updateNextAction(nextAction);
+            if (partIndex === 3) {
+              //마지막 단락
+              testResult(testSum);
+              partIndex = 0;
+              testSum = 0;
+              // const s = videoRef.current.srcObject;
+              // s.getTracks().forEach((track) => {
+              //   track.stop();
+              // });
+              break;
+            } else {
+              updatePartIndex(++partIndex);
+            }
           }
+        } else if (
+          answer[partIndex][nextAction] === result[0].className.split(",")[0] &&
+          result[0].probability > maxProbability
+        ) {
+          maxProbability = result[0].probability;
         }
+      } else if (answer[partIndex][nextAction] === result[0].className.split(",")[0]) {
+        isFindMax = true;
+        maxProbability = result[0].probability;
       }
       await tf.nextFrame();
     }
