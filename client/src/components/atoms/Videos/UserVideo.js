@@ -6,6 +6,9 @@ import * as tf from "@tensorflow/tfjs";
 function UserVideo({ answer, testResult, isPass }) {
   const videoRef = useRef(null);
   let net;
+  let isFindMax = false;
+  let maxProbability = 0.0;
+  let frameCnt = 0;
   const [webCamElement, setWebCamElement] = useState();
 
   const getWebcam = (callback) => {
@@ -32,13 +35,28 @@ function UserVideo({ answer, testResult, isPass }) {
       const result = await net.classify(img);
       console.log(answer, isPass, result[0].className, result[0].probability);
       img.dispose();
-      if (answer === result[0].className.split(",")[0]) {
-        testResult(result[0].probability);
+      if (isFindMax) {
+        if (++frameCnt > 60) {
+          isFindMax = false;
+          console.log("최대:", maxProbability);
+          testResult(maxProbability);
+          break;
+        }
+        if (
+          answer === result[0].className.split(",")[0] &&
+          result[0].probability > maxProbability
+        ) {
+          maxProbability = result[0].probability;
+          console.log(result[0].probability);
+        }
+      } else if (answer === result[0].className.split(",")[0]) {
+        isFindMax = true;
+        maxProbability = result[0].probability;
         // const s = videoRef.current.srcObject;
         // s.getTracks().forEach((track) => {
         //   track.stop();
         // });
-        break;
+        // break;
       }
       await tf.nextFrame();
     }
