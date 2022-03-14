@@ -10,6 +10,17 @@ const basic = {
       />
     </>
   ),
+  xBtn: (
+    <>
+      <path
+        d="M5 5L15 15M5 15L15 5L5 15Z"
+        stroke="#ADB5BD"
+        strokeWidth="1.66667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </>
+  ),
 
   // language
   korean: (
