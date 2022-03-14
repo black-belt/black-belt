@@ -36,17 +36,17 @@ function UserVideoCombo({ answer, updateIsPass, testResult, setNextAction, isPas
       img.dispose();
       const curActionIdx = answer.indexOf(result[0].className.split(",")[0]);
       if (curActionIdx >= 0 && curActionIdx !== nextAction - 1) {
-        if (nextAction === curActionIdx) {
+        if (answer[nextAction] === result[0].className.split(",")[0]) {
           setNextAction(nextAction);
           nextAction++;
           testAvg += result[0].probability;
           if (nextAction === answer.length) {
             testResult(testAvg / answer.length);
             updateIsPass();
-            const s = videoRef.current.srcObject;
-            s.getTracks().forEach((track) => {
-              track.stop();
-            });
+            // const s = videoRef.current.srcObject;
+            // s.getTracks().forEach((track) => {
+            //   track.stop();
+            // });
             break;
           }
         } else {

@@ -27,18 +27,17 @@ function UserVideo({ answer, updateIsPass, testResult, isPass }) {
       resizeWidth: 220,
       resizeHeight: 227,
     });
-    while (answer !== "") {
+    while (answer !== "" && !isPass) {
       const img = await webcam.capture();
       const result = await net.classify(img);
-      console.log(result[0].className, result[0].probability);
+      console.log(answer, isPass, result[0].className, result[0].probability);
       img.dispose();
       if (answer === result[0].className.split(",")[0]) {
         testResult(result[0].probability);
-        updateIsPass();
-        const s = videoRef.current.srcObject;
-        s.getTracks().forEach((track) => {
-          track.stop();
-        });
+        // const s = videoRef.current.srcObject;
+        // s.getTracks().forEach((track) => {
+        //   track.stop();
+        // });
         break;
       }
       await tf.nextFrame();
@@ -55,7 +54,7 @@ function UserVideo({ answer, updateIsPass, testResult, isPass }) {
   }, [isPass]);
 
   useEffect(() => {
-    run();
+    if (!isPass || answer !== "") run();
   }, [answer, isPass]);
 
   return (
