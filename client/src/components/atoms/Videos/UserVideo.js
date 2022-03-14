@@ -3,7 +3,7 @@ import styled from "styled-components";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 
-function UserVideo({ answer, updateIsPass, testResult, isPass }) {
+function UserVideo({ answer, testResult, isPass }) {
   const videoRef = useRef(null);
   let net;
   const [webCamElement, setWebCamElement] = useState();
@@ -54,8 +54,8 @@ function UserVideo({ answer, updateIsPass, testResult, isPass }) {
   }, [isPass]);
 
   useEffect(() => {
-    if (!isPass || answer !== "") run();
-  }, [answer, isPass]);
+    if (!isPass) run();
+  }, [answer]);
 
   return (
     <>
