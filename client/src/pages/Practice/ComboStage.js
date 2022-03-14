@@ -50,7 +50,7 @@ function ComboStage() {
           // "안팔목 (몸통)헤쳐막기",
         ]);
         setAnswerOrigin(["chickadee", "goldfinch", "hummingbird"]);
-        setAnswer(["chickadee", "goldfinch", "hummingbird", "he"]);
+        setAnswer(["chickadee", "goldfinch", "hummingbird"]);
         setAnswerIndex([0, 2, 4]);
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
@@ -84,7 +84,11 @@ function ComboStage() {
     } else if (result >= 0.6) {
       setGrade("Good");
       setGradeNum(1);
+    } else {
+      setGrade("Try Again");
+      setGradeNum(0);
     }
+    updateIsPass();
   };
 
   const restartFunc = () => {

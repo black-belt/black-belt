@@ -10,7 +10,6 @@ function BasicStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [answerOrigin, setAnswerOrigin] = useState("");
   const [answer, setAnswer] = useState("");
   const [isPass, setIsPass] = useState(false);
   const [grade, setGrade] = useState("Try Again");
@@ -25,7 +24,6 @@ function BasicStage() {
       .then((json) => {
         setTitle("기본동작");
         setDesc("동작설명");
-        setAnswerOrigin("coffee mug");
         setAnswer("coffee mug");
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
@@ -37,12 +35,12 @@ function BasicStage() {
 
   const updateIsPass = () => {
     setIsPass(true);
-    setAnswer("");
+    // setAnswer("");
     // setTimeout(() => navigate("/"), 3000);
   };
 
   const testResult = (result) => {
-    console.log("다시", result);
+    updateIsPass();
     if (result >= 0.8) {
       setGrade("Perfect!");
       setGradeNum(3);
@@ -56,15 +54,14 @@ function BasicStage() {
       setGrade("Try Again");
       setGradeNum(0);
     }
-    updateIsPass();
   };
 
   const restartFunc = () => {
-    setAnswer(answerOrigin);
+    // setAnswer(answerOrigin);
     setIsPass(false);
   };
   const homeFunc = () => {
-    setAnswer("");
+    // setAnswer("");
     setIsPass(true);
     navigate("/");
   };

@@ -45,17 +45,17 @@ function UserVideo({ answer, testResult, isPass }) {
   };
 
   useEffect(() => {
-    if (!isPass)
-      getWebcam((stream) => {
-        videoRef.current.srcObject = stream;
-        setWebCamElement(videoRef.current);
-        // run();
-      });
-  }, [isPass]);
+    // if (!isPass)
+    getWebcam((stream) => {
+      videoRef.current.srcObject = stream;
+      setWebCamElement(videoRef.current);
+      // run();
+    });
+  }, []);
 
   useEffect(() => {
     if (!isPass) run();
-  }, [answer]);
+  }, [isPass, answer]);
 
   return (
     <>
