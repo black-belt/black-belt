@@ -11,7 +11,6 @@ function ComboStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState([]);
-  const [answerOrigin, setAnswerOrigin] = useState([]);
   const [answer, setAnswer] = useState([]);
   const [answerIndex, setAnswerIndex] = useState([]);
   const [isPass, setIsPass] = useState(false);
@@ -49,8 +48,7 @@ function ComboStage() {
           // "오른 (무릎)눌러꺾기",
           // "안팔목 (몸통)헤쳐막기",
         ]);
-        setAnswerOrigin(["chickadee", "goldfinch", "hummingbird"]);
-        setAnswer(["chickadee", "goldfinch", "hummingbird"]);
+        setAnswer(["chickadee", "coffee mug", "chickadee"]);
         setAnswerIndex([0, 2, 4]);
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
@@ -61,20 +59,15 @@ function ComboStage() {
   }, []);
 
   const updateIsPass = () => {
-    setAnswer([]);
-    setNextAction(0);
     setIsPass(true);
   };
 
-  // useEffect(() => {
-  //   if (isPass && answer.length === 0) setTimeout(() => navigate("/"), 3000);
-  // }, [answer, isPass]);
-
-  // useEffect(() => {
-  //   console.log(answer[nextAction]);
-  // }, [nextAction]);
+  const updateNextAction = (value) => {
+    setNextAction(value);
+  };
 
   const testResult = (result) => {
+    updateIsPass();
     if (result >= 0.8) {
       setGrade("Perfect!");
       setGradeNum(3);
@@ -88,17 +81,15 @@ function ComboStage() {
       setGrade("Try Again");
       setGradeNum(0);
     }
-    updateIsPass();
   };
 
   const restartFunc = () => {
+    setNextAction(0);
     setIsPass(false);
-    setAnswer(answerOrigin);
   };
   const homeFunc = () => {
     navigate("/");
   };
-
   return (
     <>
       <PracticeStageTemplate
@@ -108,9 +99,8 @@ function ComboStage() {
         camera={
           <UserVideoCombo
             answer={answer}
-            updateIsPass={updateIsPass}
             testResult={testResult}
-            setNextAction={setNextAction}
+            updateNextAction={updateNextAction}
             isPass={isPass}
           />
         }

@@ -35,8 +35,6 @@ function BasicStage() {
 
   const updateIsPass = () => {
     setIsPass(true);
-    // setAnswer("");
-    // setTimeout(() => navigate("/"), 3000);
   };
 
   const testResult = (result) => {
@@ -57,12 +55,9 @@ function BasicStage() {
   };
 
   const restartFunc = () => {
-    // setAnswer(answerOrigin);
     setIsPass(false);
   };
   const homeFunc = () => {
-    // setAnswer("");
-    setIsPass(true);
     navigate("/");
   };
 
@@ -72,14 +67,7 @@ function BasicStage() {
         title={title}
         desc={desc}
         video={<LocalVideo url={videoSelected} />}
-        camera={
-          <UserVideo
-            answer={answer}
-            updateIsPass={updateIsPass}
-            testResult={testResult}
-            isPass={isPass}
-          />
-        }
+        camera={<UserVideo answer={answer} testResult={testResult} isPass={isPass} />}
       />
 
       {isPass ? (
