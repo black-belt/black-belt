@@ -79,16 +79,16 @@ function PoomsaeStage() {
         ]);
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
-
-    return () => {
-      fetch("https://jsonplaceholder.typicode.com/posts");
-    };
   }, []);
 
   const updateIsPass = () => {
-    setNextAction(answer[3].length - 1);
-    setPartIndex(3);
-    setIsPass(true);
+    fetch("https://jsonplaceholder.typicode.com/posts") //통과단계보냄
+      .then((res) => res.json())
+      .then((json) => {
+        setNextAction(answer[3].length - 1);
+        setPartIndex(3);
+        setIsPass(true);
+      });
   };
 
   const updateNextAction = (value) => {
@@ -106,7 +106,7 @@ function PoomsaeStage() {
         current[index] = true;
         return current;
       });
-    console.log("결과", index, resultArray[index], isPassArray[index]);
+    // console.log("결과", index, resultArray[index], isPassArray[index]);
     if (index === 3) {
       updateIsPass();
       let sum = 0;

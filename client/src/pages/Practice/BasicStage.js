@@ -5,6 +5,7 @@ import UserVideo from "../../components/atoms/Videos/UserVideo";
 import { useNavigate } from "react-router-dom";
 import EvaluationTemplate from "components/templates/EvaluationTemplate";
 import StageBtn from "components/atoms/Buttons/stage-btn";
+import LevelUpTemplate from "components/templates/LevelUpTemplate";
 
 function BasicStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
@@ -14,11 +15,14 @@ function BasicStage() {
   const [isPass, setIsPass] = useState(false);
   const [grade, setGrade] = useState("Try Again");
   const [gradeNum, setGradeNum] = useState(0);
+  const [isLevelUp, setIsLevelUp] = useState(false);
+  const [level, setLevel] = useState("white belt");
   const navigate = useNavigate();
 
   useEffect(() => {
     //받기: api 통신해서 title, description, 비디오(Streaming이나 youtube link), 답안 받음
     //보내기: 서버로 통과 단계를 보냄
+    //받기: 레벨업했는지, 했으면 얻은레벨
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((json) => {
@@ -27,14 +31,26 @@ function BasicStage() {
         setAnswer("junco");
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
-
-    return () => {
-      fetch("https://jsonplaceholder.typicode.com/posts");
-    };
   }, []);
 
   const updateIsPass = () => {
-    setIsPass(true);
+    fetch("https://jsonplaceholder.typicode.com/posts") //통과여부 서버로 보내줌
+      .then(
+        fetch("https://jsonplaceholder.typicode.com/posts") //레벨업했는지, 했으면 얻은레벨
+          .then((res) => res.json())
+          .then((json) => {
+            let jsonIsLevelUp = true; //레벨업했는지 안했는지
+            let jsonLevel = "yellow belt";
+            if (jsonIsLevelUp) {
+              setIsLevelUp(jsonIsLevelUp);
+              setLevel(jsonLevel);
+              setTimeout(() => {
+                setIsLevelUp(!jsonIsLevelUp);
+              }, 3000);
+            }
+            setIsPass(true);
+          })
+      );
   };
 
   const testResult = (result) => {
@@ -55,6 +71,7 @@ function BasicStage() {
   };
 
   const restartFunc = () => {
+    setIsLevelUp(false);
     setIsPass(false);
   };
   const homeFunc = () => {
@@ -71,16 +88,20 @@ function BasicStage() {
       />
 
       {isPass ? (
-        <EvaluationTemplate
-          grade={grade}
-          gradeNum={gradeNum}
-          restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
-          home={
-            <StageBtn onClick={homeFunc} isHome>
-              홈으로 이동
-            </StageBtn>
-          }
-        />
+        isLevelUp ? (
+          <LevelUpTemplate level={level} />
+        ) : (
+          <EvaluationTemplate
+            grade={grade}
+            gradeNum={gradeNum}
+            restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
+            home={
+              <StageBtn onClick={homeFunc} isHome>
+                홈으로 이동
+              </StageBtn>
+            }
+          />
+        )
       ) : null}
     </>
   );
