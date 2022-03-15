@@ -66,10 +66,10 @@ function PoomsaeStage() {
           ],
         ]);
         setAnswer([
-          ["coffee mug", "coffee mug", "coffee mug"],
-          ["coffee mug", "coffee mug", "coffee mug"],
-          ["coffee mug", "coffee mug", "coffee mug"],
-          ["coffee mug", "coffee mug", "coffee mug"],
+          ["ski mask", "coffee mug", "ski mask"],
+          ["coffee mug", "ski mask", "coffee mug"],
+          ["ski mask", "coffee mug", "ski mask"],
+          ["coffee mug", "ski mask", "coffee mug"],
         ]);
         setAnswerIndex([
           [0, 2, 4],
@@ -101,6 +101,7 @@ function PoomsaeStage() {
 
   const testResult = (index, result) => {
     resultArray[index] = result / answer[index].length;
+    // console.log("평균", resultArray[index]);
     if (resultArray[index] >= 0.6)
       setIsPassArray((current) => {
         current[index] = true;

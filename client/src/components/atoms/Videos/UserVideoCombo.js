@@ -46,7 +46,7 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
           frameCnt = 0;
           updateNextAction(++nextAction);
           if (nextAction === answer.length) {
-            console.log("저장", maxProbability);
+            // console.log("저장", maxProbability);
             testSum += maxProbability;
             testResult(testSum);
             testSum = 0;
@@ -65,7 +65,7 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
         //다음동작으로 넘어감
         isFindMax = true;
         testSum += maxProbability;
-        console.log("저장", maxProbability);
+        // console.log("저장", maxProbability);
         maxProbability = probability;
         if (nextAction === answer.length - 1) {
           frameGoal = 60;
