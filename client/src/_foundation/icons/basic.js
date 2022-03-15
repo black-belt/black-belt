@@ -307,5 +307,6 @@ const basic = {
       <path d="M33 19L22 30L17 25" stroke="#F8F9FA" />
     </>
   ),
+  line: <rect width="504" height="4" fill="#868E96" />,
 };
 export default basic;

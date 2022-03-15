@@ -2,11 +2,11 @@ import PracticeStageTemplate from "../../components/templates/PracticeStageTempl
 import { useEffect, useState } from "react";
 import LocalVideo from "../../components/atoms/Videos/LocalVideo";
 import { useNavigate } from "react-router-dom";
-import EvaluationTemplate from "components/templates/EvaluationTemplate";
 import DescStage from "components/atoms/Texts/DescStage";
 import StageBtn from "components/atoms/Buttons/stage-btn";
 import UserVideoPoomsae from "components/atoms/Videos/UserVideoPoomsae";
 import PartStage from "components/atoms/Texts/PartStage";
+import EvaluationTemplatePoomsae from "components/templates/EvaluationTemplatePoomsae";
 
 function PoomsaeStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
@@ -20,6 +20,7 @@ function PoomsaeStage() {
   const [nextAction, setNextAction] = useState(0);
   const [part, setPart] = useState(["1단락", "2단락", "3단락", "4단락"]); //영어버전
   const [partIndex, setPartIndex] = useState(0);
+  const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,10 +65,10 @@ function PoomsaeStage() {
           ],
         ]);
         setAnswer([
-          ["mask", "water jug", "mask"],
-          ["mask", "water jug", "mask"],
-          ["mask", "water jug", "mask"],
-          ["mask", "water jug", "mask"],
+          ["chickadee", "chickadee", "chickadee"],
+          ["chickadee", "chickadee", "chickadee"],
+          ["chickadee", "chickadee", "chickadee"],
+          ["chickadee", "chickadee", "chickadee"],
         ]);
         setAnswerIndex([
           [0, 2, 4],
@@ -134,7 +135,7 @@ function PoomsaeStage() {
         title={title}
         partStage={<PartStage partArray={part} curIdx={partIndex} />}
         desc={<DescStage descArray={desc[partIndex]} curIdx={answerIndex[partIndex][nextAction]} />}
-        // video={<LocalVideo url={videoSelected} />}
+        video={<LocalVideo url={videoSelected} />}
         camera={
           <UserVideoPoomsae
             answer={answer}
@@ -147,7 +148,7 @@ function PoomsaeStage() {
       />
 
       {isPass ? (
-        <EvaluationTemplate
+        <EvaluationTemplatePoomsae
           grade={grade}
           gradeNum={gradeNum}
           restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
@@ -156,6 +157,7 @@ function PoomsaeStage() {
               홈으로 이동
             </StageBtn>
           }
+          isPassArray={isPassArray}
         />
       ) : null}
     </>

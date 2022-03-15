@@ -2,12 +2,18 @@ import styled, { keyframes } from "styled-components";
 import { fontFamily, fontSize, fontWeight } from "../../_foundation/typography";
 import { colors } from "../../_foundation/colors";
 import { icons } from "_foundation";
+// import Icon from "../atoms/Icons/Icon";
+import PoomsaeResultSet from "components/atoms/Evaluation/poomsaeResultSet";
 // import { ReactComponent as.div} from "public\icons\star.svg";
 
-function EvaluationTemplate({ grade, gradeNum, restart, home }) {
+function EvaluationTemplatePoomsae({ grade, gradeNum, restart, home, isPassArray }) {
   return (
     <Background>
       <Middle>
+        <ButtonContainer>
+          <RestartButton>{restart}</RestartButton>
+          <HomeButton>{home}</HomeButton>
+        </ButtonContainer>
         <Grade>{grade}</Grade>
         <StarContainer>
           <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 60 60">
@@ -16,20 +22,20 @@ function EvaluationTemplate({ grade, gradeNum, restart, home }) {
           <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 60 60">
             {gradeNum > 1 ? icons["goldStar"] : icons["blackStar"]}
           </Svg>
+          {/* <Icon icon={gradeNum > 2 ? "goldStar" : "blackStar"} /> */}
           <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 60 60">
             {gradeNum > 2 ? icons["goldStar"] : icons["blackStar"]}
           </Svg>
         </StarContainer>
-        <ButtonContainer>
-          <RestartButton>{restart}</RestartButton>
-          <HomeButton>{home}</HomeButton>
-        </ButtonContainer>
+        <ResultContainer>
+          <PoomsaeResultSet isPassArray={isPassArray} />
+        </ResultContainer>
       </Middle>
     </Background>
   );
 }
 
-export default EvaluationTemplate;
+export default EvaluationTemplatePoomsae;
 
 const breatheAnimation = keyframes`
 0% { opacity: 0.0; }
@@ -99,7 +105,9 @@ const Svg = styled.svg`
 
 const ButtonContainer = styled.div`
   display: flex;
-  margin-top: 60px;
+  position: absolute;
+  left: 50px;
+  top: 40px;
 `;
 
 const RestartButton = styled.div`
@@ -111,3 +119,5 @@ const HomeButton = styled.div`
   font-family: ${fontFamily.sans};
   margin-left: 20px;
 `;
+
+const ResultContainer = styled.div``;
