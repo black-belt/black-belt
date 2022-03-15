@@ -3,11 +3,14 @@ import styled from "styled-components";
 import { colors } from "../../_foundation/colors";
 import { fontFamily, fontSize, fontWeight } from "../../_foundation/typography";
 
-function PracticeStageTemplate({ title, desc, video, camera }) {
+function PracticeStageTemplate({ title, desc, video, camera, partStage }) {
   return (
     <Container>
       <TextContainer>
-        <TitleContainer>{title}</TitleContainer>
+        <TitleContainer>
+          {title}
+          {partStage}
+        </TitleContainer>
         <DescContainer>{desc}</DescContainer>
       </TextContainer>
       <VideoContainer>
@@ -66,6 +69,8 @@ const TitleContainer = styled.div`
   display: flex;
   align-items: center;
 `;
+
+const TitleStage = styled.div``;
 
 const DescContainer = styled.div`
   width: 100%;

@@ -24,7 +24,7 @@ function BasicStage() {
       .then((json) => {
         setTitle("기본동작");
         setDesc("동작설명");
-        setAnswer("chickadee");
+        setAnswer("coffee mug");
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
 
@@ -35,10 +35,10 @@ function BasicStage() {
 
   const updateIsPass = () => {
     setIsPass(true);
-    // setTimeout(() => navigate("/"), 3000);
   };
 
   const testResult = (result) => {
+    updateIsPass();
     if (result >= 0.8) {
       setGrade("Perfect!");
       setGradeNum(3);
@@ -48,6 +48,9 @@ function BasicStage() {
     } else if (result >= 0.6) {
       setGrade("Good");
       setGradeNum(1);
+    } else {
+      setGrade("Try Again");
+      setGradeNum(0);
     }
   };
 
@@ -64,14 +67,7 @@ function BasicStage() {
         title={title}
         desc={desc}
         video={<LocalVideo url={videoSelected} />}
-        camera={
-          <UserVideo
-            answer={answer}
-            updateIsPass={updateIsPass}
-            testResult={testResult}
-            isPass={isPass}
-          />
-        }
+        camera={<UserVideo answer={answer} testResult={testResult} isPass={isPass} />}
       />
 
       {isPass ? (
