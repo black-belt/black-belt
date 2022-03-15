@@ -48,7 +48,7 @@ function ComboStage() {
           // "오른 (무릎)눌러꺾기",
           // "안팔목 (몸통)헤쳐막기",
         ]);
-        setAnswer(["chickadee", "coffee mug", "chickadee"]);
+        setAnswer(["mask", "water jug", "mask"]);
         setAnswerIndex([0, 2, 4]);
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });

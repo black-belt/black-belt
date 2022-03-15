@@ -64,10 +64,10 @@ function PoomsaeStage() {
           ],
         ]);
         setAnswer([
-          ["chickadee", "chickadee", "chickadee"],
-          ["chickadee", "chickadee", "chickadee"],
-          ["chickadee", "chickadee", "chickadee"],
-          ["chickadee", "chickadee", "chickadee"],
+          ["mask", "water jug", "mask"],
+          ["mask", "water jug", "mask"],
+          ["mask", "water jug", "mask"],
+          ["mask", "water jug", "mask"],
         ]);
         setAnswerIndex([
           [0, 2, 4],
@@ -134,7 +134,7 @@ function PoomsaeStage() {
         title={title}
         partStage={<PartStage partArray={part} curIdx={partIndex} />}
         desc={<DescStage descArray={desc[partIndex]} curIdx={answerIndex[partIndex][nextAction]} />}
-        video={<LocalVideo url={videoSelected} />}
+        // video={<LocalVideo url={videoSelected} />}
         camera={
           <UserVideoPoomsae
             answer={answer}

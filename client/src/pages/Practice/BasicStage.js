@@ -24,7 +24,7 @@ function BasicStage() {
       .then((json) => {
         setTitle("기본동작");
         setDesc("동작설명");
-        setAnswer("coffee mug");
+        setAnswer("water jug");
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
 

@@ -235,7 +235,7 @@ const basic = {
     />
   ),
 
-  //stage button
+  //stage icon
   restart: (
     <>
       <path d="M23 4V10H17" stroke="white" />
@@ -252,6 +252,19 @@ const basic = {
         stroke="white"
       />
       <path d="M9 22V12H15V22" stroke="white" />
+    </>
+  ),
+  circleFail: (
+    <>
+      <circle cx="25" cy="25" r="25" fill="#941E34" />
+      <path d="M31 19L19 31" stroke="#F8F9FA" />
+      <path d="M19 19L31 31" stroke="#F8F9FA" />
+    </>
+  ),
+  circlePass: (
+    <>
+      <circle cx="25" cy="25" r="25" fill="#004C8D" />
+      <path d="M33 19L22 30L17 25" stroke="#F8F9FA" />
     </>
   ),
 };
