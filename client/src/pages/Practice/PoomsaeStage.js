@@ -21,6 +21,7 @@ function PoomsaeStage() {
   const [part, setPart] = useState(["1단락", "2단락", "3단락", "4단락"]); //영어버전
   const [partIndex, setPartIndex] = useState(0);
   const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
+  const resultArray = [0, 0, 0, 0];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,10 +66,10 @@ function PoomsaeStage() {
           ],
         ]);
         setAnswer([
-          ["chickadee", "chickadee", "chickadee"],
-          ["chickadee", "chickadee", "chickadee"],
-          ["chickadee", "chickadee", "chickadee"],
-          ["chickadee", "chickadee", "chickadee"],
+          ["coffee mug", "coffee mug", "coffee mug"],
+          ["coffee mug", "coffee mug", "coffee mug"],
+          ["coffee mug", "coffee mug", "coffee mug"],
+          ["coffee mug", "coffee mug", "coffee mug"],
         ]);
         setAnswerIndex([
           [0, 2, 4],
@@ -98,31 +99,48 @@ function PoomsaeStage() {
     setPartIndex(value);
   };
 
-  const testResult = (result) => {
-    updateIsPass();
-    let len = 0;
-    answer.forEach((ans) => {
-      len += ans.length;
-    });
-    result /= len;
-    if (result >= 0.8) {
-      setGrade("Perfect!");
-      setGradeNum(3);
-    } else if (result >= 0.7) {
-      setGrade("Great");
-      setGradeNum(2);
-    } else if (result >= 0.6) {
-      setGrade("Good");
-      setGradeNum(1);
-    } else {
-      setGrade("Try Again");
-      setGradeNum(0);
+  const testResult = (index, result) => {
+    resultArray[index] = result / answer[index].length;
+    if (resultArray[index] >= 0.6)
+      setIsPassArray((current) => {
+        current[index] = true;
+        return current;
+      });
+    console.log("결과", index, resultArray[index], isPassArray[index]);
+    if (index === 3) {
+      updateIsPass();
+      let sum = 0;
+      let pass = true;
+      resultArray.forEach((value) => (sum += value));
+      isPassArray.forEach((value) => {
+        if (!value) pass = false;
+      });
+      if (!pass) {
+        setGrade("Try Again");
+        setGradeNum(0);
+        return;
+      }
+      sum /= 4;
+      if (sum >= 0.8) {
+        setGrade("Perfect!");
+        setGradeNum(3);
+      } else if (sum >= 0.7) {
+        setGrade("Great");
+        setGradeNum(2);
+      } else if (sum >= 0.6) {
+        setGrade("Good");
+        setGradeNum(1);
+      } else {
+        setGrade("Try Again");
+        setGradeNum(0);
+      }
     }
   };
 
   const restartFunc = () => {
     setNextAction(0);
     setPartIndex(0);
+    setIsPassArray([false, false, false, false]);
     setIsPass(false);
   };
   const homeFunc = () => {

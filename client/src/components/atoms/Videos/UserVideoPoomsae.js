@@ -56,11 +56,11 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
             //현단락에서 마지막동작
             nextAction = 0;
             updateNextAction(nextAction);
+            testResult(partIndex, testSum);
+            testSum = 0;
             if (partIndex === 3) {
               //마지막 단락
-              testResult(testSum);
               partIndex = 0;
-              testSum = 0;
               // const s = videoRef.current.srcObject;
               // s.getTracks().forEach((track) => {
               //   track.stop();
