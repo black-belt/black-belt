@@ -1,19 +1,6 @@
 import styled from "styled-components";
 import { colors, fontSize } from "_foundation";
 
-// export const GoogleLoginBtn = styled.button`
-//   width: 305px;
-//   height: 55px;
-
-//   background-color: ${colors.gray0};
-//   align-items: center;
-
-//   border-radius: 8px;
-//   border: 1px solid ${colors.gray5};
-
-//   cursor: pointer;
-// `;
-
 export const GoogleLoginBtn = styled.button`
   width: 305px;
   height: 55px;
