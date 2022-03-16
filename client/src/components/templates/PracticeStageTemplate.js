@@ -40,7 +40,7 @@ const Container = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   height: calc(100% - 120px);
-  width: calc(100% - 200px);
+  width: 100%;
   padding: 100px 100px 0 100px;
   font-family: ${fontFamily.sans};
   color: ${colors.gray0};
@@ -57,7 +57,7 @@ const TextContainer = styled.div`
   height: 200px;
   flex-wrap: wrap;
   font-weight: ${fontWeight.regular};
-  padding: 0 0 90px 50px;
+  margin: 0 0 50px 55px;
 `;
 
 const TitleContainer = styled.div`
@@ -69,8 +69,6 @@ const TitleContainer = styled.div`
   display: flex;
   align-items: center;
 `;
-
-const TitleStage = styled.div``;
 
 const DescContainer = styled.div`
   width: 100%;

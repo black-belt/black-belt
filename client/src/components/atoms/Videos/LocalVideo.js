@@ -8,8 +8,8 @@ function LocalVideo({ url }) {
       url={url}
       // width="90%"
       // height="100%"
-      width="39.5vw"
-      height="22vw"
+      width="39.2vw"
+      height="25vw"
       style={{
         display: "flex",
         justifyContent: "center",

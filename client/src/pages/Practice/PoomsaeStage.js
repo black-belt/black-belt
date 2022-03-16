@@ -2,11 +2,11 @@ import PracticeStageTemplate from "../../components/templates/PracticeStageTempl
 import { useEffect, useState } from "react";
 import LocalVideo from "../../components/atoms/Videos/LocalVideo";
 import { useNavigate } from "react-router-dom";
-import EvaluationTemplate from "components/templates/EvaluationTemplate";
 import DescStage from "components/atoms/Texts/DescStage";
 import StageBtn from "components/atoms/Buttons/stage-btn";
 import UserVideoPoomsae from "components/atoms/Videos/UserVideoPoomsae";
 import PartStage from "components/atoms/Texts/PartStage";
+import EvaluationTemplatePoomsae from "components/templates/EvaluationTemplatePoomsae";
 
 function PoomsaeStage() {
   const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
@@ -20,6 +20,8 @@ function PoomsaeStage() {
   const [nextAction, setNextAction] = useState(0);
   const [part, setPart] = useState(["1단락", "2단락", "3단락", "4단락"]); //영어버전
   const [partIndex, setPartIndex] = useState(0);
+  const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
+  const resultArray = [0, 0, 0, 0];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,10 +66,10 @@ function PoomsaeStage() {
           ],
         ]);
         setAnswer([
-          ["chickadee", "chickadee", "chickadee"],
-          ["chickadee", "chickadee", "chickadee"],
-          ["chickadee", "chickadee", "chickadee"],
-          ["chickadee", "chickadee", "chickadee"],
+          ["mask", "water jug", "mask"],
+          ["mask", "water jug", "mask"],
+          ["mask", "water jug", "mask"],
+          ["mask", "water jug", "mask"],
         ]);
         setAnswerIndex([
           [0, 2, 4],
@@ -77,16 +79,16 @@ function PoomsaeStage() {
         ]);
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
-
-    return () => {
-      fetch("https://jsonplaceholder.typicode.com/posts");
-    };
   }, []);
 
   const updateIsPass = () => {
-    setNextAction(answer[3].length - 1);
-    setPartIndex(3);
-    setIsPass(true);
+    fetch("https://jsonplaceholder.typicode.com/posts") //통과단계보냄
+      .then((res) => res.json())
+      .then((json) => {
+        setNextAction(answer[3].length - 1);
+        setPartIndex(3);
+        setIsPass(true);
+      });
   };
 
   const updateNextAction = (value) => {
@@ -97,31 +99,49 @@ function PoomsaeStage() {
     setPartIndex(value);
   };
 
-  const testResult = (result) => {
-    updateIsPass();
-    let len = 0;
-    answer.forEach((ans) => {
-      len += ans.length;
-    });
-    result /= len;
-    if (result >= 0.8) {
-      setGrade("Perfect!");
-      setGradeNum(3);
-    } else if (result >= 0.7) {
-      setGrade("Great");
-      setGradeNum(2);
-    } else if (result >= 0.6) {
-      setGrade("Good");
-      setGradeNum(1);
-    } else {
-      setGrade("Try Again");
-      setGradeNum(0);
+  const testResult = (index, result) => {
+    resultArray[index] = result / answer[index].length;
+    // console.log("!!평균", resultArray[index]);
+    if (resultArray[index] >= 0.6)
+      setIsPassArray((current) => {
+        current[index] = true;
+        return current;
+      });
+    // console.log("!!결과", index, resultArray[index], isPassArray[index]);
+    if (index === 3) {
+      updateIsPass();
+      let sum = 0;
+      let pass = true;
+      resultArray.forEach((value) => (sum += value));
+      isPassArray.forEach((value) => {
+        if (!value) pass = false;
+      });
+      if (!pass) {
+        setGrade("Try Again");
+        setGradeNum(0);
+        return;
+      }
+      sum /= 4;
+      if (sum >= 0.8) {
+        setGrade("Perfect!");
+        setGradeNum(3);
+      } else if (sum >= 0.7) {
+        setGrade("Great");
+        setGradeNum(2);
+      } else if (sum >= 0.6) {
+        setGrade("Good");
+        setGradeNum(1);
+      } else {
+        setGrade("Try Again");
+        setGradeNum(0);
+      }
     }
   };
 
   const restartFunc = () => {
     setNextAction(0);
     setPartIndex(0);
+    setIsPassArray([false, false, false, false]);
     setIsPass(false);
   };
   const homeFunc = () => {
@@ -147,7 +167,7 @@ function PoomsaeStage() {
       />
 
       {isPass ? (
-        <EvaluationTemplate
+        <EvaluationTemplatePoomsae
           grade={grade}
           gradeNum={gradeNum}
           restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
@@ -156,6 +176,7 @@ function PoomsaeStage() {
               홈으로 이동
             </StageBtn>
           }
+          isPassArray={isPassArray}
         />
       ) : null}
     </>
