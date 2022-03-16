@@ -7,11 +7,11 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
   const videoRef = useRef(null);
   let net;
   let testSum = 0.0;
-  let nextAction = 0;
-  let isFindMax = false;
+  let nextAction = 1;
+  let curAction = 0;
+  let isLastAction = false;
   let maxProbability = 0.0;
   let frameCnt = 0;
-  let frameGoal = 5;
   const [webCamElement, setWebCamElement] = useState();
 
   const getWebcam = (callback) => {
@@ -40,41 +40,38 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
       const probability = result[0].probability;
       console.log(answer, isPass, nextAction, result[0].className, probability);
       img.dispose();
-      if (isFindMax) {
-        if (++frameCnt > frameGoal) {
-          isFindMax = false;
-          frameCnt = 0;
-          updateNextAction(++nextAction);
-          if (nextAction === answer.length) {
-            // console.log("저장", maxProbability);
-            testSum += maxProbability;
-            testResult(testSum);
-            testSum = 0;
-            nextAction = 0;
-            frameGoal = 5;
-            // const s = videoRef.current.srcObject;
-            // s.getTracks().forEach((track) => {
-            //   track.stop();
-            // });
-            break;
-          }
-        } else if (answer[nextAction] === className && probability > maxProbability) {
+
+      if (isLastAction) {
+        //마지막 동작
+        frameCnt++;
+        if (answer[curAction] === className) {
           maxProbability = probability;
         }
-      } else if (answer[nextAction] === className) {
-        //다음동작으로 넘어감
-        isFindMax = true;
-        testSum += maxProbability;
-        // console.log("저장", maxProbability);
-        maxProbability = probability;
-        if (nextAction === answer.length - 1) {
-          frameGoal = 60;
+
+        if (frameCnt > 40) {
+          console.log("!!저장", curAction, maxProbability);
+          testSum += maxProbability;
+          frameCnt = 0;
+          testResult(testSum);
+          testSum = 0;
+          nextAction = 1;
+          curAction = 0;
+          maxProbability = 0;
+          break;
         }
-      } else if (nextAction > 0 && answer[nextAction - 1] === className) {
-        //아직 이전동작 하는중
-        isFindMax = true;
-        nextAction--;
-        if (maxProbability < probability) maxProbability = probability;
+      } else if (answer[curAction] === className && probability > maxProbability) {
+        //하던동작, 더 높은 일치율
+        maxProbability = probability;
+        updateNextAction(nextAction);
+      } else if (answer[nextAction] === className) {
+        //다음동작 발견됨 -> 다음동작으로 넘어감
+        console.log("!!저장", curAction, maxProbability);
+        testSum += maxProbability;
+        maxProbability = probability;
+        curAction = nextAction++;
+        if (nextAction === answer.length) {
+          isLastAction = true;
+        }
       }
       await tf.nextFrame();
     }
