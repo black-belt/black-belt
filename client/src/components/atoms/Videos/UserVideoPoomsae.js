@@ -7,12 +7,16 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
   const videoRef = useRef(null);
   let net;
   let testSum = 0.0;
-  let nextAction = 0;
-  let partIndex = 0;
-  let isFindMax = false;
+  let nextAction = 1;
+  let curAction = 0;
+  let nextPart = 0;
+  let curPart = 0;
+  // let partIndex = 0;
+  // let isFindMax = false;
+  let isLastAction = false;
   let maxProbability = 0.0;
   let frameCnt = 0;
-  let frameGoal = 5;
+  // let frameGoal = 5;
   const [webCamElement, setWebCamElement] = useState();
 
   const getWebcam = (callback) => {
@@ -39,57 +43,54 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
       const result = await net.classify(img);
       const className = result[0].className.split(",")[0];
       const probability = result[0].probability;
-      console.log(
-        partIndex,
-        nextAction,
-        answer[partIndex],
-        result[0].className,
-        result[0].probability
-      );
+      console.log(curPart, curAction, answer[curPart], result[0].className, result[0].probability);
       img.dispose();
-      if (isFindMax) {
-        if (++frameCnt > frameGoal) {
-          isFindMax = false;
-          frameCnt = 0;
-          updateNextAction(++nextAction);
-          if (nextAction === answer[partIndex].length) {
-            //현단락에서 마지막동작
-            nextAction = 0;
-            updateNextAction(nextAction);
-            testSum += maxProbability;
-            // console.log("저장", maxProbability);
-            testResult(partIndex, testSum);
-            testSum = 0;
-            frameGoal = 5;
-            if (partIndex === 3) {
-              //마지막 단락
-              partIndex = 0;
-              // const s = videoRef.current.srcObject;
-              // s.getTracks().forEach((track) => {
-              //   track.stop();
-              // });
-              break;
-            } else {
-              updatePartIndex(++partIndex);
-            }
-          }
-        } else if (answer[partIndex][nextAction] === className && probability > maxProbability) {
+      if (isLastAction) {
+        //마지막 파트, 마지막 동작
+        frameCnt++;
+        if (answer[curPart][curAction] === className) {
           maxProbability = probability;
         }
-      } else if (answer[partIndex][nextAction] === className) {
-        isFindMax = true;
-        if (nextAction !== 0) testSum += maxProbability;
-        // console.log("저장", maxProbability);
-        maxProbability = probability;
-        if (nextAction === answer[partIndex].length - 1) {
-          frameGoal = 60;
+
+        if (frameCnt > 40) {
+          // console.log("!!저장", curPart, curAction, nextPart, nextAction, maxProbability);
+          testSum += maxProbability;
+          frameCnt = 0;
+          testResult(curPart, testSum);
+          testSum = 0;
+          nextAction = 1;
+          curAction = 0;
+          curPart = 0;
+          maxProbability = 0;
+          break;
         }
-      } else if (nextAction > 0 && answer[partIndex][nextAction - 1] === className) {
-        //아직 이전동작 하는중
-        // console.log("다시");
-        isFindMax = true;
-        nextAction--;
-        if (maxProbability < probability) maxProbability = probability;
+      } else if (answer[curPart][curAction] === className && probability > maxProbability) {
+        //하던동작, 더 높은 일치율
+        maxProbability = probability;
+        updateNextAction(nextAction);
+        updatePartIndex(nextPart);
+      } else if (answer[nextPart][nextAction] === className) {
+        //다음동작 발견됨 -> 다음동작으로 넘어감
+        // console.log("!!저장", curPart, curAction, nextPart, nextAction, maxProbability);
+        testSum += maxProbability;
+        maxProbability = probability;
+        curAction = nextAction++;
+        if (curPart !== nextPart) {
+          testResult(curPart, testSum);
+          testSum = 0;
+          curPart = nextPart;
+        }
+        if (nextAction === answer[curPart].length) {
+          //마지막 동작이었음
+          if (nextPart === 3) {
+            //마지막단락이었음
+            isLastAction = true;
+          } else {
+            //다음단락으로 넘어감
+            nextPart++;
+            nextAction = 0;
+          }
+        }
       }
       await tf.nextFrame();
     }

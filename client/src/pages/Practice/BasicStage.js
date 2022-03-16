@@ -28,7 +28,7 @@ function BasicStage() {
       .then((json) => {
         setTitle("기본동작");
         setDesc("동작설명");
-        setAnswer("junco");
+        setAnswer("mask");
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
   }, []);

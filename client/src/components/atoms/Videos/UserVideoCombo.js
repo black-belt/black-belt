@@ -49,7 +49,7 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
         }
 
         if (frameCnt > 40) {
-          console.log("!!저장", curAction, maxProbability);
+          // console.log("!!저장", curAction, maxProbability);
           testSum += maxProbability;
           frameCnt = 0;
           testResult(testSum);
@@ -65,7 +65,7 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
         updateNextAction(nextAction);
       } else if (answer[nextAction] === className) {
         //다음동작 발견됨 -> 다음동작으로 넘어감
-        console.log("!!저장", curAction, maxProbability);
+        // console.log("!!저장", curAction, maxProbability);
         testSum += maxProbability;
         maxProbability = probability;
         curAction = nextAction++;
