@@ -1,4 +1,4 @@
-import BackgroundVideo, { Background } from "./MainPage.styled";
+import BackgroundVideo, { Background, Layer } from "./MainPage.styled";
 
 function MainPage() {
   return (
@@ -7,6 +7,7 @@ function MainPage() {
         {/* <BackgroundVideo url="videos/background.mp4"></BackgroundVideo> */}
         <BackgroundVideo url="videos/background.mp4"></BackgroundVideo>
       </Background>
+      <Layer></Layer>
     </div>
   );
 }
