@@ -1,8 +1,6 @@
-import PracticeStageTemplate from "../../components/templates/PracticeStageTemplate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StageBtn from "components/atoms/Buttons/stage-btn";
-import UserVideoPoomsae from "components/atoms/Videos/UserVideoPoomsae";
 import EvaluationTemplatePoomsae from "components/templates/EvaluationTemplatePoomsae";
 import PromotionStageTemplate from "components/templates/PromotionStageTemplate";
 import UserVideoPromotion from "components/atoms/Videos/UserVideoPromotion";
@@ -16,7 +14,10 @@ function PromotionStage() {
   const [nextAction, setNextAction] = useState(0);
   const [partIndex, setPartIndex] = useState(0);
   const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
+  const [info, setInfo] = useState([[]]);
+  const [curNum, setCurNum] = useState(0);
   const resultArray = [0, 0, 0, 0];
+  const videoText = "시작하려면 ‘기본준비자세’를 취해주세요.";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +33,11 @@ function PromotionStage() {
           ["mask", "water jug", "mask"],
           ["mask", "water jug", "mask"],
         ]);
+        setInfo([
+          ["지정품새", "3장"],
+          ["필수품새", "8장"],
+        ]);
+        setCurNum(0);
       });
   }, []);
 
@@ -115,6 +121,14 @@ function PromotionStage() {
             isPass={isPass}
           />
         }
+        info={info}
+        curNum={curNum}
+        totalSeconds={60}
+        initialSeconds={0}
+        initialProgress={0}
+        videoText={videoText}
+        // progress={1}
+        // time={"00 : 00"}
       />
 
       {isPass ? (
