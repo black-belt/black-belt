@@ -1,27 +1,23 @@
-import PracticeStageTemplate from "../../components/templates/PracticeStageTemplate";
 import { useEffect, useState } from "react";
-import LocalVideo from "../../components/atoms/Videos/LocalVideo";
 import { useNavigate } from "react-router-dom";
-import DescStage from "components/atoms/Texts/DescStage";
 import StageBtn from "components/atoms/Buttons/stage-btn";
-import UserVideoPoomsae from "components/atoms/Videos/UserVideoPoomsae";
-import PartStage from "components/atoms/Texts/PartStage";
 import EvaluationTemplatePoomsae from "components/templates/EvaluationTemplatePoomsae";
+import PromotionStageTemplate from "components/templates/PromotionStageTemplate";
+import UserVideoPromotion from "components/atoms/Videos/UserVideoPromotion";
 
 function PromotionStage() {
-  const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
   const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState([[]]);
   const [answer, setAnswer] = useState([[]]);
-  const [answerIndex, setAnswerIndex] = useState([[]]);
   const [isPass, setIsPass] = useState(false);
   const [grade, setGrade] = useState("Try Again");
   const [gradeNum, setGradeNum] = useState(0);
   const [nextAction, setNextAction] = useState(0);
-  const [part, setPart] = useState(["1단락", "2단락", "3단락", "4단락"]); //영어버전
   const [partIndex, setPartIndex] = useState(0);
   const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
+  const [info, setInfo] = useState([[]]);
+  const [curNum, setCurNum] = useState(0);
   const resultArray = [0, 0, 0, 0];
+  const videoText = "시작하려면 ‘기본준비자세’를 취해주세요.";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,54 +26,18 @@ function PromotionStage() {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((json) => {
-        setTitle("품새");
-        setDesc([
-          [
-            "왼 아래(내려)막기",
-            "오른 (몸통)지르기",
-            "오른 아래(내려)막기",
-            "왼 (몸통)지르기",
-            "왼 아래(내려)막기",
-            "오른 (몸통)지르기",
-          ],
-          [
-            "2왼 아래(내려)막기",
-            "2오른 (몸통)지르기",
-            "2오른 아래(내려)막기",
-            "2왼 (몸통)지르기",
-            "2왼 아래(내려)막기",
-            "2오른 (몸통)지르기",
-          ],
-          [
-            "3왼 아래(내려)막기",
-            "3오른 (몸통)지르기",
-            "3오른 아래(내려)막기",
-            "3왼 (몸통)지르기",
-            "3왼 아래(내려)막기",
-            "3오른 (몸통)지르기",
-          ],
-          [
-            "4왼 아래(내려)막기",
-            "4오른 (몸통)지르기",
-            "4오른 아래(내려)막기",
-            "4왼 (몸통)지르기",
-            "4왼 아래(내려)막기",
-            "4오른 (몸통)지르기",
-          ],
-        ]);
+        setTitle("1단");
         setAnswer([
           ["mask", "water jug", "mask"],
           ["mask", "water jug", "mask"],
           ["mask", "water jug", "mask"],
           ["mask", "water jug", "mask"],
         ]);
-        setAnswerIndex([
-          [0, 2, 4],
-          [1, 3, 5],
-          [0, 2, 4],
-          [1, 3, 5],
+        setInfo([
+          ["지정품새", "3장"],
+          ["필수품새", "8장"],
         ]);
-        setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
+        setCurNum(0);
       });
   }, []);
 
@@ -150,13 +110,10 @@ function PromotionStage() {
 
   return (
     <>
-      <PracticeStageTemplate
+      <PromotionStageTemplate
         title={title}
-        partStage={<PartStage partArray={part} curIdx={partIndex} />}
-        desc={<DescStage descArray={desc[partIndex]} curIdx={answerIndex[partIndex][nextAction]} />}
-        video={<LocalVideo url={videoSelected} />}
         camera={
-          <UserVideoPoomsae
+          <UserVideoPromotion
             answer={answer}
             testResult={testResult}
             updateNextAction={updateNextAction}
@@ -164,6 +121,14 @@ function PromotionStage() {
             isPass={isPass}
           />
         }
+        info={info}
+        curNum={curNum}
+        totalSeconds={60}
+        initialSeconds={0}
+        initialProgress={0}
+        videoText={videoText}
+        // progress={1}
+        // time={"00 : 00"}
       />
 
       {isPass ? (
