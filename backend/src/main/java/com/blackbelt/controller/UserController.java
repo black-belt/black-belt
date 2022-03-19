@@ -95,11 +95,11 @@ public class UserController {
 			    			.userEmail(userEmail).userName(userName).build());
 				}else {//현재 회원이다
 					lastId = user.get().getUserId();
-					//로그인 성공시 겨루기 상태값을 Y로 한다.
-					userRepo.updateState(lastId,"Y");
+					user.get().setUserState('Y');
+					userRepo.save(user.get());
 				}
 				String token = tokenProvider.createToken(lastId);// key, data, subject
-				resultMap.put("Authorization", "Bearer " + token);
+				resultMap.put("Authorization","Bearer " + token);
 				status = HttpStatus.OK;
 				
 			} else {
@@ -152,4 +152,5 @@ public class UserController {
 		}		
 		return re;
 	}
+	
 }
