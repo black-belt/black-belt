@@ -75,7 +75,7 @@ public class UserController {
 		HttpStatus status = null;
 		try {
 			String userName = map.get("userName");
-			String userEmail = map.get("userName");
+			String userEmail = map.get("userEmail");
 			if (userEmail != null) {
 				Optional<UserDto> user = userRepo.findByuserEmail(userEmail);
 				String lastId = null; String userNick = null;
@@ -99,7 +99,7 @@ public class UserController {
 					userRepo.updateState(lastId,"Y");
 				}
 				String token = tokenProvider.createToken(lastId);// key, data, subject
-				resultMap.put("Authorization", token);
+				resultMap.put("Authorization", "Bearer " + token);
 				status = HttpStatus.OK;
 				
 			} else {
