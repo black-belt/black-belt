@@ -87,8 +87,8 @@ public class UserController {
 								.userNick(userNick).userState('Y').userDelete('N').userSignupDate(new Date()).defaultLang('K')
 				    			.userEmail(userEmail).userName(userName).build());
 				}else if(user.get().getUserDelete() == 'Y'){//삭제했다가 가입하는 친구
-					userRepo.deleteById(user.get().getUserId()); //유니크 조건 때문에 일단 삭제하도록 구현
 					lastId = String.valueOf(Integer.parseInt(userRepo.findLastUser().getUserId()) + 1) ;
+					userRepo.deleteById(user.get().getUserId()); //유니크 조건 때문에 일단 삭제하도록 구현
 					userNick = "anonymous" + lastId;
 					userRepo.save(UserDto.builder().userId(lastId).countryId("1").levelId("1").tierId("1").userScore("999")
 							.userNick(userNick).userState('Y').userDelete('N').userSignupDate(new Date()).defaultLang('K')
