@@ -1,10 +1,16 @@
 HELP.md
+pom.xml
 target/
+bin/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Sensitive Data ###
+src/main/resources/application.properties
+
 ### STS ###
+application.properties
 .apt_generated
 .classpath
 .factorypath
@@ -14,6 +20,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
+application.properties
 .idea
 *.iws
 *.iml
