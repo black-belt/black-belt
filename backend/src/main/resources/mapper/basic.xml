@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.blackbelt.model.mapper.UserMapper">
+<mapper namespace="com.blackbelt.model.mapper.BasicMapper">
 	<select id="listBasic" resultType="BasicDto">
 		select basicaction.basic_id, basic_name, basic_name_e, basic_explain,
 		basic_explain_e, basic_img_path, basic_movie_path, basic_clear, basic_score, basic_locked
@@ -10,6 +10,13 @@
 		where basicaction.basic_id = basicstage.basic_id
 		and user_id=1;
 	</select>
-	
+	<update id="updateBasicStage">
+		update basicstage
+		set
+		basic_score = #{basic_score},
+		basic_clear = #{basic_clear},
+		basic_date = now()
+		where basic_id = #{basic_id}
+	</update>
 	
 </mapper>
