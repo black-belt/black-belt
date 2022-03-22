@@ -1,9 +1,19 @@
 import LangBtn from "components/atoms/Buttons/lang-btn";
 import Icon from "components/atoms/Icons/Icon";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { loginModalState } from "recoils";
 import isLogin from "utils/isLogin";
-import { Layout, Logo, NavItemBox, NavItemLink } from "./Navbar.styled";
+import {
+  Layout,
+  Logo,
+  NavItemBox,
+  NavItemBtn,
+  NavItemLink,
+} from "./Navbar.styled";
 
 function Navbar({ navItemData }) {
+  const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
   return (
     <Layout>
       <Logo>
@@ -13,15 +23,15 @@ function Navbar({ navItemData }) {
         <NavItemBox>
           <div>for test</div>
           {/* {navItemData.map(({ name, title, url }) => (
-            <NavItemLink to={url} key={name}>
               {title}
             </NavItemLink>
           ))} */}
         </NavItemBox>
       ) : (
         <NavItemBox>
-          <NavItemLink to="/">로그인</NavItemLink>
-          <NavItemLink to="/">회원가입</NavItemLink>
+          <NavItemBtn onClick={() => setLoginModalOpen("login")}>
+            로그인
+          </NavItemBtn>
           <LangBtn>
             <Icon icon="korean" />
             KOR

@@ -26,8 +26,6 @@ export const Layout = styled.div`
 `;
 
 export const Logo = styled.div`
-  /* padding: 2.8rem 0 2.5rem 0; */
-  /* text-align: center; */
   img {
     width: 143px;
     height: 53px;
@@ -37,6 +35,14 @@ export const Logo = styled.div`
 export const NavItemLink = styled(Link)`
   text-decoration: none;
   color: ${colors.gray0};
+`;
+
+export const NavItemBtn = styled.div`
+  border: none;
+  text-decoration: none;
+  color: ${colors.gray0};
+
+  cursor: pointer;
 `;
 
 export const NavItemBox = styled.div`
