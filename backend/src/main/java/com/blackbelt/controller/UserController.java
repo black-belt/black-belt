@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,6 +38,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -52,6 +55,7 @@ import com.blackbelt.model.CountryCrudRepository;
 import com.blackbelt.model.CountryDto;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.model.UserDto;
+import com.blackbelt.model.service.UserService;
 import com.blackbelt.util.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -66,7 +70,8 @@ public class UserController {
 	UserCrudRepository userRepo;
 	@Autowired
 	private JwtTokenProvider tokenProvider;
-	
+	@Autowired
+	private UserService userService;
 	HttpSession httpSession;
 
 	@PostMapping("/login")
@@ -153,4 +158,110 @@ public class UserController {
 		return re;
 	}
 	
+	@GetMapping("/userinfo")
+	public ResponseEntity<Map<String, Object>> getUserInfo( HttpServletRequest request) {
+		Map<String, Object> resultMap = null;
+		HttpStatus status = HttpStatus.OK;
+		try {
+			String authorization = request.getHeader("Authorization");
+			if(authorization.indexOf("Bearer") != -1) {
+				authorization = authorization.replaceAll("^Bearer\\s", "");
+			}
+			if (tokenProvider.validateToken(authorization)) {// 유효하면
+				
+				String userId = String.valueOf(tokenProvider.getSubject(authorization));
+				resultMap = userService.getUserInfo(userId);
+			} else {
+				status = HttpStatus.FAILED_DEPENDENCY;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	@GetMapping("/usernick")
+	public ResponseEntity<Map<String, Boolean>> nickCheck(@RequestBody Map<String,String> map){
+		ResponseEntity<Map<String, Boolean>> re = null;
+		Map<String, Boolean> resultMap = new HashMap<>();
+		try {
+			String nick = map.get("userNick");
+			Optional<UserDto> user = userRepo.findByuserNick(nick);
+			if(user.isEmpty()) resultMap.put("isUsed", false);
+			else resultMap.put("isUsed", true);
+			re = new ResponseEntity<Map<String, Boolean>>(resultMap, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			re = new ResponseEntity<Map<String, Boolean>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
+			return re;
+		}
+		return re;
+	}
+	@PatchMapping("/userdelete")
+	public ResponseEntity<?> userDelete(HttpServletRequest request){
+		HttpStatus status = HttpStatus.OK;
+		try {
+			String authorization = request.getHeader("Authorization");
+			if(authorization.indexOf("Bearer") != -1) {
+				authorization = authorization.replaceAll("^Bearer\\s", "");
+			}
+			if (tokenProvider.validateToken(authorization)) {// 유효하면
+				String userId = String.valueOf(tokenProvider.getSubject(authorization));
+				Optional<UserDto> user = userRepo.findByuserId(userId);
+				user.get().setUserState('N');
+				user.get().setUserDelete('Y');
+				userRepo.save(user.get()); //바뀐내용으로 저장
+			} else {
+				status = HttpStatus.FAILED_DEPENDENCY;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			return new ResponseEntity<String>("ERROR", status);
+		}
+		
+		return new ResponseEntity<String>("SUCCESS", status);
+	}
+	@PatchMapping("/userinfoedit")
+	public ResponseEntity<?> userEdit(HttpServletRequest request, @RequestBody Map<String,String> map){
+		HttpStatus status = HttpStatus.OK;
+		try {
+			String authorization = request.getHeader("Authorization");
+			if(authorization.indexOf("Bearer") != -1) {
+				authorization = authorization.replaceAll("^Bearer\\s", "");
+			}
+			if (tokenProvider.validateToken(authorization)) {// 유효하면
+				String userId = String.valueOf(tokenProvider.getSubject(authorization));
+				System.out.println(userId);
+				Optional<UserDto> user = userRepo.findByuserId(userId);
+				Set<String> updates =  map.keySet();
+				for(String s : updates) {
+					switch(s) {
+					case "userNick": 
+						String nick = map.get(s);
+						if(Pattern.matches("^[0-9a-zA-Z가-힣]{1,20}$", nick)) {
+							user.get().setUserNick(nick);
+						}
+						else new ResponseEntity<String>("WRONG VALUE", HttpStatus.FAILED_DEPENDENCY);
+						break;
+					case "defaultLang": user.get().setDefaultLang(map.get(s).charAt(0));
+						break;
+					case "countryId": user.get().setCountryId(map.get(s));
+						break;
+					}
+				}
+				userRepo.save(user.get()); //바뀐내용으로 저장
+			} else {
+				status = HttpStatus.FAILED_DEPENDENCY;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			return new ResponseEntity<String>("ERROR", status);
+		}
+		
+		return new ResponseEntity<String>("SUCCESS", status);
+	}
 }
