@@ -15,10 +15,12 @@ export const Layout = styled.div`
   align-items: center;
   z-index: 9999;
 
+  padding: 0 4rem;
+
   width: 100%;
   height: 92px;
   background-color: ${colors.gray4};
-  opacity: 0.2;
+  /* background-color: rgba(206, 212, 218, 0.1); */
 
   transition: 0.5s;
 `;
@@ -40,4 +42,5 @@ export const NavItemLink = styled(Link)`
 export const NavItemBox = styled.div`
   display: flex;
   align-items: center;
+  gap: 1.5rem;
 `;
