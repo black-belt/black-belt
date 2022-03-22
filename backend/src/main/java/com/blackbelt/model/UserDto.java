@@ -6,9 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -33,7 +36,9 @@ public class UserDto {
 	
 	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name="user_id")
 	private String userId;
-	@Column(name="country_id")
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "country_id")
+	@Column(name = "country_id")
 	private String countryId;
 	@Column(name="user_name")
 	private String userName;
