@@ -1,20 +1,25 @@
-import { Layout, NavItemBox, NavItemLink } from "./Navbar.styled";
+import isLogin from "utils/isLogin";
+import { Layout, Logo, NavItemBox, NavItemLink } from "./Navbar.styled";
 
-function Navbar({ isLogin, navItemData }) {
+function Navbar({ navItemData }) {
   return (
     <Layout>
-      {isLogin ? (
+      <Logo>
+        <img src="/images/logo.png" alt="" />
+      </Logo>
+      {isLogin() ? (
         <NavItemBox>
-          {navItemData.map(({ name, title, url }) => (
+          <div>for test</div>
+          {/* {navItemData.map(({ name, title, url }) => (
             <NavItemLink to={url} key={name}>
               {title}
             </NavItemLink>
-          ))}
+          ))} */}
         </NavItemBox>
       ) : (
         <NavItemBox>
-          <NavItemLink>로그인</NavItemLink>
-          <NavItemLink>회원가입</NavItemLink>
+          <NavItemLink to="/">로그인</NavItemLink>
+          <NavItemLink to="/">회원가입</NavItemLink>
         </NavItemBox>
       )}
     </Layout>

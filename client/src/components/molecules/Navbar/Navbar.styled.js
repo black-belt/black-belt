@@ -2,6 +2,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "_foundation";
 
+const img_URL = {
+  kor: {
+    url: "/images/logo_kor.png",
+  },
+  eng: { url: "/images/logo.png" },
+};
+
 export const Layout = styled.div`
   display: flex;
   justify-content: space-between;
@@ -9,10 +16,20 @@ export const Layout = styled.div`
   z-index: 9999;
 
   width: 100%;
+  height: 92px;
   background-color: ${colors.gray4};
   opacity: 0.2;
 
   transition: 0.5s;
+`;
+
+export const Logo = styled.div`
+  /* padding: 2.8rem 0 2.5rem 0; */
+  /* text-align: center; */
+  img {
+    width: 143px;
+    height: 53px;
+  }
 `;
 
 export const NavItemLink = styled(Link)`
