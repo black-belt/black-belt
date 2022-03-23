@@ -6,7 +6,7 @@ const img_URL = {
   kor: {
     url: "/images/logo_kor.png",
   },
-  eng: { url: "/images/logo.png" },
+  eng: { url: "/images/logo_navbar.png" },
 };
 
 export const Layout = styled.div`
