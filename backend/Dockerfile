@@ -1,7 +1,11 @@
 FROM openjdk:11
 
-ARG JAR_FILE= target/*.war
+ARG JAR_FILE= ./target/backend-0.0.1-SNAPSHOT.war
 
-COPY ${JAR_FILE} app.war
+EXPOSE 8000
 
-ENTRYPOINT ["java", "-jar", "/app.war"]
+COPY ${JAR_FILE}  /user/local/app.war
+
+WORKDIR /user/local
+
+ENTRYPOINT ["java", "-jar", "app.war"]
