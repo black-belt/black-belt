@@ -31,7 +31,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name="User")
+@Table(name="user")
 public class UserDto {
 	
 	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name="user_id")
