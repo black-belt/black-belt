@@ -27,9 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -116,8 +113,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	@Test
-	@DisplayName("회원 겨루기 가능여부가 잘 수정되었는지 확인할때 사용")
+	
 	@PutMapping("/logout")
 	public ResponseEntity<String> registerUser(@RequestBody Map<String,String> map ) {
 		ResponseEntity<String> re = null;
