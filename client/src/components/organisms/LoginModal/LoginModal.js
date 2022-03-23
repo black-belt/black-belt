@@ -24,7 +24,7 @@ const LoginModal = ({ ...props }) => {
       <Overlay>
         <ModalSection>
           <ModalContent>
-            <ModalHeader>
+            <ModalHeader onClick={() => setIsModalOpen(null)}>
               <Icon icon="xBtn" onClick={() => setIsModalOpen(null)} />
             </ModalHeader>
             <ModalBox>

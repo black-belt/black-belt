@@ -1,3 +1,4 @@
+import Layout from "Layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
@@ -20,23 +21,24 @@ function App() {
       <RecoilRoot>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route element={<Layout />}>
+              <Route path="/" element={<MainPage />} />
 
-            <Route path="practice" element={<Practice />}>
-              <Route path="basics" element={<Basics />} />
-              <Route path="basics/stage" element={<BasicStage />} />
-              <Route path="combos" element={<Combos />} />
-              <Route path="combos/stage" element={<ComboStage />} />
-              <Route path="poomsae" element={<Poomsae />} />
-              <Route path="poomsae/stage" element={<PoomsaeStage />} />
+              <Route path="practice" element={<Practice />}>
+                <Route path="basics" element={<Basics />} />
+                <Route path="basics/stage" element={<BasicStage />} />
+                <Route path="combos" element={<Combos />} />
+                <Route path="combos/stage" element={<ComboStage />} />
+                <Route path="poomsae" element={<Poomsae />} />
+                <Route path="poomsae/stage" element={<PoomsaeStage />} />
+              </Route>
+
+              <Route path="promotion" element={<PromotionStage />} />
+
+              <Route path="gyeorugi" element={<Lobby />} />
+              <Route path="mypage" element={<MyPage />} />
             </Route>
-
-            <Route path="promotion" element={<PromotionStage />} />
-
-            <Route path="gyeorugi" element={<Lobby />} />
             <Route path="gyeorugi/stage" element={<GyeorugiStage />} />
-
-            <Route path="mypage" element={<MyPage />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
