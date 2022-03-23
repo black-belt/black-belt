@@ -7,7 +7,7 @@ import UserVideoPromotion from "components/atoms/Videos/UserVideoPromotion";
 
 function PromotionStage() {
   const [title, setTitle] = useState("");
-  const [answer, setAnswer] = useState([[]]);
+  const [answer, setAnswer] = useState([]);
   const [isPass, setIsPass] = useState(false);
   const [grade, setGrade] = useState("Try Again");
   const [gradeNum, setGradeNum] = useState(0);
@@ -16,28 +16,28 @@ function PromotionStage() {
   const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
   const [info, setInfo] = useState([[]]);
   const [curNum, setCurNum] = useState(0);
+  const [totalSeconds, setTotalSeconds] = useState(0);
+  const [initialSeconds, setinitialSeconds] = useState(0);
+  const [initialProgress, setinitialProgress] = useState(0);
+  const [isTimer, setIsTimer] = useState(false);
   const resultArray = [0, 0, 0, 0];
   const videoText = "시작하려면 ‘기본준비자세’를 취해주세요.";
   const navigate = useNavigate();
 
   useEffect(() => {
-    //받기: api 통신해서 title, description[[]], 비디오(Streaming이나 youtube link), 답안[[]], 답안의 인덱스[[]] 받음
+    //받기: api 통신해서 title, 답안[] 받음
     //보내기: 서버로 통과 단계를 보냄
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((json) => {
         setTitle("1단");
-        setAnswer([
-          ["mask", "water jug", "mask"],
-          ["mask", "water jug", "mask"],
-          ["mask", "water jug", "mask"],
-          ["mask", "water jug", "mask"],
-        ]);
+        setAnswer(["mask", "water jug", "mask"]);
         setInfo([
           ["지정품새", "3장"],
           ["필수품새", "8장"],
         ]);
         setCurNum(0);
+        setTotalSeconds(3);
       });
   }, []);
 
@@ -72,7 +72,6 @@ function PromotionStage() {
       updateIsPass();
       let sum = 0;
       let pass = true;
-      resultArray.forEach((value) => (sum += value));
       isPassArray.forEach((value) => {
         if (!value) pass = false;
       });
@@ -81,6 +80,7 @@ function PromotionStage() {
         setGradeNum(0);
         return;
       }
+      resultArray.forEach((value) => (sum += value));
       sum /= 4;
       if (sum >= 0.8) {
         setGrade("Perfect!");
@@ -108,6 +108,15 @@ function PromotionStage() {
     navigate("/");
   };
 
+  const startTimer = () => {
+    setinitialSeconds(0);
+    setinitialProgress(0);
+    setIsTimer(true);
+  };
+  const setd = () => {
+    startTimer();
+    setCurNum((current) => ++current);
+  };
   return (
     <>
       <PromotionStageTemplate
@@ -123,12 +132,12 @@ function PromotionStage() {
         }
         info={info}
         curNum={curNum}
-        totalSeconds={60}
-        initialSeconds={0}
-        initialProgress={0}
+        totalSeconds={totalSeconds}
+        initialSeconds={initialSeconds}
+        initialProgress={initialProgress}
         videoText={videoText}
-        // progress={1}
-        // time={"00 : 00"}
+        isTimer={isTimer}
+        setIsTimer={setIsTimer}
       />
 
       {isPass ? (
@@ -144,6 +153,8 @@ function PromotionStage() {
           isPassArray={isPassArray}
         />
       ) : null}
+
+      <button onClick={setd}>qjxms</button>
     </>
   );
 }

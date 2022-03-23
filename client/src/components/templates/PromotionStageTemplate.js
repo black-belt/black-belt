@@ -13,6 +13,8 @@ function PromotionStageTemplate({
   info,
   curNum,
   videoText,
+  isTimer,
+  setIsTimer,
 }) {
   return (
     <>
@@ -22,7 +24,7 @@ function PromotionStageTemplate({
         </TextContainer>
         <VideoContainer>
           <UserContainer>
-            <VideoText>{videoText}</VideoText>
+            {!isTimer && <VideoText>{videoText}</VideoText>}
             {camera}
           </UserContainer>
           <InfoContainer>
@@ -31,6 +33,8 @@ function PromotionStageTemplate({
                 totalSeconds={totalSeconds}
                 initialSeconds={initialSeconds}
                 initialProgress={initialProgress}
+                isTimer={isTimer}
+                setIsTimer={setIsTimer}
               />
             </TimerContainer>
             <InfoText>
