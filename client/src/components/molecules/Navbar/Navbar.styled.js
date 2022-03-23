@@ -6,10 +6,11 @@ const img_URL = {
   kor: {
     url: "/images/logo_kor.png",
   },
-  eng: { url: "/images/logo.png" },
+  eng: { url: "/images/logo_navbar.png" },
 };
 
 export const Layout = styled.div`
+  position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,8 +20,8 @@ export const Layout = styled.div`
 
   width: 100%;
   height: 92px;
-  background-color: ${colors.gray4};
-  /* background-color: rgba(206, 212, 218, 0.1); */
+  /* background-color: ${colors.gray4}; */
+  background-color: rgba(206, 212, 218, 0.2);
 
   transition: 0.5s;
 `;

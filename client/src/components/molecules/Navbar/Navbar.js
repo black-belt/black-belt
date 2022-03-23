@@ -17,11 +17,12 @@ function Navbar({ navItemData }) {
   return (
     <Layout>
       <Logo>
-        <img src="/images/logo.png" alt="" />
+        <img src="/images/logo_navbar.png" alt="" />
       </Logo>
       {isLogin() ? (
         <NavItemBox>
           <div>for test</div>
+          {/* [TODO]: api 연결 후 업데이트 예정 */}
           {/* {navItemData.map(({ name, title, url }) => (
               {title}
             </NavItemLink>
@@ -31,6 +32,9 @@ function Navbar({ navItemData }) {
         <NavItemBox>
           <NavItemBtn onClick={() => setLoginModalOpen("login")}>
             로그인
+          </NavItemBtn>
+          <NavItemBtn onClick={() => setLoginModalOpen("signup")}>
+            회원가입
           </NavItemBtn>
           <LangBtn>
             <Icon icon="korean" />
