@@ -14,7 +14,7 @@ export const Layout = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 9999;
+  z-index: 9998;
 
   padding: 0 4rem;
 
