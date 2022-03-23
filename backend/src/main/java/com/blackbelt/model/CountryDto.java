@@ -19,7 +19,7 @@ import lombok.*;
 @AllArgsConstructor
 //@RequiredArgsConstructor
 @Entity
-@Table(name="country")
+@Table(name="Country")
 public class CountryDto {
 	
 	@Id@Column(name="country_id")
