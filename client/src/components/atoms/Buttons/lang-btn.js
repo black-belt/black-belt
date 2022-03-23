@@ -34,6 +34,7 @@ const StyledBtn = styled.button`
     css`
       :hover {
         background: ${colors.blue1};
+        border: 1px solid ${colors.blue1};
       }
     `}
 
