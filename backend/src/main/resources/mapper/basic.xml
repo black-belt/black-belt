@@ -7,16 +7,28 @@
 		select basicaction.basic_id, basic_name, basic_name_e, basic_explain,
 		basic_explain_e, basic_img_path, basic_movie_path, basic_clear, basic_score, basic_locked
 		from basicaction, basicstage
-		where basicaction.basic_id = basicstage.basic_id
-		and user_id=1;
+		where basicaction.basic_id = basicstage.basic_id;
 	</select>
-	<update id="updateBasicStage">
+	
+	
+	<select id="getBasic"  parameterType="int" resultType="BasicDto">
+		select basicaction.basic_id, basic_name, basic_name_e, basic_explain,
+		basic_explain_e, basic_img_path, basic_movie_path, basic_clear, basic_score, basic_locked
+		from basicaction, basicstage
+		where basicaction.basic_id = basicstage.basic_id
+		and basicstage.basic_id=#{basicid};
+	</select>
+	
+	
+	
+	<update id="updateBasicStage" parameterType="BasicStageDto">
 		update basicstage
 		set
 		basic_score = #{basic_score},
 		basic_clear = #{basic_clear},
-		basic_date = now()
-		where basic_id = #{basic_id}
+		basic_date = now(),
+		basic_locked = "N"
+		where basic_id = #{basic_id} and user_id = #{user_id}
 	</update>
 	
 </mapper>
