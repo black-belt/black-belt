@@ -51,10 +51,10 @@ export const ModalHeader = styled.div`
   top: 0;
   right: 0;
   padding: 1rem;
+  cursor: pointer;
 
-  svg {
+  Svg {
     width: 28px;
-    cursor: pointer;
   }
 `;
 
