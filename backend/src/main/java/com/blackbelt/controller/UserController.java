@@ -1,8 +1,6 @@
 package com.blackbelt.controller;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -129,7 +127,6 @@ public class UserController {
 			}
 			
 			UserDto saveUser = userRepo.save(updateUser.get());
-			assertEquals(updateUser.get().getUserState(), saveUser.getUserState(), "not updated properly!!");
 			re = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e) {
 			re = new ResponseEntity<String>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
