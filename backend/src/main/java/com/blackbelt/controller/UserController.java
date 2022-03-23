@@ -126,7 +126,7 @@ public class UserController {
 				return new ResponseEntity<String>("NOT FOUND", HttpStatus.FAILED_DEPENDENCY);
 			}
 			
-			UserDto saveUser = userRepo.save(updateUser.get());\
+			UserDto saveUser = userRepo.save(updateUser.get());
 			re = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e) {
 			re = new ResponseEntity<String>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
