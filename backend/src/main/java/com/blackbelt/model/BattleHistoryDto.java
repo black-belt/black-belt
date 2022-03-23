@@ -23,7 +23,7 @@ import lombok.ToString;
 @AllArgsConstructor
 //@RequiredArgsConstructor
 @Entity
-@Table(name="Judge")
+@Table(name="judge")
 public class BattleHistoryDto {
 	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name="battlehistory_id")
 	private String battleHistoryId;
