@@ -3,9 +3,9 @@ import styled, { css } from "styled-components";
 import { colors, fontSize, fontWeight } from "_foundation";
 import Icon from "../Icons/Icon";
 
-function InButton({ children }) {
+function InButton({ children, onClick }) {
   return (
-    <StyledBtn>
+    <StyledBtn onClick={onClick}>
       {children}
       <Icon state="default" icon="inPointer" />
       <Icon state="hover" icon="hoverPointer" />

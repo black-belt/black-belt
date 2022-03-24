@@ -17,9 +17,6 @@ function BackgroundVideo({ url }) {
 }
 export default BackgroundVideo;
 
-// const ReactPlayer = styled.video`
-//   z-index: 0;
-// `;
 export const Background = styled.div`
   position: absolute;
   top: 0;
@@ -45,13 +42,14 @@ export const Layout = styled.div`
 `;
 
 export const TextBox = styled.div`
-  padding-top: 12%;
+  padding-top: 14%;
   padding-left: 14%;
 
   color: ${colors.gray0};
 `;
 
 export const Title = styled.div`
+  line-height: 150%;
   color: ${colors.gray0};
 
   ${(props) =>
@@ -75,7 +73,7 @@ export const Contents = styled.div`
 export const ButtonBox = styled.div`
   display: flex;
   gap: 1.2rem;
-  padding-top: 2rem;
+  padding-top: 2.8rem;
 `;
 
 export const Carousel = styled.div``;

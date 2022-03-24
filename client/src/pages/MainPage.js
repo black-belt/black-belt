@@ -9,17 +9,12 @@ import BackgroundVideo, {
   Title,
 } from "./MainPage.styled";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import InButton from "components/atoms/Buttons/in-btns";
-import { modesData } from "recoils";
-
-// import i18n from "i18next";
+import { useNavigate } from "react-router-dom";
 
 function MainPage() {
   const { t, i18n } = useTranslation();
-
-  const changelanguageToKo = () => i18n.changeLanguage("ko");
-  const changelanguageToEn = () => i18n.changeLanguage("en");
+  const navigate = useNavigate();
 
   const titleMode = {
     practice: "practice mode",
@@ -35,21 +30,36 @@ function MainPage() {
     gyeorugi2: "gyeorugi explanation2",
   };
   const buttons = {
-    // practice: [
-    //   {
-    //     basics: "basics",
-    //     combos: "combos",
-    //     poomsae: "poomsae",
-    //   },
-    // ],
-    practice: ["basics", "combos", "poomsae"],
-    promotion: {
-      dan: "need api",
-    },
-    gyeorugi: {
-      noraml: "normal",
-      rank: "rank",
-    },
+    practice: [
+      {
+        title: "basics",
+        url: "/practice/basics",
+      },
+      {
+        title: "combos",
+        url: "practice/combos",
+      },
+      {
+        title: "gyeorugi",
+        url: "/practice/combos",
+      },
+    ],
+    promotion: [
+      {
+        title: "need api",
+        url: "/promotion",
+      },
+    ],
+    gyeorugi: [
+      {
+        title: "normal",
+        url: "",
+      },
+      {
+        title: "rank",
+        url: "",
+      },
+    ],
   };
   return (
     <div className="MainPage">
@@ -59,14 +69,13 @@ function MainPage() {
       </Background>
       <Layout>
         <TextBox>
-          {/* {modesData.map(({ name, title, explanation }) => (
-            <Title language={t("language")}>{t(titleMode["practice"])}</Title>
-          ))} */}
           <Title language={t("language")}>{t(titleMode["practice"])}</Title>
           <Contents>{t(explanations["practice"])}</Contents>
           <ButtonBox>
-            {buttons["practice"].map((menu) => (
-              <InButton>{t(menu)}</InButton>
+            {buttons["practice"].map((menus) => (
+              <InButton onClick={() => navigate(menus.url)}>
+                {t(menus.title)}
+              </InButton>
             ))}
           </ButtonBox>
         </TextBox>
