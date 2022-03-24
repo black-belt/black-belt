@@ -1,8 +1,12 @@
+import { useRecoilState } from "recoil";
+import { useState } from "react";
+
 import LangBtn from "components/atoms/Buttons/lang-btn";
 import Icon from "components/atoms/Icons/Icon";
-import { useState } from "react";
-import { useRecoilState } from "recoil";
+
 import { loginModalState } from "recoils";
+import { useTranslation } from "react-i18next";
+
 import isLogin from "utils/isLogin";
 import {
   Layout,
@@ -14,6 +18,17 @@ import {
 
 function Navbar({ navItemData }) {
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
+  const [translateEN, setTranslateEn] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  const handleEnglish = () => {
+    setTranslateEn(!translateEN);
+    if (translateEN) {
+      i18n.changeLanguage("en");
+    } else {
+      i18n.changeLanguage("ko");
+    }
+  };
   return (
     <Layout>
       <Logo>
@@ -31,14 +46,14 @@ function Navbar({ navItemData }) {
       ) : (
         <NavItemBox>
           <NavItemBtn onClick={() => setLoginModalOpen("login")}>
-            로그인
+            {t("login")}
           </NavItemBtn>
           <NavItemBtn onClick={() => setLoginModalOpen("signup")}>
-            회원가입
+            {t("signup")}
           </NavItemBtn>
-          <LangBtn>
-            <Icon icon="korean" />
-            KOR
+          <LangBtn onClick={handleEnglish}>
+            <Icon icon={t("language")} />
+            {t("language")}
           </LangBtn>
         </NavItemBox>
       )}

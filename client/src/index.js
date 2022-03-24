@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "_foundation/translation/i18n";
 import App from "./App";
 import "./index.css";
 
