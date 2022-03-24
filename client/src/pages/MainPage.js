@@ -5,9 +5,11 @@ import BackgroundVideo, {
   Contents,
   Layer,
   Layout,
+  TextBox,
   Title,
 } from "./MainPage.styled";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
 // import i18n from "i18next";
 
@@ -48,12 +50,14 @@ function MainPage() {
     <div className="MainPage">
       <Background>
         <BackgroundVideo url="videos/background.mp4"></BackgroundVideo>
+        <Layer></Layer>
       </Background>
-      <Layer></Layer>
       <Layout>
-        <Title></Title>
-        <Contents></Contents>
-        <ButtonBox></ButtonBox>
+        <TextBox>
+          <Title language={t("language")}>{t(titleMode["practice"])}</Title>
+          <Contents></Contents>
+          <ButtonBox></ButtonBox>
+        </TextBox>
         <Carousel></Carousel>
       </Layout>
       {/* <h1>{t("hello")}</h1>
