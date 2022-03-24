@@ -1,0 +1,36 @@
+{
+  "logo url": "/images/logo_navbar.png",
+  "login": "LOG IN",
+  "signup": "SIGN UP",
+  "welcome": "Hi,",
+  "language": "ENG",
+  "new?": "New to BlackBelt?",
+  "loginLink": "",
+  "signupLink": "Create an Account",
+
+  "practice mode": "Practice",
+  "practice mode explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "practice mode explanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+
+  "basics": "Basics",
+  "combos": "Combos",
+  "poomsae": "Poomsae",
+
+  "promotion test": "Promotion Test",
+  "promotion test explanation": "Sodales sagittis urna laoreet in. In et,",
+  "promotion test explanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "1단": "Dan 1st",
+  "2단": "Dan 2nd",
+  "3단": "Dan 3rd",
+  "4단": "Dan 4th",
+  "5단": "Dan 5th",
+  "6단": "Dan 6th",
+  "7단": "Dan 7th",
+  "8단": "Dan 8th",
+
+  "gyeorugi": "Gyeorugi",
+  "gyeorugi explanation": "Sodales sagittis urna laoreet in. In et,",
+  "gyeorugiexplanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "normal": "Normal",
+  "rank": "Rank"
+}
