@@ -1,22 +1,23 @@
 {
-  "로그인": "LOG IN",
-  "회원가입": "SIGN UP",
-  "안녕하세요": "Hi,",
-  "처음이신가요": "New to BlackBelt?",
-  "로그인 이동": "",
-  "회원가입 이동": "Create an Account",
+  "login": "LOG IN",
+  "signup": "SIGN UP",
+  "welcome": "Hi,",
+  "language": "ENG",
+  "new?": "New to BlackBelt?",
+  "loginLink": "",
+  "signupLink": "Create an Account",
 
-  "연습모드": "Practice",
-  "연습모드 설명": "Sodales sagittis urna laoreet in. In et,",
-  "연습모드 설명2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "practice mode": "Practice",
+  "practice mode explanation": "Sodales sagittis urna laoreet in. In et,",
+  "practice mode explanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
 
-  "기본동작": "Basics",
-  "연결동작": "Combos",
-  "품새": "Poomsae",
+  "basics": "Basics",
+  "combos": "Combos",
+  "poomsae": "Poomsae",
 
-  "심사모드": "Promotion Test",
-  "심사모드 설명": "Sodales sagittis urna laoreet in. In et,",
-  "심사모드 설명2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "promotion test": "Promotion Test",
+  "promotion test explanation": "Sodales sagittis urna laoreet in. In et,",
+  "promotion test explanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "1단": "Dan 1st",
   "2단": "Dan 2nd",
   "3단": "Dan 3rd",
@@ -26,9 +27,9 @@
   "7단": "Dan 7th",
   "8단": "Dan 8th",
 
-  "겨루기": "Gyeorugi",
-  "겨루기 설명": "Sodales sagittis urna laoreet in. In et,",
-  "겨루기 설명2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
-  "일반": "Normal",
-  "랭크": "Rank"
+  "gyeorugi": "Gyeorugi",
+  "gyeorugi explanation": "Sodales sagittis urna laoreet in. In et,",
+  "gyeorugiexplanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "normal": "Normal",
+  "rank": "Rank"
 }
