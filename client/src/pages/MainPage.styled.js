@@ -34,3 +34,13 @@ export const Layer = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
 `;
+
+export const Layout = styled.div``;
+
+export const Title = styled.div``;
+
+export const Contents = styled.div``;
+
+export const Carousel = styled.div``;
+
+export const ButtonBox = styled.div``;

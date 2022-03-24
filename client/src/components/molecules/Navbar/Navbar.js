@@ -19,6 +19,7 @@ import {
 function Navbar({ navItemData }) {
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
   const [translateEN, setTranslateEn] = useState(false);
+  const { t, i18n } = useTranslation();
 
   const handleEnglish = () => {
     setTranslateEn(!translateEN);
@@ -28,7 +29,6 @@ function Navbar({ navItemData }) {
       i18n.changeLanguage("ko");
     }
   };
-  const { t, i18n } = useTranslation();
   return (
     <Layout>
       <Logo>
@@ -46,14 +46,14 @@ function Navbar({ navItemData }) {
       ) : (
         <NavItemBox>
           <NavItemBtn onClick={() => setLoginModalOpen("login")}>
-            {t("로그인")}
+            {t("login")}
           </NavItemBtn>
           <NavItemBtn onClick={() => setLoginModalOpen("signup")}>
-            {t("회원가입")}
+            {t("signup")}
           </NavItemBtn>
           <LangBtn onClick={handleEnglish}>
-            <Icon icon={t("언어")} />
-            {t("언어")}
+            <Icon icon={t("language")} />
+            {t("language")}
           </LangBtn>
         </NavItemBox>
       )}
