@@ -17,7 +17,33 @@ function MainPage() {
   const changelanguageToKo = () => i18n.changeLanguage("ko");
   const changelanguageToEn = () => i18n.changeLanguage("en");
 
-  // const
+  const titleMode = {
+    practice: "practice mode",
+    promotion: "promotion test",
+    gyeorugi: "gyeorugi",
+  };
+  const explanations = {
+    practice: "practice mode explanation",
+    practice2: "practice mode explanation2",
+    promotion: "promotion test explanation",
+    promotion2: "promotion test explanation2",
+    gyeorugi: "gyeorugi explanation",
+    gyeorugi2: "gyeorugi explanation2",
+  };
+  const buttons = {
+    practice: {
+      basics: "basics",
+      combos: "combos",
+      poomsae: "poomsae",
+    },
+    promotion: {
+      dan: "need api",
+    },
+    gyeorugi: {
+      noraml: "normal",
+      rank: "rank",
+    },
+  };
   return (
     <div className="MainPage">
       <Background>
