@@ -33,7 +33,7 @@ function Navbar({ navItemData }) {
   return (
     <Layout>
       <Logo>
-        <img src="/images/logo_navbar.png" alt="" />
+        <img src={t("logo url")} alt="" />
       </Logo>
       {isLogin() ? (
         <NavItemBox>
