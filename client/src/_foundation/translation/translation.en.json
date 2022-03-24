@@ -1,4 +1,5 @@
 {
+  "logo url": "/images/logo_navbar.png",
   "login": "LOG IN",
   "signup": "SIGN UP",
   "welcome": "Hi,",
@@ -8,7 +9,7 @@
   "signupLink": "Create an Account",
 
   "practice mode": "Practice",
-  "practice mode explanation": "Sodales sagittis urna laoreet in. In et,",
+  "practice mode explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "practice mode explanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
 
   "basics": "Basics",

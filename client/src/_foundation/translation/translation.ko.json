@@ -1,4 +1,5 @@
 {
+  "logo url": "/images/logo_navbar.png",
   "login": "로그인",
   "signup": "회원가입",
   "welcome": "안녕하세요,",
@@ -8,7 +9,7 @@
   "signupLink": "Create an Account",
 
   "practice mode": "연습모드",
-  "practice mode explanation": "태권도의 다양한 동작을 연습할 수 있습니다.",
+  "practice mode explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "practice mode explanation2": "",
 
   "basics": "기본동작",

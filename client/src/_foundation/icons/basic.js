@@ -5,8 +5,8 @@ const basic = {
       <path
         d="M12 19.5L18 13.5L12 7.5"
         stroke="#F8F9FA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </>
   ),
@@ -16,6 +16,17 @@ const basic = {
         d="M5 5L15 15M5 15L15 5L5 15Z"
         stroke="#ADB5BD"
         strokeWidth="1.66667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </>
+  ),
+  hoverPointer: (
+    <>
+      <circle cx="13.5" cy="13.5" r="13.5" fill="#00B7BE" />
+      <path
+        d="M12 19.5L18 13.5L12 7.5"
+        stroke="#F8F9FA"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

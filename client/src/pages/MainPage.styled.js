@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { colors, fontSize } from "_foundation";
 import ReactPlayer from "react-player/lazy";
 
@@ -22,25 +22,60 @@ export const Background = styled.div`
   top: 0;
   left: 0;
   width: 100%;
+
+  z-index: -1;
   /* height: 100%; */
-  background-size: cover;
+  /* background-size: cover; */
 `;
 
 export const Layer = styled.div`
   position: absolute;
   top: 0;
-  left: 0;
+  /* left: 0; */
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
 `;
 
-export const Layout = styled.div``;
+export const Layout = styled.div`
+  padding-top: 92px;
+`;
 
-export const Title = styled.div``;
+export const TextBox = styled.div`
+  padding-top: 14%;
+  padding-left: 14%;
 
-export const Contents = styled.div``;
+  color: ${colors.gray0};
+`;
+
+export const Title = styled.div`
+  color: ${colors.gray0};
+
+  ${(props) =>
+    props.language === "ENG" &&
+    css`
+      font-family: Dry Brush;
+      font-size: 5rem;
+      line-height: 150%;
+    `}
+  ${(props) =>
+    props.language === "KOR" &&
+    css`
+      font-family: Dokdo;
+      font-size: 6.5rem;
+      line-height: 120%;
+    `}
+`;
+
+export const Contents = styled.div`
+  width: 46%;
+  font-size: ${fontSize.xl};
+`;
+
+export const ButtonBox = styled.div`
+  display: flex;
+  gap: 1.2rem;
+  padding-top: 2.8rem;
+`;
 
 export const Carousel = styled.div``;
-
-export const ButtonBox = styled.div``;
