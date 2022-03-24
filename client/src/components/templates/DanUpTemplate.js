@@ -3,12 +3,12 @@ import { fontFamily, fontSize, fontWeight } from "../../_foundation/typography";
 import { colors } from "../../_foundation/colors";
 // import { ReactComponent as.div} from "public\icons\star.svg";
 
-function LevelUpTemplate({ level, restart, home }) {
+function DanUpTemplate({ dan, restart, home }) {
   return (
     <Background>
       <Middle>
         <Level>
-          <LevelImage src={`../../certifications/belt${level}.png`} />
+          <LevelImage src={`../../certifications/dan${dan}.png`} />
         </Level>
         <ButtonContainer>
           <RestartButton>{restart}</RestartButton>
@@ -19,7 +19,7 @@ function LevelUpTemplate({ level, restart, home }) {
   );
 }
 
-export default LevelUpTemplate;
+export default DanUpTemplate;
 
 const breatheAnimation = keyframes`
 0% { opacity: 0.0; }

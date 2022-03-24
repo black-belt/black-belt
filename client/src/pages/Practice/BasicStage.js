@@ -17,6 +17,7 @@ function BasicStage() {
   const [gradeNum, setGradeNum] = useState(0);
   const [isLevelUp, setIsLevelUp] = useState(false);
   const [level, setLevel] = useState("white belt");
+  const [isStar, setIsStar] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +29,7 @@ function BasicStage() {
       .then((json) => {
         setTitle("기본동작");
         setDesc("동작설명");
-        setAnswer("mask");
+        setAnswer("abaya");
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
   }, []);
@@ -40,12 +41,13 @@ function BasicStage() {
           .then((res) => res.json())
           .then((json) => {
             let jsonIsLevelUp = true; //레벨업했는지 안했는지
-            let jsonLevel = "yellow belt";
+            let jsonLevel = 2;
             if (jsonIsLevelUp) {
               setIsLevelUp(jsonIsLevelUp);
               setLevel(jsonLevel);
+              setIsStar(jsonIsLevelUp);
               setTimeout(() => {
-                setIsLevelUp(!jsonIsLevelUp);
+                setIsStar((current) => !current);
               }, 3000);
             }
             setIsPass(true);
@@ -87,9 +89,22 @@ function BasicStage() {
         camera={<UserVideo answer={answer} testResult={testResult} isPass={isPass} />}
       />
 
+      {/*3초 ET가 뜨고 그뒤엔 LUT가  */}
       {isPass ? (
         isLevelUp ? (
-          <LevelUpTemplate level={level} />
+          isStar ? (
+            <EvaluationTemplate grade={grade} gradeNum={gradeNum} />
+          ) : (
+            <LevelUpTemplate
+              level={level}
+              restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
+              home={
+                <StageBtn onClick={homeFunc} isHome>
+                  홈으로 이동
+                </StageBtn>
+              }
+            />
+          )
         ) : (
           <EvaluationTemplate
             grade={grade}
