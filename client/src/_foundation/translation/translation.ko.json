@@ -1,0 +1,36 @@
+{
+  "logo url": "/images/logo_navbar.png",
+  "login": "로그인",
+  "signup": "회원가입",
+  "welcome": "안녕하세요,",
+  "language": "KOR",
+  "new?": "New to BlackBelt?",
+  "loginLink": "",
+  "signupLink": "Create an Account",
+
+  "practice mode": "연습모드",
+  "practice mode explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "practice mode explanation2": "",
+
+  "basics": "기본동작",
+  "combos": "연결동작",
+  "poomsae": "품새",
+
+  "promotion test": "심사모드",
+  "promotion test explanation": "",
+  "promotion test explanation2": "",
+  "1단": "1단",
+  "2단": "2단",
+  "3단": "3단",
+  "4단": "4단",
+  "5단": "5단",
+  "6단": "6단",
+  "7단": "7단",
+  "8단": "8단",
+
+  "gyeorugi": "겨루기",
+  "gyeorugi explanation": "",
+  "gyeorugiexplanation2": "",
+  "normal": "일반 모드",
+  "rank": "랭크 모드"
+}

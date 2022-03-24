@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 import { colors, fontSize, fontWeight } from "_foundation";
 import Icon from "../Icons/Icon";
 
-function LangBtn({ children }) {
-  return <StyledBtn>{children}</StyledBtn>;
+function LangBtn({ children, onClick }) {
+  return <StyledBtn onClick={onClick}>{children}</StyledBtn>;
 }
 export default LangBtn;
 
@@ -34,6 +34,7 @@ const StyledBtn = styled.button`
     css`
       :hover {
         background: ${colors.blue1};
+        border: 1px solid ${colors.blue1};
       }
     `}
 

@@ -5,7 +5,7 @@ import Indicator from "./Indecator";
 import styled from "styled-components";
 import { colors } from "../../../_foundation";
 
-const Countdown = ({ totalSeconds, initialSeconds, initialProgress }) => {
+const Countdown = ({ totalSeconds, initialSeconds, initialProgress, isTimer, setIsTimer }) => {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [progress, setProgress] = useState(initialProgress);
 
@@ -43,12 +43,16 @@ const Countdown = ({ totalSeconds, initialSeconds, initialProgress }) => {
         </ProgressBar>
       </ProgressBarContainer>
 
-      <Timer
-        initialSeconds={initialSeconds}
-        totalSeconds={totalSeconds}
-        onChange={handleTimer}
-        interval={1000}
-      />
+      {totalSeconds !== 0 && (
+        <Timer
+          initialSeconds={initialSeconds}
+          totalSeconds={totalSeconds}
+          onChange={handleTimer}
+          interval={1000}
+          isTimer={isTimer}
+          setIsTimer={setIsTimer}
+        />
+      )}
     </div>
   );
 };
