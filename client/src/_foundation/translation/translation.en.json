@@ -1,1 +1,31 @@
-{ "hello": "hello" }
+{
+  "로그인": "LOG IN",
+  "회원가입": "SIGN UP",
+  "안녕하세요": "Hi,",
+  "처음이신가요": "New to BlackBelt?",
+  "로그인 이동": "",
+  "회원가입 이동": "Create an Account",
+
+  "연습모드": "Practice",
+  "연습모드 설명": "",
+
+  "기본동작": "Basics",
+  "연결동작": "Combos",
+  "품새": "Poomsae",
+
+  "심사모드": "Promotion Test",
+  "심사모드 설명": "",
+  "1단": "Dan 1st",
+  "2단": "Dan 2nd",
+  "3단": "Dan 3rd",
+  "4단": "Dan 4th",
+  "5단": "Dan 5th",
+  "6단": "Dan 6th",
+  "7단": "Dan 7th",
+  "8단": "Dan 8th",
+
+  "겨루기": "Gyeorugi",
+  "겨루기 설명": "",
+  "일반": "Normal",
+  "랭크": "Rank"
+}

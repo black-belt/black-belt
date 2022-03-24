@@ -8,13 +8,13 @@ const resource = {
     translation: translationEn,
   },
   ko: {
-    tranaslation: translationKo,
+    translation: translationKo,
   },
 };
 i18n.use(initReactI18next).init({
   resources: resource,
-  lng: "kr",
-  fallbackLng: "kr",
+  lng: "ko",
+  fallbackLng: "ko",
   debug: true,
   keySeparator: false,
   interpolation: { escapeValue: false },
