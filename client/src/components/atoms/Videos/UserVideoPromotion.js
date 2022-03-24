@@ -140,7 +140,7 @@ function UserVideoPromotion({
     const loop = setInterval(() => {
       console.log(cnt++);
       analyzeImage();
-      if (cnt === (totalSeconds + 3) * 20) {
+      if (cnt === (totalSeconds + 2) * 20) {
         testSum += maxProbability;
         maxProbability = 0;
         testResult(testSum);
@@ -175,7 +175,7 @@ function UserVideoPromotion({
 export default UserVideoPromotion;
 
 const VideoContainer = styled.video`
-  height: 33vw;
+  height: 28vw;
   // margin-bottom: 60px;
   border-radius: 10px;
 `;

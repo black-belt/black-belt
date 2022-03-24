@@ -4,9 +4,11 @@ import StageBtn from "components/atoms/Buttons/stage-btn";
 import PromotionStageTemplate from "components/templates/PromotionStageTemplate";
 import UserVideoPromotion from "components/atoms/Videos/UserVideoPromotion";
 import EvaluationTemplate from "components/templates/EvaluationTemplate";
+import DanUpTemplate from "components/templates/DanUpTemplate";
 
 function PromotionStage() {
   const [title, setTitle] = useState("");
+  const [dan, setDan] = useState(0);
   const [answerRandom, setAnswerRandom] = useState([]);
   const [answerMapRandom, setAnswerMapRandom] = useState(new Map());
   const [answerEssential, setAnswerEssential] = useState([]);
@@ -14,9 +16,6 @@ function PromotionStage() {
   const [isPass, setIsPass] = useState(false);
   const [grade, setGrade] = useState("Try Again");
   const [gradeNum, setGradeNum] = useState(0);
-  // const [nextAction, setNextAction] = useState(0);
-  // const [partIndex, setPartIndex] = useState(0);
-  // const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
   const [info, setInfo] = useState([[]]);
   const [curNum, setCurNum] = useState(0);
   const [prevAvg, setPrevAvg] = useState(0);
@@ -24,11 +23,12 @@ function PromotionStage() {
   const [initialSeconds, setinitialSeconds] = useState(0);
   const [initialProgress, setinitialProgress] = useState(0);
   const [isTimer, setIsTimer] = useState(false);
+  const [isDanUp, setIsDanUp] = useState(false);
   const [readyAction, setReadyAction] = useState();
-  // const resultArray = [0, 0, 0, 0];
+  const [isStar, setIsStar] = useState(false);
   const videoText = "시작하려면 ‘기본준비자세’를 취해주세요.";
   const navigate = useNavigate();
-  let sum = 0.0;
+  let tempGrade = 0;
 
   useEffect(() => {
     //받기: api 통신해서 title, 답안[] 받음
@@ -37,8 +37,9 @@ function PromotionStage() {
       .then((res) => res.json())
       .then((json) => {
         setTitle("1단");
-        setAnswerRandom(["coffee mug"]); //, "coffee mug", "abaya", "coffee mug"
-        ["coffee mug"].forEach((key, index) => {
+        setDan(1);
+        setAnswerRandom(["abaya"]); //, "coffee mug", "abaya", "coffee mug"
+        ["abaya", "coffee mug", "abaya", "coffee mug"].forEach((key, index) => {
           if (answerMapRandom.has(key)) {
             setAnswerMapRandom((current) =>
               new Map(current).set(key, [...current.get[key], index])
@@ -48,8 +49,8 @@ function PromotionStage() {
           }
         });
 
-        setAnswerEssential(["coffee mug"]);
-        ["coffee mug"].forEach((key, index) => {
+        setAnswerEssential(["abaya"]);
+        ["abaya"].forEach((key, index) => {
           if (answerMapEssential.has(key)) {
             setAnswerMapEssential((current) =>
               new Map(current).set(key, [...current.get[key], index])
@@ -74,7 +75,14 @@ function PromotionStage() {
       .then((json) => {
         // setNextAction(answer[3].length - 1);
         // setPartIndex(3);
+        setIsStar(true);
         setIsPass(true);
+        if (tempGrade > 0) {
+          setIsDanUp(true);
+          setTimeout(() => {
+            setIsStar(false);
+          }, 3000);
+        }
       });
   };
 
@@ -96,12 +104,15 @@ function PromotionStage() {
       if (result >= 0.8) {
         setGrade("Perfect!");
         setGradeNum(3);
+        tempGrade = 3;
       } else if (result >= 0.7) {
         setGrade("Great");
         setGradeNum(2);
+        tempGrade = 2;
       } else if (result >= 0.6) {
         setGrade("Good");
         setGradeNum(1);
+        tempGrade = 1;
       } else {
         setGrade("Try Again");
         setGradeNum(0);
@@ -116,15 +127,17 @@ function PromotionStage() {
     // setIsPassArray([false, false, false, false]);
     setIsPass(false);
     setCurNum(0);
+    setinitialSeconds(0);
+    setinitialProgress(0);
   };
   const homeFunc = () => {
     navigate("/");
   };
 
   const startTimer = () => {
-    console.log("!!startTimer");
+    // console.log("!!startTimer");
     if (!isTimer) {
-      console.log("!!startTimer 들옴");
+      // console.log("!!startTimer 들옴");
       setinitialSeconds(0);
       setinitialProgress(0);
       setIsTimer(true);
@@ -163,17 +176,34 @@ function PromotionStage() {
           setIsTimer={setIsTimer}
         />
       )}
+
       {isPass ? (
-        <EvaluationTemplate
-          grade={grade}
-          gradeNum={gradeNum}
-          restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
-          home={
-            <StageBtn onClick={homeFunc} isHome>
-              홈으로 이동
-            </StageBtn>
-          }
-        />
+        isDanUp ? (
+          isStar ? (
+            <EvaluationTemplate grade={grade} gradeNum={gradeNum} />
+          ) : (
+            <DanUpTemplate
+              dan={dan}
+              restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
+              home={
+                <StageBtn onClick={homeFunc} isHome>
+                  홈으로 이동
+                </StageBtn>
+              }
+            />
+          )
+        ) : (
+          <EvaluationTemplate
+            grade={grade}
+            gradeNum={gradeNum}
+            restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
+            home={
+              <StageBtn onClick={homeFunc} isHome>
+                홈으로 이동
+              </StageBtn>
+            }
+          />
+        )
       ) : null}
     </>
   );

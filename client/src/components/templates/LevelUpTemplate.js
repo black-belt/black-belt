@@ -3,12 +3,17 @@ import { fontFamily, fontSize, fontWeight } from "../../_foundation/typography";
 import { colors } from "../../_foundation/colors";
 // import { ReactComponent as.div} from "public\icons\star.svg";
 
-function LevelUpTemplate({ level }) {
+function LevelUpTemplate({ level, restart, home }) {
   return (
     <Background>
       <Middle>
-        <Congratulation>Congratulations!</Congratulation>
-        <Level>You got a {level}</Level>
+        <Level>
+          <LevelImage src={`../../certifications/belt${level}.png`} />
+        </Level>
+        <ButtonContainer>
+          <RestartButton>{restart}</RestartButton>
+          <HomeButton>{home}</HomeButton>
+        </ButtonContainer>
       </Middle>
     </Background>
   );
@@ -33,7 +38,7 @@ const Background = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 10001;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.75);
@@ -57,17 +62,28 @@ const Middle = styled.div`
   transition: 1s linear;
 `;
 
-const Congratulation = styled.div`
-  font-size: ${fontSize.h2};
-  font-family: ${fontFamily.sans};
-  font-weight: ${fontWeight.extrabold};
-  color: ${colors.gray0};
-  margin-bottom: 20px;
+const LevelImage = styled.img`
+  width: 20vw;
 `;
 
 const Level = styled.div`
-  font-size: ${fontSize.h1};
+  /* font-size: ${fontSize.h1};
   font-family: ${fontFamily.sans};
   font-weight: ${fontWeight.extrabold};
-  color: ${colors.gray0};
+  color: ${colors.gray0}; */
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  margin-top: 60px;
+`;
+
+const RestartButton = styled.div`
+  font-family: ${fontFamily.sans};
+  margin-right: 20px;
+`;
+
+const HomeButton = styled.div`
+  font-family: ${fontFamily.sans};
+  margin-left: 20px;
 `;

@@ -14,8 +14,8 @@ function Timer({ initialSeconds, totalSeconds, onChange, interval, isTimer, setI
   }, [elapsed]);
 
   useEffect(() => {
+    setElapsed(0);
     if (isTimer) {
-      setElapsed(0);
       start(intervalId);
     }
   }, [isTimer]);
