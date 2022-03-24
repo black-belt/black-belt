@@ -7,14 +7,16 @@
   "회원가입 이동": "Create an Account",
 
   "연습모드": "Practice",
-  "연습모드 설명": "",
+  "연습모드 설명": "Sodales sagittis urna laoreet in. In et,",
+  "연습모드 설명2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
 
   "기본동작": "Basics",
   "연결동작": "Combos",
   "품새": "Poomsae",
 
   "심사모드": "Promotion Test",
-  "심사모드 설명": "",
+  "심사모드 설명": "Sodales sagittis urna laoreet in. In et,",
+  "심사모드 설명2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "1단": "Dan 1st",
   "2단": "Dan 2nd",
   "3단": "Dan 3rd",
@@ -25,7 +27,8 @@
   "8단": "Dan 8th",
 
   "겨루기": "Gyeorugi",
-  "겨루기 설명": "",
+  "겨루기 설명": "Sodales sagittis urna laoreet in. In et,",
+  "겨루기 설명2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "일반": "Normal",
   "랭크": "Rank"
 }
