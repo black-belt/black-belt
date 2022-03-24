@@ -16,6 +16,8 @@ function MainPage() {
 
   const changelanguageToKo = () => i18n.changeLanguage("ko");
   const changelanguageToEn = () => i18n.changeLanguage("en");
+
+  // const
   return (
     <div className="MainPage">
       <Background>
