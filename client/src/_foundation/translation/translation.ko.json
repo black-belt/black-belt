@@ -4,6 +4,8 @@
   "signup": "회원가입",
   "welcome": "안녕하세요,",
   "language": "KOR",
+
+  "welcome google": "구글 계정으로 계속하기",
   "new?": "New to BlackBelt?",
   "loginLink": "",
   "signupLink": "Create an Account",

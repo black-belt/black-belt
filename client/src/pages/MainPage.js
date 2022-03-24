@@ -73,7 +73,7 @@ function MainPage() {
           <Contents>{t(explanations["practice"])}</Contents>
           <ButtonBox>
             {buttons["practice"].map((menus) => (
-              <InButton onClick={() => navigate(menus.url)}>
+              <InButton key={menus.title} onClick={() => navigate(menus.url)}>
                 {t(menus.title)}
               </InButton>
             ))}
