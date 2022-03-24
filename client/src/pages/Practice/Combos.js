@@ -1,12 +1,5 @@
-import Navbar from "components/molecules/Navbar";
-
 function Combos() {
-  return (
-    <div className="Combos">
-      Combos
-      <Navbar />
-    </div>
-  );
+  return <div className="Combos">Combos</div>;
 }
 
 export default Combos;

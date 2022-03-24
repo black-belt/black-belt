@@ -1,8 +1,6 @@
 package com.blackbelt.controller;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -27,9 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -116,8 +111,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	@Test
-	@DisplayName("회원 겨루기 가능여부가 잘 수정되었는지 확인할때 사용")
+	
 	@PutMapping("/logout")
 	public ResponseEntity<String> registerUser(@RequestBody Map<String,String> map ) {
 		ResponseEntity<String> re = null;
@@ -133,7 +127,6 @@ public class UserController {
 			}
 			
 			UserDto saveUser = userRepo.save(updateUser.get());
-			assertEquals(updateUser.get().getUserState(), saveUser.getUserState(), "not updated properly!!");
 			re = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e) {
 			re = new ResponseEntity<String>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
