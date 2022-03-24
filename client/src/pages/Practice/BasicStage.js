@@ -40,7 +40,7 @@ function BasicStage() {
           .then((res) => res.json())
           .then((json) => {
             let jsonIsLevelUp = true; //레벨업했는지 안했는지
-            let jsonLevel = "yellow belt";
+            let jsonLevel = 2;
             if (jsonIsLevelUp) {
               setIsLevelUp(jsonIsLevelUp);
               setLevel(jsonLevel);

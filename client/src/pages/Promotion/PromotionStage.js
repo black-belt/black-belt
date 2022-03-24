@@ -1,28 +1,34 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StageBtn from "components/atoms/Buttons/stage-btn";
-import EvaluationTemplatePoomsae from "components/templates/EvaluationTemplatePoomsae";
 import PromotionStageTemplate from "components/templates/PromotionStageTemplate";
 import UserVideoPromotion from "components/atoms/Videos/UserVideoPromotion";
+import EvaluationTemplate from "components/templates/EvaluationTemplate";
 
 function PromotionStage() {
   const [title, setTitle] = useState("");
-  const [answer, setAnswer] = useState([]);
+  const [answerRandom, setAnswerRandom] = useState([]);
+  const [answerMapRandom, setAnswerMapRandom] = useState(new Map());
+  const [answerEssential, setAnswerEssential] = useState([]);
+  const [answerMapEssential, setAnswerMapEssential] = useState(new Map());
   const [isPass, setIsPass] = useState(false);
   const [grade, setGrade] = useState("Try Again");
   const [gradeNum, setGradeNum] = useState(0);
-  const [nextAction, setNextAction] = useState(0);
-  const [partIndex, setPartIndex] = useState(0);
-  const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
+  // const [nextAction, setNextAction] = useState(0);
+  // const [partIndex, setPartIndex] = useState(0);
+  // const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
   const [info, setInfo] = useState([[]]);
   const [curNum, setCurNum] = useState(0);
+  const [prevAvg, setPrevAvg] = useState(0);
   const [totalSeconds, setTotalSeconds] = useState(0);
   const [initialSeconds, setinitialSeconds] = useState(0);
   const [initialProgress, setinitialProgress] = useState(0);
   const [isTimer, setIsTimer] = useState(false);
-  const resultArray = [0, 0, 0, 0];
+  const [readyAction, setReadyAction] = useState();
+  // const resultArray = [0, 0, 0, 0];
   const videoText = "시작하려면 ‘기본준비자세’를 취해주세요.";
   const navigate = useNavigate();
+  let sum = 0.0;
 
   useEffect(() => {
     //받기: api 통신해서 title, 답안[] 받음
@@ -31,13 +37,34 @@ function PromotionStage() {
       .then((res) => res.json())
       .then((json) => {
         setTitle("1단");
-        setAnswer(["mask", "water jug", "mask"]);
+        setAnswerRandom(["coffee mug"]); //, "coffee mug", "abaya", "coffee mug"
+        ["coffee mug"].forEach((key, index) => {
+          if (answerMapRandom.has(key)) {
+            setAnswerMapRandom((current) =>
+              new Map(current).set(key, [...current.get[key], index])
+            );
+          } else {
+            setAnswerMapRandom((current) => new Map([...current, [key, index]]));
+          }
+        });
+
+        setAnswerEssential(["coffee mug"]);
+        ["coffee mug"].forEach((key, index) => {
+          if (answerMapEssential.has(key)) {
+            setAnswerMapEssential((current) =>
+              new Map(current).set(key, [...current.get[key], index])
+            );
+          } else {
+            setAnswerMapEssential((current) => new Map([...current, [key, index]]));
+          }
+        });
         setInfo([
           ["지정품새", "3장"],
           ["필수품새", "8장"],
         ]);
+        setReadyAction("abaya");
         setCurNum(0);
-        setTotalSeconds(3);
+        setTotalSeconds(10);
       });
   }, []);
 
@@ -45,103 +72,99 @@ function PromotionStage() {
     fetch("https://jsonplaceholder.typicode.com/posts") //통과단계보냄
       .then((res) => res.json())
       .then((json) => {
-        setNextAction(answer[3].length - 1);
-        setPartIndex(3);
+        // setNextAction(answer[3].length - 1);
+        // setPartIndex(3);
         setIsPass(true);
       });
   };
 
-  const updateNextAction = (value) => {
-    setNextAction(value);
-  };
-
-  const updatePartIndex = (value) => {
-    setPartIndex(value);
-  };
-
-  const testResult = (index, result) => {
-    resultArray[index] = result / answer[index].length;
-    // console.log("!!평균", resultArray[index]);
-    if (resultArray[index] >= 0.6)
-      setIsPassArray((current) => {
-        current[index] = true;
-        return current;
-      });
-    // console.log("!!결과", index, resultArray[index], isPassArray[index]);
-    if (index === 3) {
-      updateIsPass();
-      let sum = 0;
-      let pass = true;
-      isPassArray.forEach((value) => {
-        if (!value) pass = false;
-      });
-      if (!pass) {
+  const testResult = (result) => {
+    if (curNum === 0) {
+      result /= answerRandom.length;
+      if (result < 0.6) {
         setGrade("Try Again");
         setGradeNum(0);
+        updateIsPass();
         return;
       }
-      resultArray.forEach((value) => (sum += value));
-      sum /= 4;
-      if (sum >= 0.8) {
+      setPrevAvg(() => result);
+      setCurNum((current) => ++current); //다음 품새
+    } else if (curNum === 1) {
+      result /= answerEssential.length;
+      result += prevAvg;
+      result /= 2;
+      if (result >= 0.8) {
         setGrade("Perfect!");
         setGradeNum(3);
-      } else if (sum >= 0.7) {
+      } else if (result >= 0.7) {
         setGrade("Great");
         setGradeNum(2);
-      } else if (sum >= 0.6) {
+      } else if (result >= 0.6) {
         setGrade("Good");
         setGradeNum(1);
       } else {
         setGrade("Try Again");
         setGradeNum(0);
       }
+      updateIsPass();
     }
   };
 
   const restartFunc = () => {
-    setNextAction(0);
-    setPartIndex(0);
-    setIsPassArray([false, false, false, false]);
+    // setNextAction(0);
+    // setPartIndex(0);
+    // setIsPassArray([false, false, false, false]);
     setIsPass(false);
+    setCurNum(0);
   };
   const homeFunc = () => {
     navigate("/");
   };
 
   const startTimer = () => {
-    setinitialSeconds(0);
-    setinitialProgress(0);
-    setIsTimer(true);
+    console.log("!!startTimer");
+    if (!isTimer) {
+      console.log("!!startTimer 들옴");
+      setinitialSeconds(0);
+      setinitialProgress(0);
+      setIsTimer(true);
+    }
   };
-  const setd = () => {
-    startTimer();
-    setCurNum((current) => ++current);
-  };
+
   return (
     <>
-      <PromotionStageTemplate
-        title={title}
-        camera={
-          <UserVideoPromotion
-            answer={answer}
-            testResult={testResult}
-            updateNextAction={updateNextAction}
-            updatePartIndex={updatePartIndex}
-            isPass={isPass}
-          />
-        }
-        info={info}
-        curNum={curNum}
-        totalSeconds={totalSeconds}
-        initialSeconds={initialSeconds}
-        initialProgress={initialProgress}
-        videoText={videoText}
-        isTimer={isTimer}
-        setIsTimer={setIsTimer}
-      />
-
+      {readyAction && (
+        <PromotionStageTemplate
+          title={title}
+          camera={
+            <UserVideoPromotion
+              answerRandom={answerRandom}
+              answerMapRandom={answerMapRandom}
+              answerEssential={answerEssential}
+              answerMapEssential={answerMapEssential}
+              testResult={testResult}
+              // updateNextAction={updateNextAction}
+              // updatePartIndex={updatePartIndex}
+              isPass={isPass}
+              startTimer={startTimer}
+              isTimer={isTimer}
+              readyAction={readyAction}
+              totalSeconds={totalSeconds}
+              curNum={curNum}
+            />
+          }
+          info={info}
+          curNum={curNum}
+          totalSeconds={totalSeconds}
+          initialSeconds={initialSeconds}
+          initialProgress={initialProgress}
+          videoText={videoText}
+          isTimer={isTimer}
+          setIsTimer={setIsTimer}
+        />
+      )}
       {isPass ? (
-        <EvaluationTemplatePoomsae
+        <EvaluationTemplate
           grade={grade}
           gradeNum={gradeNum}
           restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
@@ -150,11 +173,8 @@ function PromotionStage() {
               홈으로 이동
             </StageBtn>
           }
-          isPassArray={isPassArray}
         />
       ) : null}
-
-      <button onClick={setd}>qjxms</button>
     </>
   );
 }
