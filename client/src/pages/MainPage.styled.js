@@ -49,19 +49,21 @@ export const TextBox = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 5rem;
-  line-height: 150%;
   color: ${colors.gray0};
 
   ${(props) =>
     props.language === "ENG" &&
     css`
       font-family: Dry Brush;
+      font-size: 5rem;
+      line-height: 150%;
     `}
   ${(props) =>
     props.language === "KOR" &&
     css`
       font-family: Dokdo;
+      font-size: 6.5rem;
+      line-height: 120%;
     `}
 `;
 
