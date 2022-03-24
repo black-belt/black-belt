@@ -2,7 +2,7 @@ import React from "react";
 import { icons } from "_foundation";
 import styled from "styled-components";
 
-const Icon = ({ icon, block, ...props }) => {
+const Icon = ({ icon, block, state, ...props }) => {
   return (
     <Svg
       viewBox="0 0 27 27"
@@ -11,6 +11,7 @@ const Icon = ({ icon, block, ...props }) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       block={block}
+      className={state}
       // stroke="currentColor"
       {...props}
     >

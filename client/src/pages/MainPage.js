@@ -10,6 +10,8 @@ import BackgroundVideo, {
 } from "./MainPage.styled";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import InButton from "components/atoms/Buttons/in-btns";
+import { modesData } from "recoils";
 
 // import i18n from "i18next";
 
@@ -33,11 +35,14 @@ function MainPage() {
     gyeorugi2: "gyeorugi explanation2",
   };
   const buttons = {
-    practice: {
-      basics: "basics",
-      combos: "combos",
-      poomsae: "poomsae",
-    },
+    // practice: [
+    //   {
+    //     basics: "basics",
+    //     combos: "combos",
+    //     poomsae: "poomsae",
+    //   },
+    // ],
+    practice: ["basics", "combos", "poomsae"],
     promotion: {
       dan: "need api",
     },
@@ -54,9 +59,16 @@ function MainPage() {
       </Background>
       <Layout>
         <TextBox>
+          {/* {modesData.map(({ name, title, explanation }) => (
+            <Title language={t("language")}>{t(titleMode["practice"])}</Title>
+          ))} */}
           <Title language={t("language")}>{t(titleMode["practice"])}</Title>
-          <Contents></Contents>
-          <ButtonBox></ButtonBox>
+          <Contents>{t(explanations["practice"])}</Contents>
+          <ButtonBox>
+            {buttons["practice"].map((menu) => (
+              <InButton>{t(menu)}</InButton>
+            ))}
+          </ButtonBox>
         </TextBox>
         <Carousel></Carousel>
       </Layout>

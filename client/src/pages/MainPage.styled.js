@@ -46,17 +46,19 @@ export const Layout = styled.div`
 
 export const TextBox = styled.div`
   padding-top: 12%;
-  padding-left: 16%;
+  padding-left: 14%;
+
+  color: ${colors.gray0};
 `;
 
 export const Title = styled.div`
-  font-size: ${fontSize.h1};
   color: ${colors.gray0};
 
   ${(props) =>
     props.language === "ENG" &&
     css`
       font-family: Dry Brush;
+      font-size: 5rem;
     `}
   ${(props) =>
     props.language === "KOR" &&
@@ -65,8 +67,15 @@ export const Title = styled.div`
     `}
 `;
 
-export const Contents = styled.div``;
+export const Contents = styled.div`
+  width: 46%;
+  font-size: ${fontSize.xl};
+`;
+
+export const ButtonBox = styled.div`
+  display: flex;
+  gap: 1.2rem;
+  padding-top: 2rem;
+`;
 
 export const Carousel = styled.div``;
-
-export const ButtonBox = styled.div``;

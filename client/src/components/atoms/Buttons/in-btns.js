@@ -7,7 +7,8 @@ function InButton({ children }) {
   return (
     <StyledBtn>
       {children}
-      <Icon icon="inPointer" />
+      <Icon state="default" icon="inPointer" />
+      <Icon state="hover" icon="hoverPointer" />
     </StyledBtn>
   );
 }
@@ -20,7 +21,7 @@ const StyledBtn = styled.button`
 
   width: ${(props) => props.width};
   height: 48px;
-  padding: 0.6rem 1.5rem;
+  padding: 0.4rem 1.2rem;
 
   border-radius: 4rem;
   border: 1px solid ${colors.gray0};
@@ -35,10 +36,23 @@ const StyledBtn = styled.button`
   transition: 0.2s;
   cursor: pointer;
 
+  .hover {
+    display: none;
+  }
+
   ${(props) =>
     css`
       :hover {
         background: ${colors.blue1};
+        border: 1px solid ${colors.blue1};
+        .default {
+          display: none;
+          transition: 0.2s;
+        }
+        .hover {
+          display: inline-block;
+          transition: 0.2s;
+        }
       }
     `}
 
