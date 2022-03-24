@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.blackbelt.model.ComboDto;
+import com.blackbelt.model.PoomsaeDto;
 import com.blackbelt.model.mapper.ComboMapper;
 
 @Service
@@ -14,12 +15,16 @@ public class ComboServiceImpl implements ComboService {
 	@Autowired
 	private SqlSession sqlSession;
 	@Override
-	public List<ComboDto> listCombo() throws Exception {
-		return sqlSession.getMapper(ComboMapper.class).listCombo();
+	public List<ComboDto> listCombo(int poomsae_id) throws Exception {
+		return sqlSession.getMapper(ComboMapper.class).listCombo(poomsae_id);
 	}
 	@Override
 	public ComboDto getCombo(int comboid) throws Exception {
 		return sqlSession.getMapper(ComboMapper.class).getCombo(comboid);
+	}
+	@Override
+	public List<PoomsaeDto> getPoomsae() throws Exception {
+		return sqlSession.getMapper(ComboMapper.class).getPoomsae();
 	}
 
 }

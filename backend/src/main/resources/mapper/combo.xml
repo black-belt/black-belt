@@ -4,9 +4,9 @@
 
 <mapper namespace="com.blackbelt.model.mapper.ComboMapper">
 	<select id="listCombo" resultType="ComboDto">
-		select combo_id, combo_name, combo_name_e, combo_explain, combo_explain_e, 
+		select combo_id, poomsae_id, combo_name, combo_name_e, combo_explain, combo_explain_e, 
 		combo_img_path, combo_movie_path
-		from comboaction
+		from comboaction where poomsae_id = #{poomsae_id}
 	</select>
 	
 	<select id="getCombo" resultType="ComboDto">
@@ -14,6 +14,11 @@
 		combo_img_path, combo_movie_path, combo_answer, combo_answer_index, poomsae_id
 		from comboaction
 		where combo_id = #{combo_id}		
+	</select>
+	
+	<select id="getPoomsae" resultType="PoomsaeDto">
+		select poomsae_id, poomsae_name, poomsae_name_e
+		from poomsaeaction	
 	</select>
 	
 	
