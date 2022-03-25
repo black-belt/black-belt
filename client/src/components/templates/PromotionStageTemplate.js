@@ -69,7 +69,7 @@ const BackgroundImage = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url("images/promotionBackground.jpg");
+  background-image: url("/images/promotionBackground.jpg");
   background-size: 100% 100%;
   filter: grayscale(100%) brightness(40%);
   min-width: 100%;
