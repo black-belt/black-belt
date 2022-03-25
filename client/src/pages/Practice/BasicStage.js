@@ -2,7 +2,7 @@ import PracticeStageTemplate from "../../components/templates/PracticeStageTempl
 import { useEffect, useState } from "react";
 import LocalVideo from "../../components/atoms/Videos/LocalVideo";
 import UserVideo from "../../components/atoms/Videos/UserVideo";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import EvaluationTemplate from "components/templates/EvaluationTemplate";
 import StageBtn from "components/atoms/Buttons/stage-btn";
 import LevelUpTemplate from "components/templates/LevelUpTemplate";
@@ -18,12 +18,16 @@ function BasicStage() {
   const [isLevelUp, setIsLevelUp] = useState(false);
   const [level, setLevel] = useState("white belt");
   const [isStar, setIsStar] = useState(false);
+  // const stageId = useParams().stageId;
+  const state = useLocation().state;
   const navigate = useNavigate();
 
   useEffect(() => {
     //받기: api 통신해서 title, description, 비디오(Streaming이나 youtube link), 답안 받음
     //보내기: 서버로 통과 단계를 보냄
     //받기: 레벨업했는지, 했으면 얻은레벨
+
+    //state.stageId가 현재 basicStage
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((json) => {
@@ -31,6 +35,7 @@ function BasicStage() {
         setDesc("동작설명");
         setAnswer("abaya");
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
+        // console.log(state.stageId);
       });
   }, []);
 

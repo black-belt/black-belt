@@ -56,6 +56,7 @@ const Description = styled.div`
   padding-top: 20px;
   font-family: inherit;
   font-size: ${fontSize.xl};
+  letter-spacing: 0.5px;
 `;
 
 const CardContainer = styled.div`
@@ -68,14 +69,13 @@ const CardContainer = styled.div`
 `;
 
 const BackgroundImage = styled.div`
-  filter: grayscale(100%) brightness(70%);
   filter: gray;
   position: absolute;
   top: 0;
   left: 0;
   background-image: url("/images/promotionBackground.jpg");
   background-size: 100% 100%;
-  filter: grayscale(100%) brightness(40%);
+  filter: grayscale(100%) brightness(20%);
   min-width: 100%;
   min-height: 100%;
   z-index: -1;

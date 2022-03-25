@@ -2,36 +2,16 @@ import BasicCard from "components/molecules/BasicCard";
 import BasicTemplate from "components/templates/BasicTemplate";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 function Basics() {
   const { t, i18n } = useTranslation();
   const [cardInfoList, setCardInfoList] = useState([]);
+  const [selectedStage, setSelectedStage] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     //받기: api 통신해서 기본동작의 목록들을 받음
-    // "basicList": [
-    //   {
-    //       "basicId" : 1,
-    //       "basicName" : "basic_name",
-    //       "basicNameE" : "basic_name_e",
-    //       "basicExplain" : "basic_explain",
-    //       "basicExplainE" : "basic_explain_e",
-    //       "basicImgPath" : "basic_img_path ",
-    //       "basicClear" : "basic_clear",
-    //       "basicScore: 2,
-    //       "basicLocked" : "basic_locked"
-    //   },
-    //   {
-    //       "basicId" : 2,
-    //       "basicName" : "basic_name",
-    //       "basicNameE" : "basic_name_e",
-    //       "basicExplain" : "basic_explain",
-    //       "basicExplainE" : "basic_explain_e",
-    //       "basicImgPath" : "basic_img_path ",
-    //       "basicClear" : "basic_clear",
-    //       "basicScore: 2,
-    //       "basicLocked" : "basic_locked"
-    //   }, ...
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((json) => {
@@ -129,22 +109,30 @@ function Basics() {
       });
   }, []);
 
+  const goToStage = (stageId) => {
+    navigate(`/practice/basics/stage`, { state: { stageId: stageId } });
+  };
+
   return (
     <>
       <BasicTemplate
         cards={cardInfoList.map((value) =>
           t("language") === "KOR" ? (
             <BasicCard
+              onClick={goToStage}
               key={value.basicId}
+              stageId={value.basicId}
               title={value.basicName}
               desc={value.basicExplain}
               img={value.basicImgPath}
               clear={value.basicClear}
               score={value.basicScore}
               locked={value.basicLocked}
-            ></BasicCard>
+            />
           ) : (
             <BasicCard
+              onClick={goToStage}
+              stageId={value.basicId}
               key={value.basicId}
               title={value.basicNameE}
               desc={value.basicExplainE}
@@ -152,7 +140,7 @@ function Basics() {
               clear={value.basicClear}
               score={value.basicScore}
               locked={value.basicLocked}
-            ></BasicCard>
+            />
           )
         )}
       ></BasicTemplate>

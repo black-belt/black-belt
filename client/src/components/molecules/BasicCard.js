@@ -2,10 +2,14 @@ import styled, { css } from "styled-components";
 import { colors, fontSize, fontWeight, fontFamily } from "../../_foundation";
 import CustomIcon from "../atoms/Icons/Icon";
 
-function BasicCard({ title, desc, img, clear, score, locked }) {
+function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId }) {
+  const selectStage = () => {
+    onClick(stageId);
+  };
+
   return (
     <Card>
-      <ImageContainer>
+      <ImageContainer onClick={selectStage}>
         <Image img={img} clear={clear}></Image>
         <DescriptionContainer>
           <Description>{desc}</Description>
@@ -59,7 +63,7 @@ const ImageContainer = styled.div`
   box-sizing: border-box;
   transition: all 0.35s ease;
   width: 100%;
-  height: 85%;
+  height: 75%;
   position: relative;
   text-align: left;
   overflow: hidden;
@@ -94,7 +98,6 @@ const Image = styled.div`
   height: 100%;
   background-color: ${colors.gray6};
   background-image: url(${(props) => props.img});
-  /* background-size: 100% 90%; */
   background-repeat: no-repeat;
   background-size: contain;
   background-origin: content-box;
@@ -102,10 +105,10 @@ const Image = styled.div`
   ${(props) =>
     !props.clear
       ? css`
-          filter: grayscale(0%) brightness(100%);
+          filter: grayscale(100%) brightness(100%);
         `
       : css`
-          filter: grayscale(70%) brightness(30%);
+          filter: grayscale(100%) brightness(55%);
         `}
   filter: gray;
   border-radius: 5px;
@@ -117,13 +120,6 @@ const Image = styled.div`
     left: 0;
     right: 0;
   }
-
-  /* ${ImageContainer}:hover & {
-    zoom: 1;
-    filter: alpha(opacity=50);
-    -webkit-opacity: 0.5;
-    opacity: 0.5;
-  } */
 `;
 
 const DescriptionContainer = styled.div`
@@ -137,17 +133,6 @@ const DescriptionContainer = styled.div`
 
   z-index: 1;
   padding: 20%;
-
-  /* &:hover {
-    transform: translate(0px, 0px);
-    opacity: 1;
-  } */
-
-  /* ${ImageContainer}:hover {
-    -webkit-transform: translate(0px, 0px);
-    transform: translate(0px, 0px);
-    opacity: 1;
-  } */
 `;
 
 const Description = styled.div`
@@ -157,11 +142,6 @@ const Description = styled.div`
   opacity: 0;
   top: 50%;
   transform: translateY(40px);
-
-  /* &:hover {
-    transform: translate(0px, 0px);
-    opacity: 1;
-  } */
 
   ${ImageContainer}:hover & {
     transform: translate(0px, 0px);
@@ -178,11 +158,6 @@ const Arrow = styled.div`
   opacity: 0;
   transform: translateX(-10px);
 
-  /* &:hover {
-    transform: translate(0px, 0px);
-    opacity: 1;
-  } */
-
   ${ImageContainer}:hover & {
     transform: translate(0px, 0px);
     opacity: 1;
@@ -190,6 +165,7 @@ const Arrow = styled.div`
 `;
 
 const InfoContainer = styled.div`
+  height: 25%;
   display: flex;
   justify-content: space-between;
 `;
