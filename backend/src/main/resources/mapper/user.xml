@@ -45,7 +45,7 @@
 			UNION ALL
 			select user_lv4_date as lvDate from user where user_id = #{userid}
 			UNION ALL
-			select judge_date as lvDate from Judge where user_id = #{userid} and judge_ox = 'Y' order by lvDate
+			select judge_date as lvDate from judge where user_id = #{userid} and judge_ox = 'Y' order by lvDate
 			)a
 		where lvDate is not null;
 	</select>
@@ -67,6 +67,5 @@
 		    LEFT JOIN country c on u.country_id = c.country_id
 		ORDER BY end_time
 		LIMIT 10
-	</select>
-	
+	</select> 
 </mapper>

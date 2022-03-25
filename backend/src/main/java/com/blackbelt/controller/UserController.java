@@ -1,8 +1,6 @@
 package com.blackbelt.controller;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -27,9 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,8 +42,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.blackbelt.model.CountryCrudRepository;
@@ -56,6 +53,7 @@ import com.blackbelt.model.CountryDto;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.model.UserDto;
 import com.blackbelt.model.service.UserService;
+import com.blackbelt.service.FileStorageService;
 import com.blackbelt.util.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -73,6 +71,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	HttpSession httpSession;
+	@Autowired
+    private FileStorageService fileStorageService;
 
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login( @RequestBody Map<String,String> map) {
@@ -104,24 +104,29 @@ public class UserController {
 					userRepo.save(user.get());
 				}
 				String token = tokenProvider.createToken(lastId);// key, data, subject
+				Optional<UserDto> userinfo = userRepo.findByuserEmail(userEmail);
 				resultMap.put("Authorization","Bearer " + token);
+				resultMap.put("userInfo", userinfo.get());
+				resultMap.put("statusCode",200);
 				status = HttpStatus.OK;
 				
 			} else {
+				resultMap.put("statusCode",424);
 				status = HttpStatus.FAILED_DEPENDENCY;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("statusCode",500);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	@Test
-	@DisplayName("회원 겨루기 가능여부가 잘 수정되었는지 확인할때 사용")
+	
 	@PutMapping("/logout")
-	public ResponseEntity<String> registerUser(@RequestBody Map<String,String> map ) {
-		ResponseEntity<String> re = null;
-		
+	public ResponseEntity<Map<String, Object>> registerUser(@RequestBody Map<String,String> map ) {
+		ResponseEntity<Map<String, Object>> re = null;
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			String userId = map.get("userId");
 			Optional<UserDto> updateUser = userRepo.findById(userId);
@@ -129,30 +134,35 @@ public class UserController {
 				updateUser.get().setUserId(userId);
 				updateUser.get().setUserState('N');
 			}else {
-				return new ResponseEntity<String>("NOT FOUND", HttpStatus.FAILED_DEPENDENCY);
+				resultMap.put("statusCode",424);
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
 			}
 			
 			UserDto saveUser = userRepo.save(updateUser.get());
-			assertEquals(updateUser.get().getUserState(), saveUser.getUserState(), "not updated properly!!");
-			re = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			resultMap.put("statusCode",200);
+			re = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}catch(Exception e) {
-			re = new ResponseEntity<String>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+			resultMap.put("statusCode",500);
+			re = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return re;
 	}
 	
 	@GetMapping("/country")
-	public ResponseEntity<List<CountryDto>> getCountries() {
-		ResponseEntity<List<CountryDto>> re = null;
+	public ResponseEntity<Map<String, Object>> getCountries() {
+		ResponseEntity<Map<String, Object>> re = null;
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			List<CountryDto> clist = countryRepo.findAll();
 			
 			System.out.println(clist.get(0).getCountryId());
 		  if(clist != null) {
-			  re = new ResponseEntity<List<CountryDto>>(clist, HttpStatus.OK);
+			  resultMap.put("data",clist);
+			  resultMap.put("statusCode",200);
+			  re = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		  }
 		} catch (Exception e) {
-			re = new ResponseEntity<List<CountryDto>>(new ArrayList<CountryDto>(), HttpStatus.INTERNAL_SERVER_ERROR);
+			re = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
 		}		
 		return re;
@@ -160,7 +170,7 @@ public class UserController {
 	
 	@GetMapping("/userinfo")
 	public ResponseEntity<Map<String, Object>> getUserInfo( HttpServletRequest request) {
-		Map<String, Object> resultMap = null;
+		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.OK;
 		try {
 			String authorization = request.getHeader("Authorization");
@@ -171,37 +181,43 @@ public class UserController {
 				
 				String userId = String.valueOf(tokenProvider.getSubject(authorization));
 				resultMap = userService.getUserInfo(userId);
+				resultMap.put("statusCode", 200);
 			} else {
+				resultMap.put("statusCode", 424);
 				status = HttpStatus.FAILED_DEPENDENCY;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
+			resultMap.put("statusCode", 500);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	@GetMapping("/usernick")
-	public ResponseEntity<Map<String, Boolean>> nickCheck(@RequestBody Map<String,String> map){
-		ResponseEntity<Map<String, Boolean>> re = null;
-		Map<String, Boolean> resultMap = new HashMap<>();
+	public ResponseEntity<Map<String, Object>> nickCheck(@RequestBody Map<String,String> map){
+		ResponseEntity<Map<String, Object>> re = null;
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			String nick = map.get("userNick");
 			Optional<UserDto> user = userRepo.findByuserNick(nick);	
 			if(user.isPresent()) resultMap.put("isUsed", false);			// isEmpty 를 바꿈 java version 차이
 			else resultMap.put("isUsed", true);
-			re = new ResponseEntity<Map<String, Boolean>>(resultMap, HttpStatus.OK);
+			resultMap.put("statusCode", 200);
+			re = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			re = new ResponseEntity<Map<String, Boolean>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
+			resultMap.put("statusCode", 500);
+			re = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
 			return re;
 		}
 		return re;
 	}
 	@PatchMapping("/userdelete")
-	public ResponseEntity<?> userDelete(HttpServletRequest request){
+	public ResponseEntity<Map<String, Object>> userDelete(HttpServletRequest request){
 		HttpStatus status = HttpStatus.OK;
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			String authorization = request.getHeader("Authorization");
 			if(authorization.indexOf("Bearer") != -1) {
@@ -213,20 +229,24 @@ public class UserController {
 				user.get().setUserState('N');
 				user.get().setUserDelete('Y');
 				userRepo.save(user.get()); //바뀐내용으로 저장
+				resultMap.put("statusCode", 200);
 			} else {
+				resultMap.put("statusCode", 424);
 				status = HttpStatus.FAILED_DEPENDENCY;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
+			resultMap.put("statusCode", 500);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			return new ResponseEntity<String>("ERROR", status);
+			return new ResponseEntity<Map<String, Object>>(resultMap, status);
 		}
 		
-		return new ResponseEntity<String>("SUCCESS", status);
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	@PatchMapping("/userinfoedit")
-	public ResponseEntity<?> userEdit(HttpServletRequest request, @RequestBody Map<String,String> map){
+	public ResponseEntity<Map<String, Object>> userEdit(HttpServletRequest request, @RequestBody Map<String,String> map){
 		HttpStatus status = HttpStatus.OK;
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			String authorization = request.getHeader("Authorization");
 			if(authorization.indexOf("Bearer") != -1) {
@@ -244,7 +264,10 @@ public class UserController {
 						if(Pattern.matches("^[0-9a-zA-Z가-힣]{1,20}$", nick)) {
 							user.get().setUserNick(nick);
 						}
-						else new ResponseEntity<String>("WRONG VALUE", HttpStatus.FAILED_DEPENDENCY);
+						else {
+							resultMap.put("statusCode", 424);
+							new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
+						}
 						break;
 					case "defaultLang": user.get().setDefaultLang(map.get(s).charAt(0));
 						break;
@@ -253,15 +276,57 @@ public class UserController {
 					}
 				}
 				userRepo.save(user.get()); //바뀐내용으로 저장
+				resultMap.put("statusCode", 200);
 			} else {
 				status = HttpStatus.FAILED_DEPENDENCY;
+				resultMap.put("statusCode", 424);
+				new ResponseEntity<Map<String, Object>>(resultMap, status);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			return new ResponseEntity<String>("ERROR", status);
+			resultMap.put("statusCode", 500);
+			return new ResponseEntity<Map<String, Object>>(resultMap, status);
 		}
 		
-		return new ResponseEntity<String>("SUCCESS", status);
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+	@PostMapping("/uploadprofile")
+    public ResponseEntity<Map<String, Object>> form(HttpServletRequest request, @RequestParam("uploadFile") MultipartFile file) throws IOException {
+		HttpStatus status = HttpStatus.OK;
+		Map<String, Object> resultMap = new HashMap<>();
+		try {
+			String authorization = request.getHeader("Authorization");
+			if(authorization.indexOf("Bearer") != -1) {
+				authorization = authorization.replaceAll("^Bearer\\s", "");
+			}
+			if (tokenProvider.validateToken(authorization)) {
+				 if (!file.isEmpty()) {
+					 	String[] fileInfo = fileStorageService.storeFile(file);
+			        	String fileName = fileInfo[0];
+			        	String fileDir = fileInfo[1];
+			        	String userId = String.valueOf(tokenProvider.getSubject(authorization));
+						Optional<UserDto> user = userRepo.findByuserId(userId);
+						user.get().setUserProfilePath(fileDir);
+						userRepo.save(user.get()); //바뀐내용으로 저장\
+						resultMap.put("profileSavePath", fileDir);
+						resultMap.put("statusCode", 200);
+			        }else {
+			        	status = HttpStatus.FAILED_DEPENDENCY;
+						resultMap.put("statusCode", 424);
+						new ResponseEntity<Map<String, Object>>(resultMap, status);
+			        }
+			}else {
+				status = HttpStatus.FAILED_DEPENDENCY;
+				resultMap.put("statusCode", 424);
+				new ResponseEntity<Map<String, Object>>(resultMap, status);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			resultMap.put("statusCode", 500);
+			return new ResponseEntity<Map<String, Object>>(resultMap, status);
+		}
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
 }

@@ -18,8 +18,8 @@ const StyledBtn = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: ${(props) => props.width};}
-  height: 48px;  
+  width: ${(props) => props.width};
+  height: 48px;
   padding: 0.6rem 1.5rem;
 
   border-radius: 4rem;
@@ -40,6 +40,7 @@ const StyledBtn = styled.button`
     css`
       :hover {
         background: ${colors.blue1};
+        border: 1px solid ${colors.blue1};
       }
     `}
 

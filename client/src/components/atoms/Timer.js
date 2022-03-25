@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 
-function Timer({ initialSeconds, totalSeconds, onChange, interval }) {
+function Timer({ initialSeconds, totalSeconds, onChange, interval, isTimer, setIsTimer }) {
   const [elapsed, setElapsed] = useState(initialSeconds); //경과된 시간
   const [intervalId, setIntervalId] = useState(0);
-  let time = initialSeconds;
 
   useEffect(() => {
-    start(intervalId);
+    // start(intervalId);
     return () => clear(intervalId);
   }, []);
 
@@ -14,10 +13,19 @@ function Timer({ initialSeconds, totalSeconds, onChange, interval }) {
     onChange?.(elapsed);
   }, [elapsed]);
 
+  useEffect(() => {
+    setElapsed(0);
+    if (isTimer) {
+      start(intervalId);
+    }
+  }, [isTimer]);
+
   const start = (intervalId) => {
+    let time = 0;
     clear(intervalId);
     const newIntervalId = setInterval(() => {
-      if (time === totalSeconds) {
+      if (time + initialSeconds === totalSeconds) {
+        setIsTimer(false);
         clear(newIntervalId);
         return;
       }
