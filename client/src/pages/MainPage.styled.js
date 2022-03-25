@@ -38,12 +38,30 @@ export const Layer = styled.div`
 `;
 
 export const Layout = styled.div`
-  padding-top: 92px;
+  padding: 92px 16% 0 16%;
+  width: 100vw;
+  height: 100vh;
+
+  vertical-align: middle;
+  /* text-align: center; */
+
+  /* display: flex; */
+  /* align-items: center; */
+`;
+
+export const Carousel = styled.div`
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 100%;
+
+  /* padding: 10% 0; */
+  gap: 2rem;
+  /* margi */
 `;
 
 export const TextBox = styled.div`
+  width: 60%;
   /* padding-top: 14%;
   padding-left: 14%; */
 
@@ -70,7 +88,7 @@ export const Title = styled.div`
 `;
 
 export const Contents = styled.div`
-  width: 46%;
+  /* width: 46%; */
   font-size: ${fontSize.xl};
 `;
 
@@ -80,4 +98,15 @@ export const ButtonBox = styled.div`
   padding-top: 2.8rem;
 `;
 
-export const Carousel = styled.div``;
+export const ImgBox = styled.div`
+  /* padding: 10% 0; */
+  height: 400px;
+  border-radius: 10px;
+  /* margin: 10% 0; */
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  img {
+    width: 400px;
+  }
+`;

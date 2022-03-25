@@ -1,8 +1,11 @@
+import Slider from "react-animated-slider";
+import "react-animated-slider/build/horizontal.css";
 import BackgroundVideo, {
   Background,
   ButtonBox,
   Carousel,
   Contents,
+  ImgBox,
   Layer,
   Layout,
   TextBox,
@@ -15,6 +18,24 @@ import { useNavigate } from "react-router-dom";
 function MainPage() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
+  const slides = [
+    {
+      title: "practice mode",
+      description: "practice mode explanation",
+      description2: "practice mode explanation2",
+    },
+    {
+      title: "promotion test",
+      description: "promotion test explanation",
+      description2: "promotion test explanation2",
+    },
+    {
+      title: "gyeorugi",
+      description: "gyeorugi explanation",
+      description2: "gyeorugi explanation2",
+    },
+  ];
 
   const titleMode = {
     practice: "practice mode",
@@ -68,18 +89,22 @@ function MainPage() {
         <Layer></Layer>
       </Background>
       <Layout>
-        <TextBox>
-          <Title language={t("language")}>{t(titleMode["practice"])}</Title>
-          <Contents>{t(explanations["practice"])}</Contents>
-          <ButtonBox>
-            {buttons["practice"].map((menus) => (
-              <InButton key={menus.title} onClick={() => navigate(menus.url)}>
-                {t(menus.title)}
-              </InButton>
-            ))}
-          </ButtonBox>
-        </TextBox>
-        <Carousel></Carousel>
+        <Carousel>
+          <TextBox>
+            <Title language={t("language")}>{t(titleMode["practice"])}</Title>
+            <Contents>{t(explanations["practice"])}</Contents>
+            <ButtonBox>
+              {buttons["practice"].map((menus) => (
+                <InButton key={menus.title} onClick={() => navigate(menus.url)}>
+                  {t(menus.title)}
+                </InButton>
+              ))}
+            </ButtonBox>
+          </TextBox>
+          <ImgBox>
+            <img src="/images/practice.png" alt="" />
+          </ImgBox>
+        </Carousel>
       </Layout>
       {/* <h1>{t("hello")}</h1>
       <button onClick={changelanguageToKo}>Korean</button>
