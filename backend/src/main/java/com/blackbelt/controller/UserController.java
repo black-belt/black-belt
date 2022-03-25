@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.blackbelt.model.CountryCrudRepository;
@@ -52,6 +53,7 @@ import com.blackbelt.model.CountryDto;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.model.UserDto;
 import com.blackbelt.model.service.UserService;
+import com.blackbelt.service.FileStorageService;
 import com.blackbelt.util.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -69,6 +71,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	HttpSession httpSession;
+	@Autowired
+    private FileStorageService fileStorageService;
 
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login( @RequestBody Map<String,String> map) {
@@ -287,15 +291,42 @@ public class UserController {
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-//	@PostMapping("/user/uploadprofile ")
-//    public String form(@RequestParam MultipartFile file) throws IOException {
-//
-//        if (!file.isEmpty()) {
-//            String filename = file.getOriginalFilename();
-//
-//            String fullPath = uploadDir + filename;
-//            file.transferTo(new File(fullPath));
-//        }
-//        return "upload-form";
-//    }
+	@PostMapping("/uploadprofile")
+    public ResponseEntity<Map<String, Object>> form(HttpServletRequest request, @RequestParam("uploadFile") MultipartFile file) throws IOException {
+		HttpStatus status = HttpStatus.OK;
+		Map<String, Object> resultMap = new HashMap<>();
+		try {
+			String authorization = request.getHeader("Authorization");
+			if(authorization.indexOf("Bearer") != -1) {
+				authorization = authorization.replaceAll("^Bearer\\s", "");
+			}
+			if (tokenProvider.validateToken(authorization)) {
+				 if (!file.isEmpty()) {
+					 	String[] fileInfo = fileStorageService.storeFile(file);
+			        	String fileName = fileInfo[0];
+			        	String fileDir = fileInfo[1];
+			        	String userId = String.valueOf(tokenProvider.getSubject(authorization));
+						Optional<UserDto> user = userRepo.findByuserId(userId);
+						user.get().setUserProfilePath(fileDir);
+						userRepo.save(user.get()); //바뀐내용으로 저장\
+						resultMap.put("profileSavePath", fileDir);
+						resultMap.put("statusCode", 200);
+			        }else {
+			        	status = HttpStatus.FAILED_DEPENDENCY;
+						resultMap.put("statusCode", 424);
+						new ResponseEntity<Map<String, Object>>(resultMap, status);
+			        }
+			}else {
+				status = HttpStatus.FAILED_DEPENDENCY;
+				resultMap.put("statusCode", 424);
+				new ResponseEntity<Map<String, Object>>(resultMap, status);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			resultMap.put("statusCode", 500);
+			return new ResponseEntity<Map<String, Object>>(resultMap, status);
+		}
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
 }
