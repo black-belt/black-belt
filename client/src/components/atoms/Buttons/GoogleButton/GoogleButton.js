@@ -2,6 +2,8 @@ import Icon from "components/atoms/Icons/Icon";
 import React from "react";
 import GoogleLogin from "react-google-login";
 import { useTranslation } from "react-i18next";
+import { useRecoilState } from "recoil";
+import { username, profileImg } from "recoils";
 import axiosInstance from "utils/API";
 import {
   GoogleContent,
@@ -13,6 +15,9 @@ const clientId = process.env.REACT_APP_GOOGLE_API_KEY;
 
 export default function GoogleButton({ onSocial }) {
   const { t, i18n } = useTranslation();
+  const [name, setName] = useRecoilState(username);
+  const [profileImgUrl, setProfileImgUrl] = useRecoilState(profileImg);
+
   const onSuccess = async (response) => {
     console.log(response);
     // localStorage.setItem('blackbelt_token', )
@@ -29,10 +34,13 @@ export default function GoogleButton({ onSocial }) {
         userName: name,
         userEmail: email,
       });
-      // console.log(data.Authorization);
+      // console.log(data);
       // const token = data.Authorization
+      setName(data.userInfo.userNick);
+      setProfileImgUrl(data.userInfo.userProfilePath);
+      console.log(name, profileImgUrl);
       localStorage.setItem("blackbelt_token", data.Authorization);
-      window.location.reload();
+      // window.location.reload();
     };
     googleLogin();
   };
