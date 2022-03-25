@@ -3,7 +3,8 @@ import { colors, fontSize, fontWeight, fontFamily } from "../../_foundation";
 import { useTranslation } from "react-i18next";
 // import SmallCarousel from "components/molecules/Carousel/SmallCarousel";
 import { useEffect, useState } from "react";
-import TempCarousel from "components/atoms/Carousel/TempCarousel";
+// import TempCarousel from "components/atoms/Carousel/TempCarousel";
+import SmallCarousel from "components/molecules/Carousel/SmallCarousel";
 // import SSCarousel from "components/atoms/Carousel/SSCarousel";
 
 function ComboTemplate({ cards }) {
@@ -22,11 +23,11 @@ function ComboTemplate({ cards }) {
           <Title language={t("language")}>{t(title)}</Title>
           <Description>{t(explanations)}</Description>
         </TextContainer>
-        <TempCarousel
+        <SmallCarousel
           items={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
           active={active}
-          // setActive={setActive}
-        ></TempCarousel>
+          setActive={setActive}
+        ></SmallCarousel>
       </Container>
       <BackgroundImage />
     </>
