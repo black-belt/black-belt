@@ -18,9 +18,9 @@ const StyledBtn = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: ${(props) => props.width};}
-  height: 36px;
-  padding: 1rem 1rem 1rem 0.6rem;
+  width: ${(props) => props.width};
+  height: 48px;
+  padding: 0.6rem 1.5rem;
 
   border-radius: 4rem;
   border: 1px solid ${colors.gray0};
@@ -28,7 +28,7 @@ const StyledBtn = styled.button`
   background-color: transparent;
 
   font-family: inherit;
-  font-size: ${fontSize.lg};
+  font-size: ${fontSize.xl};
   line-height: 1.75rem;
   text-align: center;
   text-decoration: none;
@@ -40,14 +40,14 @@ const StyledBtn = styled.button`
     css`
       :hover {
         background: ${colors.blue1};
+        border: 1px solid ${colors.blue1};
       }
     `}
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     margin-right: 10px;
-    margin-left: 3px;
     vertical-align: top;
   }
 `;

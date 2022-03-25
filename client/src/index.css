@@ -7,6 +7,22 @@
     url("./style/PretendardVariable.woff2") format("woff2-variations");
 }
 
+@font-face {
+  font-family: "Dry Brush";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: local("Dry Brush"), url("./style/Dry-Brush.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Dokdo";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: local("KoreanDokdo"), url("./style/KoreanDokdo.woff") format("woff");
+}
+
 body {
   margin: 0;
   font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont,

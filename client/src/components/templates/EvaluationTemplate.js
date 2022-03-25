@@ -20,10 +20,12 @@ function EvaluationTemplate({ grade, gradeNum, restart, home }) {
             {gradeNum > 2 ? icons["goldStar"] : icons["blackStar"]}
           </Svg>
         </StarContainer>
-        <ButtonContainer>
-          <RestartButton>{restart}</RestartButton>
-          <HomeButton>{home}</HomeButton>
-        </ButtonContainer>
+        {restart && (
+          <ButtonContainer>
+            <RestartButton>{restart}</RestartButton>
+            <HomeButton>{home}</HomeButton>
+          </ButtonContainer>
+        )}
       </Middle>
     </Background>
   );
@@ -48,7 +50,7 @@ const Background = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 10001;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.75);
@@ -92,8 +94,8 @@ const Svg = styled.svg`
   // stroke-width: 2;
   // stroke-linecap: round;
   // stroke-linejoin: round;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   padding: 0 5px;
 `;
 

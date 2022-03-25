@@ -48,19 +48,19 @@ function ComboStage() {
           // "오른 (무릎)눌러꺾기",
           // "안팔목 (몸통)헤쳐막기",
         ]);
-        setAnswer(["chickadee", "coffee mug", "chickadee"]);
+        setAnswer(["mask", "water jug", "mask"]);
         setAnswerIndex([0, 2, 4]);
         setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
       });
-
-    return () => {
-      fetch("https://jsonplaceholder.typicode.com/posts");
-    };
   }, []);
 
   const updateIsPass = () => {
-    setNextAction(answer.length - 1);
-    setIsPass(true);
+    fetch("https://jsonplaceholder.typicode.com/posts") //통과단계보냄
+      .then((res) => res.json())
+      .then((json) => {
+        setNextAction(answer.length - 1);
+        setIsPass(true);
+      });
   };
 
   const updateNextAction = (value) => {

@@ -1,6 +1,7 @@
 import Icon from "components/atoms/Icons/Icon";
 import GoogleButton from "components/atoms/Buttons/GoogleButton/GoogleButton";
-import React from "react";
+import React, { useCallback } from "react";
+import { useRecoilState } from "recoil";
 import {
   Overlay,
   ModalBox,
@@ -11,15 +12,20 @@ import {
   Footer,
   FooterLink,
 } from "./LoginModal.styled";
+import { loginModalState } from "recoils";
 
 const LoginModal = ({ ...props }) => {
+  const [isModalOpen, setIsModalOpen] = useRecoilState(loginModalState);
+  const closeModal = useCallback(() => {
+    setIsModalOpen(null);
+  }, [setIsModalOpen]);
   return (
     <>
       <Overlay>
         <ModalSection>
           <ModalContent>
-            <ModalHeader>
-              <Icon icon="xBtn" />
+            <ModalHeader onClick={() => setIsModalOpen(null)}>
+              <Icon icon="xBtn" onClick={() => setIsModalOpen(null)} />
             </ModalHeader>
             <ModalBox>
               <Logo>
