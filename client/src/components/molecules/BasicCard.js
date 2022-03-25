@@ -55,7 +55,7 @@ export default BasicCard;
 
 const Card = styled.div`
   width: 25%;
-  height: 40%;
+  height: 35%;
   padding: 20px;
 `;
 
@@ -63,7 +63,7 @@ const ImageContainer = styled.div`
   box-sizing: border-box;
   transition: all 0.35s ease;
   width: 100%;
-  height: 75%;
+  height: 85%;
   position: relative;
   text-align: left;
   overflow: hidden;
