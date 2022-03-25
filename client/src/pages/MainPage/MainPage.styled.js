@@ -88,7 +88,7 @@ export const Carousel = styled.div`
   align-items: center;
   gap: 2rem;
 
-  padding: 0 16%;
+  padding: 0 14%;
   /* width: 100%;
   height: 100%; */
 `;
