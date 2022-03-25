@@ -1,5 +1,6 @@
 import Slider from "react-animated-slider";
-import "react-animated-slider/build/horizontal.css";
+import "./carousel.css";
+// import "react-animated-slider/build/horizontal.css";
 import BackgroundVideo, {
   Background,
   ButtonBox,
@@ -10,10 +11,12 @@ import BackgroundVideo, {
   Layout,
   TextBox,
   Title,
+  // Slider,
 } from "./MainPage.styled";
 import { useTranslation } from "react-i18next";
 import InButton from "components/atoms/Buttons/in-btns";
 import { useNavigate } from "react-router-dom";
+import { splitRealAndImagArrays } from "@tensorflow/tfjs-core/dist/backends/complex_util";
 
 function MainPage() {
   const { t, i18n } = useTranslation();
@@ -24,16 +27,46 @@ function MainPage() {
       title: "practice mode",
       description: "practice mode explanation",
       description2: "practice mode explanation2",
+      button: [
+        {
+          name: "basics",
+          url: "/practice/basics",
+        },
+        {
+          name: "combos",
+          url: "/practice/combos",
+        },
+        {
+          name: "poomsae",
+          url: "/practice/poomsae",
+        },
+      ],
     },
     {
       title: "promotion test",
       description: "promotion test explanation",
       description2: "promotion test explanation2",
+      button: [
+        {
+          name: "combos",
+          url: "/practice/combos",
+        },
+      ],
     },
     {
       title: "gyeorugi",
       description: "gyeorugi explanation",
       description2: "gyeorugi explanation2",
+      button: [
+        {
+          name: "normal",
+          url: "",
+        },
+        {
+          name: "rank",
+          url: "",
+        },
+      ],
     },
   ];
 
@@ -89,22 +122,29 @@ function MainPage() {
         <Layer></Layer>
       </Background>
       <Layout>
-        <Carousel>
-          <TextBox>
-            <Title language={t("language")}>{t(titleMode["practice"])}</Title>
-            <Contents>{t(explanations["practice"])}</Contents>
-            <ButtonBox>
-              {buttons["practice"].map((menus) => (
-                <InButton key={menus.title} onClick={() => navigate(menus.url)}>
-                  {t(menus.title)}
-                </InButton>
-              ))}
-            </ButtonBox>
-          </TextBox>
-          <ImgBox>
-            <img src="/images/practice.png" alt="" />
-          </ImgBox>
-        </Carousel>
+        <Slider>
+          {slides.map((slide) => (
+            <Carousel>
+              <TextBox>
+                <Title language={t("language")}>{t(slide.title)}</Title>
+                <Contents>{t(slide.description)}</Contents>
+                <ButtonBox>
+                  {slide.button.map((menus) => (
+                    <InButton
+                      key={menus.title}
+                      onClick={() => navigate(menus.url)}
+                    >
+                      {t(menus.title)}
+                    </InButton>
+                  ))}
+                </ButtonBox>
+              </TextBox>
+              <ImgBox>
+                <img src="/images/practice.png" alt="" />
+              </ImgBox>
+            </Carousel>
+          ))}
+        </Slider>
       </Layout>
       {/* <h1>{t("hello")}</h1>
       <button onClick={changelanguageToKo}>Korean</button>
