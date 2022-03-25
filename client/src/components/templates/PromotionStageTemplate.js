@@ -13,6 +13,8 @@ function PromotionStageTemplate({
   info,
   curNum,
   videoText,
+  isTimer,
+  setIsTimer,
 }) {
   return (
     <>
@@ -22,7 +24,7 @@ function PromotionStageTemplate({
         </TextContainer>
         <VideoContainer>
           <UserContainer>
-            <VideoText>{videoText}</VideoText>
+            {!isTimer && <VideoText>{videoText}</VideoText>}
             {camera}
           </UserContainer>
           <InfoContainer>
@@ -31,6 +33,8 @@ function PromotionStageTemplate({
                 totalSeconds={totalSeconds}
                 initialSeconds={initialSeconds}
                 initialProgress={initialProgress}
+                isTimer={isTimer}
+                setIsTimer={setIsTimer}
               />
             </TimerContainer>
             <InfoText>
@@ -79,7 +83,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   height: calc(100% - 120px);
   width: 100%;
-  padding: 100px 100px 0 100px;
+  padding: 100px 100px 0 0;
   font-family: ${fontFamily.sans};
   color: ${colors.gray0};
   background-color: transparent;
@@ -90,7 +94,7 @@ const TextContainer = styled.div`
   height: 120px;
   flex-wrap: wrap;
   font-weight: ${fontWeight.regular};
-  margin: 0 0 50px 9%;
+  margin: 50px 0 50px 13%;
 `;
 
 const TitleContainer = styled.div`
@@ -141,9 +145,9 @@ const TimerContainer = styled.div`
 
 const InfoText = styled.div`
   display: flex;
-  flex-wrap: warp;
+  flex-wrap: wrap;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 `;

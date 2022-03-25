@@ -1,5 +1,7 @@
+import BasicTempalte from "components/templates/BasicTemplate";
+
 function Basics() {
-  return <div className="Basics">Basics</div>;
+  return <>{/* <BasicTempalte /> */}</>;
 }
 
 export default Basics;

@@ -19,7 +19,7 @@
 	    <result property="userLose" column="userLose"/>
 	    <result property="userDraw" column="userDraw"/>
 	    <collection property="userLvDates" column="userid=userId" javaType="java.util.ArrayList" ofType="date" select="getLvDates"/>
-	    <collection property="battleHistories" column="userid=userId" javaType="java.util.ArrayList" ofType="com.blackbelt.model.BattleHistoryDto" select="getBattleHistories"/>
+	    <!-- <collection property="battleHistories" column="userid=userId" javaType="java.util.ArrayList" ofType="com.blackbelt.model.BattleHistoryDto" select="getBattleHistories"/> -->
 	</resultMap>
 	<select id="getUserInfo" parameterType="String" resultMap="userInfo">
 		SELECT 
@@ -49,7 +49,7 @@
 			)a
 		where lvDate is not null;
 	</select>
-	<select id="getBattleHistories" resultType="com.blackbelt.model.BattleHistoryDto">
+	<!-- <select id="getBattleHistories" resultType="com.blackbelt.model.BattleHistoryDto">
 		SELECT battlehistory_id AS battleHistoryId, end_time, enemyId,enemyColor, et.tier_name AS enemyTier, et.tier_name_e AS enemyTierE
 		, et.tier_img_path AS enemyTierPath, mt.tier_name AS myTier, mt.tier_name_e AS myTierE, mt.tier_img_path AS myTierPath,
         bt.red_win_lose_draw AS redWinLoseDraw, c.country_name AS enemyCountryName, c.country_image_path AS enemyCountryImagePath
@@ -67,6 +67,6 @@
 		    LEFT JOIN country c on u.country_id = c.country_id
 		ORDER BY end_time
 		LIMIT 10
-	</select>
+	</select> -->
 	
 </mapper>
