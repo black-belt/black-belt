@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 function Basics() {
   const { t, i18n } = useTranslation();
   const [cardInfoList, setCardInfoList] = useState([]);
-  const [selectedStage, setSelectedStage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -114,37 +113,21 @@ function Basics() {
   };
 
   return (
-    <>
-      <BasicTemplate
-        cards={cardInfoList.map((value) =>
-          t("language") === "KOR" ? (
-            <BasicCard
-              onClick={goToStage}
-              key={value.basicId}
-              stageId={value.basicId}
-              title={value.basicName}
-              desc={value.basicExplain}
-              img={value.basicImgPath}
-              clear={value.basicClear}
-              score={value.basicScore}
-              locked={value.basicLocked}
-            />
-          ) : (
-            <BasicCard
-              onClick={goToStage}
-              stageId={value.basicId}
-              key={value.basicId}
-              title={value.basicNameE}
-              desc={value.basicExplainE}
-              img={value.basicImgPath}
-              clear={value.basicClear}
-              score={value.basicScore}
-              locked={value.basicLocked}
-            />
-          )
-        )}
-      ></BasicTemplate>
-    </>
+    <BasicTemplate
+      cards={cardInfoList.map((value) => (
+        <BasicCard
+          onClick={goToStage}
+          key={value.basicId}
+          stageId={value.basicId}
+          title={t("language") === "KOR" ? value.basicName : value.basicNameE}
+          desc={t("language") === "KOR" ? value.basicExplain : value.basicExplainE}
+          img={value.basicImgPath}
+          clear={value.basicClear}
+          score={value.basicScore}
+          locked={value.basicLocked}
+        />
+      ))}
+    ></BasicTemplate>
   );
 }
 

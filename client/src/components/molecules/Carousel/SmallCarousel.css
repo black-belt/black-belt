@@ -1,0 +1,75 @@
+/* .left-enter {
+  opacity: 0;
+  left: 50px - 110px;
+  height: 150px;
+  width: 110px;
+  line-height: 150px - 30;
+  margin-top: 40px;
+}
+
+.left-enter.left-enter-active {
+  opacity: 1;
+  left: 50px;
+  height: 150px;
+  width: 110px;
+  line-height: 150px;
+  margin-top: 25px;
+  transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
+}
+
+.left-leave {
+  opacity: 1;
+  left: 350px;
+  height: 150px;
+  width: 110px;
+  line-height: 150px;
+  margin-top: 25px;
+}
+
+.left-leave.left-leave-active {
+  left: 350px + 110px + 20;
+  opacity: 0;
+  height: 150px - 30;
+  line-height: 120px;
+  margin-top: 40px;
+  width: 110px - 20;
+  transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
+}
+
+.right-enter {
+  opacity: 0;
+  left: 350px + 110px;
+  height: 150px - 30;
+  width: 110px - 20;
+  line-height: 150px - 30;
+  margin-top: 40px;
+}
+
+.right-enter.right-enter-active {
+  left: 350px;
+  opacity: 1;
+  height: 150px;
+  margin-top: 25px;
+  line-height: 150px;
+  width: 110px;
+  transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
+}
+
+.right-leave {
+  left: 50px;
+  height: 150px;
+  opacity: 1;
+  margin-top: 25px;
+  line-height: 150px;
+  width: 110px;
+}
+
+.right-leave.right-leave-active {
+  left: 50px - 110px;
+  opacity: 0;
+  height: 150px - 30;
+  width: 110px - 20;
+  line-height: 150px - 30;
+  margin-top: 40px;
+  transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
+} */
