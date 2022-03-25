@@ -34,16 +34,18 @@ export const Layer = styled.div`
   /* left: 0; */
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.66);
 `;
 
 export const Layout = styled.div`
   padding-top: 92px;
+  width: 100%;
+  height: 100%;
 `;
 
 export const TextBox = styled.div`
-  padding-top: 14%;
-  padding-left: 14%;
+  /* padding-top: 14%;
+  padding-left: 14%; */
 
   color: ${colors.gray0};
 `;

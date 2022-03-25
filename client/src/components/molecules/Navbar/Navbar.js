@@ -1,5 +1,6 @@
-import { useRecoilState } from "recoil";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import axios from "axios";
 
 import LangBtn from "components/atoms/Buttons/lang-btn";
 import Icon from "components/atoms/Icons/Icon";
@@ -15,11 +16,21 @@ import {
   NavItemBtn,
   NavItemLink,
 } from "./Navbar.styled";
+import axiosInstance from "utils/API";
 
 function Navbar({ navItemData }) {
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
   const [translateEN, setTranslateEn] = useState(false);
   const { t, i18n } = useTranslation();
+
+  const getUserInfo = async () => {
+    const userInfo = await axiosInstance.get("/api/user/userinfo", {});
+    console.log(userInfo);
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   const handleEnglish = () => {
     setTranslateEn(!translateEN);
@@ -29,10 +40,11 @@ function Navbar({ navItemData }) {
       i18n.changeLanguage("ko");
     }
   };
+
   return (
     <Layout>
       <Logo>
-        <img src="/images/logo_navbar.png" alt="" />
+        <img src={t("logo url")} alt="" />
       </Logo>
       {isLogin() ? (
         <NavItemBox>

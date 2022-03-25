@@ -37,11 +37,11 @@ function MainPage() {
       },
       {
         title: "combos",
-        url: "practice/combos",
+        url: "/practice/combos",
       },
       {
-        title: "gyeorugi",
-        url: "/practice/combos",
+        title: "poomsae",
+        url: "/practice/poomsae",
       },
     ],
     promotion: [
@@ -64,7 +64,7 @@ function MainPage() {
   return (
     <div className="MainPage">
       <Background>
-        <BackgroundVideo url="videos/background.mp4"></BackgroundVideo>
+        <BackgroundVideo url="/videos/background.mp4"></BackgroundVideo>
         <Layer></Layer>
       </Background>
       <Layout>
@@ -73,7 +73,7 @@ function MainPage() {
           <Contents>{t(explanations["practice"])}</Contents>
           <ButtonBox>
             {buttons["practice"].map((menus) => (
-              <InButton onClick={() => navigate(menus.url)}>
+              <InButton key={menus.title} onClick={() => navigate(menus.url)}>
                 {t(menus.title)}
               </InButton>
             ))}
