@@ -1,6 +1,5 @@
 import Slider from "react-animated-slider";
 import "./carousel.css";
-// import "react-animated-slider/build/horizontal.css";
 import BackgroundVideo, {
   Background,
   ButtonBox,
@@ -11,12 +10,10 @@ import BackgroundVideo, {
   Layout,
   TextBox,
   Title,
-  // Slider,
 } from "./MainPage.styled";
 import { useTranslation } from "react-i18next";
 import InButton from "components/atoms/Buttons/in-btns";
 import { useNavigate } from "react-router-dom";
-import { splitRealAndImagArrays } from "@tensorflow/tfjs-core/dist/backends/complex_util";
 
 function MainPage() {
   const { t, i18n } = useTranslation();
@@ -70,51 +67,6 @@ function MainPage() {
     },
   ];
 
-  const titleMode = {
-    practice: "practice mode",
-    promotion: "promotion test",
-    gyeorugi: "gyeorugi",
-  };
-  const explanations = {
-    practice: "practice mode explanation",
-    practice2: "practice mode explanation2",
-    promotion: "promotion test explanation",
-    promotion2: "promotion test explanation2",
-    gyeorugi: "gyeorugi explanation",
-    gyeorugi2: "gyeorugi explanation2",
-  };
-  const buttons = {
-    practice: [
-      {
-        title: "basics",
-        url: "/practice/basics",
-      },
-      {
-        title: "combos",
-        url: "/practice/combos",
-      },
-      {
-        title: "poomsae",
-        url: "/practice/poomsae",
-      },
-    ],
-    promotion: [
-      {
-        title: "need api",
-        url: "/promotion",
-      },
-    ],
-    gyeorugi: [
-      {
-        title: "normal",
-        url: "",
-      },
-      {
-        title: "rank",
-        url: "",
-      },
-    ],
-  };
   return (
     <div className="MainPage">
       <Background>
@@ -146,9 +98,6 @@ function MainPage() {
           ))}
         </Slider>
       </Layout>
-      {/* <h1>{t("hello")}</h1>
-      <button onClick={changelanguageToKo}>Korean</button>
-      <button onClick={changelanguageToEn}>English</button> */}
     </div>
   );
 }
