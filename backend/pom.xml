@@ -31,6 +31,7 @@
 		    <artifactId>jjwt</artifactId>
 		    <version>0.9.1</version>
 		</dependency>
+		<!--  Web Socket -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
@@ -45,7 +46,6 @@
 		    <artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>	
 
-		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -61,7 +61,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--  for just socket test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 		
+		<!--  JPA, 하이버네이트 -->
+		<dependency>
+   			<groupId>org.hibernate</groupId>
+   			<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
+
 		<!-- Swagger Setting -->
 		<dependency>
 		    <groupId>io.springfox</groupId>
