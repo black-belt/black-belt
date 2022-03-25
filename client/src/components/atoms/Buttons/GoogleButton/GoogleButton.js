@@ -21,15 +21,18 @@ export default function GoogleButton({ onSocial }) {
       googleId,
       profileObj: { email, name },
     } = response;
-    console.log(googleId, email, name);
+    // console.log(googleId, email, name);
 
     const googleLogin = async () => {
-      const { data } = await axiosInstance.post("/api/user/login", {
+      const data = await axiosInstance.post("/api/user/login", {
         googleId: googleId,
         userName: name,
         userEmail: email,
       });
-      console.log(data);
+      // console.log(data.Authorization);
+      // const token = data.Authorization
+      localStorage.setItem("blackbelt_token", data.Authorization);
+      window.location.reload();
     };
     googleLogin();
   };
