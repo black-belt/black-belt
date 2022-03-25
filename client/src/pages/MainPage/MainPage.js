@@ -76,7 +76,7 @@ function MainPage() {
       <Layout>
         <Slider>
           {slides.map((slide) => (
-            <Carousel>
+            <Carousel key={slide.title}>
               <TextBox>
                 <Title language={t("language")}>{t(slide.title)}</Title>
                 <Contents>{t(slide.description)}</Contents>
