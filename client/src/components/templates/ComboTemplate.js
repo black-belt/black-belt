@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 // import TempCarousel from "components/atoms/Carousel/TempCarousel";
 import SmallCarousel from "components/molecules/Carousel/SmallCarousel";
+import BottomButtonList from "components/molecules/BottomButtonList";
 // import SSCarousel from "components/atoms/Carousel/SSCarousel";
 
 function ComboTemplate({ cards }) {
@@ -19,15 +20,22 @@ function ComboTemplate({ cards }) {
   return (
     <>
       <Container>
-        <TextContainer>
-          <Title language={t("language")}>{t(title)}</Title>
-          <Description>{t(explanations)}</Description>
-        </TextContainer>
-        <SmallCarousel
-          items={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-          active={active}
-          setActive={setActive}
-        ></SmallCarousel>
+        <TopContainer>
+          <TextContainer>
+            <Title language={t("language")}>{t(title)}</Title>
+            <Description>{t(explanations)}</Description>
+          </TextContainer>
+          <CarouselContainer>
+            <SmallCarousel
+              items={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+              active={active}
+              setActive={setActive}
+            ></SmallCarousel>
+          </CarouselContainer>
+        </TopContainer>
+        <ButtonContainer>
+          <BottomButtonList />
+        </ButtonContainer>
       </Container>
       <BackgroundImage />
     </>
@@ -38,15 +46,21 @@ export default ComboTemplate;
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100vh;
   color: ${colors.gray0};
 `;
 
+const TopContainer = styled.div`
+  display: flex;
+  height: 80%;
+`;
+
 const TextContainer = styled.div`
-  width: 30%;
+  width: 40%;
   height: 100%;
-  padding: 40vh 90px 0 90px;
+  padding: 35vh 90px 0 200px;
 `;
 
 const Title = styled.div`
@@ -73,11 +87,11 @@ const Description = styled.div`
   letter-spacing: 0.5px;
 `;
 
-const CardContainer = styled.div`
-  width: 70%;
+const CarouselContainer = styled.div`
+  width: 60%;
   height: 100%;
   padding: 100px 110px 0 0;
-  display: flex;
+  position: relative;
   flex-wrap: wrap;
   align-content: center;
 `;
@@ -93,4 +107,8 @@ const BackgroundImage = styled.div`
   min-width: 100%;
   min-height: 100%;
   z-index: -1;
+`;
+
+const ButtonContainer = styled.div`
+  height: 20%;
 `;
