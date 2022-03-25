@@ -176,7 +176,6 @@ public class UserController {
 			if (tokenProvider.validateToken(authorization)) {// 유효하면
 				
 				String userId = String.valueOf(tokenProvider.getSubject(authorization));
-				System.out.println(userId);
 				resultMap = userService.getUserInfo(userId);
 				resultMap.put("statusCode", 200);
 			} else {
