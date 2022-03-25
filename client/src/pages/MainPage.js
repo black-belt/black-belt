@@ -129,12 +129,12 @@ function MainPage() {
                 <Title language={t("language")}>{t(slide.title)}</Title>
                 <Contents>{t(slide.description)}</Contents>
                 <ButtonBox>
-                  {slide.button.map((menus) => (
+                  {slide["button"].map((menus) => (
                     <InButton
-                      key={menus.title}
+                      key={menus.name}
                       onClick={() => navigate(menus.url)}
                     >
-                      {t(menus.title)}
+                      {t(menus.name)}
                     </InButton>
                   ))}
                 </ButtonBox>
