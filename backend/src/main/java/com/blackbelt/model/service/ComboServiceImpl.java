@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.blackbelt.model.ComboDto;
+import com.blackbelt.model.ComboStageDto;
 import com.blackbelt.model.PoomsaeDto;
 import com.blackbelt.model.mapper.ComboMapper;
 
@@ -25,6 +26,12 @@ public class ComboServiceImpl implements ComboService {
 	@Override
 	public List<PoomsaeDto> getPoomsae() throws Exception {
 		return sqlSession.getMapper(ComboMapper.class).getPoomsae();
+	}
+	@Override
+	public void updateComboStage(ComboStageDto comboStageDto) {
+		//System.out.println("combo2"+comboStageDto.getCombo_clear());
+		sqlSession.getMapper(ComboMapper.class).updateComboStage(comboStageDto);
+		
 	}
 
 }

@@ -20,6 +20,15 @@
 		select poomsae_id, poomsae_name, poomsae_name_e
 		from poomsaeaction	
 	</select>
-	
+
+	<update id="updateComboStage" parameterType="ComboStageDto">
+		update combostage
+		set
+		combo_score = #{combo_score},
+		combo_clear = #{combo_clear},
+		combo_date = now(),
+		combo_locked = "N"
+		where combo_id = #{combo_id} and user_id = #{user_id}
+	</update>
 	
 </mapper>

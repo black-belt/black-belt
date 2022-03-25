@@ -40,13 +40,13 @@ public class BasicController {
 		@PatchMapping("/{basicid}")
 		public ResponseEntity<Map<String, String>> updateBasicStage(@PathVariable("basicid") int basicid, @RequestBody Map<String, String> map, @RequestHeader("Authorization") String authorization ) throws Exception {
 			//String userId = map.get("userId");
-			System.out.println("맵값: "+map);
-			String user_id =  map.get("userId");
+			//System.out.println("맵값: "+map);
+			String user_id =  map.get("userId");//나중에 token에서**
 			String test = map.get("basicId");
 			String basic_id =  Integer.toString(basicid);
 			String basic_score = map.get("basicScore");
-			String basic_clear = "1";
-			
+//			String basic_clear = "1";
+			 String basic_clear = map.get("basicClear");
 			
 	         if(authorization.indexOf("Bearer") != -1) {
 	            authorization = authorization.replaceAll("^Bearer\\s", "");
@@ -55,12 +55,12 @@ public class BasicController {
 //	            
 //	            String userId = String.valueOf(tokenProvider.getSubject(authorization));
 //	         }
-			
-			if(map.get("basicClear") == "Y") {
-				basic_clear = "1";
-			}else {
-				basic_clear = "2";
-			}		
+	        
+//			if(map.get("basicClear") == "Y") {
+//				basic_clear = "1";
+//			}else {
+//				basic_clear = "2";
+//			}		
 			//String basic_clear = "1";// map.get("basicClear"); //Y 에러..? 
 			BasicStageDto basicStageDto = new BasicStageDto(user_id, basic_id, basic_score, basic_clear);
 			basicService.updateBasicStage(basicStageDto);

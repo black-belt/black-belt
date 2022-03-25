@@ -25,6 +25,14 @@ public class ComboStageDto {
 		this.combo_date = combo_date;
 		this.combo_locked = combo_locked;
 	}
+	public ComboStageDto(String user_id, String combo_id, String combo_score, String combo_clear) {
+		super();
+		this.user_id = user_id;
+		this.combo_id = combo_id;
+		this.combo_score = combo_score;
+		this.combo_clear = combo_clear;
+	}
+
 
 	
 	

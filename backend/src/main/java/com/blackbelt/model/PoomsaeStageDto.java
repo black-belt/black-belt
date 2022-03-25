@@ -26,6 +26,14 @@ public class PoomsaeStageDto {
 		this.poomsae_locked = poomsae_locked;
 	}
 	
+	public PoomsaeStageDto(String user_id, String poomsae_id, String poomsae_score, String poomsae_clear) {
+		super();
+		this.user_id = user_id;
+		this.poomsae_id = poomsae_id;
+		this.poomsae_score = poomsae_score;
+		this.poomsae_clear = poomsae_clear;
+	}
+	
 	
 	
 }

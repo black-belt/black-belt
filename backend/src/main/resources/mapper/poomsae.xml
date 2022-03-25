@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blackbelt.model.mapper.PoomsaeMapper">
+	<select id="listPoomsae" resultType="PoomsaeDto">
+		select poomsaestage.poomsae_id, poomsae_name, poomsae_name_e, poomsae_explain, poomsae_explain_e,
+	 	poomsae_img_path, poomsae_movie_path, poomsae_clear, poomsae_score,poomsae_locked
+	 	from poomsaeaction, poomsaestage
+	 	where poomsaestage.poomsae_id = poomsaeaction.poomsae_id
+  		and user_id = #{user_id};
+	</select>
+	
+	<select id="getPoomsae" resultType="PoomsaeDto">
+		select poomsae_id, poomsae_name, poomsae_name_e, poomsae_explain, 
+		poomsae_explain_e, poomsae_img_path, poomsae_movie_path,
+		poomsae_answer, poomsae_answer_index
+        from poomsaeaction
+  		where poomsae_id = #{poomsae_id};
+	</select>
+	
+	<update id="updatePoomsaeStage" parameterType="PoomsaeStageDto">
+		update poomsaestage
+		set
+		poomsae_score = #{poomsae_score},
+		poomsae_clear = #{poomsae_clear},
+		poomsae_date = now(),
+		poomsae_locked = "N"
+		where poomsae_id = #{poomsae_id} and user_id = #{poomsae_id}
+	</update>
+</mapper>
