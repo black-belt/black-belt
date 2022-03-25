@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -165,7 +166,7 @@ public class UserController {
 	
 	@GetMapping("/userinfo")
 	public ResponseEntity<Map<String, Object>> getUserInfo( HttpServletRequest request) {
-		Map<String, Object> resultMap = null;
+		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.OK;
 		try {
 			String authorization = request.getHeader("Authorization");
@@ -175,6 +176,7 @@ public class UserController {
 			if (tokenProvider.validateToken(authorization)) {// 유효하면
 				
 				String userId = String.valueOf(tokenProvider.getSubject(authorization));
+				System.out.println(userId);
 				resultMap = userService.getUserInfo(userId);
 				resultMap.put("statusCode", 200);
 			} else {
@@ -286,4 +288,15 @@ public class UserController {
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+//	@PostMapping("/user/uploadprofile ")
+//    public String form(@RequestParam MultipartFile file) throws IOException {
+//
+//        if (!file.isEmpty()) {
+//            String filename = file.getOriginalFilename();
+//
+//            String fullPath = uploadDir + filename;
+//            file.transferTo(new File(fullPath));
+//        }
+//        return "upload-form";
+//    }
 }
