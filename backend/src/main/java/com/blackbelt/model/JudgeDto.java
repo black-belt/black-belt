@@ -25,4 +25,12 @@ public class JudgeDto {
 		this.judge_date = judge_date;
 	}
 	
+	public JudgeDto(String user_id, String level_id, String judge_ox, String judge_score) {
+		super();
+		this.user_id = user_id;
+		this.level_id = level_id;
+		this.judge_ox = judge_ox;
+		this.judge_score = judge_score;
+	}
+	
 }
