@@ -1,38 +1,25 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { colors, fontSize } from "_foundation";
-import HoverBtn from "components/atoms/Buttons/hover-btn";
+import DotButton from "components/atoms/Buttons/dot-btn";
 
-function BottomButtonList() {
+function BottomButtonList({ buttons, selectedPoomsaeIdx, changePoomsae }) {
   return (
     <>
       <Container>
         <Border></Border>
         <ButtonContainer>
-          <OneButton>
-            <HoverBtn onClick={() => {}} text="TaeGeuk 1"></HoverBtn>
-          </OneButton>
-          <OneButton>
-            <HoverBtn onClick={() => {}} text="TaeGeuk 1"></HoverBtn>
-          </OneButton>
-          <OneButton>
-            <HoverBtn onClick={() => {}} text="TaeGeuk 1"></HoverBtn>
-          </OneButton>
-          <OneButton>
-            <HoverBtn onClick={() => {}} text="TaeGeuk 1"></HoverBtn>
-          </OneButton>
-          <OneButton>
-            <HoverBtn onClick={() => {}} text="TaeGeuk 1"></HoverBtn>
-          </OneButton>
-          <OneButton>
-            <HoverBtn onClick={() => {}} text="TaeGeuk 1"></HoverBtn>
-          </OneButton>
-          <OneButton>
-            <HoverBtn onClick={() => {}} text="TaeGeuk 1"></HoverBtn>
-          </OneButton>
-          <OneButton>
-            <HoverBtn onClick={() => {}} text="TaeGeuk 1"></HoverBtn>
-          </OneButton>
+          {buttons.map((value, index) => (
+            <OneButton key={index}>
+              <DotButton
+                onClick={() => {
+                  changePoomsae(index);
+                }}
+                text={value}
+                isActive={index === selectedPoomsaeIdx}
+              ></DotButton>
+            </OneButton>
+          ))}
         </ButtonContainer>
       </Container>
     </>
@@ -67,7 +54,7 @@ const OneButton = styled.div`
 `;
 
 const Border = styled.div`
-  width: 78%;
+  width: calc(85% - 90px);
   border: 1px solid ${colors.gray7};
 
   position: absolute;

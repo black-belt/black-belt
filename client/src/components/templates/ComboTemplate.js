@@ -8,33 +8,53 @@ import SmallCarousel from "components/molecules/Carousel/SmallCarousel";
 import BottomButtonList from "components/molecules/BottomButtonList";
 // import SSCarousel from "components/atoms/Carousel/SSCarousel";
 
-function ComboTemplate({ cards }) {
+function ComboTemplate({
+  buttons,
+  selectedPoomsaeIdx,
+  changePoomsae,
+  selectedPoomsaeInfo,
+  selectedChapterIdx,
+  changeChapter,
+}) {
   const { t, i18n } = useTranslation();
-  const [active, setActive] = useState(0);
-  const title = "combos";
-  const explanations = "combos description";
 
-  useEffect(() => {
-    console.log(active);
-  }, [active]);
   return (
     <>
       <Container>
         <TopContainer>
           <TextContainer>
-            <Title language={t("language")}>{t(title)}</Title>
-            <Description>{t(explanations)}</Description>
+            <Title language={t("language")}>
+              {t("language") === "KOR"
+                ? selectedPoomsaeInfo.poomsaeName
+                : selectedPoomsaeInfo.poomsaeNameE}
+            </Title>
+            <SubTitle language={t("language")}>
+              {t("language") === "KOR"
+                ? selectedChapterIdx + 1 + " 단락"
+                : "Chapter " + selectedChapterIdx + 1}
+            </SubTitle>
+            {selectedPoomsaeInfo.comboList && (
+              <Description>
+                {t("language") === "KOR"
+                  ? selectedPoomsaeInfo.comboList[selectedChapterIdx].comboExplain
+                  : selectedPoomsaeInfo.comboList[selectedChapterIdx].comboExplainE}
+              </Description>
+            )}
           </TextContainer>
           <CarouselContainer>
             <SmallCarousel
-              items={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-              active={active}
-              setActive={setActive}
+              items={[1, 2, 3, 4]}
+              active={selectedChapterIdx}
+              setActive={changeChapter}
             ></SmallCarousel>
           </CarouselContainer>
         </TopContainer>
         <ButtonContainer>
-          <BottomButtonList />
+          <BottomButtonList
+            buttons={buttons}
+            selectedPoomsaeIdx={selectedPoomsaeIdx}
+            changePoomsae={changePoomsae}
+          />
         </ButtonContainer>
       </Container>
       <BackgroundImage />
@@ -58,9 +78,9 @@ const TopContainer = styled.div`
 `;
 
 const TextContainer = styled.div`
-  width: 40%;
+  width: 35%;
   height: 100%;
-  padding: 35vh 90px 0 200px;
+  padding: 25vh 90px 0 150px;
 `;
 
 const Title = styled.div`
@@ -80,6 +100,23 @@ const Title = styled.div`
     `}
 `;
 
+const SubTitle = styled.div`
+  ${(props) =>
+    props.language === "ENG" &&
+    css`
+      font-family: Dry Brush;
+      font-size: 3rem;
+      line-height: 150%;
+    `}
+  ${(props) =>
+    props.language === "KOR" &&
+    css`
+      font-family: Dokdo;
+      font-size: 3.5rem;
+      line-height: 120%;
+    `}
+`;
+
 const Description = styled.div`
   padding-top: 20px;
   font-family: inherit;
@@ -88,9 +125,9 @@ const Description = styled.div`
 `;
 
 const CarouselContainer = styled.div`
-  width: 60%;
+  width: 65%;
   height: 100%;
-  padding: 100px 110px 0 0;
+  /* padding: 100px 110px 0 0; */
   position: relative;
   flex-wrap: wrap;
   align-content: center;
@@ -110,5 +147,6 @@ const BackgroundImage = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  height: 20%;
+  /* height: 20%; */
+  padding-top: 40px;
 `;

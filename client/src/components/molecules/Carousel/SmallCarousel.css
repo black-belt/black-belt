@@ -3,106 +3,107 @@
   color: white;
   font-size: 40px;
   position: absolute;
+  border-radius: 10px;
   transition: height 1s, width 1s, left 1s, margin-top 1s, line-height 1s, background-color 1s;
 }
 
 .level-2 {
-  height: 180px;
-  width: 130px;
+  height: 430px;
+  width: 310px;
   line-height: 180px;
   background-color: #000000;
-  left: 350px;
-  margin-top: 10px;
+  left: 690px;
+  margin-top: 30px;
 }
 
 .level-1 {
-  height: 180px;
-  width: 130px;
+  height: 430px;
+  width: 310px;
   line-height: 180px;
   background-color: #111111;
-  left: 210px;
-  margin-top: 10px;
+  left: 370px;
+  margin-top: 30px;
 }
 
 .level0 {
-  height: 200px;
-  width: 150px;
+  height: 490px;
+  width: 350px;
   line-height: 200px;
   background-color: #4ec9e1;
-  left: 50px;
+  left: 0;
 }
 
 .left-enter {
   opacity: 0;
-  left: 0;
-  height: 150px;
-  width: 110px;
-  line-height: 150px;
-  margin-top: 25px;
+  left: -60px;
+  height: 420px;
+  width: 300px;
+  /* line-height: 150px; */
+  margin-top: 40px;
 }
 
 .left-enter.left-enter-active {
   opacity: 1;
-  left: 50px;
-  height: 200px;
-  width: 150px;
-  line-height: 200px;
-  margin-top: 0px;
-  transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
+  left: 0;
+  height: 490px;
+  width: 350px;
+  /* line-height: 200px; */
+  margin-top: 25px;
+  transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 0.5s, line-height 1s;
 }
 
 .left-leave {
   opacity: 1;
-  left: 350px;
-  height: 150px;
-  width: 110px;
-  line-height: 150px;
+  left: 750px;
+  height: 420px;
+  width: 300px;
+  line-height: 430px;
   margin-top: 25px;
 }
 
 .left-leave.left-leave-active {
-  left: 480px;
+  left: 750;
   opacity: 0;
-  height: 120px;
-  line-height: 120px;
-  margin-top: 40px;
-  width: 90px;
+  height: 336px;
+  width: 240px;
+  margin-top: 70px;
+  line-height: 150px;
   transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
 }
 
 .right-enter {
   opacity: 0;
-  left: 460px;
-  height: 120px;
-  width: 90px;
+  left: 750px;
+  height: 336px;
+  width: 240px;
   line-height: 120px;
-  margin-top: 40px;
+  margin-top: 70px;
 }
 
 .right-enter.right-enter-active {
-  left: 350px;
+  left: 690px;
   opacity: 1;
-  height: 150px;
+  height: 420px;
+  width: 300px;
   margin-top: 25px;
   line-height: 150px;
-  width: 110px;
   transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
 }
 
 .right-leave {
   left: 50px;
-  height: 150px;
+  height: 420px;
+  width: 300px;
   opacity: 1;
   margin-top: 25px;
   line-height: 150px;
-  width: 110px;
 }
 
 .right-leave.right-leave-active {
   left: -60px;
   opacity: 0;
-  height: 120px;
-  width: 90px;
+  height: 420px;
+  width: 300px;
   line-height: 120px;
   margin-top: 40px;
   transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
