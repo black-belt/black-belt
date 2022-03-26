@@ -4,7 +4,7 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import CustomIcon from "../../atoms/Icons/Icon";
 import "./SmallCarousel.css";
 
-function SmallCarousel({ items, active, setActive }) {
+function SmallCarousel({ items, active, setActive, goToStage }) {
   const [direction, setDirection] = useState("");
   // const nodeRef = useRef(null);
   // var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
@@ -12,7 +12,8 @@ function SmallCarousel({ items, active, setActive }) {
   const generateItems = () => {
     let curItems = [];
     let level;
-    for (let i = active; i < active + 3; i++) {
+    curItems.push(<NewItem key={active} id={active} level={0} onClick={() => goToStage(active)} />);
+    for (let i = active + 1; i < active + 3; i++) {
       let index = i;
       if (i < 0) {
         index = items.length + i;
@@ -20,7 +21,17 @@ function SmallCarousel({ items, active, setActive }) {
         index = i % items.length;
       }
       level = active - i;
-      curItems.push(<NewItem key={index} id={items[index]} level={level} />);
+      curItems.push(
+        <NewItem
+          key={index}
+          id={index}
+          level={level}
+          onClick={() => {
+            setActive(index);
+            setDirection("right");
+          }}
+        />
+      );
     }
     return curItems;
   };
@@ -113,6 +124,10 @@ const CardContainer = styled.div`
   top: 25vh;
 `;
 
-function NewItem({ level, id }) {
-  return <div className={`item level${level}`}>{id}</div>;
+function NewItem({ level, id, onClick }) {
+  return (
+    <div className={`item level${level}`} onClick={onClick}>
+      {id}
+    </div>
+  );
 }

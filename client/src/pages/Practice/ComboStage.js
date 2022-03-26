@@ -1,7 +1,7 @@
 import PracticeStageTemplate from "../../components/templates/PracticeStageTemplate";
 import { useEffect, useState } from "react";
 import LocalVideo from "../../components/atoms/Videos/LocalVideo";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import EvaluationTemplate from "components/templates/EvaluationTemplate";
 import UserVideoCombo from "components/atoms/Videos/UserVideoCombo";
 import DescStage from "components/atoms/Texts/DescStage";
@@ -17,6 +17,7 @@ function ComboStage() {
   const [grade, setGrade] = useState("Try Again");
   const [gradeNum, setGradeNum] = useState(0);
   const [nextAction, setNextAction] = useState(0);
+  const state = useLocation().state;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +26,7 @@ function ComboStage() {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((json) => {
+        console.log(state.stageId);
         setTitle("연결동작");
         setDesc([
           "왼 아래(내려)막기",

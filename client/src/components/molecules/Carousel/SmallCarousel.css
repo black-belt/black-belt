@@ -85,7 +85,7 @@
   opacity: 1;
   height: 420px;
   width: 300px;
-  margin-top: 25px;
+  margin-top: 40px;
   line-height: 150px;
   transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
 }

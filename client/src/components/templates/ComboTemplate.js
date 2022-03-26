@@ -15,6 +15,7 @@ function ComboTemplate({
   selectedPoomsaeInfo,
   selectedChapterIdx,
   changeChapter,
+  goToStage,
 }) {
   const { t, i18n } = useTranslation();
 
@@ -43,9 +44,10 @@ function ComboTemplate({
           </TextContainer>
           <CarouselContainer>
             <SmallCarousel
-              items={[1, 2, 3, 4]}
+              items={[0, 1, 2, 3]}
               active={selectedChapterIdx}
               setActive={changeChapter}
+              goToStage={goToStage}
             ></SmallCarousel>
           </CarouselContainer>
         </TopContainer>
@@ -70,6 +72,7 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   color: ${colors.gray0};
+  overflow: hidden;
 `;
 
 const TopContainer = styled.div`

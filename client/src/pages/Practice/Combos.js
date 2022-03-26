@@ -883,7 +883,10 @@ function Combos() {
   }, []);
 
   const goToStage = (stageId) => {
-    navigate(`/practice/combos/stage`, { state: { stageId: stageId } });
+    console.log(selectedPoomsaeInfo.comboList[stageId].comboId);
+    navigate(`/practice/combos/stage`, {
+      state: { stageId: selectedPoomsaeInfo.comboList[stageId].comboId },
+    });
   };
 
   const changePoomsae = (index) => {
@@ -909,6 +912,7 @@ function Combos() {
       changePoomsae={changePoomsae}
       selectedChapterIdx={selectedChapterIdx}
       changeChapter={changeChapter}
+      goToStage={goToStage}
     />
   );
 }
