@@ -26,7 +26,7 @@ function ComboStage() {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((json) => {
-        console.log(state.stageId);
+        // console.log(state.stageId);
         setTitle("연결동작");
         setDesc([
           "왼 아래(내려)막기",

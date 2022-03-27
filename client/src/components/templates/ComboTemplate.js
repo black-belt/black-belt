@@ -44,7 +44,7 @@ function ComboTemplate({
           </TextContainer>
           <CarouselContainer>
             <SmallCarousel
-              items={[0, 1, 2, 3]}
+              items={selectedPoomsaeInfo.comboList}
               active={selectedChapterIdx}
               setActive={changeChapter}
               goToStage={goToStage}

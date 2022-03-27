@@ -26,7 +26,7 @@ function Combos() {
             comboList: [
               {
                 comboId: 1,
-                comboName: "combo_name",
+                comboName: "1콤보",
                 comboNameE: "combo_name_e",
                 comboExplain: "combo_explain1",
                 comboExplainE: "combo_explain_e",
@@ -37,7 +37,7 @@ function Combos() {
               },
               {
                 comboId: 2,
-                comboName: "2combo_name",
+                comboName: "2콤보",
                 comboNameE: "2combo_name_e",
                 comboExplain: "2combo_explain2",
                 comboExplainE: "2combo_explain_e",
@@ -48,7 +48,7 @@ function Combos() {
               },
               {
                 comboId: 3,
-                comboName: "combo_name",
+                comboName: "3콤보",
                 comboNameE: "combo_name_e",
                 comboExplain: "3combo_explain3",
                 comboExplainE: "3combo_explain_e",
@@ -59,7 +59,7 @@ function Combos() {
               },
               {
                 comboId: 4,
-                comboName: "2combo_name",
+                comboName: "4콤보",
                 comboNameE: "2combo_name_e",
                 comboExplain: "4combo_explain4",
                 comboExplainE: "4combo_explain_e",

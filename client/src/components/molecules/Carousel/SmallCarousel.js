@@ -1,18 +1,29 @@
 import styled from "styled-components";
+import { colors, fontSize, fontWeight, fontFamily } from "../../../_foundation";
 import React, { useState, useRef } from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import CustomIcon from "../../atoms/Icons/Icon";
+import { useTranslation } from "react-i18next";
 import "./SmallCarousel.css";
 
 function SmallCarousel({ items, active, setActive, goToStage }) {
   const [direction, setDirection] = useState("");
+  const { t, i18n } = useTranslation();
   // const nodeRef = useRef(null);
   // var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
 
   const generateItems = () => {
     let curItems = [];
     let level;
-    curItems.push(<NewItem key={active} id={active} level={0} onClick={() => goToStage(active)} />);
+    curItems.push(
+      <NewItem
+        key={active}
+        level={0}
+        onClick={() => goToStage(active)}
+        title={t("language") === "KOR" ? items[active].comboName : items[active].comboNameE}
+        score={items[active].comboScore}
+      />
+    );
     for (let i = active + 1; i < active + 3; i++) {
       let index = i;
       if (i < 0) {
@@ -24,12 +35,13 @@ function SmallCarousel({ items, active, setActive, goToStage }) {
       curItems.push(
         <NewItem
           key={index}
-          id={index}
           level={level}
           onClick={() => {
             setActive(index);
             setDirection("right");
           }}
+          title={t("language") === "KOR" ? items[active].comboName : items[active].comboNameE}
+          score={items[index].comboScore}
         />
       );
     }
@@ -67,13 +79,51 @@ function SmallCarousel({ items, active, setActive, goToStage }) {
           transitionEnterTimeout={300}
           transitionLeaveTimeout={500}
         >
-          {generateItems()}
+          {items && generateItems()}
         </ReactCSSTransitionGroup>
       </CardContainer>
     </Carousel>
   );
 }
 export default SmallCarousel;
+
+function NewItem({ level, onClick, title, score }) {
+  return (
+    <>
+      <div className={`item level${level}`} onClick={onClick}>
+        <InfoContainer>
+          <Title>{title}</Title>
+          <Stars>
+            <Star>
+              <CustomIcon
+                icon={score > 0 ? "goldStar" : "blackStar"}
+                viewBox="0 0 55 55"
+                width="20"
+                height="20"
+              />
+            </Star>
+            <Star>
+              <CustomIcon
+                icon={score > 1 ? "goldStar" : "blackStar"}
+                viewBox="0 0 55 55"
+                width="20"
+                height="20"
+              />
+            </Star>
+            <Star>
+              <CustomIcon
+                icon={score > 2 ? "goldStar" : "blackStar"}
+                viewBox="0 0 55 55"
+                width="20"
+                height="20"
+              />
+            </Star>
+          </Stars>
+        </InfoContainer>
+      </div>
+    </>
+  );
+}
 
 const Carousel = styled.div`
   position: absolute;
@@ -124,10 +174,31 @@ const CardContainer = styled.div`
   top: 25vh;
 `;
 
-function NewItem({ level, id, onClick }) {
-  return (
-    <div className={`item level${level}`} onClick={onClick}>
-      {id}
-    </div>
-  );
-}
+const InfoContainer = styled.div`
+  /* height: 100px; */
+  display: flex;
+  position: relative;
+  height: 100%;
+  /* bottom: -45px; */
+  /* margin-top: 400px; */
+  justify-content: space-between;
+`;
+
+const Stars = styled.div`
+  position: absolute;
+  bottom: -40px;
+  right: 0;
+  padding: 10px 10px 0 0;
+  display: flex;
+`;
+
+const Star = styled.div`
+  padding-left: 3px;
+`;
+
+const Title = styled.div`
+  position: absolute;
+  bottom: -30px;
+  padding: 10px 0 0 5px;
+  font-size: ${fontSize.xl};
+`;

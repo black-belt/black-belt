@@ -8,46 +8,46 @@
 }
 
 .level-2 {
-  height: 430px;
+  height: 400px;
   width: 310px;
-  line-height: 180px;
   background-color: #000000;
   left: 690px;
   margin-top: 30px;
+  /* line-height: 820px; */
 }
 
 .level-1 {
-  height: 430px;
+  height: 400px;
   width: 310px;
-  line-height: 180px;
   background-color: #111111;
   left: 370px;
   margin-top: 30px;
+  /* line-height: 820px; */
 }
 
 .level0 {
-  height: 490px;
+  height: 460px;
   width: 350px;
-  line-height: 200px;
   background-color: #4ec9e1;
   left: 0;
+  /* line-height: 940px; */
 }
 
 .left-enter {
   opacity: 0;
   left: -60px;
-  height: 420px;
+  height: 390px;
   width: 300px;
-  /* line-height: 150px; */
+  /* line-height: 845px; */
   margin-top: 40px;
 }
 
 .left-enter.left-enter-active {
   opacity: 1;
   left: 0;
-  height: 490px;
+  height: 460px;
   width: 350px;
-  /* line-height: 200px; */
+  /* line-height: 845px; */
   margin-top: 25px;
   transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 0.5s, line-height 1s;
 }
@@ -55,9 +55,9 @@
 .left-leave {
   opacity: 1;
   left: 750px;
-  height: 420px;
+  height: 390px;
   width: 300px;
-  line-height: 430px;
+  /* line-height: 230px; */
   margin-top: 25px;
 }
 
@@ -67,7 +67,7 @@
   height: 336px;
   width: 240px;
   margin-top: 70px;
-  line-height: 150px;
+  /* line-height: 230px; */
   transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
 }
 
@@ -75,36 +75,36 @@
   opacity: 0;
   left: 750px;
   height: 336px;
-  width: 240px;
-  line-height: 120px;
+  width: 270px;
   margin-top: 70px;
+  /* line-height: 250px; */
 }
 
 .right-enter.right-enter-active {
   left: 690px;
   opacity: 1;
-  height: 420px;
+  height: 390px;
   width: 300px;
   margin-top: 40px;
-  line-height: 150px;
+  /* line-height: 250px; */
   transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
 }
 
 .right-leave {
   left: 50px;
-  height: 420px;
+  height: 390px;
   width: 300px;
   opacity: 1;
+  /* line-height: 300px; */
   margin-top: 25px;
-  line-height: 150px;
 }
 
 .right-leave.right-leave-active {
   left: -60px;
   opacity: 0;
-  height: 420px;
+  height: 390px;
   width: 300px;
-  line-height: 120px;
   margin-top: 40px;
+  /* line-height: 300px; */
   transition: left 1s, opacity 1s, height 1s, width 1s, margin-top 1s, line-height 1s;
 }
