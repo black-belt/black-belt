@@ -57,7 +57,7 @@ function MainPage() {
       button: [
         {
           name: "normal",
-          url: "",
+          url: "gyeorugi/normal",
         },
         {
           name: "rank",
