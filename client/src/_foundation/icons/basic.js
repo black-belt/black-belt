@@ -66,20 +66,20 @@ const basic = {
   gyeorugiBigProfile: (
     <>
       <g filter="url(#filter0_d_690_2306)">
-        <g clip-path="url(#clip0_690_2306)">
+        <g clipPath="url(#clip0_690_2306)">
           <mask id="path-2-inside-1_690_2306" fill="white">
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M386.107 587.21L278.292 725H277.996C258.301 689.9 226.165 667.044 189.865 667.044C153.763 667.044 121.78 689.652 102.058 724.426L-2.12207 591.282V-135.455H386.107V587.21Z"
             />
           </mask>
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M386.107 587.21L278.292 725H277.996C258.301 689.9 226.165 667.044 189.865 667.044C153.763 667.044 121.78 689.652 102.058 724.426L-2.12207 591.282V-135.455H386.107V587.21Z"
             fill="#343A40"
-            fill-opacity="0.7"
+            fillOpacity="0.7"
           />
           <path
             d="M386.107 587.21L395.558 594.605L398.107 591.347V587.21H386.107ZM278.292 725V737H284.14L287.743 732.394L278.292 725ZM277.996 725L267.531 730.872L270.969 737H277.996V725ZM102.058 724.426L92.6072 731.821L103.653 745.938L112.496 730.346L102.058 724.426ZM-2.12207 591.282H-14.1221V595.418L-11.5728 598.676L-2.12207 591.282ZM-2.12207 -135.455V-147.455H-14.1221V-135.455H-2.12207ZM386.107 -135.455H398.107V-147.455H386.107V-135.455ZM376.656 579.815L268.842 717.605L287.743 732.394L395.558 594.605L376.656 579.815ZM278.292 713H277.996V737H278.292V713ZM288.461 719.127C267.234 681.297 231.591 655.044 189.865 655.044V679.044C220.739 679.044 249.369 698.504 267.531 730.872L288.461 719.127ZM189.865 655.044C148.368 655.044 112.884 681.013 91.6198 718.506L112.496 730.346C130.676 698.291 159.158 679.044 189.865 679.044V655.044ZM111.509 717.031L7.32868 583.887L-11.5728 598.676L92.6072 731.821L111.509 717.031ZM9.87793 591.282V-135.455H-14.1221V591.282H9.87793ZM-2.12207 -123.455H386.107V-147.455H-2.12207V-123.455ZM374.107 -135.455V587.21H398.107V-135.455H374.107Z"
@@ -88,8 +88,8 @@ const basic = {
           />
           <mask id="path-4-inside-2_690_2306" fill="white">
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M-92 -475H472V509.805L310.021 716.818H309.616C282.804 669.036 239.055 637.921 189.638 637.921C140.49 637.921 96.9484 668.698 70.0999 716.038L-92 508.871V-475Z"
             />
           </mask>
@@ -108,9 +108,9 @@ const basic = {
           width="383"
           height="736"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
