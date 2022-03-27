@@ -17,28 +17,25 @@ import com.blackbelt.model.service.QueService;
 import com.blackbelt.model.service.UserService;
 
 @RestController
-@RequestMapping("/que")
+@RequestMapping("api/que")
 //@Api("큐 컨트롤러 API")
 public class QueController {
 
-	//logger 관련해서 한줄
+	//logger 관련
 	private static final String SUCCESS ="success";
 	private static final String FAIL ="fail";
 	
-	//@Autowired
-	// 매칭할 service 입력 
 	@Autowired
 	private QueService queService;
 
 	
 	// 닉네임 검색
-	@GetMapping("/select/{search}")	///{search}
+	@GetMapping("/select/{search}")	
 	public ResponseEntity<List<UserDto>> searchUserList(
 			@PathVariable("search") String search)	throws Exception{		// 이 줄에 ApiParam 등도 추가 ! 	
 		List<UserDto> userlist = queService.searchUserList(search);
 		
 		return new ResponseEntity<List<UserDto>>( userlist,HttpStatus.OK);
-		//return new ResponseEntity<String> (search, HttpStatus.OK);
 	}
 	
 

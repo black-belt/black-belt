@@ -12,11 +12,11 @@
     <div class="msgArea"></div>
 </div>
 </body>
-<h1>HELLO YUNSOO</h1>
+<h1>WEBSOCKET TEST용 임시 Client Page</h1>
 <script>
-		// http 로 하면 안되고 ws 로 해야됨 
-        let socket = new WebSocket("ws://localhost:8080/message");
-
+		// socket 생성! => http->ws 로 통신계층 upgrade 
+        let socket = new WebSocket("ws://localhost:8080/socket");	//"ws://{도메인}/socket" 형태 유지 
+		
         socket.onopen = function (e) {
             console.log('open server!')
         };
@@ -35,7 +35,8 @@
 
         function sendMsg() {
             let content=document.querySelector('.content').value;
-            socket.send(content);		//
+            // socket.send()로 데이터 전송!! 
+            socket.send(content);		
         }
 </script>
 </html>

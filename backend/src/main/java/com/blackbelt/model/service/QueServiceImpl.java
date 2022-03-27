@@ -13,13 +13,12 @@ import com.blackbelt.util.JwtTokenProvider;
 @Service
 public class QueServiceImpl implements QueService{
 
-	//private QueRepository queRepository;
 	@Autowired
 	private UserCrudRepository userCrudRepository;
 	
 	@Transactional
 	public List<UserDto> searchUserList(String search){
-		List<UserDto> user = userCrudRepository.findByuserNickContaining(search);	// Containing 포함하면 다중검색 가능 
+		List<UserDto> user = userCrudRepository.findByuserNickContaining(search);	// Containing 포함=>다중검색 가능 
 
 		
 		return user;
