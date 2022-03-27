@@ -4,7 +4,7 @@ import { RecoilRoot } from "recoil";
 
 import GyeorugiStage from "./pages/Gyeorugi/GyeorugiStage";
 import Lobby from "./pages/Gyeorugi/Lobby";
-import MainPage from "./pages/MainPage";
+import MainPage from "./pages/MainPage/MainPage";
 import MyPage from "./pages/Mypage/MyPage";
 import Basics from "./pages/Practice/Basics";
 import BasicStage from "./pages/Practice/BasicStage";
