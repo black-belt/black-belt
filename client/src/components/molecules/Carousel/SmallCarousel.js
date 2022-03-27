@@ -40,7 +40,7 @@ function SmallCarousel({ items, active, setActive, goToStage }) {
             setActive(index);
             setDirection("right");
           }}
-          title={t("language") === "KOR" ? items[active].comboName : items[active].comboNameE}
+          title={t("language") === "KOR" ? items[index].comboName : items[index].comboNameE}
           score={items[index].comboScore}
         />
       );
