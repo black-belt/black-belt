@@ -11,6 +11,7 @@ function Combos() {
   const [selectedPoomsaeIdx, setSelectedPoomsaeIdx] = useState(0);
   const [selectedPoomsaeInfo, setSelectedPoomsaeInfo] = useState([]);
   const [selectedChapterIdx, setSelectedChapterIdx] = useState(0);
+  const [imageList, setImageList] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -838,6 +839,7 @@ function Combos() {
         ];
         setPoomsaeList(jsonInfo);
         setSelectedPoomsaeInfo(jsonInfo[0]);
+        setImageList(makeRandom());
         // let listKor = jsonInfo.map((value) => {
         //   let newValue = {
         //     poomsaeId: value.poomsaeId,
@@ -889,11 +891,27 @@ function Combos() {
     });
   };
 
+  const makeRandom = () => {
+    let randomIndexArray = [];
+    for (let i = 0; i < 4; i++) {
+      //check if there is any duplicate index
+      let randomNum = Math.floor(Math.random() * 16) + 1;
+      if (randomIndexArray.indexOf(randomNum) === -1) {
+        randomIndexArray.push(randomNum);
+      } else {
+        //if the randomNum is already in the array retry
+        i--;
+      }
+    }
+    return randomIndexArray;
+  };
+
   const changePoomsae = (index) => {
     setSelectedPoomsaeIdx(index);
     // setSelectedPoomsaeInfo(t("language") === "KOR" ? poomsaeListKor[index] : poomsaeListEng[index]);
     setSelectedPoomsaeInfo(() => poomsaeList[index]);
     setSelectedChapterIdx(0);
+    setImageList(makeRandom());
   };
 
   const changeChapter = (index) => {
@@ -913,6 +931,7 @@ function Combos() {
       selectedChapterIdx={selectedChapterIdx}
       changeChapter={changeChapter}
       goToStage={goToStage}
+      imageList={imageList}
     />
   );
 }

@@ -10,7 +10,7 @@
 .level-2 {
   height: 400px;
   width: 310px;
-  background-color: #000000;
+  /* background-color: #000000; */
   left: 690px;
   margin-top: 30px;
   /* line-height: 820px; */
@@ -19,8 +19,8 @@
 .level-1 {
   height: 400px;
   width: 310px;
-  background-color: #111111;
-  left: 370px;
+  /* background-color: #111111; */
+  left: 365px;
   margin-top: 30px;
   /* line-height: 820px; */
 }
@@ -28,7 +28,7 @@
 .level0 {
   height: 460px;
   width: 350px;
-  background-color: #4ec9e1;
+  /* background-color: #4ec9e1; */
   left: 0;
   /* line-height: 940px; */
 }

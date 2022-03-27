@@ -1,12 +1,8 @@
 import styled, { css } from "styled-components";
-import { colors, fontSize, fontWeight, fontFamily } from "../../_foundation";
+import { colors, fontSize } from "../../_foundation";
 import { useTranslation } from "react-i18next";
-// import SmallCarousel from "components/molecules/Carousel/SmallCarousel";
-import { useEffect, useState } from "react";
-// import TempCarousel from "components/atoms/Carousel/TempCarousel";
 import SmallCarousel from "components/molecules/Carousel/SmallCarousel";
 import BottomButtonList from "components/molecules/BottomButtonList";
-// import SSCarousel from "components/atoms/Carousel/SSCarousel";
 
 function ComboTemplate({
   buttons,
@@ -16,6 +12,7 @@ function ComboTemplate({
   selectedChapterIdx,
   changeChapter,
   goToStage,
+  imageList,
 }) {
   const { t, i18n } = useTranslation();
 
@@ -48,6 +45,7 @@ function ComboTemplate({
               active={selectedChapterIdx}
               setActive={changeChapter}
               goToStage={goToStage}
+              imageList={imageList}
             ></SmallCarousel>
           </CarouselContainer>
         </TopContainer>

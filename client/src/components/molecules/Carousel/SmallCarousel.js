@@ -6,7 +6,7 @@ import CustomIcon from "../../atoms/Icons/Icon";
 import { useTranslation } from "react-i18next";
 import "./SmallCarousel.css";
 
-function SmallCarousel({ items, active, setActive, goToStage }) {
+function SmallCarousel({ items, active, setActive, goToStage, imageList }) {
   const [direction, setDirection] = useState("");
   const { t, i18n } = useTranslation();
   // const nodeRef = useRef(null);
@@ -22,6 +22,7 @@ function SmallCarousel({ items, active, setActive, goToStage }) {
         onClick={() => goToStage(active)}
         title={t("language") === "KOR" ? items[active].comboName : items[active].comboNameE}
         score={items[active].comboScore}
+        imageNum={imageList[active]}
       />
     );
     for (let i = active + 1; i < active + 3; i++) {
@@ -42,6 +43,7 @@ function SmallCarousel({ items, active, setActive, goToStage }) {
           }}
           title={t("language") === "KOR" ? items[index].comboName : items[index].comboNameE}
           score={items[index].comboScore}
+          imageNum={imageList[index]}
         />
       );
     }
@@ -87,10 +89,20 @@ function SmallCarousel({ items, active, setActive, goToStage }) {
 }
 export default SmallCarousel;
 
-function NewItem({ level, onClick, title, score }) {
+function NewItem({ level, onClick, title, score, imageNum }) {
   return (
     <>
-      <div className={`item level${level}`} onClick={onClick}>
+      <div
+        className={`item level${level}`}
+        onClick={onClick}
+        style={{
+          background: "rgba(0, 0, 0, 0.6)",
+          backgroundImage: `url("/images/combo/combo${imageNum}.png")`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center center",
+        }}
+      >
         <InfoContainer>
           <Title>{title}</Title>
           <Stars>
@@ -127,19 +139,8 @@ function NewItem({ level, onClick, title, score }) {
 
 const Carousel = styled.div`
   position: absolute;
-  /* height: 200px;
-  width: 810px;
-  margin: auto; */
   left: 50px;
   right: 0;
-  /* top: 0;
-  bottom: 0;
-
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none; */
 `;
 
 const Arrow = styled.div`
@@ -147,18 +148,6 @@ const Arrow = styled.div`
   width: 30px;
   height: 30px;
   top: 18vh;
-  /* background-color: white; */
-  /* text-align: center;
-  font-size: 25px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 20px;
-  color: #228291;
-  line-height: 30px;
-  margin-top: 85px;
-  z-index: 1000; */
-  /* top: 0;
-  left: 0; */
 `;
 
 const ArrowLeft = styled(Arrow)`
@@ -175,12 +164,9 @@ const CardContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  /* height: 100px; */
   display: flex;
   position: relative;
   height: 100%;
-  /* bottom: -45px; */
-  /* margin-top: 400px; */
   justify-content: space-between;
 `;
 
