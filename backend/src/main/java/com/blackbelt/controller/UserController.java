@@ -174,6 +174,9 @@ public class UserController {
 		HttpStatus status = HttpStatus.OK;
 		try {
 			String authorization = request.getHeader("Authorization");
+			System.out.println("##########################################");
+			System.out.println(authorization);
+			System.out.println("##########################################");
 			if(authorization.indexOf("Bearer") != -1) {
 				authorization = authorization.replaceAll("^Bearer\\s", "");
 			}
