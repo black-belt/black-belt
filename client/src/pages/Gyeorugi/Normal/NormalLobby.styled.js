@@ -23,11 +23,6 @@ export const Standby = styled.div`
   height: 100%;
   width: 78%;
   padding-top: 4%;
-  text-align: center;
-
-  button {
-    display: inline-block;
-  }
 `;
 
 export const ChampionBox = styled.div`
@@ -36,7 +31,7 @@ export const ChampionBox = styled.div`
   justify-content: center;
   gap: 8rem;
 
-  padding-bottom: 2.5rem;
+  padding-bottom: 2rem;
 `;
 
 export const MyChampion = styled.div`
@@ -55,10 +50,15 @@ export const CounterChampion = styled.div`
 export const SearchLayout = styled.div`
   width: 22%;
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 3rem 1rem 3rem 1.5rem;
   /* background-color: rgba(173, 181, 189, 0.2); */
   background-color: rgba(0, 0, 0, 0.5);
-  /* filter: grayscale(100%) brightness(15%); */
+`;
+
+export const SearchBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 `;
 
 export const SearchInput = styled.input`

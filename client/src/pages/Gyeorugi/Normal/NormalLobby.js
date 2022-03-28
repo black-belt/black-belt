@@ -1,4 +1,8 @@
 import InButton from "components/atoms/Buttons/in-btns";
+import Icon from "components/atoms/Icons/Icon";
+import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import axiosInstance from "utils/API";
 import {
   BackgroundImg,
   ChampBackground,
@@ -6,6 +10,7 @@ import {
   CounterChampion,
   Layout,
   MyChampion,
+  SearchBox,
   SearchInput,
   SearchLayout,
   SearchList,
@@ -18,6 +23,20 @@ import {
 } from "./NormalLobby.styled";
 
 function NormalLobby() {
+  const { t, i18n } = useTranslation();
+  const [searchInput, setSearchInput] = useState("");
+  const onChangeNick = useCallback((e) => {
+    setSearchInput(e.target.value);
+  });
+  const searchUserInfo = async () => {
+    const userInfo = await axiosInstance.get(`/api/que/select/${searchInput}`);
+    console.log(userInfo);
+  };
+  const onKeyEnter = (e) => {
+    if (e.key === "Enter") {
+      searchUserInfo();
+    }
+  };
   return (
     <div className="NormalLobby">
       <Layout>
@@ -31,10 +50,15 @@ function NormalLobby() {
               <ChampBackground src="/images/gyeorugi-profile-big.png" alt="" />
             </CounterChampion>
           </ChampionBox>
-          <InButton>겨루기 시작</InButton>
+          <center>
+            <InButton>{t("start")}</InButton>
+          </center>
         </Standby>
         <SearchLayout>
-          <SearchInput />
+          <SearchBox>
+            <SearchInput onKeyPress={onKeyEnter} onChange={onChangeNick} />
+            <Icon icon="search" onClick={searchUserInfo} />
+          </SearchBox>
           <SearchList>
             <UserProfile>
               {/* <UserImg /> */}
