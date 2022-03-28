@@ -21,6 +21,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { GetUserInfo, UserProfileSelector } from "api";
+import Dropdown from "./Dropdown";
 
 function Navbar({ navItemData }) {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ function Navbar({ navItemData }) {
   return (
     <Layout>
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
+      <Dropdown />
       {isLogin() ? (
         <>
           {user && (
