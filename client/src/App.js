@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
 import GyeorugiStage from "./pages/Gyeorugi/GyeorugiStage";
-import Lobby from "./pages/Gyeorugi/Lobby";
-import MainPage from "./pages/MainPage";
+import NormalLobby from "./pages/Gyeorugi/Normal/NormalLobby";
+import MainPage from "./pages/MainPage/MainPage";
 import MyPage from "./pages/Mypage/MyPage";
 import Basics from "./pages/Practice/Basics";
 import BasicStage from "./pages/Practice/BasicStage";
@@ -35,7 +35,7 @@ function App() {
 
               <Route path="promotion" element={<PromotionStage />} />
 
-              <Route path="gyeorugi" element={<Lobby />} />
+              <Route path="gyeorugi/normal" element={<NormalLobby />} />
               <Route path="mypage" element={<MyPage />} />
             </Route>
             <Route path="gyeorugi/stage" element={<GyeorugiStage />} />

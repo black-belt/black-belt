@@ -28,6 +28,7 @@ const StyledBtn = styled.button`
   color: ${colors.gray0};
   background-color: transparent;
 
+  font-family: inherit;
   font-size: ${fontSize.xl};
   line-height: 1.75rem;
   text-align: center;

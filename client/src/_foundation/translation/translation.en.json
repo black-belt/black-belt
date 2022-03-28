@@ -19,7 +19,7 @@
   "poomsae": "Poomsae",
 
   "promotion test": "Promotion Test",
-  "promotion test explanation": "Sodales sagittis urna laoreet in. In et,",
+  "promotion test explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "promotion test explanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "1단": "Dan 1st",
   "2단": "Dan 2nd",
@@ -31,8 +31,15 @@
   "8단": "Dan 8th",
 
   "gyeorugi": "Gyeorugi",
-  "gyeorugi explanation": "Sodales sagittis urna laoreet in. In et,",
+  "gyeorugi explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "gyeorugiexplanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "normal": "Normal",
-  "rank": "Rank"
+  "rank": "Rank",
+
+
+  "start": "Start Match",
+
+  "basics description": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "combos description": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."
+
 }
