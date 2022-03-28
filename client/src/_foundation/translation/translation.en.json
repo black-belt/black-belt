@@ -6,6 +6,10 @@
   "welcome_korean": "",
   "language": "ENG",
 
+  "logout": "Logout",
+  "about tkd": "About TaeKwonDo",
+  "mypage": "My Page",
+
   "welcome google": "Sign in with Google Account",
   "new?": "New to BlackBelt?",
   "loginLink": "",

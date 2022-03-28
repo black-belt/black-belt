@@ -6,6 +6,10 @@
   "welcome_korean": "님",
   "language": "KOR",
 
+  "logout": "로그아웃",
+  "about tkd": "태권도란?",
+  "mypage": "마이페이지",
+
   "welcome google": "구글 계정으로 계속하기",
   "new?": "New to BlackBelt?",
   "loginLink": "",

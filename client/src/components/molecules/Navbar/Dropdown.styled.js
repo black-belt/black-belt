@@ -1,14 +1,16 @@
 import styled from "styled-components";
-import { colors, fontWeight } from "_foundation";
+import { colors, fontSize, fontWeight } from "_foundation";
 
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
+  top: 80px;
+  right: 3.6rem;
 
   width: 200px;
   border-radius: 6px;
-  border: 1px solid ${colors.gray7};
+  border: 1px solid ${colors.gray5};
 
   /* background-color: rgba(0, 0, 0, 0.77); */
   background-color: ${colors.gray4};
@@ -25,10 +27,27 @@ export const UserInfo = styled.div`
 
 export const UserName = styled.div`
   font-weight: ${fontWeight.medium};
+  font-size: ${fontSize.xl};
 `;
 
-export const MenuBox = styled.div``;
+export const UserEmail = styled.div`
+  font-size: ${fontSize.standard};
+`;
+
+export const MenuBox = styled.div`
+  padding: 12px 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  border-bottom: 1px solid ${colors.gray8};
+
+  /* font-weight: ${fontWeight.medium}; */
+`;
 
 export const DropdownItem = styled.div``;
 
-export const Logout = styled.div``;
+export const Logout = styled.div`
+  padding: 12px 16px;
+`;
