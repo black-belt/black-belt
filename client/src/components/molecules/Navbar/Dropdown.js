@@ -18,8 +18,10 @@ const Dropdown = () => {
   const [user, setUser] = useState(null);
   const userData = GetUserInfo();
   useEffect(() => {
-    setUser(UserProfileSelector(userData));
-  }, []);
+    if (userData.data) {
+      setUser(UserProfileSelector(userData.data));
+    }
+  }, [userData.data]);
 
   const menus = [
     {
@@ -33,10 +35,12 @@ const Dropdown = () => {
   ];
   return (
     <Layout>
-      <UserInfo>
-        <UserName>nickname</UserName>
-        <UserEmail>useremail@email.com</UserEmail>
-      </UserInfo>
+      {user && (
+        <UserInfo>
+          <UserName>{user.nickname}</UserName>
+          <UserEmail>useremail@email.com</UserEmail>
+        </UserInfo>
+      )}
       <MenuBox>
         {menus.map((menu) => (
           <DropdownItem key={menu.title} onClick={() => navigate(menu.url)}>
