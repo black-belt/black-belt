@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import axios from "axios";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { useQuery } from "react-query";
 
 import LangBtn from "components/atoms/Buttons/lang-btn";
-import Icon from "components/atoms/Icons/Icon";
+import Icon from "components/atoms/Icons/CustomIcon";
 
 import { loginModalState } from "recoils";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,9 @@ import {
   NavItemBox,
   NavItemBtn,
   NavItemLink,
+  ProfileBox,
+  ProfileImg,
+  Welcome,
 } from "./Navbar.styled";
 import axiosInstance from "utils/API";
 import { useNavigate } from "react-router-dom";
@@ -26,16 +29,12 @@ function Navbar({ navItemData }) {
   const { t, i18n } = useTranslation();
 
   const getUserInfo = async () => {
-    const { userInfo } = await axiosInstance.get("/api/user/userinfo", {});
+    const userInfo = await axiosInstance.get("/api/user/userinfo", {});
     console.log(userInfo);
     return userInfo;
   };
 
-  useEffect(() => {
-    if (isLogin()) {
-      getUserInfo();
-    }
-  }, [isLogin]);
+  const query = useQuery("userInfo", getUserInfo);
 
   const handleEnglish = () => {
     setTranslateEn(!translateEN);
@@ -50,14 +49,25 @@ function Navbar({ navItemData }) {
     <Layout>
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
       {isLogin() ? (
-        <NavItemBox>
-          <div>for test</div>
-          {/* [TODO]: api 연결 후 업데이트 예정 */}
-          {/* {navItemData.map(({ name, title, url }) => (
-              {title}
-            </NavItemLink>
-          ))} */}
-        </NavItemBox>
+        <>
+          {!query.isLoading && query.data && (
+            <ProfileBox>
+              <Welcome>
+                {t("welcome")} {query.data.userNick}
+                {t("welcome_korean")}
+              </Welcome>
+              {query.data.userProfilePath ? (
+                <ProfileImg>
+                  <img src={query.data.userProfilePath} />
+                </ProfileImg>
+              ) : (
+                <ProfileImg>
+                  <Icon width={40} height={40} icon="defaultUser" />
+                </ProfileImg>
+              )}
+            </ProfileBox>
+          )}
+        </>
       ) : (
         <NavItemBox>
           <NavItemBtn onClick={() => setLoginModalOpen("login")}>

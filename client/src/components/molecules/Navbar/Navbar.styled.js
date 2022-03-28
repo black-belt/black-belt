@@ -2,13 +2,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "_foundation";
 
-const img_URL = {
-  kor: {
-    url: "/images/logo_kor.png",
-  },
-  eng: { url: "/images/logo_navbar.png" },
-};
-
 export const Layout = styled.div`
   position: fixed;
   display: flex;
@@ -28,10 +21,14 @@ export const Layout = styled.div`
 
 export const Logo = styled.img`
   cursor: pointer;
-  /* img {
-    width: 143px;
-    height: 53px;
-  } */
+`;
+
+export const ProfileImg = styled.div`
+  cursor: pointer;
+`;
+
+export const Welcome = styled.span`
+  color: ${colors.gray0};
 `;
 
 export const NavItemLink = styled(Link)`
@@ -45,6 +42,12 @@ export const NavItemBtn = styled.div`
   color: ${colors.gray0};
 
   cursor: pointer;
+`;
+
+export const ProfileBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 `;
 
 export const NavItemBox = styled.div`
