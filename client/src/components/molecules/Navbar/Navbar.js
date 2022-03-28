@@ -9,19 +9,15 @@ import { loginModalState } from "recoils";
 import { useTranslation } from "react-i18next";
 
 import isLogin from "utils/isLogin";
-import {
-  Layout,
-  Logo,
-  NavItemBox,
-  NavItemBtn,
-  NavItemLink,
-} from "./Navbar.styled";
+import { Layout, Logo, NavItemBox, NavItemBtn, NavItemLink } from "./Navbar.styled";
 import axiosInstance from "utils/API";
+import { useNavigate } from "react-router-dom";
 
 function Navbar({ navItemData }) {
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
   const [translateEN, setTranslateEn] = useState(false);
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   const getUserInfo = async () => {
     const userInfo = await axiosInstance.get("/api/user/userinfo", {});
@@ -41,10 +37,14 @@ function Navbar({ navItemData }) {
     }
   };
 
+  const goHome = () => {
+    navigate("/");
+  };
+
   return (
     <Layout>
       <Logo>
-        <img src={t("logo url")} alt="" />
+        <img src={t("logo url")} alt="" onClick={goHome} />
       </Logo>
       {isLogin() ? (
         <NavItemBox>
@@ -57,12 +57,8 @@ function Navbar({ navItemData }) {
         </NavItemBox>
       ) : (
         <NavItemBox>
-          <NavItemBtn onClick={() => setLoginModalOpen("login")}>
-            {t("login")}
-          </NavItemBtn>
-          <NavItemBtn onClick={() => setLoginModalOpen("signup")}>
-            {t("signup")}
-          </NavItemBtn>
+          <NavItemBtn onClick={() => setLoginModalOpen("login")}>{t("login")}</NavItemBtn>
+          <NavItemBtn onClick={() => setLoginModalOpen("signup")}>{t("signup")}</NavItemBtn>
           <LangBtn onClick={handleEnglish}>
             <Icon icon={t("language")} />
             {t("language")}
