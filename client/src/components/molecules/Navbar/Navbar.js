@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { useRecoilState } from "recoil";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import LangBtn from "components/atoms/Buttons/lang-btn";
 import Icon from "components/atoms/Icons/CustomIcon";
 
-import { loginModalState } from "recoils";
+import { loginModalState, userInfo } from "recoils";
 import { useTranslation } from "react-i18next";
 
 import isLogin from "utils/isLogin";
@@ -26,19 +26,22 @@ import { GetUserInfo, UserProfileSelector } from "api";
 function Navbar({ navItemData }) {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [translateEN, setTranslateEn] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
-
   const { t, i18n } = useTranslation();
-  const userData = GetUserInfo();
 
-  useEffect(() => {
-    if (userData.data) {
-      setUser(UserProfileSelector(userData.data));
-    }
-  }, [userData.data]);
+  const [userData, setUserData] = useState(null);
+  const user = useRecoilValue(userInfo);
+  console.log(user);
+
+  // const userData = GetUserInfo();
+  // useEffect(() => {
+  //   if (userData && userData.data) {
+  //     setUser(UserProfileSelector(userData.data));
+  //   }
+  // }, [userData.data]);
 
   useEffect(() => {
     const pageClickEvent = (event) => {
@@ -46,7 +49,6 @@ function Navbar({ navItemData }) {
         dropdownRef.current !== null &&
         !dropdownRef.current.contains(event.target)
       ) {
-        console.log(dropdownRef);
         setDropdownOpen(!dropdownOpen);
       }
     };
@@ -66,16 +68,16 @@ function Navbar({ navItemData }) {
       i18n.changeLanguage("ko");
     }
   };
-  console.log(dropdownRef);
+
   return (
     <Layout ref={dropdownRef}>
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
       {isLogin() ? (
-        <>
+        <Suspense fallback={<div>Loading ...</div>}>
           {user && (
             <ProfileBox>
               <Welcome>
-                {t("welcome")} {user.nickname}
+                {t("welcome")} {user?.userNick}
                 {t("welcome_korean")}
               </Welcome>
               {user.profileImg ? (
@@ -90,7 +92,7 @@ function Navbar({ navItemData }) {
             </ProfileBox>
           )}
           {dropdownOpen && <UserDropdown />}
-        </>
+        </Suspense>
       ) : (
         <NavItemBox>
           <NavItemBtn onClick={() => setLoginModalOpen("login")}>

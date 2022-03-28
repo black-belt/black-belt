@@ -2,6 +2,7 @@ import { GetUserInfo, UserProfileSelector } from "api";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "utils/API";
 import {
   DropdownItem,
   Layout,
@@ -17,11 +18,20 @@ const Dropdown = () => {
   const { t, i18n } = useTranslation();
   const [user, setUser] = useState(null);
   const userData = GetUserInfo();
+
   useEffect(() => {
     if (userData.data) {
       setUser(UserProfileSelector(userData.data));
     }
   }, [userData.data]);
+
+  const UserLogout = async () => {
+    const res = await axiosInstance.put("/api/user/logout", {
+      userId: user.id,
+    });
+    localStorage.removeItem("blackbelt_token");
+    window.location.reload();
+  };
 
   const menus = [
     {
@@ -38,7 +48,7 @@ const Dropdown = () => {
       {user && (
         <UserInfo>
           <UserName>{user.nickname}</UserName>
-          <UserEmail>useremail@email.com</UserEmail>
+          <UserEmail>{user.email}</UserEmail>
         </UserInfo>
       )}
       <MenuBox>
@@ -48,7 +58,7 @@ const Dropdown = () => {
           </DropdownItem>
         ))}
       </MenuBox>
-      <Logout>{t("logout")}</Logout>
+      <Logout onClick={UserLogout}>{t("logout")}</Logout>
     </Layout>
   );
 };

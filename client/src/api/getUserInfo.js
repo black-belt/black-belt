@@ -5,13 +5,7 @@ export const GetUserInfo = () => useQuery(["getUserInfo"], () => fetchData());
 
 const fetchData = async () => {
   const res = await axiosInstance.get("/api/user/userinfo", {});
-  // const res = await axiosInstance({
-  //   url: "/api/user/userinfo",
-  // });
-  // console.log(res);
   return res;
-
-  // return res;
 };
 
 export const UserProfileSelector = (user) => {
@@ -26,6 +20,8 @@ export const UserProfileSelector = (user) => {
     lose: user.userLose,
     draw: user.userDraw,
     score: user.userScore,
+    id: user.userId,
+    email: user.userEamil,
   };
   return profileData;
 };
