@@ -13,7 +13,7 @@ import {
   Logo,
   NavItemBox,
   NavItemBtn,
-  NavItemLink,
+  // NavItemLink,
   ProfileBox,
   ProfileImg,
   UserDropdown,
@@ -46,6 +46,7 @@ function Navbar({ navItemData }) {
         dropdownRef.current !== null &&
         !dropdownRef.current.contains(event.target)
       ) {
+        console.log(dropdownRef);
         setDropdownOpen(!dropdownOpen);
       }
     };
@@ -65,9 +66,9 @@ function Navbar({ navItemData }) {
       i18n.changeLanguage("ko");
     }
   };
-
+  console.log(dropdownRef);
   return (
-    <Layout>
+    <Layout ref={dropdownRef}>
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
       {isLogin() ? (
         <>
