@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { useQuery } from "react-query";
 
 import LangBtn from "components/atoms/Buttons/lang-btn";
 import Icon from "components/atoms/Icons/CustomIcon";
@@ -19,22 +18,23 @@ import {
   ProfileImg,
   Welcome,
 } from "./Navbar.styled";
-import axiosInstance from "utils/API";
+
 import { useNavigate } from "react-router-dom";
+import { GetUserInfo, UserProfileSelector } from "api";
 
 function Navbar({ navItemData }) {
   const navigate = useNavigate();
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
+  const [user, setUser] = useState(null);
   const [translateEN, setTranslateEn] = useState(false);
   const { t, i18n } = useTranslation();
+  const userData = GetUserInfo();
 
-  const getUserInfo = async () => {
-    const userInfo = await axiosInstance.get("/api/user/userinfo", {});
-    console.log(userInfo);
-    return userInfo;
-  };
-
-  const query = useQuery("userInfo", getUserInfo);
+  useEffect(() => {
+    if (userData.data) {
+      setUser(UserProfileSelector(userData.data));
+    }
+  }, [userData.data]);
 
   const handleEnglish = () => {
     setTranslateEn(!translateEN);
@@ -50,15 +50,15 @@ function Navbar({ navItemData }) {
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
       {isLogin() ? (
         <>
-          {!query.isLoading && query.data && (
+          {user && (
             <ProfileBox>
               <Welcome>
-                {t("welcome")} {query.data.userNick}
+                {t("welcome")} {user.nickname}
                 {t("welcome_korean")}
               </Welcome>
-              {query.data.userProfilePath ? (
+              {user.profileImg ? (
                 <ProfileImg>
-                  <img src={query.data.userProfilePath} />
+                  <img src={user.profileImg} />
                 </ProfileImg>
               ) : (
                 <ProfileImg>
