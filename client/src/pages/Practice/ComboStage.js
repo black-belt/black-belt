@@ -11,11 +11,6 @@ import { useTranslation } from "react-i18next";
 
 function ComboStage() {
   const [info, setInfo] = useState();
-  // const [videoSelected, setVideoSelected] = useState("../../videos/basics1.MP4");
-  // const [title, setTitle] = useState("");
-  // const [desc, setDesc] = useState([]);
-  // const [answer, setAnswer] = useState([]);
-  // const [answerIndex, setAnswerIndex] = useState([]);
   const [isPass, setIsPass] = useState(false);
   const [grade, setGrade] = useState("Try Again");
   const [gradeNum, setGradeNum] = useState(0);
@@ -28,37 +23,6 @@ function ComboStage() {
     //받기: api 통신해서 title, description[], 비디오(Streaming이나 youtube link), 답안[], 답안의 인덱스[] 받음
     //보내기: 서버로 통과 단계를 보냄
     getComboData();
-    // fetch("https://jsonplaceholder.typicode.com/posts")
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     // console.log(state.stageId);
-    //     setTitle("연결동작");
-    //     setDesc([
-    //       "왼 아래(내려)막기",
-    //       "오른 (몸통)지르기",
-    //       "오른 아래(내려)막기",
-    //       "왼 (몸통)지르기",
-    //       "왼 아래(내려)막기",
-    //       "오른 (몸통)지르기",
-    //       // "왼 손날 아래(내려)막기",
-    //       // "오른 아금손 앞치기",
-    //       // "오른 앞차기",
-    //       // "오른 손날 아래(내려)막기",
-    //       // "왼 아금손 앞치기",
-    //       // "왼 앞차기",
-    //       // "왼 손날 아래(내려)막기",
-    //       // "오른 아금손 앞치기",
-    //       // "오른 앞차기",
-    //       // "왼 (무릎)눌러꺾기",
-    //       // "안팔목 (몸통)헤쳐막기",
-    //       // "왼 앞차기",
-    //       // "오른 (무릎)눌러꺾기",
-    //       // "안팔목 (몸통)헤쳐막기",
-    //     ]);
-    //     setAnswer(["mask", "water jug", "mask"]);
-    //     setAnswerIndex([0, 2, 4]);
-    //     setVideoSelected(`https://youtu.be/o9JvP-A4TvY`);
-    //   });
   }, []);
 
   const getComboData = async () => {
