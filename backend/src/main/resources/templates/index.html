@@ -18,6 +18,8 @@
         let socket = new WebSocket("ws://localhost:8080/socket");	//"ws://{도메인}/socket" 형태 유지 
 		
         socket.onopen = function (e) {
+        	// socket open 시 유저 아이디 제공 
+        	socket.send("0,userid");
             console.log('open server!')
         };
 
@@ -26,6 +28,8 @@
         }
         
         socket.onmessage = function (e) {
+        	// 프론트 customizing
+        	console.log("onmessage도 동작했어욤");
             console.log(e.data);
             let msgArea = document.querySelector('.msgArea');
             let newMsg = document.createElement('div');
