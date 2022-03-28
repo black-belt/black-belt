@@ -1,7 +1,7 @@
 import PracticeStageTemplate from "../../components/templates/PracticeStageTemplate";
 import { useEffect, useState } from "react";
 import LocalVideo from "../../components/atoms/Videos/LocalVideo";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DescStage from "components/atoms/Texts/DescStage";
 import StageBtn from "components/atoms/Buttons/stage-btn";
 import UserVideoPoomsae from "components/atoms/Videos/UserVideoPoomsae";
@@ -21,12 +21,14 @@ function PoomsaeStage() {
   const [part, setPart] = useState(["1단락", "2단락", "3단락", "4단락"]); //영어버전
   const [partIndex, setPartIndex] = useState(0);
   const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
+  const state = useLocation().state;
   const resultArray = [0, 0, 0, 0];
   const navigate = useNavigate();
 
   useEffect(() => {
     //받기: api 통신해서 title, description[[]], 비디오(Streaming이나 youtube link), 답안[[]], 답안의 인덱스[[]] 받음
     //보내기: 서버로 통과 단계를 보냄
+    // console.log(state.stageId);
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((json) => {
