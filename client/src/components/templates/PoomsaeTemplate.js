@@ -3,6 +3,7 @@ import { colors, fontSize } from "../../_foundation";
 import { useTranslation } from "react-i18next";
 import BottomButtonList from "components/molecules/BottomButtonList";
 import PoomsaeCard from "components/molecules/PoomsaeCard";
+import CustomIcon from "../atoms/Icons/Icon";
 
 function PoomsaeTemplate({
   buttons,
@@ -24,6 +25,33 @@ function PoomsaeTemplate({
                 ? selectedPoomsaeInfo.poomsaeName
                 : selectedPoomsaeInfo.poomsaeNameE}
             </Title>
+            <Stars>
+              <Star>
+                <CustomIcon
+                  icon={selectedPoomsaeInfo.poomsaeScore > 0 ? "goldStar" : "blackStar"}
+                  viewBox="0 0 55 55"
+                  width="40"
+                  height="40"
+                />
+              </Star>
+              <Star>
+                <CustomIcon
+                  icon={selectedPoomsaeInfo.poomsaeScore > 1 ? "goldStar" : "blackStar"}
+                  viewBox="0 0 55 55"
+                  width="40"
+                  height="40"
+                />
+              </Star>
+              <Star>
+                <CustomIcon
+                  icon={selectedPoomsaeInfo.poomsaeScore > 2 ? "goldStar" : "blackStar"}
+                  viewBox="0 0 55 55"
+                  width="40"
+                  height="40"
+                />
+              </Star>
+            </Stars>
+
             {selectedPoomsaeInfo && (
               <Description>
                 {t("language") === "KOR"
@@ -96,6 +124,15 @@ const Title = styled.div`
       font-size: 6.5rem;
       line-height: 120%;
     `}
+`;
+
+const Stars = styled.div`
+  padding: 10px 10px 10px 0;
+  display: flex;
+`;
+
+const Star = styled.div`
+  padding-left: 10px;
 `;
 
 const Description = styled.div`

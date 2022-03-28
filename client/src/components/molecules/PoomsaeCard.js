@@ -8,7 +8,7 @@ function PoomsaeCard({ title, img, clear, score, locked, onClick }) {
       <ImageContainer onClick={onClick}>
         <Image img={img} clear={clear}></Image>
       </ImageContainer>
-      <InfoContainer>
+      {/* <InfoContainer>
         <Title>{title}</Title>
         <Stars>
           <Star>
@@ -36,7 +36,7 @@ function PoomsaeCard({ title, img, clear, score, locked, onClick }) {
             />
           </Star>
         </Stars>
-      </InfoContainer>
+      </InfoContainer> */}
     </Card>
   );
 }
