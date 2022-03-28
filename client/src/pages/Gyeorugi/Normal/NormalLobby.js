@@ -10,6 +10,11 @@ import {
   SearchLayout,
   SearchList,
   Standby,
+  UserImg,
+  UserName,
+  UserProfile,
+  UserStatus,
+  UserTextBox,
 } from "./NormalLobby.styled";
 
 function NormalLobby() {
@@ -29,8 +34,16 @@ function NormalLobby() {
           <InButton>겨루기 시작</InButton>
         </Standby>
         <SearchLayout>
-          <SearchInput></SearchInput>
-          <SearchList></SearchList>
+          <SearchInput />
+          <SearchList>
+            <UserProfile>
+              {/* <UserImg /> */}
+              <UserTextBox>
+                <UserName></UserName>
+                <UserStatus></UserStatus>
+              </UserTextBox>
+            </UserProfile>
+          </SearchList>
         </SearchLayout>
       </Layout>
     </div>

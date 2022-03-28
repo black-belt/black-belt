@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { colors, fontSize } from "_foundation";
 
 export const BackgroundImg = styled.img`
-  filter: grayscale(100%) brightness(15%);
+  filter: grayscale(100%) brightness(20%);
   position: absolute;
   top: 0;
   left: 0;
@@ -24,8 +24,6 @@ export const Standby = styled.div`
   width: 78%;
   padding-top: 4%;
   text-align: center;
-
-  /* background-color: black; */
 
   button {
     display: inline-block;
@@ -56,9 +54,30 @@ export const CounterChampion = styled.div`
 
 export const SearchLayout = styled.div`
   width: 22%;
-  background-color: blue;
+  text-align: center;
+  padding: 3rem 1rem;
+  /* background-color: rgba(173, 181, 189, 0.2); */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* filter: grayscale(100%) brightness(15%); */
 `;
 
-export const SearchInput = styled.div``;
+export const SearchInput = styled.input`
+  width: 90%;
+  height: 30px;
+
+  border: none;
+  border-radius: 5px;
+  background-color: ${colors.gray2};
+`;
 
 export const SearchList = styled.div``;
+
+export const UserProfile = styled.div``;
+
+export const UserImg = styled.img``;
+
+export const UserTextBox = styled.div``;
+
+export const UserName = styled.div``;
+
+export const UserStatus = styled.div``;
