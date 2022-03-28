@@ -43,8 +43,8 @@ function Navbar({ navItemData }) {
 
   return (
     <Layout>
-      <Logo>
-        <img src={t("logo url")} alt="" onClick={goHome} />
+      <Logo onClick={goHome}>
+        <img src={t("logo url")} alt="" />
       </Logo>
       {isLogin() ? (
         <NavItemBox>
