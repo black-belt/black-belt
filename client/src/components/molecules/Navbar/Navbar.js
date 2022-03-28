@@ -17,20 +17,25 @@ import {
   NavItemLink,
 } from "./Navbar.styled";
 import axiosInstance from "utils/API";
+import { useNavigate } from "react-router-dom";
 
 function Navbar({ navItemData }) {
+  const navigate = useNavigate();
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
   const [translateEN, setTranslateEn] = useState(false);
   const { t, i18n } = useTranslation();
 
   const getUserInfo = async () => {
-    const userInfo = await axiosInstance.get("/api/user/userinfo", {});
+    const { userInfo } = await axiosInstance.get("/api/user/userinfo", {});
     console.log(userInfo);
+    return userInfo;
   };
 
   useEffect(() => {
-    getUserInfo();
-  }, []);
+    if (isLogin()) {
+      getUserInfo();
+    }
+  }, [isLogin]);
 
   const handleEnglish = () => {
     setTranslateEn(!translateEN);
@@ -43,9 +48,7 @@ function Navbar({ navItemData }) {
 
   return (
     <Layout>
-      <Logo>
-        <img src={t("logo url")} alt="" />
-      </Logo>
+      <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
       {isLogin() ? (
         <NavItemBox>
           <div>for test</div>

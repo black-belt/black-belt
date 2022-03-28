@@ -26,7 +26,8 @@ export const Layout = styled.div`
   transition: 0.5s;
 `;
 
-export const Logo = styled.div`
+export const Logo = styled.img`
+  cursor: pointer;
   /* img {
     width: 143px;
     height: 53px;
