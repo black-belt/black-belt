@@ -22,7 +22,7 @@ export const Layout = styled.div`
 
 export const UserInfo = styled.div`
   padding: 12px 16px;
-  border-bottom: 1px solid ${colors.gray8};
+  border-bottom: 1px solid ${colors.gray5};
 `;
 
 export const UserName = styled.div`
@@ -35,19 +35,32 @@ export const UserEmail = styled.div`
 `;
 
 export const MenuBox = styled.div`
-  padding: 12px 16px;
+  /* padding: 12px 16px; */
+  padding: 6px 0;
 
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  /* gap: 0.6rem; */
 
-  border-bottom: 1px solid ${colors.gray8};
+  border-bottom: 1px solid ${colors.gray5};
 
   /* font-weight: ${fontWeight.medium}; */
 `;
 
-export const DropdownItem = styled.div``;
+export const DropdownItem = styled.div`
+  padding: 6px 16px;
+  cursor: pointer;
+  :hover {
+    background-color: ${colors.gray5};
+  }
+`;
 
 export const Logout = styled.div`
-  padding: 12px 16px;
+  margin: 6px 0;
+  padding: 6px 16px;
+  cursor: pointer;
+
+  :hover {
+    background-color: ${colors.gray5};
+  }
 `;
