@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import LangBtn from "components/atoms/Buttons/lang-btn";
@@ -16,18 +16,21 @@ import {
   NavItemLink,
   ProfileBox,
   ProfileImg,
+  UserDropdown,
   Welcome,
 } from "./Navbar.styled";
 
 import { useNavigate } from "react-router-dom";
 import { GetUserInfo, UserProfileSelector } from "api";
-import Dropdown from "./Dropdown";
 
 function Navbar({ navItemData }) {
   const navigate = useNavigate();
-  const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
+  const dropdownRef = useRef(null);
   const [user, setUser] = useState(null);
   const [translateEN, setTranslateEn] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
+
   const { t, i18n } = useTranslation();
   const userData = GetUserInfo();
 
@@ -36,6 +39,23 @@ function Navbar({ navItemData }) {
       setUser(UserProfileSelector(userData.data));
     }
   }, [userData.data]);
+
+  useEffect(() => {
+    const pageClickEvent = (event) => {
+      if (
+        dropdownRef.current !== null &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setDropdownOpen(!dropdownOpen);
+      }
+    };
+    if (dropdownOpen) {
+      window.addEventListener("click", pageClickEvent);
+    }
+    return () => {
+      window.removeEventListener("click", pageClickEvent);
+    };
+  }, [dropdownOpen]);
 
   const handleEnglish = () => {
     setTranslateEn(!translateEN);
@@ -49,7 +69,6 @@ function Navbar({ navItemData }) {
   return (
     <Layout>
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
-      <Dropdown />
       {isLogin() ? (
         <>
           {user && (
@@ -59,16 +78,17 @@ function Navbar({ navItemData }) {
                 {t("welcome_korean")}
               </Welcome>
               {user.profileImg ? (
-                <ProfileImg>
+                <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>
                   <img src={user.profileImg} />
                 </ProfileImg>
               ) : (
-                <ProfileImg>
+                <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>
                   <Icon width={40} height={40} icon="defaultUser" />
                 </ProfileImg>
               )}
             </ProfileBox>
           )}
+          {dropdownOpen && <UserDropdown />}
         </>
       ) : (
         <NavItemBox>

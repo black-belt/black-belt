@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "_foundation";
+import Dropdown from "./Dropdown";
 
 export const Layout = styled.div`
   position: fixed;
@@ -29,6 +30,14 @@ export const ProfileImg = styled.div`
 
 export const Welcome = styled.span`
   color: ${colors.gray0};
+`;
+
+export const UserDropdown = styled(Dropdown)`
+  z-index: 9999;
+  top: 80px;
+  right: 3.6rem;
+
+  animation: 0.3s cubic-bezier(0.3, 0, 0, 1);
 `;
 
 export const NavItemLink = styled(Link)`

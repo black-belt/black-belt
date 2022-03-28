@@ -35,21 +35,15 @@ export const UserEmail = styled.div`
 `;
 
 export const MenuBox = styled.div`
-  /* padding: 12px 16px; */
   padding: 6px 0;
 
-  display: flex;
-  flex-direction: column;
-  /* gap: 0.6rem; */
-
   border-bottom: 1px solid ${colors.gray5};
-
-  /* font-weight: ${fontWeight.medium}; */
 `;
 
 export const DropdownItem = styled.div`
   padding: 6px 16px;
   cursor: pointer;
+
   :hover {
     background-color: ${colors.gray5};
   }

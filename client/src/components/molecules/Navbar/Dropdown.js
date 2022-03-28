@@ -1,6 +1,7 @@
 import { GetUserInfo, UserProfileSelector } from "api";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import {
   DropdownItem,
   Layout,
@@ -12,6 +13,7 @@ import {
 } from "./Dropdown.styled";
 
 const Dropdown = () => {
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [user, setUser] = useState(null);
   const userData = GetUserInfo();
@@ -37,7 +39,9 @@ const Dropdown = () => {
       </UserInfo>
       <MenuBox>
         {menus.map((menu) => (
-          <DropdownItem>{t(menu.title)}</DropdownItem>
+          <DropdownItem key={menu.title} onClick={() => navigate(menu.url)}>
+            {t(menu.title)}
+          </DropdownItem>
         ))}
       </MenuBox>
       <Logout>{t("logout")}</Logout>
