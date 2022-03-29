@@ -1,5 +1,5 @@
-import { useQuery } from "react-query";
-import axiosInstance from "utils/API";
+// import { useQuery } from "react-query";
+// import axiosInstance from "utils/API";
 
 // export const GetBasicsData = () =>
 //   useQuery(["getBasicsData"], () => fetchData());
