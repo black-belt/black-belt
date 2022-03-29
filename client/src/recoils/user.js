@@ -11,7 +11,6 @@ export const token = atom({
 export const userInfo = selector({
   key: "userInfo",
   get: async ({ get }) => {
-    console.log(get(token).accessToken);
     if (!!get(token).accessToken) {
       const res = await axiosInstance.get("/api/user/userinfo", {});
       return res;

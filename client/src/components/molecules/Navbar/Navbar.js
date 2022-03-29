@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import LangBtn from "components/atoms/Buttons/lang-btn";
 import Icon from "components/atoms/Icons/CustomIcon";
 
-import { accessToken, loginModalState, userInfo } from "recoils";
+import { loginModalState, userInfo } from "recoils";
 import { useTranslation } from "react-i18next";
 
 import isLogin from "utils/isLogin";
@@ -21,31 +21,16 @@ import {
 } from "./Navbar.styled";
 
 import { useNavigate } from "react-router-dom";
-import { GetUserInfo, UserProfileSelector } from "api";
 
 function Navbar({ navItemData }) {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  // const [user, setUser] = useState(null);
   const [translateEN, setTranslateEn] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
   const { t, i18n } = useTranslation();
 
-  const [userData, setUserData] = useState(null);
   const user = useRecoilValue(userInfo);
-  console.log(user);
-
-  // const userData = GetUserInfo();
-  // useEffect(() => {
-  //   if (userData && userData.data) {
-  //     setUser(UserProfileSelector(userData.data));
-  //   }
-  // }, [userData.data]);
-  console.log(accessToken);
-  console.log(useRecoilValue(accessToken));
-  // const test = JSON.parse(localStorage.getItem("blackbelt_token"));
-  // console.log(test)
 
   useEffect(() => {
     const pageClickEvent = (event) => {
