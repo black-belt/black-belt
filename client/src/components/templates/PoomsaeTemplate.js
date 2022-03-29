@@ -13,7 +13,7 @@ function PoomsaeTemplate({
   goToStage,
   imageNum,
 }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -28,7 +28,11 @@ function PoomsaeTemplate({
             <Stars>
               <Star>
                 <CustomIcon
-                  icon={selectedPoomsaeInfo.poomsaeScore > 0 ? "goldStar" : "blackStar"}
+                  icon={
+                    selectedPoomsaeInfo.poomsaeScore > 0
+                      ? "goldStar"
+                      : "blackStar"
+                  }
                   viewBox="0 0 55 55"
                   width="40"
                   height="40"
@@ -36,7 +40,11 @@ function PoomsaeTemplate({
               </Star>
               <Star>
                 <CustomIcon
-                  icon={selectedPoomsaeInfo.poomsaeScore > 1 ? "goldStar" : "blackStar"}
+                  icon={
+                    selectedPoomsaeInfo.poomsaeScore > 1
+                      ? "goldStar"
+                      : "blackStar"
+                  }
                   viewBox="0 0 55 55"
                   width="40"
                   height="40"
@@ -44,7 +52,11 @@ function PoomsaeTemplate({
               </Star>
               <Star>
                 <CustomIcon
-                  icon={selectedPoomsaeInfo.poomsaeScore > 2 ? "goldStar" : "blackStar"}
+                  icon={
+                    selectedPoomsaeInfo.poomsaeScore > 2
+                      ? "goldStar"
+                      : "blackStar"
+                  }
                   viewBox="0 0 55 55"
                   width="40"
                   height="40"
