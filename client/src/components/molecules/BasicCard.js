@@ -1,8 +1,17 @@
 import styled, { css } from "styled-components";
-import { colors, fontSize, fontWeight, fontFamily } from "../../_foundation";
+import { colors, fontSize } from "_foundation";
 import CustomIcon from "../atoms/Icons/Icon";
 
-function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId }) {
+function BasicCard({
+  title,
+  desc,
+  img,
+  clear,
+  score,
+  locked,
+  onClick,
+  stageId,
+}) {
   const selectStage = () => {
     onClick(stageId);
   };
@@ -14,7 +23,12 @@ function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId })
         <DescriptionContainer>
           <Description>{desc}</Description>
           <Arrow>
-            <CustomIcon icon="inPointer" viewBox="0 0 50 50" width="55" height="55" />
+            <CustomIcon
+              icon="inPointer"
+              viewBox="0 0 50 50"
+              width="55"
+              height="55"
+            />
           </Arrow>
         </DescriptionContainer>
       </ImageContainer>

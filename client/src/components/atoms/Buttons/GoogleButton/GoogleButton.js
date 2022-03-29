@@ -2,7 +2,7 @@ import Icon from "components/atoms/Icons/Icon";
 import React from "react";
 import GoogleLogin from "react-google-login";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { token } from "recoils";
 import axiosInstance from "utils/API";
@@ -16,7 +16,7 @@ const clientId = process.env.REACT_APP_GOOGLE_API_KEY;
 
 export default function GoogleButton() {
   // const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const setToken = useSetRecoilState(token);
 
   const onSuccess = async (response) => {

@@ -1,4 +1,4 @@
-import Recoil, { atom, selector } from "recoil";
+import { atom, selector } from "recoil";
 import axiosInstance from "utils/API";
 import { localStorageEffect } from "utils/localStorageEffect";
 

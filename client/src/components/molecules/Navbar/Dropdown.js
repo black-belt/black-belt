@@ -17,7 +17,7 @@ import {
 
 const Dropdown = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [user, setUser] = useState(null);
   const userData = GetUserInfo();
   const resetToken = useResetRecoilState(token);
@@ -29,7 +29,7 @@ const Dropdown = () => {
   }, [userData.data]);
 
   const UserLogout = async () => {
-    const res = await axiosInstance.put("/api/user/logout", {
+    await axiosInstance.put("/api/user/logout", {
       userId: user.id,
     });
     // localStorage.removeItem("blackbelt_token");
