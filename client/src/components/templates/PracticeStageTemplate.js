@@ -5,7 +5,7 @@ import { fontFamily, fontSize, fontWeight } from "../../_foundation/typography";
 import { useTranslation } from "react-i18next";
 
 function PracticeStageTemplate({ title, desc, video, camera, partStage }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Container>
