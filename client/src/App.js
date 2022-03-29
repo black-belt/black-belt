@@ -1,4 +1,5 @@
 import Layout from "Layout";
+import NormalStage from "pages/Gyeorugi/GyeorugiStage/NormalStage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
@@ -39,6 +40,7 @@ function App() {
               <Route path="mypage" element={<MyPage />} />
             </Route>
             <Route path="gyeorugi/stage" element={<GyeorugiStage />} />
+            <Route path="gyeorugi/normal/stage" element={<NormalStage />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
