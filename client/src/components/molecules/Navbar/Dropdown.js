@@ -2,6 +2,8 @@ import { GetUserInfo, UserProfileSelector } from "api";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useResetRecoilState } from "recoil";
+import { token } from "recoils";
 import axiosInstance from "utils/API";
 import {
   DropdownItem,
@@ -18,6 +20,7 @@ const Dropdown = () => {
   const { t, i18n } = useTranslation();
   const [user, setUser] = useState(null);
   const userData = GetUserInfo();
+  const resetToken = useResetRecoilState(token);
 
   useEffect(() => {
     if (userData.data) {
@@ -29,7 +32,8 @@ const Dropdown = () => {
     const res = await axiosInstance.put("/api/user/logout", {
       userId: user.id,
     });
-    localStorage.removeItem("blackbelt_token");
+    // localStorage.removeItem("blackbelt_token");
+    resetToken();
     window.location.reload();
   };
 
@@ -43,6 +47,8 @@ const Dropdown = () => {
       url: "/mypage",
     },
   ];
+  console.log(user);
+  console.log(userData);
   return (
     <Layout>
       {user && (

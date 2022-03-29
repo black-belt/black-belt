@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import LangBtn from "components/atoms/Buttons/lang-btn";
 import Icon from "components/atoms/Icons/CustomIcon";
 
-import { loginModalState, userInfo } from "recoils";
+import { accessToken, loginModalState, userInfo } from "recoils";
 import { useTranslation } from "react-i18next";
 
 import isLogin from "utils/isLogin";
@@ -42,6 +42,10 @@ function Navbar({ navItemData }) {
   //     setUser(UserProfileSelector(userData.data));
   //   }
   // }, [userData.data]);
+  console.log(accessToken);
+  console.log(useRecoilValue(accessToken));
+  // const test = JSON.parse(localStorage.getItem("blackbelt_token"));
+  // console.log(test)
 
   useEffect(() => {
     const pageClickEvent = (event) => {

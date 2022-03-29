@@ -32,6 +32,7 @@ export const UserName = styled.div`
 
 export const UserEmail = styled.div`
   font-size: ${fontSize.standard};
+  color: ${colors.gray7};
 `;
 
 export const MenuBox = styled.div`

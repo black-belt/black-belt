@@ -1,37 +1,20 @@
-import axios from "axios";
 import Recoil, { atom, selector } from "recoil";
 import axiosInstance from "utils/API";
+import { localStorageEffect } from "utils/localStorageEffect";
 
 export const token = atom({
   key: "token",
-  default: {
-    accessToken: undefined,
-  },
-  // effects_UNSTABLE: localStorage.getItem("blackbelt_token"),
-});
-// const token = localStorage.getItem("blackbelt_token");
-
-export const authTrigger = atom({
-  key: "authTrigger",
-  default: 0,
+  default: { accessToken: undefined },
+  effects_UNSTABLE: [localStorageEffect("blackbelt_token")],
 });
 
 export const userInfo = selector({
   key: "userInfo",
   get: async ({ get }) => {
+    console.log(get(token).accessToken);
     if (!!get(token).accessToken) {
-      const res = await axios.get(
-        process.env.REACT_APP_SERVER_URL + "/api/user/userinfo",
-        {
-          headers: {
-            Authorization: get(token).accessToken,
-          },
-        }
-      );
-      // const res = await axiosInstance({ url: "/api/user/userinfo" });
-      // const res = await axiosInstance.get("/api/user/userinfo", {});
-      console.log(res?.data);
-      return res?.data;
+      const res = await axiosInstance.get("/api/user/userinfo", {});
+      return res;
     }
     return {
       battleHistories: [],
@@ -53,11 +36,6 @@ export const userInfo = selector({
       userWin: "",
     };
   },
-  set: ({ set }, value) => {
-    if (value instanceof Recoil.DefaultValue) {
-      set(authTrigger, (v) => v + 1);
-    }
-  },
 });
 
 export const accessToken = selector({
@@ -65,14 +43,4 @@ export const accessToken = selector({
   get: ({ get }) => {
     return get(token).accessToken;
   },
-});
-
-export const username = atom({
-  key: "username",
-  default: "",
-});
-
-export const profileImg = atom({
-  key: "profileImg",
-  default: "",
 });

@@ -21,7 +21,7 @@ export const UserProfileSelector = (user) => {
     draw: user.userDraw,
     score: user.userScore,
     id: user.userId,
-    email: user.userEamil,
+    email: user.userEmail,
   };
   return profileData;
 };
