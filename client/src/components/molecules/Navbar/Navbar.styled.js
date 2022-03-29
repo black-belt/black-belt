@@ -14,7 +14,6 @@ export const Layout = styled.div`
 
   width: 100%;
   height: 92px;
-  /* background-color: ${colors.gray4}; */
   background-color: rgba(206, 212, 218, 0.2);
 
   transition: 0.5s;
