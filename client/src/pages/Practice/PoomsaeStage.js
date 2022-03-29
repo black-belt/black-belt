@@ -20,7 +20,7 @@ function PoomsaeStage() {
   const [isPassArray, setIsPassArray] = useState([false, false, false, false]);
   const state = useLocation().state;
   const resultArray = [0, 0, 0, 0];
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,8 +38,12 @@ function PoomsaeStage() {
       ["mask", "water jug", "mask"],
     ];
     data.poomsae_movie_path = "https://youtu.be/o9JvP-A4TvY";
-    data.poomsae_explain = data.poomsae_explain.split("#").map((value) => value.split("/"));
-    data.poomsae_explain_e = data.poomsae_explain_e.split("#").map((value) => value.split("/"));
+    data.poomsae_explain = data.poomsae_explain
+      .split("#")
+      .map((value) => value.split("/"));
+    data.poomsae_explain_e = data.poomsae_explain_e
+      .split("#")
+      .map((value) => value.split("/"));
     data.poomsae_answer_index = [
       [0, 2, 4],
       [1, 3, 5],
@@ -122,10 +126,16 @@ function PoomsaeStage() {
     <>
       {info && (
         <PracticeStageTemplate
-          title={t("language") === "KOR" ? info.poomsae_name : info.poomsae_name_e}
+          title={
+            t("language") === "KOR" ? info.poomsae_name : info.poomsae_name_e
+          }
           partStage={
             <PartStage
-              partArray={t("language") === "KOR" ? info.poomsae_part : info.poomsae_part_e}
+              partArray={
+                t("language") === "KOR"
+                  ? info.poomsae_part
+                  : info.poomsae_part_e
+              }
               curIdx={partIndex}
             />
           }

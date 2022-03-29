@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useRef, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import LangBtn from "components/atoms/Buttons/lang-btn";
 import Icon from "components/atoms/Icons/CustomIcon";
@@ -21,12 +21,13 @@ import {
 } from "./Navbar.styled";
 import { useNavigate } from "react-router-dom";
 
-function Navbar({ navItemData }) {
+function Navbar() {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const [translateEN, setTranslateEn] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
+  const setLoginModalOpen = useSetRecoilState(loginModalState);
+
   const { t, i18n } = useTranslation();
 
   const user = useRecoilValue(userInfo);
@@ -57,10 +58,6 @@ function Navbar({ navItemData }) {
     }
   };
 
-  const goHome = () => {
-    navigate("/");
-  };
-
   return (
     <Layout ref={dropdownRef}>
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
@@ -75,7 +72,7 @@ function Navbar({ navItemData }) {
               </Welcome>
               {user.profileImg ? (
                 <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>
-                  <img src={user.profileImg} />
+                  <img src={user.profileImg} alt="" />
                 </ProfileImg>
               ) : (
                 <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 function Poomsae() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [poomsaeList, setPoomsaeList] = useState([]);
   const [selectedPoomsaeIdx, setSelectedPoomsaeIdx] = useState(0);
   const [selectedPoomsaeInfo, setSelectedPoomsaeInfo] = useState([]);
