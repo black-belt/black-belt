@@ -5,6 +5,7 @@
 <mapper namespace="com.blackbelt.model.mapper.UserMapper">
 	<resultMap id="userInfo" type="HashMap">
 	    <result property="userId" column="userId"/>
+	    <result property="userEmail" column="userEmail"/>
 	    <result property="userNick" column="userNick"/>
 	    <result property="countryName" column="countryName"/>
 	    <result property="countryImagePath" column="countryImagePath"/>
@@ -23,12 +24,12 @@
 	</resultMap>
 	<select id="getUserInfo" parameterType="String" resultMap="userInfo">
 		SELECT 
-			u.userId, u.userNick, ifnull(u.userProfilePath,"") AS userProfilePath, u.userScore,u.userTier, t.tier_img_path AS userTierPath ,IFNULL(u.userWin, 0) AS userWin 
+			u.userId, u.userEmail, u.userNick, ifnull(u.userProfilePath,"") AS userProfilePath, u.userScore,u.userTier, t.tier_img_path AS userTierPath ,IFNULL(u.userWin, 0) AS userWin 
 			, IFNULL(u.userLose, 0) AS userLose, IFNULL(u.userDraw, 0) AS userDraw,
 		    c.country_name AS countryName, c.country_image_path AS countryImagePath, l.level_name AS levelName, l.level_name_e AS levelNameE,
 		    l.level_image_path AS levelImagePath
 		FROM
-			(SELECT user_id AS userId, country_id ,user_nick AS userNick, user_profile_path AS userProfilePath, user_score AS userScore,
+			(SELECT user_id AS userId, user_email AS userEmail, country_id ,user_nick AS userNick, user_profile_path AS userProfilePath, user_score AS userScore,
 					tier_id AS userTier, level_id, user_win AS userWin, user_lose AS userLose, user_Draw AS userDraw
 			FROM user WHERE user_id = #{userid}) u
 			LEFT JOIN country c on c.country_id = u.country_id

@@ -2,23 +2,13 @@ import styled, { css } from "styled-components";
 import { colors, fontSize, fontWeight, fontFamily } from "../../_foundation";
 import CustomIcon from "../atoms/Icons/Icon";
 
-function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId }) {
-  const selectStage = () => {
-    onClick(stageId);
-  };
-
+function PoomsaeCard({ title, img, clear, score, locked, onClick }) {
   return (
     <Card>
-      <ImageContainer onClick={selectStage}>
+      <ImageContainer onClick={onClick}>
         <Image img={img} clear={clear}></Image>
-        <DescriptionContainer>
-          <Description>{desc}</Description>
-          <Arrow>
-            <CustomIcon icon="inPointer" viewBox="0 0 50 50" width="55" height="55" />
-          </Arrow>
-        </DescriptionContainer>
       </ImageContainer>
-      <InfoContainer>
+      {/* <InfoContainer>
         <Title>{title}</Title>
         <Stars>
           <Star>
@@ -46,17 +36,16 @@ function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId })
             />
           </Star>
         </Stars>
-      </InfoContainer>
+      </InfoContainer> */}
     </Card>
   );
 }
 
-export default BasicCard;
+export default PoomsaeCard;
 
 const Card = styled.div`
-  width: 25%;
-  height: 35%;
-  padding: 20px;
+  width: 100%;
+  height: 100%;
 `;
 
 const ImageContainer = styled.div`
@@ -67,25 +56,6 @@ const ImageContainer = styled.div`
   position: relative;
   text-align: left;
   overflow: hidden;
-
-  &:after {
-    content: "";
-    background-color: rgba(0, 0, 0, 0.65);
-    -webkit-transition: all 0.35s ease;
-    transition: all 0.35s ease;
-    opacity: 0;
-  }
-
-  &:hover:after {
-    border-radius: 5px;
-    content: "";
-    opacity: 1;
-    position: absolute;
-    top: 10px;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-  }
 `;
 
 const Image = styled.div`
@@ -96,23 +66,20 @@ const Image = styled.div`
   padding: 20px 0;
   width: 100%;
   height: 100%;
-  ${(props) =>
-    props.clear === "Y"
-      ? css`
-          background: rgb(100, 100, 100, 0.7);
-          filter: grayscale(100%) brightness(100%);
-        `
-      : css`
-          background: rgb(0, 0, 0, 0.4);
-          filter: grayscale(100%) brightness(55%);
-        `}
-  /* background: rgb(0, 0, 0, 0.7); */
-  /* background-color: ${colors.gray6}; */
+  background: rgba(100, 100, 100, 0.7);
   background-image: url(${(props) => props.img});
   background-repeat: no-repeat;
   background-size: contain;
   background-origin: content-box;
   background-position: center;
+  ${(props) =>
+    !props.clear
+      ? css`
+          filter: grayscale(100%) brightness(50%);
+        `
+      : css`
+          filter: grayscale(0%) brightness(100%);
+        `}
   filter: gray;
   border-radius: 5px;
 
@@ -122,48 +89,6 @@ const Image = styled.div`
     bottom: 0;
     left: 0;
     right: 0;
-  }
-`;
-
-const DescriptionContainer = styled.div`
-  color: ${colors.gray0};
-  transition: all 0.35s ease;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  z-index: 1;
-  padding: 20%;
-`;
-
-const Description = styled.div`
-  letter-spacing: 1px;
-  box-sizing: border-box;
-  transition: all 0.35s ease;
-  opacity: 0;
-  top: 50%;
-  transform: translateY(40px);
-
-  ${ImageContainer}:hover & {
-    transform: translate(0px, 0px);
-    opacity: 1;
-  }
-`;
-
-const Arrow = styled.div`
-  box-sizing: border-box;
-  transition: all 0.35s ease;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  opacity: 0;
-  transform: translateX(-10px);
-
-  ${ImageContainer}:hover & {
-    transform: translate(0px, 0px);
-    opacity: 1;
   }
 `;
 

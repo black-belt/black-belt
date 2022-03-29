@@ -19,7 +19,6 @@ import {
   UserDropdown,
   Welcome,
 } from "./Navbar.styled";
-
 import { useNavigate } from "react-router-dom";
 
 function Navbar({ navItemData }) {
@@ -29,6 +28,7 @@ function Navbar({ navItemData }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   const user = useRecoilValue(userInfo);
 
@@ -58,9 +58,14 @@ function Navbar({ navItemData }) {
     }
   };
 
+  const goHome = () => {
+    navigate("/");
+  };
+
   return (
     <Layout ref={dropdownRef}>
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
+
       {isLogin() ? (
         <Suspense fallback={<div>Loading ...</div>}>
           {user && (
@@ -84,12 +89,8 @@ function Navbar({ navItemData }) {
         </Suspense>
       ) : (
         <NavItemBox>
-          <NavItemBtn onClick={() => setLoginModalOpen("login")}>
-            {t("login")}
-          </NavItemBtn>
-          <NavItemBtn onClick={() => setLoginModalOpen("signup")}>
-            {t("signup")}
-          </NavItemBtn>
+          <NavItemBtn onClick={() => setLoginModalOpen("login")}>{t("login")}</NavItemBtn>
+          <NavItemBtn onClick={() => setLoginModalOpen("signup")}>{t("signup")}</NavItemBtn>
           <LangBtn onClick={handleEnglish}>
             <Icon icon={t("language")} />
             {t("language")}
