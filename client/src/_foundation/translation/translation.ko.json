@@ -3,7 +3,12 @@
   "login": "로그인",
   "signup": "회원가입",
   "welcome": "안녕하세요,",
+  "welcome_korean": "님",
   "language": "KOR",
+
+  "logout": "로그아웃",
+  "about tkd": "태권도란?",
+  "mypage": "마이페이지",
 
   "welcome google": "구글 계정으로 계속하기",
   "new?": "New to BlackBelt?",
@@ -36,9 +41,8 @@
   "normal": "일반 모드",
   "rank": "랭크 모드",
 
-
   "start": "겨루기 시작",
 
-  "basics description":"한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
-  "combos description":"한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."
+  "basics description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "combos description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."
 }

@@ -2,8 +2,9 @@ import Icon from "components/atoms/Icons/Icon";
 import React from "react";
 import GoogleLogin from "react-google-login";
 import { useTranslation } from "react-i18next";
-import { useRecoilState } from "recoil";
-import { username, profileImg } from "recoils";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { token } from "recoils";
 import axiosInstance from "utils/API";
 import {
   GoogleContent,
@@ -13,20 +14,16 @@ import {
 
 const clientId = process.env.REACT_APP_GOOGLE_API_KEY;
 
-export default function GoogleButton({ onSocial }) {
+export default function GoogleButton() {
+  // const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const [name, setName] = useRecoilState(username);
-  const [profileImgUrl, setProfileImgUrl] = useRecoilState(profileImg);
+  const setToken = useSetRecoilState(token);
 
   const onSuccess = async (response) => {
-    console.log(response);
-    // localStorage.setItem('blackbelt_token', )
-
     const {
       googleId,
       profileObj: { email, name },
     } = response;
-    // console.log(googleId, email, name);
 
     const googleLogin = async () => {
       const data = await axiosInstance.post("/api/user/login", {
@@ -34,20 +31,18 @@ export default function GoogleButton({ onSocial }) {
         userName: name,
         userEmail: email,
       });
-      // console.log(data);
-      // const token = data.Authorization
-      setName(data.userInfo.userNick);
-      setProfileImgUrl(data.userInfo.userProfilePath);
-      console.log(name, profileImgUrl);
-      localStorage.setItem("blackbelt_token", data.Authorization);
-      // window.location.reload();
+      await setToken({
+        accessToken: data.Authorization,
+      });
+      // await navigate("/");
+      await window.location.reload();
     };
     googleLogin();
   };
   const onFailure = (error) => {
     console.log(error);
   };
-
+  console.log(setToken);
   return (
     <div>
       <GoogleLogin
