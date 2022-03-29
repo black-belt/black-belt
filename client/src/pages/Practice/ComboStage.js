@@ -16,7 +16,7 @@ function ComboStage() {
   const [gradeNum, setGradeNum] = useState(0);
   const [nextAction, setNextAction] = useState(0);
   const state = useLocation().state;
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -80,7 +80,11 @@ function ComboStage() {
           title={t("language") === "KOR" ? info.combo_name : info.combo_name_e}
           desc={
             <DescStage
-              descArray={t("language") === "KOR" ? info.combo_explain : info.combo_explain_e}
+              descArray={
+                t("language") === "KOR"
+                  ? info.combo_explain
+                  : info.combo_explain_e
+              }
               curIdx={info.combo_answer_index[nextAction]}
             />
           }
