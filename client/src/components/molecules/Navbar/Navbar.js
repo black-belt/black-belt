@@ -28,7 +28,6 @@ function Navbar({ navItemData }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
 
   const user = useRecoilValue(userInfo);
 
@@ -89,8 +88,12 @@ function Navbar({ navItemData }) {
         </Suspense>
       ) : (
         <NavItemBox>
-          <NavItemBtn onClick={() => setLoginModalOpen("login")}>{t("login")}</NavItemBtn>
-          <NavItemBtn onClick={() => setLoginModalOpen("signup")}>{t("signup")}</NavItemBtn>
+          <NavItemBtn onClick={() => setLoginModalOpen("login")}>
+            {t("login")}
+          </NavItemBtn>
+          <NavItemBtn onClick={() => setLoginModalOpen("signup")}>
+            {t("signup")}
+          </NavItemBtn>
           <LangBtn onClick={handleEnglish}>
             <Icon icon={t("language")} />
             {t("language")}
