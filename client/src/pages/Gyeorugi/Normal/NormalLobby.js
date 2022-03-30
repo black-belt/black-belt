@@ -19,13 +19,14 @@ import {
   SearchList,
   Standby,
   Status,
-  UserDetail,
+  // UserDetail,
   UserImg,
   UserName,
   UserProfile,
   UserStatus,
   UserTextBox,
 } from "./NormalLobby.styled";
+import UserDetail from "./UserDetails";
 
 function NormalLobby() {
   const { t } = useTranslation();
@@ -62,6 +63,7 @@ function NormalLobby() {
       color: colors.gray6,
     },
   };
+
   return (
     <div className="NormalLobby">
       <Layout>
@@ -93,9 +95,12 @@ function NormalLobby() {
             <SearchList>
               {userList.map((user) => (
                 <UserProfile key={user.userId}>
-                  <UserDetail>
-                    <img src="/images/yeon.png" alt="" />
-                  </UserDetail>
+                  <UserDetail userData={user} />
+
+                  {/* </UserDetail> */}
+                  {/* // <UserDetail userData={user}>
+                  //   <img src="/images/yeon.png" alt="" />
+                  // </UserDetail> */}
                   {user.userProfilePath ? (
                     <UserImg
                       state={user.userState}
