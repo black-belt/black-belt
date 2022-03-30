@@ -14,7 +14,7 @@ function Poomsae() {
 
   const getPoomsaeData = async () => {
     const data = await axiosInstance.get("/api/poomsae", {});
-    console.log(data);
+    // console.log(data);
     setPoomsaeList(() => data);
     setSelectedPoomsaeInfo(data[0]);
     setImageNum(1);
