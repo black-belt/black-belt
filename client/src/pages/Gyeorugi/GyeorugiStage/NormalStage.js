@@ -1,4 +1,4 @@
-import VideoRoomComponent from "./components/VideoRoomComponent";
+import VideoRoomComponent from "../../../components/organisms/VideoRoom/VideoRoomComponent";
 
 function NormalStage() {
   return <VideoRoomComponent />;

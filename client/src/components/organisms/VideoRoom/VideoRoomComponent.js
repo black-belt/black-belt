@@ -2,13 +2,11 @@ import React, { Component, useEffect, useState } from "react";
 import axios from "axios";
 import "./VideoRoomComponent.css";
 import { OpenVidu, Subscriber } from "openvidu-browser";
-import StreamComponent from "./stream/StreamComponent";
-import DialogExtensionComponent from "./dialog-extension/DialogExtension";
-import ChatComponent from "./chat/ChatComponent";
-
-import OpenViduLayout from "../layout/openvidu-layout";
-import UserModel from "../models/user-model";
-import ToolbarComponent from "./toolbar/ToolbarComponent";
+import UserModel from "pages/Gyeorugi/GyeorugiStage/models/user-model";
+import OpenViduLayout from "components/molecules/Layout/openvidu-layout";
+import DialogExtensionComponent from "components/molecules/DialogExtension/DialogExtension";
+import StreamComponent from "components/molecules/Stream/StreamComponent";
+import GyeorugiStageTempalte from "components/templates/GyeorugiStageTemplate";
 
 var localUser = new UserModel();
 
@@ -571,51 +569,39 @@ function VideoRoomComponent({
     });
   };
 
-  const newSesionId = mySessionId;
   const newLocalUser = myLocalUser;
 
   return (
-    <div className="container" id="container">
-      <ToolbarComponent
-        sessionId={newSesionId}
-        user={newLocalUser}
-        showNotification={messageReceived}
-        camStatusChanged={camStatusChanged}
-        micStatusChanged={micStatusChanged}
-        screenShare={screenShare}
-        stopScreenShare={stopScreenShare}
-        toggleFullscreen={toggleFullscreen}
-        switchCamera={switchCamera}
-        leaveSession={myLeaveSession}
-        toggleChat={toggleChat}
+    <>
+      <GyeorugiStageTempalte
+        dialog={
+          <DialogExtensionComponent
+            showDialog={showExtensionDialog}
+            cancelClicked={closeDialogExtension}
+          />
+        }
+        localUser={newLocalUser}
+        subscribers={subscribers}
       />
-      <DialogExtensionComponent
-        showDialog={showExtensionDialog}
-        cancelClicked={closeDialogExtension}
-      />
-      <div id="layout" className="bounds">
-        {newLocalUser !== undefined && newLocalUser.getStreamManager() !== undefined && (
-          <div className="OT_root OT_publisher custom-class" id="localUser">
-            <StreamComponent user={newLocalUser} handleNickname={nicknameChanged} />
-          </div>
-        )}
-        {subscribers.map((sub, i) => (
-          <div key={i} className="OT_root OT_publisher custom-class" id="remoteUsers">
-            <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
-          </div>
-        ))}
-        {newLocalUser !== undefined && newLocalUser.getStreamManager() !== undefined && (
-          <div className="OT_root OT_publisher custom-class" style={{ display: chatDisplay }}>
-            <ChatComponent
-              user={newLocalUser}
-              chatDisplay={chatDisplay}
-              close={toggleChat}
-              messageReceived={checkNotification}
-            />
-          </div>
-        )}
-      </div>
-    </div>
+      {/* <div className="container" id="container">
+        <DialogExtensionComponent
+          showDialog={showExtensionDialog}
+          cancelClicked={closeDialogExtension}
+        />
+        <div id="layout" className="bounds">
+          {newLocalUser !== undefined && newLocalUser.getStreamManager() !== undefined && (
+            <div className="OT_root OT_publisher custom-class" id="localUser">
+              <StreamComponent user={newLocalUser} />
+            </div>
+          )}
+          {subscribers.map((sub, i) => (
+            <div key={i} className="OT_root OT_publisher custom-class" id="remoteUsers">
+              <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
+            </div>
+          ))}
+        </div>
+      </div> */}
+    </>
   );
 }
 
