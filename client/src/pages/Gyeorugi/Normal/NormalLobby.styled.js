@@ -82,7 +82,7 @@ export const UserProfile = styled.div`
 
   padding: 1rem 0;
 
-  cursor: pointer;
+  /* cursor: pointer; */
 `;
 
 export const UserDetail = styled.div`
