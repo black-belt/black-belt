@@ -1668,40 +1668,54 @@
     "@svgr/plugin-svgo" "^5.5.0"
     "loader-utils" "^2.0.0"
 
+"@teachablemachine/pose@^0.8.6":
+  "integrity" "sha512-72UHof2okPdyKlDMSnFcDk/h7dj4I9BBbGsJs64P+B/WQb1rwFcxAeeUFud5rJ2HFwElLDLEjnyaHZljeWV2Bg=="
+  "resolved" "https://registry.npmjs.org/@teachablemachine/pose/-/pose-0.8.6.tgz"
+  "version" "0.8.6"
+  dependencies:
+    "@tensorflow-models/posenet" "^2.2.0"
+    "autobind-decorator" "^2.4.0"
+    "seedrandom" "^3.0.1"
+
 "@tensorflow-models/mobilenet@^2.1.0":
   "integrity" "sha512-JjqT9ijHDFA2FEpUGWg7H2lQ0GrMuE2VmiCRBYmUew6b4JKht8LXDjG5HxZh95YH6c/25sZWTpGeHbquloH+hw=="
   "resolved" "https://registry.npmjs.org/@tensorflow-models/mobilenet/-/mobilenet-2.1.0.tgz"
   "version" "2.1.0"
 
-"@tensorflow/tfjs-backend-cpu@3.14.0":
-  "integrity" "sha512-Sk0B8p1QUqxEVsOmBNxxX2BUgeR8mfXVc6JZM5lWKP79bYy8YGzuiitrSrcxAhEFAANgmDVvM9FTTVR25a0CWg=="
-  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-3.14.0.tgz"
-  "version" "3.14.0"
+"@tensorflow-models/posenet@^2.2.0":
+  "integrity" "sha512-0SXIksRet/IdX7WVH+JSD6W3upkGHix1hwtd3xykIoIMGR7zQ4SC5+wZcNt9ofASyxNYQoI+tUULUo4LNw0c3w=="
+  "resolved" "https://registry.npmjs.org/@tensorflow-models/posenet/-/posenet-2.2.2.tgz"
+  "version" "2.2.2"
+
+"@tensorflow/tfjs-backend-cpu@3.15.0":
+  "integrity" "sha512-f+GREHSiVkVIpFAwkjB7YWcZefqQvCKQhrNjZzm1WX4VdnWlo0b1lTI+gPIIYNk4LEFMBNJbfqy/N1xNS/SOLQ=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-3.15.0.tgz"
+  "version" "3.15.0"
   dependencies:
     "@types/seedrandom" "2.4.27"
     "seedrandom" "2.4.3"
 
-"@tensorflow/tfjs-backend-webgl@3.14.0":
-  "integrity" "sha512-P3qB9LmC69+9ut9cC76mGUS4tLIFk95qmWUaUP1Zk4R3iLkiRnLE4xmBxGnm3rNckoWS77Ujpel58i4QK1BmCw=="
-  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-webgl/-/tfjs-backend-webgl-3.14.0.tgz"
-  "version" "3.14.0"
+"@tensorflow/tfjs-backend-webgl@3.15.0":
+  "integrity" "sha512-QOxbTABFbP+m+UmCVB8VQlmZbsXiJOP8QRkRRZHhGWNKjtT3eWi+ROS1tbloS7/Q20SEmNZXCvcsjv0TBgFQPw=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-webgl/-/tfjs-backend-webgl-3.15.0.tgz"
+  "version" "3.15.0"
   dependencies:
-    "@tensorflow/tfjs-backend-cpu" "3.14.0"
+    "@tensorflow/tfjs-backend-cpu" "3.15.0"
     "@types/offscreencanvas" "~2019.3.0"
     "@types/seedrandom" "2.4.27"
     "@types/webgl-ext" "0.0.30"
     "@types/webgl2" "0.0.6"
     "seedrandom" "2.4.3"
 
-"@tensorflow/tfjs-converter@3.14.0":
-  "integrity" "sha512-cz8dpfOU5kOeY8SyNdmg5Pv836fYmZGH/6j3VaslALkqK63TOgVGpWUzi7f10KEZCZUk29TTVeu3u9zqobSBpA=="
-  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-converter/-/tfjs-converter-3.14.0.tgz"
-  "version" "3.14.0"
+"@tensorflow/tfjs-converter@3.15.0":
+  "integrity" "sha512-FBk3qGvNfS1xCw+ZLXCiD72vpR/rZaShFOY7HmLtTTfWlebWowrjaNqjvO8SKc7UGtRR/GJ7Bf3TgKyr9D3g0Q=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-converter/-/tfjs-converter-3.15.0.tgz"
+  "version" "3.15.0"
 
-"@tensorflow/tfjs-core@3.14.0":
-  "integrity" "sha512-bS/iuI9BpDVZuqEPfLzIFLoHYd+ihNIiux+EXveuFO8phPx7FkgPqakatHYLzrdYlOfAXurIxIlGNAzVKNQOUQ=="
-  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-core/-/tfjs-core-3.14.0.tgz"
-  "version" "3.14.0"
+"@tensorflow/tfjs-core@3.15.0":
+  "integrity" "sha512-X1XGr8rewm/n0RDMnaLRcRYsTHlQCqQUR5DCtjUf4TuII7kq/pkZ9xCKPPfS1qUd5jLy663h8j5cAyjJNUt/hw=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-core/-/tfjs-core-3.15.0.tgz"
+  "version" "3.15.0"
   dependencies:
     "@types/long" "^4.0.1"
     "@types/offscreencanvas" "~2019.3.0"
@@ -1711,30 +1725,30 @@
     "node-fetch" "~2.6.1"
     "seedrandom" "2.4.3"
 
-"@tensorflow/tfjs-data@3.14.0":
-  "integrity" "sha512-pM3Hn51LyAWvOoh6ll5ei5Ec6o14gblyNDfuV0xeOphUAEXGEdpjFP/GDkDPlgLPQAxTli78Jd1B+cLKbgWwTQ=="
-  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-data/-/tfjs-data-3.14.0.tgz"
-  "version" "3.14.0"
+"@tensorflow/tfjs-data@3.15.0":
+  "integrity" "sha512-x8JOhpIsqN9jIWZqEmt2vLYf49lIhekI6nyw/fgAKjtx+I4qKw2gY7/r11TewZRxyD2o7SOrSoNIZT8nQJ5YfQ=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-data/-/tfjs-data-3.15.0.tgz"
+  "version" "3.15.0"
   dependencies:
     "@types/node-fetch" "^2.1.2"
     "node-fetch" "~2.6.1"
 
-"@tensorflow/tfjs-layers@3.14.0":
-  "integrity" "sha512-7ACV0WrxUF4nRRvLmCiKevAHPhChaxgZ+5T5lPrjR1PtFGL0yOsWVaHphSvUIOHEV5HA6S06/p3Yi+2wlDL6fA=="
-  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-layers/-/tfjs-layers-3.14.0.tgz"
-  "version" "3.14.0"
+"@tensorflow/tfjs-layers@3.15.0":
+  "integrity" "sha512-6MWTrRd+kK2rto/HXX0Gg9yGIkT0twvuzTHcxFHUJVlW3JYulRCp185h3AcBytyzqQeae5eA73aOovm3lBvN+A=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-layers/-/tfjs-layers-3.15.0.tgz"
+  "version" "3.15.0"
 
 "@tensorflow/tfjs@^3.14.0":
-  "integrity" "sha512-tqp3LcmbjhcbtvQZdGiaTSv9zYMH/RqtHHPbTjHw5TpXAcLp3/g//QHed7Bmm2C6q96SKIgDU/7WCJmNrpoxRA=="
-  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs/-/tfjs-3.14.0.tgz"
-  "version" "3.14.0"
+  "integrity" "sha512-sXcgD5hJsFsKlsBqSQYL21i27PtZ2V4fJLpKhGHXbNxvWq7B83UJuAzhc05x9hU6Ectnq4/41cMdTN/D+pe75Q=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs/-/tfjs-3.15.0.tgz"
+  "version" "3.15.0"
   dependencies:
-    "@tensorflow/tfjs-backend-cpu" "3.14.0"
-    "@tensorflow/tfjs-backend-webgl" "3.14.0"
-    "@tensorflow/tfjs-converter" "3.14.0"
-    "@tensorflow/tfjs-core" "3.14.0"
-    "@tensorflow/tfjs-data" "3.14.0"
-    "@tensorflow/tfjs-layers" "3.14.0"
+    "@tensorflow/tfjs-backend-cpu" "3.15.0"
+    "@tensorflow/tfjs-backend-webgl" "3.15.0"
+    "@tensorflow/tfjs-converter" "3.15.0"
+    "@tensorflow/tfjs-core" "3.15.0"
+    "@tensorflow/tfjs-data" "3.15.0"
+    "@tensorflow/tfjs-layers" "3.15.0"
     "argparse" "^1.0.10"
     "chalk" "^4.1.0"
     "core-js" "3"
@@ -2667,6 +2681,11 @@
   "integrity" "sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg=="
   "resolved" "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
   "version" "2.1.2"
+
+"autobind-decorator@^2.4.0":
+  "integrity" "sha512-OGYhWUO72V6DafbF8PM8rm3EPbfuyMZcJhtm5/n26IDwO18pohE4eNazLoCGhPiXOCD0gEGmrbU3849QvM8bbw=="
+  "resolved" "https://registry.npmjs.org/autobind-decorator/-/autobind-decorator-2.4.0.tgz"
+  "version" "2.4.0"
 
 "autoprefixer@^10.4.2":
   "integrity" "sha512-9fOPpHKuDW1w/0EKfRmVnxTDt8166MAnLI3mgZ1JCnhNtYWxcJ6Ud5CO/AVOZi/AvFa8DY9RTy3h3+tFBlrrdQ=="
@@ -8201,6 +8220,11 @@
     "@types/json-schema" "^7.0.4"
     "ajv" "^6.12.2"
     "ajv-keywords" "^3.4.1"
+
+"seedrandom@^3.0.1":
+  "integrity" "sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg=="
+  "resolved" "https://registry.npmjs.org/seedrandom/-/seedrandom-3.0.5.tgz"
+  "version" "3.0.5"
 
 "seedrandom@2.4.3":
   "integrity" "sha1-JDhQTa0zkXMUv/GKxNeU8W1qrsw="

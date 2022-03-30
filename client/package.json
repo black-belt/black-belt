@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "4.9.10",
     "@material-ui/icons": "4.9.1",
+    "@teachablemachine/pose": "^0.8.6",
     "@tensorflow-models/mobilenet": "^2.1.0",
     "@tensorflow/tfjs": "^3.14.0",
     "@testing-library/jest-dom": "^5.16.2",

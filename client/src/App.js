@@ -46,7 +46,6 @@ function App() {
                   <Route path="mypage" element={<MyPage />} />
                 </Route>
                 <Route path="gyeorugi/stage" element={<GyeorugiStage />} />
-                <Route path="gyeorugi/normal/stage" element={<NormalStage />} />
               </Routes>
             </BrowserRouter>
           </React.Suspense>

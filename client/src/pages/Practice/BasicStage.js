@@ -30,12 +30,10 @@ function BasicStage() {
 
   const getBasicData = async () => {
     const data = await axiosInstance.get(`/api/basic/${state.stageId}`, {});
-    data[0].basic_answer = "abaya";
+    data[0].basic_answer = "Upward Block";
     data[0].basic_movie_path = "https://youtu.be/o9JvP-A4TvY";
     setInfo(data[0]);
   };
-  console.log(info);
-  console.log(state);
 
   const updateIsPass = () => {
     fetch("https://jsonplaceholder.typicode.com/posts") //통과여부 서버로 보내줌
@@ -88,15 +86,14 @@ function BasicStage() {
       {info && (
         <PracticeStageTemplate
           title={t("language") === "KOR" ? info.basic_name : info.basic_name_e}
-          desc={
-            t("language") === "KOR" ? info.basic_explain : info.basic_explain_e
-          }
+          desc={t("language") === "KOR" ? info.basic_explain : info.basic_explain_e}
           video={<LocalVideo url={info.basic_movie_path} />}
           camera={
             <UserVideo
               answer={info.basic_answer}
               testResult={testResult}
               isPass={isPass}
+              stageId={state.stageId}
             />
           }
         />
