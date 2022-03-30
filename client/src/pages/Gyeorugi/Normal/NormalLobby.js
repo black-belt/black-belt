@@ -17,6 +17,7 @@ import {
   SearchLayout,
   SearchList,
   Standby,
+  Status,
   UserImg,
   UserName,
   UserProfile,
@@ -40,6 +41,12 @@ function NormalLobby() {
     if (e.key === "Enter") {
       searchUserInfo();
     }
+  };
+  const status = {
+    Y: "online",
+    B: "battle",
+    T: "test",
+    N: "offline",
   };
   return (
     <div className="NormalLobby">
@@ -74,23 +81,27 @@ function NormalLobby() {
                 <UserProfile key={user.userId}>
                   {user.userProfilePath ? (
                     <UserImg
+                      state={user.userState}
                       // src={`http://j6a506.p.ssafy.io:8000${user.userProfilePath}`}
                       src={user.userProfilePath}
                       alt=""
                     />
                   ) : (
                     <Icon
+                      state={user.userState}
                       icon="defaultUser"
                       block="block"
-                      width={45}
-                      height={45}
+                      width={40}
+                      height={40}
                     />
                   )}
                   <UserTextBox>
-                    <UserName>{user.userNick}</UserName>
-                    <UserStatus state={user.userState}>
-                      {user.userState}
-                    </UserStatus>
+                    <UserName state={user.userState}>{user.userNick}</UserName>
+                    <Status>
+                      <UserStatus state={user.userState}>
+                        {t(status[user.userState])}
+                      </UserStatus>
+                    </Status>
                   </UserTextBox>
                 </UserProfile>
               ))}

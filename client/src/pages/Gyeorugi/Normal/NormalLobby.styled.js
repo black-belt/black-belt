@@ -77,18 +77,45 @@ export const SearchList = styled.div`
 export const UserProfile = styled.div`
   display: flex;
   align-items: center;
+
+  padding: 0.5rem 0;
 `;
 
-export const UserImg = styled.img``;
+export const UserImg = styled.img`
+  ${(props) => {
+    if (props.state === "N") {
+      return css`
+        filter: grayscale(100%) brightness(45%);
+      `;
+    }
+  }}
+`;
 
-export const UserTextBox = styled.div``;
+export const UserTextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+
+  padding: 0 0.4rem;
+`;
 
 export const UserName = styled.div`
   font-size: ${fontSize.xl};
   font-weight: ${fontWeight.medium};
+  ${(props) => {
+    if (props.state === "N") {
+      return css`
+        color: ${colors.gray6};
+      `;
+    }
+  }}
 `;
 
+export const Status = styled.div``;
+
 export const UserStatus = styled.div`
+  font-size: ${fontSize.sm};
   ${(props) => {
     if (props.state === "Y") {
       return css`
