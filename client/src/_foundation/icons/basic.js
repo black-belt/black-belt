@@ -72,6 +72,25 @@ const basic = {
       </defs>
     </>
   ),
+  gyeorugiUserDetailBackground: (
+    <>
+      <path
+        d="M357 77.0492L375.276 94.5L357 111.951V77.0492Z"
+        fill="#212529"
+        stroke="#D7BE69"
+      />
+      <rect
+        x="0.5"
+        y="0.5"
+        width="367"
+        height="188"
+        rx="4.5"
+        fill="#212529"
+        stroke="#D7BE69"
+      />
+      <path d="M375 94.5L355.5 113.12V75.8805L375 94.5Z" fill="#212529" />
+    </>
+  ),
 
   // social
   google: (

@@ -19,6 +19,7 @@ import {
   SearchList,
   Standby,
   Status,
+  UserDetail,
   UserImg,
   UserName,
   UserProfile,
@@ -92,11 +93,15 @@ function NormalLobby() {
             <SearchList>
               {userList.map((user) => (
                 <UserProfile key={user.userId}>
+                  <UserDetail>
+                    <img src="/images/yeon.png" alt="" />
+                  </UserDetail>
                   {user.userProfilePath ? (
                     <UserImg
                       state={user.userState}
                       // src={`http://j6a506.p.ssafy.io:8000${user.userProfilePath}`}
                       src={user.userProfilePath}
+                      // src="yeon.png"
                       alt=""
                     />
                   ) : (

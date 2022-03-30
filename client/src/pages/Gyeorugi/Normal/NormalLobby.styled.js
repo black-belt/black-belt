@@ -80,9 +80,18 @@ export const UserProfile = styled.div`
   display: flex;
   align-items: center;
 
-  padding: 0.7rem 0;
+  padding: 1rem 0;
 
   cursor: pointer;
+`;
+
+export const UserDetail = styled.div`
+  position: absolute;
+  right: 22%;
+  /* z-index: 10000; */
+  img {
+    width: 300px;
+  }
 `;
 
 export const UserImg = styled.img`
