@@ -39,10 +39,10 @@ function BasicStage() {
     setInfo(data);
   };
 
-  const updateIsPass = async () => {
+  const updateIsPass = async (g) => {
     const data = await axiosInstance.patch(`/api/basic/${state.stageId}`, {
-      basicScore: gradeNum,
-      basicClear: gradeNum > 0 ? "Y" : "N",
+      basicScore: g,
+      basicClear: g > 0 ? "Y" : "N",
     });
     console.log(data);
     if (data.levelpre !== data.levelafter) {
@@ -57,20 +57,24 @@ function BasicStage() {
   };
 
   const testResult = (result) => {
-    updateIsPass();
+    let g = 0;
     if (result >= 0.8) {
       setGrade("Perfect!");
       setGradeNum(3);
+      g = 3;
     } else if (result >= 0.7) {
       setGrade("Great");
       setGradeNum(2);
+      g = 2;
     } else if (result >= 0.6) {
       setGrade("Good");
       setGradeNum(1);
+      g = 1;
     } else {
       setGrade("Try Again");
       setGradeNum(0);
     }
+    updateIsPass(g);
   };
 
   const restartFunc = () => {

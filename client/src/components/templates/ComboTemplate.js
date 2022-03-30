@@ -38,10 +38,10 @@ function ComboTemplate({
                 {t("language") === "KOR"
                   ? selectedPoomsaeInfo.comboList[selectedChapterIdx].combo_explain
                       .slice(0, 8)
-                      .map((value) => <Description>{value}</Description>)
+                      .map((value, index) => <Description key={index}>{value}</Description>)
                   : selectedPoomsaeInfo.comboList[selectedChapterIdx].combo_explain_e
                       .slice(0, 8)
-                      .map((value) => <Description>{value}</Description>)}
+                      .map((value, index) => <Description key={index}>{value}</Description>)}
                 {selectedPoomsaeInfo.comboList[selectedChapterIdx].combo_explain.length > 8
                   ? "..."
                   : null}
