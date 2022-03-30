@@ -107,11 +107,17 @@ export const UserTextBox = styled.div`
 export const UserName = styled.div`
   font-size: ${fontSize.xl};
   font-weight: ${fontWeight.medium};
+  color: ${colors.gray2};
 
   ${(props) => {
     if (props.state === "N") {
       return css`
         color: ${colors.gray6};
+      `;
+    }
+    if (props.state === "Y") {
+      return css`
+        color: ${colors.gray0};
       `;
     }
   }}
