@@ -59,6 +59,8 @@ export const SearchBox = styled.div`
   display: flex;
   align-items: center;
   gap: 0.6rem;
+
+  padding-bottom: 1rem;
 `;
 
 export const SearchInput = styled.input`
@@ -78,7 +80,7 @@ export const UserProfile = styled.div`
   display: flex;
   align-items: center;
 
-  padding: 0.5rem 0;
+  padding: 0.65rem 0;
 `;
 
 export const UserImg = styled.img`
