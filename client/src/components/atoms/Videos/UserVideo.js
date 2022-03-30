@@ -7,6 +7,7 @@ function UserVideo({ answer, testResult, isPass, stageId }) {
   let isFindMax = false;
   let maxProbability = 0.0;
   let frameCnt = 0;
+  let answerNum = 0;
   const modelURL = `/models/basics/${stageId}/model.json`;
   const metadataURL = `/models/basics/${stageId}/metadata.json`;
 
@@ -44,7 +45,8 @@ function UserVideo({ answer, testResult, isPass, stageId }) {
       const prediction = await model.predictTopK(posenetOutput, 1);
       const className = prediction[0].className;
       const probability = prediction[0].probability;
-      if (isFindMax) {
+      console.log(className, probability);
+      if (isFindMax && answerNum >= 5) {
         if (++frameCnt > 30) {
           isFindMax = false;
           frameCnt = 0;
@@ -57,6 +59,7 @@ function UserVideo({ answer, testResult, isPass, stageId }) {
       } else if (answer === className) {
         isFindMax = true;
         maxProbability = probability;
+        answerNum++;
         // const s = videoRef.current.srcObject;
         // s.getTracks().forEach((track) => {
         //   track.stop();

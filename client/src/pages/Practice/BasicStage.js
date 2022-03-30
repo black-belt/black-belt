@@ -26,34 +26,34 @@ function BasicStage() {
     //보내기: 서버로 통과 단계를 보냄
     //받기: 레벨업했는지, 했으면 얻은레벨
     getBasicData();
+    return () => {
+      setIsPass(true);
+    };
   }, []);
 
   const getBasicData = async () => {
     const data = await axiosInstance.get(`/api/basic/${state.stageId}`, {});
-    data[0].basic_answer = "Upward Block";
-    data[0].basic_movie_path = "https://youtu.be/o9JvP-A4TvY";
-    setInfo(data[0]);
+    console.log(data);
+    data.basic_answer = "Upward Block";
+    data.basic_movie_path = "https://youtu.be/o9JvP-A4TvY";
+    setInfo(data);
   };
 
-  const updateIsPass = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts") //통과여부 서버로 보내줌
-      .then(
-        fetch("https://jsonplaceholder.typicode.com/posts") //레벨업했는지, 했으면 얻은레벨
-          .then((res) => res.json())
-          .then((json) => {
-            let jsonIsLevelUp = true; //레벨업했는지 안했는지
-            let jsonLevel = 2;
-            if (jsonIsLevelUp) {
-              setIsLevelUp(jsonIsLevelUp);
-              setLevel(jsonLevel);
-              setIsStar(jsonIsLevelUp);
-              setTimeout(() => {
-                setIsStar((current) => !current);
-              }, 3000);
-            }
-            setIsPass(true);
-          })
-      );
+  const updateIsPass = async () => {
+    const data = await axiosInstance.patch(`/api/basic/${state.stageId}`, {
+      basicScore: gradeNum,
+      basicClear: gradeNum > 0 ? "Y" : "N",
+    });
+    console.log(data);
+    if (data.levelpre !== data.levelafter) {
+      setIsLevelUp(true);
+      setLevel(data.levelafter);
+      setIsStar(true);
+      setTimeout(() => {
+        setIsStar((current) => !current);
+      }, 3000);
+    }
+    setIsPass(true);
   };
 
   const testResult = (result) => {
