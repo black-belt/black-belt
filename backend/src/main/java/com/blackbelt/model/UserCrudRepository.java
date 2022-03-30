@@ -1,5 +1,6 @@
 package com.blackbelt.model;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +19,9 @@ public interface UserCrudRepository extends JpaRepository<UserDto, String> {
 	
 	@Query(value="SELECT * FROM user WHERE user_id=:id", nativeQuery = true)
 	Optional<UserDto> findByuserId(String id);
+	
+	// for User 닉네임 검색 
+	List<UserDto> findByuserNickContaining(String search);
 	
 //	@Modifying
 //	@Query(value="update user set user_state = :stateValue WHERE user_id=:userId", nativeQuery = true)

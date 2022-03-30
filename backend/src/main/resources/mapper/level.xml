@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blackbelt.model.mapper.LevelMapper">
+	<select id="selectlevel" resultType="Integer">
+		select (level_id + 1) as uplevel from taekwondo.user where user_id= #{user_id};
+	</select>
+	
+	<select id="maxlevel" resultType="Integer">
+		select max(level_id) as maxlevel from level;
+	</select>
+	
+	
+	<update id="levelup" parameterType="String">
+		update taekwondo.user 
+		set level_id = #{level_id}
+		where user.user_id = #{user_id};
+	</update>
+	
+
+		<select id = "getscore" resultType="Integer">
+		select user_score from user where user_id = #{user_id}
+	</select>
+	
+	<update id="updatetier" parameterType="Integer">
+		update user 
+		set tier_id = #{tier_id}
+		where user_id = #{user_id};
+	</update>
+	
+</mapper>

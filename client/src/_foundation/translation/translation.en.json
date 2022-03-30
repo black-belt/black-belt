@@ -3,7 +3,12 @@
   "login": "LOG IN",
   "signup": "SIGN UP",
   "welcome": "Hi,",
+  "welcome_korean": "",
   "language": "ENG",
+
+  "logout": "Logout",
+  "about tkd": "About TaeKwonDo",
+  "mypage": "My Page",
 
   "welcome google": "Sign in with Google Account",
   "new?": "New to BlackBelt?",
@@ -36,10 +41,8 @@
   "normal": "Normal",
   "rank": "Rank",
 
-
   "start": "Start Match",
 
   "basics description": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "combos description": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."
-
 }
