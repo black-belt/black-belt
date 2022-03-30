@@ -80,7 +80,9 @@ export const UserProfile = styled.div`
   display: flex;
   align-items: center;
 
-  padding: 0.65rem 0;
+  padding: 0.7rem 0;
+
+  cursor: pointer;
 `;
 
 export const UserImg = styled.img`
@@ -105,6 +107,7 @@ export const UserTextBox = styled.div`
 export const UserName = styled.div`
   font-size: ${fontSize.xl};
   font-weight: ${fontWeight.medium};
+
   ${(props) => {
     if (props.state === "N") {
       return css`
@@ -114,30 +117,14 @@ export const UserName = styled.div`
   }}
 `;
 
-export const Status = styled.div``;
+export const Status = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 export const UserStatus = styled.div`
+  padding: 0 0.4rem;
   font-size: ${fontSize.sm};
-  ${(props) => {
-    if (props.state === "Y") {
-      return css`
-        color: ${colors.green};
-      `;
-    }
-    if (props.state === "T") {
-      return css`
-        color: ${colors.star};
-      `;
-    }
-    if (props.state === "B") {
-      return css`
-        color: ${colors.blue0};
-      `;
-    }
-    if (props.state === "N") {
-      return css`
-        color: ${colors.gray6};
-      `;
-    }
-  }}
+
+  color: ${(props) => props.state};
 `;

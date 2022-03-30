@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { userInfo } from "recoils";
 import axiosInstance from "utils/API";
+import { colors } from "_foundation";
 import {
   BackgroundImg,
   ChampBackground,
@@ -43,10 +44,22 @@ function NormalLobby() {
     }
   };
   const status = {
-    Y: "online",
-    B: "battle",
-    T: "test",
-    N: "offline",
+    Y: {
+      state: "online",
+      color: colors.green,
+    },
+    B: {
+      state: "battle",
+      color: colors.blue0,
+    },
+    T: {
+      state: "test",
+      color: colors.star,
+    },
+    N: {
+      state: "offline",
+      color: colors.gray6,
+    },
   };
   return (
     <div className="NormalLobby">
@@ -98,8 +111,22 @@ function NormalLobby() {
                   <UserTextBox>
                     <UserName state={user.userState}>{user.userNick}</UserName>
                     <Status>
-                      <UserStatus state={user.userState}>
-                        {t(status[user.userState])}
+                      <svg
+                        width="7"
+                        height="7"
+                        viewBox="0 0 7 7"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="3.5"
+                          cy="3.5"
+                          r="3.5"
+                          fill={status[user.userState].color}
+                        />
+                      </svg>
+                      <UserStatus state={status[user.userState].color}>
+                        {t(status[user.userState].state)}
                       </UserStatus>
                     </Status>
                   </UserTextBox>
