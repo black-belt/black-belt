@@ -254,7 +254,6 @@ public class UserController {
 			}
 			if (tokenProvider.validateToken(authorization)) {// 유효하면
 				String userId = String.valueOf(tokenProvider.getSubject(authorization));
-				System.out.println(userId);
 				Optional<UserDto> user = userRepo.findByuserId(userId);
 				Set<String> updates =  map.keySet();
 				for(String s : updates) {
