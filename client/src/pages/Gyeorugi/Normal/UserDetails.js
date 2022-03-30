@@ -1,6 +1,5 @@
 // import Icon from "components/atoms/Icons/CustomIcon";
 import BasicButton from "components/atoms/Buttons/button";
-import InButton from "components/atoms/Buttons/in-btns";
 import { useTranslation } from "react-i18next";
 import {
   Layout,
@@ -14,13 +13,13 @@ const UserDetail = (props) => {
   const { t } = useTranslation();
   console.log(props.userData);
   const user = props.userData;
-  const tier = {
-    1: "bronze",
-    2: "silver",
-    3: "gold",
-    4: "platinum",
-    5: "diamond",
-    6: "master",
+  const tierInfo = {
+    1: { tier: "bronze", url: "" },
+    2: { tier: "silver", url: "" },
+    3: { tier: "gold", url: "" },
+    4: { tier: "platinum", url: "" },
+    5: { tier: "diamond", url: "" },
+    6: { tier: "master", url: "" },
   };
 
   return (
@@ -30,7 +29,7 @@ const UserDetail = (props) => {
       <UserImg src={user.userprofilePath} alt="" />
       <ProfileBox>
         <Username>{user.userNick}</Username>
-        <UserTier>{tier[user.tierId]}</UserTier>
+        <UserTier>{tierInfo[user.tierId].tier}</UserTier>
         <BasicButton width="115px" height="36px">
           {t("apply")}
         </BasicButton>
