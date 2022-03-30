@@ -1,14 +1,17 @@
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
-import { colors } from "../../../_foundation/colors";
-import { fontFamily, fontSize, fontWeight } from "../../../_foundation/typography";
+import { colors, fontWeight } from "_foundation";
 
 function PartStage({ partArray, curIdx }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <Container language={t("language")}>
       {partArray.map((desc, index) =>
-        index === curIdx ? <CurPart key={index}>{desc}</CurPart> : <Part key={index}>{desc}</Part>
+        index === curIdx ? (
+          <CurPart key={index}>{desc}</CurPart>
+        ) : (
+          <Part key={index}>{desc}</Part>
+        )
       )}
     </Container>
   );

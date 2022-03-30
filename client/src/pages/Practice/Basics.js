@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "utils/API";
 
 function Basics() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [cardInfoList, setCardInfoList] = useState([]);
   const navigate = useNavigate();
 
@@ -33,8 +33,16 @@ function Basics() {
                 onClick={goToStage}
                 key={index}
                 stageId={value.basic_id}
-                title={t("language") === "KOR" ? value.basic_name : value.basic_name_e}
-                desc={t("language") === "KOR" ? value.basic_explain : value.basic_explain_e}
+                title={
+                  t("language") === "KOR"
+                    ? value.basic_name
+                    : value.basic_name_e
+                }
+                desc={
+                  t("language") === "KOR"
+                    ? value.basic_explain
+                    : value.basic_explain_e
+                }
                 img="/images/card2.png"
                 clear={value.basic_clear}
                 score={value.basic_score}

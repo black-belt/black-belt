@@ -1,32 +1,53 @@
-import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import axios from "axios";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import LangBtn from "components/atoms/Buttons/lang-btn";
-import Icon from "components/atoms/Icons/Icon";
+import Icon from "components/atoms/Icons/CustomIcon";
 
-import { loginModalState } from "recoils";
+import { loginModalState, userInfo } from "recoils";
 import { useTranslation } from "react-i18next";
 
 import isLogin from "utils/isLogin";
-import { Layout, Logo, NavItemBox, NavItemBtn, NavItemLink } from "./Navbar.styled";
-import axiosInstance from "utils/API";
+import {
+  Layout,
+  Logo,
+  NavItemBox,
+  NavItemBtn,
+  // NavItemLink,
+  ProfileBox,
+  ProfileImg,
+  UserDropdown,
+  Welcome,
+} from "./Navbar.styled";
 import { useNavigate } from "react-router-dom";
 
-function Navbar({ navItemData }) {
-  const [loginModalOpen, setLoginModalOpen] = useRecoilState(loginModalState);
-  const [translateEN, setTranslateEn] = useState(false);
-  const { t, i18n } = useTranslation();
+function Navbar() {
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+  const [translateEN, setTranslateEn] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const setLoginModalOpen = useSetRecoilState(loginModalState);
 
-  const getUserInfo = async () => {
-    const userInfo = await axiosInstance.get("/api/user/userinfo", {});
-    console.log(userInfo);
-  };
+  const { t, i18n } = useTranslation();
+
+  const user = useRecoilValue(userInfo);
 
   useEffect(() => {
-    getUserInfo();
-  }, []);
+    const pageClickEvent = (event) => {
+      if (
+        dropdownRef.current !== null &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setDropdownOpen(!dropdownOpen);
+      }
+    };
+    if (dropdownOpen) {
+      window.addEventListener("click", pageClickEvent);
+    }
+    return () => {
+      window.removeEventListener("click", pageClickEvent);
+    };
+  }, [dropdownOpen]);
 
   const handleEnglish = () => {
     setTranslateEn(!translateEN);
@@ -37,28 +58,39 @@ function Navbar({ navItemData }) {
     }
   };
 
-  const goHome = () => {
-    navigate("/");
-  };
-
   return (
-    <Layout>
-      <Logo onClick={goHome}>
-        <img src={t("logo url")} alt="" />
-      </Logo>
+    <Layout ref={dropdownRef}>
+      <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
+
       {isLogin() ? (
-        <NavItemBox>
-          <div>for test</div>
-          {/* [TODO]: api 연결 후 업데이트 예정 */}
-          {/* {navItemData.map(({ name, title, url }) => (
-              {title}
-            </NavItemLink>
-          ))} */}
-        </NavItemBox>
+        <Suspense fallback={<div>Loading ...</div>}>
+          {user && (
+            <ProfileBox>
+              <Welcome>
+                {t("welcome")} {user?.userNick}
+                {t("welcome_korean")}
+              </Welcome>
+              {user.profileImg ? (
+                <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>
+                  <img src={user.profileImg} alt="" />
+                </ProfileImg>
+              ) : (
+                <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>
+                  <Icon width={40} height={40} icon="defaultUser" />
+                </ProfileImg>
+              )}
+            </ProfileBox>
+          )}
+          {dropdownOpen && <UserDropdown />}
+        </Suspense>
       ) : (
         <NavItemBox>
-          <NavItemBtn onClick={() => setLoginModalOpen("login")}>{t("login")}</NavItemBtn>
-          <NavItemBtn onClick={() => setLoginModalOpen("signup")}>{t("signup")}</NavItemBtn>
+          <NavItemBtn onClick={() => setLoginModalOpen("login")}>
+            {t("login")}
+          </NavItemBtn>
+          <NavItemBtn onClick={() => setLoginModalOpen("signup")}>
+            {t("signup")}
+          </NavItemBtn>
           <LangBtn onClick={handleEnglish}>
             <Icon icon={t("language")} />
             {t("language")}

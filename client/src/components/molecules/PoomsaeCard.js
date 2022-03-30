@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
-import { colors, fontSize, fontWeight, fontFamily } from "../../_foundation";
-import CustomIcon from "../atoms/Icons/Icon";
+// import { fontSize } from "_foundation";
 
 function PoomsaeCard({ title, img, clear, score, locked, onClick }) {
   return (
@@ -92,22 +91,22 @@ const Image = styled.div`
   }
 `;
 
-const InfoContainer = styled.div`
-  height: 25%;
-  display: flex;
-  justify-content: space-between;
-`;
+// const InfoContainer = styled.div`
+//   height: 25%;
+//   display: flex;
+//   justify-content: space-between;
+// `;
 
-const Stars = styled.div`
-  padding: 10px 10px 0 0;
-  display: flex;
-`;
+// const Stars = styled.div`
+//   padding: 10px 10px 0 0;
+//   display: flex;
+// `;
 
-const Star = styled.div`
-  padding-left: 3px;
-`;
+// const Star = styled.div`
+//   padding-left: 3px;
+// `;
 
-const Title = styled.div`
-  padding: 10px 0 0 5px;
-  font-size: ${fontSize.xl};
-`;
+// const Title = styled.div`
+//   padding: 10px 0 0 5px;
+//   font-size: ${fontSize.xl};
+// `;
