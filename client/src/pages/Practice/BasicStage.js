@@ -26,53 +26,55 @@ function BasicStage() {
     //보내기: 서버로 통과 단계를 보냄
     //받기: 레벨업했는지, 했으면 얻은레벨
     getBasicData();
+    return () => {
+      setIsPass(true);
+    };
   }, []);
 
   const getBasicData = async () => {
     const data = await axiosInstance.get(`/api/basic/${state.stageId}`, {});
-    data[0].basic_answer = "abaya";
-    data[0].basic_movie_path = "https://youtu.be/o9JvP-A4TvY";
-    setInfo(data[0]);
+    console.log(data);
+    data.basic_answer = "Upward Block";
+    data.basic_movie_path = "https://youtu.be/o9JvP-A4TvY";
+    setInfo(data);
   };
-  console.log(info);
-  console.log(state);
 
-  const updateIsPass = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts") //통과여부 서버로 보내줌
-      .then(
-        fetch("https://jsonplaceholder.typicode.com/posts") //레벨업했는지, 했으면 얻은레벨
-          .then((res) => res.json())
-          .then((json) => {
-            let jsonIsLevelUp = true; //레벨업했는지 안했는지
-            let jsonLevel = 2;
-            if (jsonIsLevelUp) {
-              setIsLevelUp(jsonIsLevelUp);
-              setLevel(jsonLevel);
-              setIsStar(jsonIsLevelUp);
-              setTimeout(() => {
-                setIsStar((current) => !current);
-              }, 3000);
-            }
-            setIsPass(true);
-          })
-      );
+  const updateIsPass = async (g) => {
+    const data = await axiosInstance.patch(`/api/basic/${state.stageId}`, {
+      basicScore: g,
+      basicClear: g > 0 ? "Y" : "N",
+    });
+    console.log(data);
+    if (data.levelpre !== data.levelafter) {
+      setIsLevelUp(true);
+      setLevel(data.levelafter);
+      setIsStar(true);
+      setTimeout(() => {
+        setIsStar((current) => !current);
+      }, 3000);
+    }
+    setIsPass(true);
   };
 
   const testResult = (result) => {
-    updateIsPass();
+    let g = 0;
     if (result >= 0.8) {
       setGrade("Perfect!");
       setGradeNum(3);
+      g = 3;
     } else if (result >= 0.7) {
       setGrade("Great");
       setGradeNum(2);
+      g = 2;
     } else if (result >= 0.6) {
       setGrade("Good");
       setGradeNum(1);
+      g = 1;
     } else {
       setGrade("Try Again");
       setGradeNum(0);
     }
+    updateIsPass(g);
   };
 
   const restartFunc = () => {
@@ -88,15 +90,14 @@ function BasicStage() {
       {info && (
         <PracticeStageTemplate
           title={t("language") === "KOR" ? info.basic_name : info.basic_name_e}
-          desc={
-            t("language") === "KOR" ? info.basic_explain : info.basic_explain_e
-          }
+          desc={t("language") === "KOR" ? info.basic_explain : info.basic_explain_e}
           video={<LocalVideo url={info.basic_movie_path} />}
           camera={
             <UserVideo
               answer={info.basic_answer}
               testResult={testResult}
               isPass={isPass}
+              stageId={state.stageId}
             />
           }
         />
