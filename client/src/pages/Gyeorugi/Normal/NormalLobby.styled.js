@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { colors, fontSize } from "_foundation";
+import { colors, fontSize, fontWeight } from "_foundation";
 
 export const BackgroundImg = styled.img`
   filter: grayscale(100%) brightness(20%);
@@ -70,14 +70,45 @@ export const SearchInput = styled.input`
   background-color: ${colors.gray2};
 `;
 
-export const SearchList = styled.div``;
+export const SearchList = styled.div`
+  color: ${colors.gray0};
+`;
 
-export const UserProfile = styled.div``;
+export const UserProfile = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 export const UserImg = styled.img``;
 
 export const UserTextBox = styled.div``;
 
-export const UserName = styled.div``;
+export const UserName = styled.div`
+  font-size: ${fontSize.xl};
+  font-weight: ${fontWeight.medium};
+`;
 
-export const UserStatus = styled.div``;
+export const UserStatus = styled.div`
+  ${(props) => {
+    if (props.state === "Y") {
+      return css`
+        color: ${colors.green};
+      `;
+    }
+    if (props.state === "T") {
+      return css`
+        color: ${colors.star};
+      `;
+    }
+    if (props.state === "B") {
+      return css`
+        color: ${colors.blue0};
+      `;
+    }
+    if (props.state === "N") {
+      return css`
+        color: ${colors.gray6};
+      `;
+    }
+  }}
+`;
