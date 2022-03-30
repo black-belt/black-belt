@@ -84,7 +84,7 @@ public class UserController {
 			if (userEmail != null) {
 				Optional<UserDto> user = userRepo.findByuserEmail(userEmail);
 				String lastId = null; String userNick = null;
-				if(user.isEmpty()) {
+				if(user.isEmpty()) {					// isEmpty 를 바꿈 java version 차이
 					//회원가입 처리 추가할 부분
 					lastId = String.valueOf(Integer.parseInt(userRepo.findLastUser().getUserId()) + 1) ;
 					userNick = "anonymous" + lastId;
@@ -130,7 +130,7 @@ public class UserController {
 		try {
 			String userId = map.get("userId");
 			Optional<UserDto> updateUser = userRepo.findById(userId);
-			if(!updateUser.isEmpty()) {
+			if(!updateUser.isEmpty()) {					// isEmpty 를 바꿈 java version 차이
 				updateUser.get().setUserId(userId);
 				updateUser.get().setUserState('N');
 			}else {
@@ -200,8 +200,8 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			String nick = map.get("userNick");
-			Optional<UserDto> user = userRepo.findByuserNick(nick);
-			if(user.isEmpty()) resultMap.put("isUsed", false);
+			Optional<UserDto> user = userRepo.findByuserNick(nick);	
+			if(user.isEmpty()) resultMap.put("isUsed", false);			// isEmpty 를 바꿈 java version 차이
 			else resultMap.put("isUsed", true);
 			resultMap.put("statusCode", 200);
 			re = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);

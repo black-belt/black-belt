@@ -1,8 +1,17 @@
 import styled, { css } from "styled-components";
-import { colors, fontSize, fontWeight, fontFamily } from "../../_foundation";
+import { colors, fontSize } from "_foundation";
 import CustomIcon from "../atoms/Icons/Icon";
 
-function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId }) {
+function BasicCard({
+  title,
+  desc,
+  img,
+  clear,
+  score,
+  locked,
+  onClick,
+  stageId,
+}) {
   const selectStage = () => {
     onClick(stageId);
   };
@@ -14,7 +23,12 @@ function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId })
         <DescriptionContainer>
           <Description>{desc}</Description>
           <Arrow>
-            <CustomIcon icon="inPointer" viewBox="0 0 50 50" width="55" height="55" />
+            <CustomIcon
+              icon="inPointer"
+              viewBox="0 0 50 50"
+              width="55"
+              height="55"
+            />
           </Arrow>
         </DescriptionContainer>
       </ImageContainer>
@@ -96,20 +110,23 @@ const Image = styled.div`
   padding: 20px 0;
   width: 100%;
   height: 100%;
-  background-color: ${colors.gray6};
+  ${(props) =>
+    props.clear === "Y"
+      ? css`
+          background: rgb(100, 100, 100, 0.7);
+          filter: grayscale(100%) brightness(100%);
+        `
+      : css`
+          background: rgb(0, 0, 0, 0.4);
+          filter: grayscale(100%) brightness(55%);
+        `}
+  /* background: rgb(0, 0, 0, 0.7); */
+  /* background-color: ${colors.gray6}; */
   background-image: url(${(props) => props.img});
   background-repeat: no-repeat;
   background-size: contain;
   background-origin: content-box;
   background-position: center;
-  ${(props) =>
-    !props.clear
-      ? css`
-          filter: grayscale(100%) brightness(100%);
-        `
-      : css`
-          filter: grayscale(100%) brightness(55%);
-        `}
   filter: gray;
   border-radius: 5px;
 
