@@ -27,21 +27,21 @@ function ComboStage() {
 
   const getComboData = async () => {
     const data = await axiosInstance.get(`/api/combo/${state.stageId}`, {});
+    console.log(data);
+    console.log(state.stageId);
     data.combo_answer = ["abaya", "coffee mug", "abaya"];
     data.combo_movie_path = "https://youtu.be/o9JvP-A4TvY";
-    data.combo_explain = data.combo_explain.split("/");
-    data.combo_explain_e = data.combo_explain_e.split("/");
     data.combo_answer_index = [0, 2, 4];
     setInfo(data);
   };
 
-  const updateIsPass = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts") //통과단계보냄
-      .then((res) => res.json())
-      .then((json) => {
-        setNextAction(info.combo_answer.length - 1);
-        setIsPass(true);
-      });
+  const updateIsPass = async (g) => {
+    await axiosInstance.patch(`/api/combo/${state.stageId}`, {
+      comboScore: g,
+      comboClear: g > 0 ? "Y" : "N",
+    });
+    setNextAction(info.combo_answer.length - 1);
+    setIsPass(true);
   };
 
   const updateNextAction = (value) => {
@@ -49,21 +49,25 @@ function ComboStage() {
   };
 
   const testResult = (result) => {
-    updateIsPass();
+    let g = 0;
     result /= info.combo_answer.length;
     if (result >= 0.8) {
       setGrade("Perfect!");
       setGradeNum(3);
+      g = 3;
     } else if (result >= 0.7) {
       setGrade("Great");
       setGradeNum(2);
+      g = 2;
     } else if (result >= 0.6) {
       setGrade("Good");
       setGradeNum(1);
+      g = 1;
     } else {
       setGrade("Try Again");
       setGradeNum(0);
     }
+    updateIsPass(g);
   };
 
   const restartFunc = () => {
@@ -80,11 +84,7 @@ function ComboStage() {
           title={t("language") === "KOR" ? info.combo_name : info.combo_name_e}
           desc={
             <DescStage
-              descArray={
-                t("language") === "KOR"
-                  ? info.combo_explain
-                  : info.combo_explain_e
-              }
+              descArray={t("language") === "KOR" ? info.combo_explain : info.combo_explain_e}
               curIdx={info.combo_answer_index[nextAction]}
             />
           }

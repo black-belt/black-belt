@@ -37,9 +37,9 @@ const Svg = styled.svg`
   shape-rendering: inherit;
   transform: translate3d(0, 0, 0);
   stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  /* view-box: 0 0 ${(props) => props.viewSize} ${(props) => props.viewSize}; */
-  /* width: ${(props) => props.width}; */
-  /* height: ${(props) => props.viewSize}; */
+  /* stroke-linecap: round;
+  stroke-linejoin: round; */
+  // view-box: 0 0 ${(props) => props.viewSize} ${(props) => props.viewSize};
+  // width: ${(props) => props.viewSize};
+  // height: ${(props) => props.viewSize};
 `;

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 // import { fontSize } from "_foundation";
 
-function PoomsaeCard({ title, img, clear, score, locked, onClick }) {
+function PoomsaeCard({ img, clear, onClick }) {
   return (
     <Card>
       <ImageContainer onClick={onClick}>
@@ -58,6 +58,16 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.div`
+  ${(props) =>
+    props.clear === "N"
+      ? css`
+          background: rgba(0, 0, 0, 0.7);
+          filter: grayscale(100%) brightness(50%);
+        `
+      : css`
+          background: rgba(100, 100, 100, 0.7);
+          filter: grayscale(0%) brightness(100%);
+        `}
   box-sizing: border-box;
   transition: all 0.35s ease;
   backface-visibility: hidden;
@@ -65,21 +75,11 @@ const Image = styled.div`
   padding: 20px 0;
   width: 100%;
   height: 100%;
-  background: rgba(100, 100, 100, 0.7);
   background-image: url(${(props) => props.img});
   background-repeat: no-repeat;
   background-size: contain;
   background-origin: content-box;
   background-position: center;
-  ${(props) =>
-    !props.clear
-      ? css`
-          filter: grayscale(100%) brightness(50%);
-        `
-      : css`
-          filter: grayscale(0%) brightness(100%);
-        `}
-  filter: gray;
   border-radius: 5px;
 
   ${ImageContainer}:after & {

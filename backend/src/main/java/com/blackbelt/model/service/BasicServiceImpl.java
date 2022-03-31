@@ -19,13 +19,18 @@ public class BasicServiceImpl implements BasicService {
 		return sqlSession.getMapper(BasicMapper.class).listBasic();
 	}
 	@Override
-	public List<BasicDto> getBasic(int basicid) throws Exception {
-		return sqlSession.getMapper(BasicMapper.class).getBasic(basicid);
+	public BasicDto getBasic(String userid, int basicid) throws Exception {
+		int user_id = Integer.parseInt(userid);
+		return sqlSession.getMapper(BasicMapper.class).getBasic(user_id, basicid);
 	}
 	@Override
 	public void updateBasicStage(BasicStageDto basicStageDto) throws Exception {
 		sqlSession.getMapper(BasicMapper.class).updateBasicStage(basicStageDto);
 		
+	}
+	@Override
+	public List<BasicDto> listBasic(String user_id) throws Exception {
+		return sqlSession.getMapper(BasicMapper.class).listBasicuser(user_id);
 	}
 
 

@@ -16,8 +16,9 @@ public class ComboServiceImpl implements ComboService {
 	@Autowired
 	private SqlSession sqlSession;
 	@Override
-	public List<ComboDto> listCombo(int poomsae_id) throws Exception {
-		return sqlSession.getMapper(ComboMapper.class).listCombo(poomsae_id);
+	public List<ComboDto> listCombo(int poomsae_id, String user_id_str) throws Exception {
+		int user_id = Integer.parseInt(user_id_str);
+		return sqlSession.getMapper(ComboMapper.class).listCombo(poomsae_id, user_id);
 	}
 	@Override
 	public ComboDto getCombo(int comboid) throws Exception {

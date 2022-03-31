@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { colors, fontSize, fontWeight, fontFamily } from "../../../_foundation";
-import React, { useState, useRef } from "react";
+import { fontSize } from "../../../_foundation";
+import React, { useState } from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import CustomIcon from "../../atoms/Icons/Icon";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,7 @@ import "./SmallCarousel.css";
 
 function SmallCarousel({ items, active, setActive, goToStage, imageList }) {
   const [direction, setDirection] = useState("");
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   // const nodeRef = useRef(null);
   // var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
 
@@ -20,8 +20,8 @@ function SmallCarousel({ items, active, setActive, goToStage, imageList }) {
         key={active}
         level={0}
         onClick={() => goToStage(active)}
-        title={t("language") === "KOR" ? items[active].comboName : items[active].comboNameE}
-        score={items[active].comboScore}
+        title={t("language") === "KOR" ? items[active].combo_name : items[active].combo_name_e}
+        score={items[active].combo_score}
         imageNum={imageList[active]}
       />
     );
@@ -41,8 +41,8 @@ function SmallCarousel({ items, active, setActive, goToStage, imageList }) {
             setActive(index);
             setDirection("right");
           }}
-          title={t("language") === "KOR" ? items[index].comboName : items[index].comboNameE}
-          score={items[index].comboScore}
+          title={t("language") === "KOR" ? items[index].combo_name : items[index].combo_name_e}
+          score={items[index].combo_score}
           imageNum={imageList[index]}
         />
       );
@@ -96,11 +96,12 @@ function NewItem({ level, onClick, title, score, imageNum }) {
         className={`item level${level}`}
         onClick={onClick}
         style={{
-          background: "rgba(0, 0, 0, 0.6)",
+          background: score > 0 ? "rgba(100,100,100,0.6)" : "rgba(0, 0, 0, 0.6)",
           backgroundImage: `url("/images/combo/combo${imageNum}.png")`,
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
+          filter: score > 0 ? "grayscale(0%)" : "grayscale(100%) brightness(50%)",
         }}
       >
         <InfoContainer>
@@ -110,24 +111,24 @@ function NewItem({ level, onClick, title, score, imageNum }) {
               <CustomIcon
                 icon={score > 0 ? "goldStar" : "blackStar"}
                 viewBox="0 0 55 55"
-                width="20"
-                height="20"
+                width="27"
+                height="27"
               />
             </Star>
             <Star>
               <CustomIcon
                 icon={score > 1 ? "goldStar" : "blackStar"}
                 viewBox="0 0 55 55"
-                width="20"
-                height="20"
+                width="27"
+                height="27"
               />
             </Star>
             <Star>
               <CustomIcon
                 icon={score > 2 ? "goldStar" : "blackStar"}
                 viewBox="0 0 55 55"
-                width="20"
-                height="20"
+                width="27"
+                height="27"
               />
             </Star>
           </Stars>
@@ -172,7 +173,7 @@ const InfoContainer = styled.div`
 
 const Stars = styled.div`
   position: absolute;
-  bottom: -40px;
+  bottom: -43px;
   right: 0;
   padding: 10px 10px 0 0;
   display: flex;
@@ -184,7 +185,7 @@ const Star = styled.div`
 
 const Title = styled.div`
   position: absolute;
-  bottom: -30px;
-  padding: 10px 0 0 5px;
+  bottom: -35px;
+  padding: 0 0 0 5px;
   font-size: ${fontSize.xl};
 `;

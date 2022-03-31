@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "Layout";
+import NormalStage from "pages/Gyeorugi/GyeorugiStage/NormalStage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";

@@ -1,9 +1,11 @@
 package com.blackbelt.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import com.blackbelt.model.ComboDto;
 import com.blackbelt.model.ComboStageDto;
 import com.blackbelt.model.PoomsaeDto;
 import com.blackbelt.model.service.ComboService;
+import com.blackbelt.util.JwtTokenProvider;
 
 @RestController
 @RequestMapping("api/combo")
@@ -26,14 +29,22 @@ public class ComboController {
 	
 	@Autowired
 	private ComboService comboService;
-	
+	@Autowired
+	private JwtTokenProvider tokenProvider;
 	//@GetMapping("") ///api/combo/:comboid
 	
 	//@SuppressWarnings("null")
 	@GetMapping("")
-	public ResponseEntity<List<Map<String, Object>>> getCombos() throws Exception {
-		//나중에 token값 유효여부만 판단하면 됨. id가 쓰이진 않을듯??
-		
+	public ResponseEntity<List<Map<String, Object>>> getCombos( @RequestHeader("Authorization") String authorization) throws Exception {
+		String user_id = "";
+        if(authorization.indexOf("Bearer") != -1) {
+           authorization = authorization.replaceAll("^Bearer\\s", "");
+        }
+        if (tokenProvider.validateToken(authorization)) {// 유효하면
+           
+       	 user_id = String.valueOf(tokenProvider.getSubject(authorization));
+       	 System.out.println("토큰이 유효함.");
+        }
 		List<PoomsaeDto> poomsaelist = comboService.getPoomsae();
 		
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
@@ -54,8 +65,28 @@ public class ComboController {
 			map.put("poomsae_name", poomsae_name);
 			map.put("poomsae_name_e", poomsae_name_e);
 			//System.out.println("getCombos4");
-			List<ComboDto> combolist = comboService.listCombo(Integer.parseInt(poomsae_id));
-			//System.out.println("getCombos5");
+			List<ComboDto> combolist = comboService.listCombo(Integer.parseInt(poomsae_id), user_id);
+			
+//			/ArrayList<String> testlist = new ArrayList<String>();
+			
+			for(ComboDto combo: combolist) {
+				String[] combo_explain_list = ((String) combo.getCombo_explain()).split("/"); 
+				combo.setCombo_explain(combo_explain_list);
+				String[] combo_explain_e_list = ((String) combo.getCombo_explain_e()).split("/"); 
+				combo.setCombo_explain_e(combo_explain_e_list);
+				String combo_answer = ((String) combo.getCombo_answer());
+				if(combo_answer != null) {
+					String[] combo_answer_list = combo_answer.replace("[", "").replace("]", "").replace(" ", "").split(",");
+					combo.setCombo_answer(combo_answer_list);
+				}
+				String combo_answer_index = ((String) combo.getCombo_answer_index());
+				if(combo_answer_index != null) {
+					String[] combo_answer_index_list = combo_answer_index.replace("[", "").replace("]", "").replace(" ", "").split(",");
+					combo.setCombo_answer_index(combo_answer_index_list);
+				}
+
+			}
+
 			map.put("comboList", combolist);
 			//System.out.println("getCombos6");
 			result.add(map);
@@ -70,38 +101,46 @@ public class ComboController {
 	@GetMapping("/{comboid}")
 	public ResponseEntity<ComboDto> getCombo(@PathVariable("comboid") int comboid) throws Exception {
 		ComboDto result = comboService.getCombo(comboid);// getCombo(comboid);
+		
+			String[] combo_explain_list = ((String) result.getCombo_explain()).split("/"); 
+			result.setCombo_explain(combo_explain_list);
+			String[] combo_explain_e_list = ((String) result.getCombo_explain_e()).split("/"); 
+			result.setCombo_explain_e(combo_explain_e_list);
+			String combo_answer = ((String) result.getCombo_answer());
+			if(combo_answer != null) {
+				String[] combo_answer_list = combo_answer.replace("[", "").replace("]", "").replace(" ", "").split(",");
+				result.setCombo_answer(combo_answer_list);
+			}
+			String combo_answer_index = ((String) result.getCombo_answer_index());
+			if(combo_answer_index != null) {
+				String[] combo_answer_index_list = combo_answer_index.replace("[", "").replace("]", "").replace(" ", "").split(",");
+				result.setCombo_answer_index(combo_answer_index_list);
+			}
+
+		
 		return ResponseEntity.status(200).body(result);
 	} 
 	
 	@PatchMapping("/{comboid}")
-	public ResponseEntity<Map<String, String>> updateComboStage(@PathVariable("comboid") int comboid, @RequestBody Map<String, String> map) throws Exception{
-		//, @RequestHeader("Authorization") String authorization 
+	public ResponseEntity<Map<String, String>> updateComboStage(@RequestHeader("Authorization") String authorization, @PathVariable("comboid") int comboid, @RequestBody Map<String, String> map) throws Exception{
+		String user_id = "";
+        if(authorization.indexOf("Bearer") != -1) {
+           authorization = authorization.replaceAll("^Bearer\\s", "");
+        }
+        if (tokenProvider.validateToken(authorization)) {// 유효하면
+        	user_id = String.valueOf(tokenProvider.getSubject(authorization));
+            System.out.println("유효함!");
+         }
 		String combo_id = Integer.toString(comboid);
-		String user_id = "1";//나중에 token에서**
 		String combo_score = map.get("comboScore");
 		String combo_clear = map.get("comboClear");
-		
-//		if(authorization.indexOf("Bearer") != -1) {
-//            authorization = authorization.replaceAll("^Bearer\\s", "");
-//         }
-////         if (tokenProvider.validateToken(authorization)) {// 유효하면
-////            
-////            String userId = String.valueOf(tokenProvider.getSubject(authorization));
-////         }
-//		if(map.get("comboClear")== "Y") {
-//			combo_clear = "1";
-//		}else {
-//			combo_clear = "2";
-//		}
-		
-		//System.out.println("combo_clear1: "+combo_clear);
+
 		ComboStageDto comboStageDto = new ComboStageDto(user_id, combo_id, combo_score, combo_clear);
 		comboService.updateComboStage(comboStageDto);
 		
 		Map<String, String> result = new HashMap<>();
-//		result.put("", remappingFunction);
-		//result.put("statusCode", "200");
-		//result.compute("", remappingFunction);
+
+		result.put("statusCode", "200");
 		
 		
 		return ResponseEntity.status(200).body(result);
