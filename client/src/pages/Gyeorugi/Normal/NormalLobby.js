@@ -33,28 +33,23 @@ function NormalLobby() {
   const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState("");
   const [userList, setUserList] = useState(null);
-  // const openDetails = useSetRecoilState(userDetailModalState);
-  const [openDetails, setOpenDetails] = useRecoilState(userDetailModalState);
   const [targetUser, setTargetUser] = useState("");
 
-  const onclickTargetUser = (user) => {
-    setOpenDetails(!openDetails);
-    setTargetUser(user);
-  };
-  // console.log(openDetails(false));
   const onChangeNick = useCallback((e) => {
     setSearchInput(e.target.value);
   });
+
   const searchUserInfo = async () => {
     const userInfo = await axiosInstance.get(`/api/que/select/${searchInput}`);
-    console.log(userInfo);
     setUserList(userInfo);
   };
+
   const onKeyEnter = (e) => {
     if (e.key === "Enter") {
       searchUserInfo();
     }
   };
+
   const status = {
     Y: {
       state: "online",
@@ -106,13 +101,11 @@ function NormalLobby() {
               {userList.map((user) => (
                 <UserProfile
                   key={user.userId}
-                  // onClick={() => setOpenDetails(!openDetails)}
-                  // onClick={onclickTargetUser(user.userId)}
-                  onClick={() => setTargetUser(user.userId)}
+                  onClick={() =>
+                    setTargetUser(user.userId == targetUser ? "" : user.userId)
+                  }
                 >
-                  {!openDetails && (
-                    <UserDetail userData={user} target={targetUser} />
-                  )}
+                  <UserDetail userData={user} target={targetUser} />
                   {user.userProfilePath ? (
                     <UserImg
                       state={user.userState}

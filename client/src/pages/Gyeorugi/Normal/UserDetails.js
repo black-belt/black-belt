@@ -17,10 +17,8 @@ import {
 
 const UserDetail = (props) => {
   const { t } = useTranslation();
-  console.log(props.userData);
   const user = props.userData;
   const target = props.target;
-  console.log(target, user.userId);
   const tier = {
     1: "bronze",
     2: "silver",
@@ -32,8 +30,6 @@ const UserDetail = (props) => {
 
   return (
     <Layout targetUser={target} user={user.userId}>
-      {/* <Icon icon="gyeorugiUserDetailBackground" width={376} height={189} /> */}
-      {/* <img src="/images/userDetailBackground.png" alt="" /> */}
       <Img>
         {user.userprofilePath ? (
           <UserImg src={user.userprofilePath} alt="" />
@@ -49,7 +45,7 @@ const UserDetail = (props) => {
         <Contents>
           <TextBox>
             <Username>{user.userNick}</Username>
-            <UserTier>{tier[user.tierId]}</UserTier>
+            <UserTier>{t(tier[user.tierId])}</UserTier>
           </TextBox>
           <BasicButton width="115px" height="36px" able={user.userState}>
             {t("apply")}

@@ -33,20 +33,16 @@ export const Img = styled.div`
   /* margin: 0.4rem 0.3rem; */
   background-color: black;
 `;
+
 export const UserImg = styled.img`
   width: 100%;
 `;
+
 export const NoUserImg = styled.img`
   width: 75%;
   filter: grayscale(100%) brightness(90%);
-  /* background: linear-gradient(
-    268.54deg,
-    #212529 1.86%,
-    rgba(0, 0, 0, 0) 60.97%
-  ); */
-  /* url(.jpg),  */
-  /* linear-gradient(90deg, #c4c4c4 0%, rgba(196, 196, 196, 0) 100%); */
 `;
+
 export const Gradient = styled.div`
   position: absolute;
   top: 0.3rem;
@@ -60,6 +56,7 @@ export const Gradient = styled.div`
     rgba(0, 0, 0, 0) 60.97%
   );
 `;
+
 export const ProfileBox = styled.div`
   width: 55%;
   padding: 2rem;
