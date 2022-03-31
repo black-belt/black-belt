@@ -42,6 +42,17 @@
   "rank": "Rank",
 
   "start": "Start Match",
+  "online": "Online",
+  "offline": "Offline",
+  "battle": "In Gyeorugi",
+  "test": "In Promotion Test",
+
+  "bronze": "Bronze",
+  "silver": "Silver",
+  "gold": "Gold",
+  "platinum": "Platinum",
+  "diamond": "Diamond",
+  "apply": "",
 
   "basics description": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "combos description": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."

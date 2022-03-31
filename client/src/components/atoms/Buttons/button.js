@@ -3,8 +3,12 @@ import styled, { css } from "styled-components";
 import { colors, fontSize, fontWeight } from "_foundation";
 import Icon from "../Icons/Icon";
 
-function BasicButton({ children }) {
-  return <StyledBtn>{children}</StyledBtn>;
+function BasicButton({ able, width, height, fontSize, children }) {
+  return (
+    <StyledBtn width={width} height={height} fontSize={fontSize} able={able}>
+      {children}
+    </StyledBtn>
+  );
 }
 export default BasicButton;
 
@@ -14,7 +18,7 @@ const StyledBtn = styled.button`
   align-items: center;
 
   width: ${(props) => props.width};
-  height: 48px;
+  height: ${(props) => props.height};
   padding: 0.6rem 1.5rem;
 
   border-radius: 4rem;
@@ -22,7 +26,7 @@ const StyledBtn = styled.button`
   color: ${colors.gray0};
   background-color: transparent;
 
-  font-size: ${fontSize.xl};
+  font-size: ${(props) => props.fontSize};
   line-height: 1.75rem;
   text-align: center;
   text-decoration: none;
@@ -30,12 +34,31 @@ const StyledBtn = styled.button`
   transition: 0.2s;
   cursor: pointer;
 
-  ${(props) =>
-    css`
-      :hover {
-        background: ${colors.blue1};
-      }
-    `}
+  ${(props) => {
+    if (props.able === "Y") {
+      return css`
+        :hover {
+          background: ${colors.blue1};
+          border: 1px solid ${colors.blue1};
+        }
+      `;
+    } else {
+      return css`
+        cursor: default;
+      `;
+    }
+  }}
+  /* ${(props) => {
+    if (props.able) {
+      return;
+      css`
+        :hover {
+          background: ${colors.blue1};
+          border: 1px solid ${colors.blue1};
+        }
+      `;
+    }
+  }} */
 
   svg {
     width: 22px;

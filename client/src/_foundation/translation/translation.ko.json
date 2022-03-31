@@ -42,6 +42,17 @@
   "rank": "랭크 모드",
 
   "start": "겨루기 시작",
+  "online": "온라인",
+  "offline": "로그아웃",
+  "battle": "심사중",
+  "test": "겨루기 중",
+
+  "bronze": "브론즈",
+  "silver": "실버",
+  "gold": "골드",
+  "platinum": "플래티넘",
+  "diamond": "다이아",
+  "apply": "겨루기 신청",
 
   "basics description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "combos description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."
