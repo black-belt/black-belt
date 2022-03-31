@@ -7,7 +7,8 @@ import com.blackbelt.model.BasicStageDto;
 
 public interface BasicService {
 	List<BasicDto> listBasic() throws Exception;
-	List<BasicDto> getBasic(int basicid) throws Exception;
+	List<BasicDto> listBasic(String user_id) throws Exception;
+	BasicDto getBasic(String user_id, int basicid) throws Exception;
 	void updateBasicStage(BasicStageDto basicStageDto) throws Exception;
 	
 }

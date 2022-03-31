@@ -31,19 +31,14 @@ function PoomsaeStage() {
 
   const getPoomsaeData = async () => {
     const data = await axiosInstance.get(`/api/poomsae/${state.stageId}`, {});
+    // console.log(data);
     data.poomsae_answer = [
-      ["mask", "water jug", "mask"],
-      ["mask", "water jug", "mask"],
-      ["mask", "water jug", "mask"],
-      ["mask", "water jug", "mask"],
+      ["abaya", "coffee mug", "abaya"],
+      ["abaya", "coffee mug", "abaya"],
+      ["abaya", "coffee mug", "abaya"],
+      ["abaya", "coffee mug", "abaya"],
     ];
     data.poomsae_movie_path = "https://youtu.be/o9JvP-A4TvY";
-    data.poomsae_explain = data.poomsae_explain
-      .split("#")
-      .map((value) => value.split("/"));
-    data.poomsae_explain_e = data.poomsae_explain_e
-      .split("#")
-      .map((value) => value.split("/"));
     data.poomsae_answer_index = [
       [0, 2, 4],
       [1, 3, 5],
@@ -55,14 +50,14 @@ function PoomsaeStage() {
     setInfo(data);
   };
 
-  const updateIsPass = () => {
-    fetch("https://jsonplaceholder.typicode.com/posts") //통과단계보냄
-      .then((res) => res.json())
-      .then((json) => {
-        setNextAction(info.poomsae_answer[3].length - 1);
-        setPartIndex(3);
-        setIsPass(true);
-      });
+  const updateIsPass = async (g) => {
+    await axiosInstance.patch(`/api/poomsae/${state.stageId}`, {
+      poomsaeScore: g,
+      poomsaeClear: g > 0 ? "Y" : "N",
+    });
+    setNextAction(info.poomsae_answer[3].length - 1);
+    setPartIndex(3);
+    setIsPass(true);
   };
 
   const updateNextAction = (value) => {
@@ -83,7 +78,7 @@ function PoomsaeStage() {
       });
     // console.log("!!결과", index, resultArray[index], isPassArray[index]);
     if (index === 3) {
-      updateIsPass();
+      let g = 0;
       let sum = 0;
       let pass = true;
       resultArray.forEach((value) => (sum += value));
@@ -93,22 +88,27 @@ function PoomsaeStage() {
       if (!pass) {
         setGrade("Try Again");
         setGradeNum(0);
+        updateIsPass(g);
         return;
       }
       sum /= 4;
       if (sum >= 0.8) {
         setGrade("Perfect!");
         setGradeNum(3);
+        g = 3;
       } else if (sum >= 0.7) {
         setGrade("Great");
         setGradeNum(2);
+        g = 2;
       } else if (sum >= 0.6) {
         setGrade("Good");
         setGradeNum(1);
+        g = 1;
       } else {
         setGrade("Try Again");
         setGradeNum(0);
       }
+      updateIsPass(g);
     }
   };
 
@@ -126,16 +126,10 @@ function PoomsaeStage() {
     <>
       {info && (
         <PracticeStageTemplate
-          title={
-            t("language") === "KOR" ? info.poomsae_name : info.poomsae_name_e
-          }
+          title={t("language") === "KOR" ? info.poomsae_name : info.poomsae_name_e}
           partStage={
             <PartStage
-              partArray={
-                t("language") === "KOR"
-                  ? info.poomsae_part
-                  : info.poomsae_part_e
-              }
+              partArray={t("language") === "KOR" ? info.poomsae_part : info.poomsae_part_e}
               curIdx={partIndex}
             />
           }

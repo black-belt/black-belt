@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "4.9.10",
+    "@material-ui/icons": "4.9.1",
+    "@teachablemachine/pose": "^0.8.6",
     "@tensorflow-models/mobilenet": "^2.1.0",
     "@tensorflow/tfjs": "^3.14.0",
     "@testing-library/jest-dom": "^5.16.2",
@@ -10,7 +13,9 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
     "i18next": "^21.6.14",
+    "jquery": "3.5.0",
     "moment": "^2.29.1",
+    "openvidu-browser": "2.20.0",
     "react": "^17.0.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-animated-slider": "^2.0.0",
@@ -26,13 +31,15 @@
     "recoil": "^0.6.1",
     "styled-components": "^5.3.3",
     "swiper": "^8.0.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "ws": "^8.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:openvidu-react": "npm install --prefix ../library/ && node library-copy.js && cd ../library && npm run create-library"
   },
   "eslintConfig": {
     "extends": [

@@ -7,7 +7,7 @@ import com.blackbelt.model.ComboStageDto;
 import com.blackbelt.model.PoomsaeDto;
 
 public interface ComboMapper {
-	List<ComboDto> listCombo(int poomsae_id) throws Exception;
+	List<ComboDto> listCombo(int poomsae_id, int user_id) throws Exception;
 	ComboDto getCombo(int comboid) throws Exception;
 	List<PoomsaeDto> getPoomsae() throws Exception;
 	void updateComboStage(ComboStageDto comboStageDto);

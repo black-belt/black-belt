@@ -99,6 +99,7 @@ export default UserVideoCombo;
 
 const VideoContainer = styled.video`
   height: 22vw;
+  width: 35vw;
   margin-bottom: 60px;
   border-radius: 10px;
 `;

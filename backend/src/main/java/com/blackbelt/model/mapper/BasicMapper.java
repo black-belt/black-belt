@@ -7,8 +7,9 @@ import com.blackbelt.model.BasicStageDto;
 
 public interface BasicMapper {
 	List<BasicDto> listBasic() throws Exception;
-	List<BasicDto> getBasic(int basicid) throws Exception;
+	BasicDto getBasic(int user_id, int basicid) throws Exception;
 	void updateBasicStage(BasicStageDto basicStageDto) throws Exception;
+	List<BasicDto> listBasicuser(String user_id);
 	
 //	UserDto login(Map<String, String> map) throws Exception;
 //	
