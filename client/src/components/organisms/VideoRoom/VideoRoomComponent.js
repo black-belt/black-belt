@@ -5,8 +5,8 @@ import { OpenVidu, Subscriber } from "openvidu-browser";
 import UserModel from "pages/Gyeorugi/GyeorugiStage/models/user-model";
 import OpenViduLayout from "components/molecules/Layout/openvidu-layout";
 import DialogExtensionComponent from "components/molecules/DialogExtension/DialogExtension";
-// import StreamComponent from "components/molecules/Stream/StreamComponent";
 import GyeorugiStageTempalte from "components/templates/GyeorugiStageTemplate";
+import { useLocation } from "react-router-dom";
 
 var localUser = new UserModel();
 
@@ -16,6 +16,7 @@ function VideoRoomComponent({
   sessionName,
   user,
   token,
+  country,
   joinSession,
   leaveSession,
 }) {
@@ -23,14 +24,17 @@ function VideoRoomComponent({
     ? openviduServerUrl
     : "https://" + window.location.hostname + ":4443";
   const OPENVIDU_SERVER_SECRET = openviduSecret ? openviduSecret : "MY_SECRET";
+  const state = useLocation().state;
   let hasBeenUpdated = false;
   let layout = new OpenViduLayout();
   let sessionId = sessionName ? sessionName : "SessionA";
   let userName = user ? user : "OpenVidu_User" + Math.floor(Math.random() * 100);
+  let userCountry = country ? country : "korea";
   let remotes = [];
   let localUserAccessAllowed = false;
   const [mySessionId, setMySessionId] = useState(sessionId);
   const [myUserName, setMyUserName] = useState(userName);
+  const [myCountry, setMyCountry] = useState(userCountry);
   const [session, setSession] = useState(undefined);
   const [myLocalUser, setMyLocalUser] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
@@ -45,6 +49,7 @@ function VideoRoomComponent({
   const [answer, setAnswer] = useState([]);
   const [leftPercent, setLeftPercent] = useState(100);
   const [rightPercent, setRightPercent] = useState(100);
+  const [usersInfo, setUsersInfo] = useState([]);
   let publisher;
   //   let session;
 
@@ -87,7 +92,6 @@ function VideoRoomComponent({
     setOV((current) => {
       return newOV;
     });
-    // session = newOV.initSession();
     setSession((current) => {
       return newOV.initSession();
     });
@@ -102,7 +106,8 @@ function VideoRoomComponent({
   }, [session, OV]);
 
   const connectToSession = () => {
-    if (token !== undefined) {
+    //state.token
+    if (token) {
       console.log("token received: ", token);
       connect(token);
     } else {
@@ -130,7 +135,7 @@ function VideoRoomComponent({
     session
       .connect(token, { clientData: myUserName })
       .then(() => {
-        console.log("!!!", OV);
+        // console.log("!!!", OV);
         connectWebCam();
       })
       .catch((error) => {
@@ -148,7 +153,6 @@ function VideoRoomComponent({
   };
 
   const connectWebCam = async () => {
-    console.log("!!!!", OV);
     var devices = await OV.getDevices();
     var videoDevices = devices.filter((device) => device.kind === "videoinput");
 
@@ -173,12 +177,14 @@ function VideoRoomComponent({
         });
       });
     }
-    console.log("여기pub", publisher);
 
+    //state.name
     localUser.setNickname(myUserName);
     localUser.setConnectionId(session.connection.connectionId);
     localUser.setScreenShareActive(false);
     localUser.setStreamManager(publisher);
+    //state.country
+    localUser.setCountry(myCountry);
     subscribeToUserChanged();
     subscribeToStreamDestroyed();
     sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
@@ -237,30 +243,10 @@ function VideoRoomComponent({
     setSubscribers([]);
     setMySessionId("SessionA");
     setMyUserName("OpenVidu_User" + Math.floor(Math.random() * 100));
+    setMyCountry("korea");
     setMyLocalUser(undefined);
     if (leaveSession) leaveSession();
   };
-
-  // const camStatusChanged = () => {
-  //   localUser.setVideoActive(!localUser.isVideoActive());
-  //   localUser.getStreamManager().publishVideo(localUser.isVideoActive());
-  //   sendSignalUserChanged({ isVideoActive: localUser.isVideoActive() });
-  //   setMyLocalUser(() => localUser);
-  // };
-
-  // const micStatusChanged = () => {
-  //   localUser.setAudioActive(!localUser.isAudioActive());
-  //   localUser.getStreamManager().publishAudio(localUser.isAudioActive());
-  //   sendSignalUserChanged({ isAudioActive: localUser.isAudioActive() });
-  //   setMyLocalUser(() => localUser);
-  // };
-
-  // const nicknameChanged = (nickname) => {
-  //   let localUser = myLocalUser;
-  //   localUser.setNickname(nickname);
-  //   setMyLocalUser(() => localUser);
-  //   sendSignalUserChanged({ nickname: myLocalUser.getNickname() });
-  // };
 
   const deleteSubscriber = (stream) => {
     const remoteUsers = subscribers;
@@ -349,117 +335,9 @@ function VideoRoomComponent({
     session.signal(signalOptions);
   };
 
-  // const toggleFullscreen = () => {
-  //   const document = window.document;
-  //   const fs = document.getElementById("container");
-  //   if (
-  //     !document.fullscreenElement &&
-  //     !document.mozFullScreenElement &&
-  //     !document.webkitFullscreenElement &&
-  //     !document.msFullscreenElement
-  //   ) {
-  //     if (fs.requestFullscreen) {
-  //       fs.requestFullscreen();
-  //     } else if (fs.msRequestFullscreen) {
-  //       fs.msRequestFullscreen();
-  //     } else if (fs.mozRequestFullScreen) {
-  //       fs.mozRequestFullScreen();
-  //     } else if (fs.webkitRequestFullscreen) {
-  //       fs.webkitRequestFullscreen();
-  //     }
-  //   } else {
-  //     if (document.exitFullscreen) {
-  //       document.exitFullscreen();
-  //     } else if (document.msExitFullscreen) {
-  //       document.msExitFullscreen();
-  //     } else if (document.mozCancelFullScreen) {
-  //       document.mozCancelFullScreen();
-  //     } else if (document.webkitExitFullscreen) {
-  //       document.webkitExitFullscreen();
-  //     }
-  //   }
-  // };
-
-  // const switchCamera = async () => {
-  //   try {
-  //     const devices = await OV.getDevices();
-  //     var videoDevices = devices.filter((device) => device.kind === "videoinput");
-
-  //     if (videoDevices && videoDevices.length > 1) {
-  //       var newVideoDevice = videoDevices.filter(
-  //         (device) => device.deviceId !== currentVideoDevice.deviceId
-  //       );
-
-  //       if (newVideoDevice.length > 0) {
-  //         // Creating a new publisher with specific videoSource
-  //         // In mobile devices the default and first camera is the front one
-  //         var newPublisher = OV.initPublisher(undefined, {
-  //           audioSource: undefined,
-  //           videoSource: newVideoDevice[0].deviceId,
-  //           publishAudio: localUser.isAudioActive(),
-  //           publishVideo: localUser.isVideoActive(),
-  //           mirror: true,
-  //         });
-
-  //         //newPublisher.once("accessAllowed", () => {
-  //         await session.unpublish(localUser.getStreamManager());
-  //         await session.publish(newPublisher);
-  //         myLocalUser.setStreamManager(newPublisher);
-  //         setCurrentVideoDevice(() => newVideoDevice);
-  //         setMyLocalUser(() => localUser);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
-  // const screenShare = () => {
-  //   const videoSource = navigator.userAgent.indexOf("Firefox") !== -1 ? "window" : "screen";
-  //   const publisher = OV.initPublisher(
-  //     undefined,
-  //     {
-  //       videoSource: videoSource,
-  //       publishAudio: localUser.isAudioActive(),
-  //       publishVideo: localUser.isVideoActive(),
-  //       mirror: false,
-  //     },
-  //     (error) => {
-  //       if (error && error.name === "SCREEN_EXTENSION_NOT_INSTALLED") {
-  //         alert("Your browser does not support screen EXTENSION");
-  //       } else if (error && error.name === "SCREEN_SHARING_NOT_SUPPORTED") {
-  //         alert("Your browser does not support screen sharing");
-  //       } else if (error && error.name === "SCREEN_EXTENSION_DISABLED") {
-  //         alert("You need to enable screen sharing extension");
-  //       } else if (error && error.name === "SCREEN_CAPTURE_DENIED") {
-  //         alert("You need to choose a window or application to share");
-  //       }
-  //     }
-  //   );
-
-  //   publisher.once("accessAllowed", () => {
-  //     session.unpublish(localUser.getStreamManager());
-  //     localUser.setStreamManager(publisher);
-  //     session.publish(localUser.getStreamManager()).then(() => {
-  //       localUser.setScreenShareActive(true);
-  //       setMyLocalUser(() => localUser);
-  //     });
-  //     sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
-  //   });
-  //   publisher.on("streamPlaying", () => {
-  //     updateLayout();
-  //     publisher.videos[0].video.parentElement.classList.remove("custom-class");
-  //   });
-  // };
-
   const closeDialogExtension = () => {
     setShowExtensionDialog(false);
   };
-
-  // const stopScreenShare = () => {
-  //   session.unpublish(localUser.getStreamManager());
-  //   connectWebCam();
-  // };
 
   const checkSomeoneShareScreen = () => {
     let isScreenShared;
@@ -512,7 +390,7 @@ function VideoRoomComponent({
     }
   };
 
-  const getToken = () => {
+  const getToken = async () => {
     return createSession(mySessionId).then((sessionId) => createToken(sessionId));
   };
 
@@ -577,6 +455,7 @@ function VideoRoomComponent({
 
   const startMe = () => {
     setReady(() => true);
+    start();
   };
 
   const start = () => {

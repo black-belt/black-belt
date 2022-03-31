@@ -74,7 +74,7 @@ function OvVideoComponent({ user, mutedSound, answer, isEnd, isStart, start, att
     const className = prediction[0].className;
     const probability = prediction[0].probability;
     console.log(className, probability);
-    if (className === "Ready Action" && probability >= 0.6) {
+    if (className === "Basic Ready Stance" && probability >= 0.6) {
       start();
     }
   };
