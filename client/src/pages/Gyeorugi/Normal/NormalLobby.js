@@ -142,12 +142,7 @@ function NormalLobby() {
                     />
                   )}
                   <UserTextBox>
-                    <UserName
-                      state={user.userState}
-                      // onClick={() => setOpenDetails(!openDetails)}
-                    >
-                      {user.userNick}
-                    </UserName>
+                    <UserName state={user.userState}>{user.userNick}</UserName>
                     <Status>
                       <svg
                         width="7"
