@@ -94,7 +94,7 @@ const LeftBarColor = styled.div`
   left: 0;
   top: 70px;
   height: 40px;
-  width: 100%;
+  width: ${(props) => props.percent}%;
   border-radius: 10px;
   transition: 0.3s;
 `;
@@ -104,7 +104,7 @@ const RightBarColor = styled.div`
   right: 0;
   top: 70px;
   height: 40px;
-  width: 100%;
+  width: ${(props) => props.percent}%;
   border-radius: 10px;
   transition: 0.3s;
 `;

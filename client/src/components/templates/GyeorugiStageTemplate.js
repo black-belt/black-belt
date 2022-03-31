@@ -10,8 +10,14 @@ function GyeorugiStageTempalte({
   guide,
   isTimer,
   setIsTimer,
-  leftPrecent,
+  leftPercent,
   rightPercent,
+  answer,
+  isEnd,
+  isStart,
+  start,
+  attack,
+  defence,
 }) {
   console.log("구독", subscribers);
   return (
@@ -28,7 +34,7 @@ function GyeorugiStageTempalte({
                 right={subscribers}
                 isTimer={isTimer}
                 setIsTimer={setIsTimer}
-                leftPrecent={leftPrecent}
+                leftPercent={leftPercent}
                 rightPercent={rightPercent}
               />
             )}
@@ -36,7 +42,15 @@ function GyeorugiStageTempalte({
         <VideoLayout>
           {localUser !== undefined && localUser.getStreamManager() !== undefined && (
             <LocalUser>
-              <StreamComponent user={localUser} />
+              <StreamComponent
+                user={localUser}
+                answer={answer}
+                isEnd={isEnd}
+                isStart={isStart}
+                start={start}
+                attack={attack}
+                defence={defence}
+              />
             </LocalUser>
           )}
           {subscribers.map((sub, i) => (

@@ -4,12 +4,12 @@ import * as tmPose from "@teachablemachine/pose";
 
 function UserVideo({ answer, testResult, isPass, aiId }) {
   const videoRef = useRef(null);
+  const modelURL = `/models/basics/${aiId}/model.json`;
+  const metadataURL = `/models/basics/${aiId}/metadata.json`;
   let isFindMax = false;
   let maxProbability = 0.0;
   let frameCnt = 0;
   let answerNum = 0;
-  const modelURL = `/models/basics/${aiId}/model.json`;
-  const metadataURL = `/models/basics/${aiId}/metadata.json`;
 
   const [model, setModel] = useState(undefined);
   const [webCamElement, setWebCamElement] = useState(undefined);

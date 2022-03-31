@@ -8,6 +8,7 @@ import DanUpTemplate from "components/templates/DanUpTemplate";
 import axiosInstance from "utils/API";
 
 function PromotionStage() {
+  const [judge, setJudge] = useState();
   const [title, setTitle] = useState("");
   const [dan, setDan] = useState(0);
   const [answerRandom, setAnswerRandom] = useState([]);
@@ -50,7 +51,7 @@ function PromotionStage() {
     // ];
     // data.poomsae_part = ["1단락", "2단락", "3단락", "4단락"];
     // data.poomsae_part_e = ["Part1", "Part2", "Part3", "Part4"];
-    // setInfo(data);
+    setJudge(data);
   };
 
   useEffect(() => {
