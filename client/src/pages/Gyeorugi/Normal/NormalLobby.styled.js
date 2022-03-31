@@ -12,7 +12,7 @@ export const BackgroundImg = styled.img`
 `;
 
 export const Layout = styled.div`
-  padding-top: 92px;
+  /* padding-top: 92px; */
   height: 100vh;
   width: 100vw;
 
@@ -22,7 +22,8 @@ export const Layout = styled.div`
 export const Standby = styled.div`
   height: 100%;
   width: 78%;
-  padding-top: 4%;
+  background-color: red;
+  /* padding-top: 4%; */
 `;
 
 export const ChampionBox = styled.div`
@@ -32,22 +33,39 @@ export const ChampionBox = styled.div`
   gap: 8rem;
 
   padding-bottom: 2rem;
+  /* height: 100vh; */
+  height: 85%;
+  /* width: 100%; */
+  background-color: blue;
 `;
 
-export const MyChampion = styled.div`
+export const Champion = styled.div`
+  padding-top: 92px;
+  /* position: absolute; */
   width: 24%;
+  /* width: auto; */
+  height: 100%;
+  background-color: yellow;
+  /* height: 500px; */
+  background-image: url("/images/badge.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 `;
 
-export const ChampBackground = styled.img`
-  width: 100%;
-  height: auto;
+export const ChampionInfo = styled.div`
+  color: ${colors.gray0};
 `;
 
-export const CounterChampion = styled.div`
-  width: 24%;
+export const Name = styled.div`
+  font-size: ${fontSize.h4};
+  font-weight: ${fontWeight.medium};
 `;
+export const ProfileImg = styled.img``;
+export const Tier = styled.div``;
 
 export const SearchLayout = styled.div`
+  margin-top: 92px;
   width: 22%;
   text-align: center;
   padding: 3rem 1rem 3rem 1.5rem;

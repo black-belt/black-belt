@@ -1,25 +1,28 @@
+import { GetUserInfo } from "api";
 import InButton from "components/atoms/Buttons/in-btns";
 import Icon from "components/atoms/Icons/CustomIcon";
 // import Icon from "components/atoms/Icons/Icon";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userDetailModalState, userInfo } from "recoils";
 import axiosInstance from "utils/API";
 import { colors } from "_foundation";
 import {
   BackgroundImg,
-  ChampBackground,
+  Champion,
   ChampionBox,
-  CounterChampion,
+  ChampionInfo,
   Layout,
-  MyChampion,
+  Name,
+  ProfileImg,
   SearchBox,
   SearchInput,
   SearchLayout,
   SearchList,
   Standby,
   Status,
+  Tier,
   // UserDetail,
   UserImg,
   UserName,
@@ -34,6 +37,7 @@ function NormalLobby() {
   const [searchInput, setSearchInput] = useState("");
   const [userList, setUserList] = useState(null);
   const [targetUser, setTargetUser] = useState("");
+  const myInfo = useRecoilValue(userInfo);
 
   const onChangeNick = useCallback((e) => {
     setSearchInput(e.target.value);
@@ -75,12 +79,16 @@ function NormalLobby() {
         <BackgroundImg src="/images/practiceBackground.jpg" />
         <Standby>
           <ChampionBox>
-            <MyChampion>
-              <ChampBackground src="/images/gyeorugi-profile-big.png" alt="" />
-            </MyChampion>
-            <CounterChampion>
-              <ChampBackground src="/images/gyeorugi-profile-big.png" alt="" />
-            </CounterChampion>
+            <Champion>
+              <ChampionInfo>
+                <Name>{myInfo.userNick}</Name>
+                <ProfileImg></ProfileImg>
+                <Tier></Tier>
+              </ChampionInfo>
+            </Champion>
+            <Champion>
+              {/* <ChampBackground src="/images/badge.png" alt="" /> */}
+            </Champion>
           </ChampionBox>
           <center>
             <InButton>{t("start")}</InButton>
