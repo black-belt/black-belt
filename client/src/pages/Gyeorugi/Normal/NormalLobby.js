@@ -3,7 +3,8 @@ import Icon from "components/atoms/Icons/CustomIcon";
 // import Icon from "components/atoms/Icons/Icon";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { userInfo } from "recoils";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { userDetailModalState, userInfo } from "recoils";
 import axiosInstance from "utils/API";
 import { colors } from "_foundation";
 import {
@@ -32,6 +33,15 @@ function NormalLobby() {
   const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState("");
   const [userList, setUserList] = useState(null);
+  // const openDetails = useSetRecoilState(userDetailModalState);
+  const [openDetails, setOpenDetails] = useRecoilState(userDetailModalState);
+  const [targetUser, setTargetUser] = useState("");
+
+  const onclickTargetUser = (user) => {
+    setOpenDetails(!openDetails);
+    setTargetUser(user);
+  };
+  // console.log(openDetails(false));
   const onChangeNick = useCallback((e) => {
     setSearchInput(e.target.value);
   });
@@ -94,19 +104,19 @@ function NormalLobby() {
           {userList ? (
             <SearchList>
               {userList.map((user) => (
-                <UserProfile key={user.userId}>
-                  <UserDetail userData={user} />
-
-                  {/* </UserDetail> */}
-                  {/* // <UserDetail userData={user}>
-                  //   <img src="/images/yeon.png" alt="" />
-                  // </UserDetail> */}
+                <UserProfile
+                  key={user.userId}
+                  // onClick={() => setOpenDetails(!openDetails)}
+                  // onClick={onclickTargetUser(user.userId)}
+                  onClick={() => setTargetUser(user.userId)}
+                >
+                  {!openDetails && (
+                    <UserDetail userData={user} target={targetUser} />
+                  )}
                   {user.userProfilePath ? (
                     <UserImg
                       state={user.userState}
-                      // src={`http://j6a506.p.ssafy.io:8000${user.userProfilePath}`}
                       src={user.userProfilePath}
-                      // src="yeon.png"
                       alt=""
                     />
                   ) : (
@@ -119,7 +129,12 @@ function NormalLobby() {
                     />
                   )}
                   <UserTextBox>
-                    <UserName state={user.userState}>{user.userNick}</UserName>
+                    <UserName
+                      state={user.userState}
+                      // onClick={() => setOpenDetails(!openDetails)}
+                    >
+                      {user.userNick}
+                    </UserName>
                     <Status>
                       <svg
                         width="7"
