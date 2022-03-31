@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -105,6 +106,12 @@ public class UserController {
 				}
 				String token = tokenProvider.createToken(lastId);// key, data, subject
 				Optional<UserDto> userinfo = userRepo.findByuserEmail(userEmail);
+				Date date = new Date();
+		    	Calendar cal = Calendar.getInstance();
+		    	cal.setTime(date);
+		    	cal.add(Calendar.HOUR, +12);
+		    	Date koreaExpireDate = cal.getTime();
+		    	resultMap.put("tokenExpireDate", koreaExpireDate);
 				resultMap.put("Authorization","Bearer " + token);
 				resultMap.put("userInfo", userinfo.get());
 				resultMap.put("statusCode",200);
