@@ -97,7 +97,7 @@ function BasicStage() {
               answer={info.basic_answer}
               testResult={testResult}
               isPass={isPass}
-              stageId={state.stageId}
+              aiId={state.aiId}
             />
           }
         />
