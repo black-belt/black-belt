@@ -3,9 +3,9 @@ import styled, { css } from "styled-components";
 import { colors, fontSize, fontWeight } from "_foundation";
 import Icon from "../Icons/Icon";
 
-function BasicButton({ width, height, fontSize, children }) {
+function BasicButton({ able, width, height, fontSize, children }) {
   return (
-    <StyledBtn width={width} height={height} fontSize={fontSize}>
+    <StyledBtn width={width} height={height} fontSize={fontSize} able={able}>
       {children}
     </StyledBtn>
   );
@@ -34,13 +34,31 @@ const StyledBtn = styled.button`
   transition: 0.2s;
   cursor: pointer;
 
-  ${(props) =>
-    css`
-      :hover {
-        background: ${colors.blue1};
-        border: 1px solid ${colors.blue1};
-      }
-    `}
+  ${(props) => {
+    if (props.able === "Y") {
+      return css`
+        :hover {
+          background: ${colors.blue1};
+          border: 1px solid ${colors.blue1};
+        }
+      `;
+    } else {
+      return css`
+        cursor: default;
+      `;
+    }
+  }}
+  /* ${(props) => {
+    if (props.able) {
+      return;
+      css`
+        :hover {
+          background: ${colors.blue1};
+          border: 1px solid ${colors.blue1};
+        }
+      `;
+    }
+  }} */
 
   svg {
     width: 22px;

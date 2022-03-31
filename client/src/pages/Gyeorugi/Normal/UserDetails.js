@@ -49,7 +49,7 @@ const UserDetail = (props) => {
             <Username>{user.userNick}</Username>
             <UserTier>{tier[user.tierId]}</UserTier>
           </TextBox>
-          <BasicButton width="115px" height="36px">
+          <BasicButton width="115px" height="36px" able={user.userState}>
             {t("apply")}
           </BasicButton>
         </Contents>
