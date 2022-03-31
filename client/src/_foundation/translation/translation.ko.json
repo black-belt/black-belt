@@ -46,6 +46,9 @@
   "offline": "로그아웃",
   "battle": "심사중",
   "test": "겨루기 중",
+  "search": "닉네임 검색",
+  "search output": "해당 닉네임이 존재하지 않습니다",
+  "search msg": "겨루고 싶은 상대를 닉네임으로 검색해보세요",
 
   "bronze": "브론즈",
   "silver": "실버",

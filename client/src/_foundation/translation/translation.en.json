@@ -46,6 +46,9 @@
   "offline": "Offline",
   "battle": "In Gyeorugi",
   "test": "In Promotion Test",
+  "search": "Search Nickname",
+  "search output": "This nickname doesn't exist.",
+  "search msg": "",
 
   "bronze": "Bronze",
   "silver": "Silver",

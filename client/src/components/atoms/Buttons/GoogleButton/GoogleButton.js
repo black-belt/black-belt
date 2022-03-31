@@ -6,7 +6,11 @@ import { useTranslation } from "react-i18next";
 import { useSetRecoilState } from "recoil";
 import { token } from "recoils";
 import axiosInstance from "utils/API";
-import { GoogleContent, GoogleLoginBtn, GoogleWrapper } from "./GoogleButton.styled";
+import {
+  GoogleContent,
+  GoogleLoginBtn,
+  GoogleWrapper,
+} from "./GoogleButton.styled";
 
 const clientId = process.env.REACT_APP_GOOGLE_API_KEY;
 

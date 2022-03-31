@@ -116,6 +116,12 @@ export const SearchList = styled.div`
   color: ${colors.gray0};
 `;
 
+export const SearchMsg = styled.div`
+  color: ${colors.gray1};
+  padding-top: 2rem;
+  font-size: ${fontSize.standard};
+`;
+
 export const UserProfile = styled.div`
   display: flex;
   align-items: center;

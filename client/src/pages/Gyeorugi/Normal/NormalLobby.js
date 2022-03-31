@@ -1,9 +1,9 @@
 import InButton from "components/atoms/Buttons/in-btns";
 import Icon from "components/atoms/Icons/CustomIcon";
 // import Icon from "components/atoms/Icons/Icon";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userInfo } from "recoils";
 import axiosInstance from "utils/API";
 import { colors } from "_foundation";
@@ -19,6 +19,7 @@ import {
   SearchInput,
   SearchLayout,
   SearchList,
+  SearchMsg,
   Standby,
   Status,
   Tier,
@@ -33,6 +34,7 @@ import UserDetail from "./UserDetails";
 function NormalLobby() {
   const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState("");
+  const [finishSearch, setFinishSearch] = useState(false);
   const [userList, setUserList] = useState(null);
   const [targetUser, setTargetUser] = useState("");
   const myInfo = useRecoilValue(userInfo);
@@ -44,7 +46,10 @@ function NormalLobby() {
   const searchUserInfo = async () => {
     const userInfo = await axiosInstance.get(`/api/que/select/${searchInput}`);
     setUserList(userInfo);
+    setFinishSearch(true);
   };
+
+  console.log(finishSearch, searchInput);
 
   const onKeyEnter = (e) => {
     if (e.key === "Enter") {
@@ -80,6 +85,8 @@ function NormalLobby() {
     6: "master",
   };
 
+  console.log(userList);
+
   return (
     <div className="NormalLobby">
       <Layout>
@@ -108,7 +115,11 @@ function NormalLobby() {
         </Standby>
         <SearchLayout>
           <SearchBox>
-            <SearchInput onKeyPress={onKeyEnter} onChange={onChangeNick} />
+            <SearchInput
+              onKeyPress={onKeyEnter}
+              onChange={onChangeNick}
+              placeholder={t("search")}
+            />
             <Icon
               icon="search"
               onClick={searchUserInfo}
@@ -116,7 +127,7 @@ function NormalLobby() {
               height={27}
             />
           </SearchBox>
-          {userList ? (
+          {userList && userList.length ? (
             <SearchList>
               {userList.map((user) => (
                 <UserProfile
@@ -167,7 +178,13 @@ function NormalLobby() {
               ))}
             </SearchList>
           ) : (
-            <></>
+            <>
+              {finishSearch ? (
+                <SearchMsg>{t("search output")}</SearchMsg>
+              ) : (
+                <SearchMsg>{t("search msg")}</SearchMsg>
+              )}
+            </>
           )}
         </SearchLayout>
       </Layout>

@@ -3,9 +3,15 @@ import styled, { css } from "styled-components";
 import { colors, fontSize, fontWeight } from "_foundation";
 import Icon from "../Icons/Icon";
 
-function BasicButton({ able, width, height, fontSize, children }) {
+function BasicButton({ onClick, able, width, height, fontSize, children }) {
   return (
-    <StyledBtn width={width} height={height} fontSize={fontSize} able={able}>
+    <StyledBtn
+      width={width}
+      height={height}
+      fontSize={fontSize}
+      able={able}
+      onClick={onClick}
+    >
       {children}
     </StyledBtn>
   );
