@@ -3,7 +3,10 @@ import BasicButton from "components/atoms/Buttons/button";
 import { useTranslation } from "react-i18next";
 import {
   Contents,
+  Gradient,
+  Img,
   Layout,
+  NoUserImg,
   ProfileBox,
   TextBox,
   TierImg,
@@ -29,7 +32,16 @@ const UserDetail = (props) => {
     <Layout>
       {/* <Icon icon="gyeorugiUserDetailBackground" width={376} height={189} /> */}
       {/* <img src="/images/userDetailBackground.png" alt="" /> */}
-      <UserImg src={user.userprofilePath} alt="" />
+      <Img>
+        {user.userprofilePath ? (
+          <UserImg src={user.userprofilePath} alt="" />
+        ) : (
+          <>
+            <NoUserImg src="/images/default-profile-gyeorugi.png" alt="" />
+            <Gradient />
+          </>
+        )}
+      </Img>
       <ProfileBox url={`/images/tier/${tier[user.tierId]}.png`}>
         <TierImg src={`/images/tier/${tier[user.tierId]}.png`} alt="" />
         <Contents>
