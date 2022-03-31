@@ -1,7 +1,6 @@
 import InButton from "components/atoms/Buttons/in-btns";
 import Icon from "components/atoms/Icons/CustomIcon";
-// import Icon from "components/atoms/Icons/Icon";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userInfo } from "recoils";
