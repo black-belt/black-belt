@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "Layout";
-import NormalStage from "pages/Gyeorugi/GyeorugiStage/NormalStage";
+import GyeorugiNormalStage from "pages/Gyeorugi/GyeorugiStage/GyeorugiNormalStage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -46,6 +46,7 @@ function App() {
                   <Route path="mypage" element={<MyPage />} />
                 </Route>
                 <Route path="gyeorugi/stage" element={<GyeorugiStage />} />
+                <Route path="gyeorugi/stage/normal" element={<GyeorugiNormalStage />} />
               </Routes>
             </BrowserRouter>
           </React.Suspense>

@@ -582,6 +582,7 @@ function VideoRoomComponent({
         }
         localUser={newLocalUser}
         subscribers={subscribers}
+        guide={"상대방에 대한 예의를 갖추고 인사를 하면 겨루기가 시작됩니다."}
       />
       {/* <div className="container" id="container">
         <DialogExtensionComponent

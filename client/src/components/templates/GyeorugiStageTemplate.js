@@ -1,14 +1,37 @@
-import ScoreBar from "components/molecules/ScoreBar";
+import ScoreBar from "components/molecules/Gyeorugi/ScoreBar";
 import StreamComponent from "components/molecules/Stream/StreamComponent";
 import styled from "styled-components";
+import { colors, fontWeight } from "../../_foundation";
 
-function GyeorugiStageTempalte({ dialog, localUser, subscribers }) {
+function GyeorugiStageTempalte({
+  dialog,
+  localUser,
+  subscribers,
+  guide,
+  isTimer,
+  setIsTimer,
+  leftPrecent,
+  rightPercent,
+}) {
+  console.log("구독", subscribers);
   return (
     <>
       <Container>
         {dialog}
+        {!isTimer && <Guide>{guide}</Guide>}
         <ScoreContainer>
-          <ScoreBar />
+          {localUser !== undefined &&
+            localUser.getStreamManager() !== undefined &&
+            subscribers !== undefined && (
+              <ScoreBar
+                left={localUser}
+                right={subscribers}
+                isTimer={isTimer}
+                setIsTimer={setIsTimer}
+                leftPrecent={leftPrecent}
+                rightPercent={rightPercent}
+              />
+            )}
         </ScoreContainer>
         <VideoLayout>
           {localUser !== undefined && localUser.getStreamManager() !== undefined && (
@@ -48,17 +71,17 @@ const VideoLayout = styled.div`
 
 const LocalUser = styled.div`
   position: absolute;
-  width: 36%;
+  width: 41%;
   height: 57%;
-  left: 10%;
+  left: 70px;
   top: 30%;
 `;
 
 const RemoteUser = styled.div`
   position: absolute;
-  width: 36%;
+  width: 41%;
   height: 57%;
-  right: 10%;
+  right: 70px;
   top: 30%;
 `;
 
@@ -68,8 +91,21 @@ const BackgroundImage = styled.div`
   left: 0;
   background-image: url("/images/promotionBackground.jpg");
   background-size: 100% 100%;
-  filter: grayscale(100%) brightness(40%);
+  filter: grayscale(100%) brightness(90%);
   min-width: 100%;
   min-height: 100%;
   z-index: -1;
+`;
+
+const Guide = styled.div`
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  color: ${colors.gray7};
+  transform: translate(-50%, 0%);
+  background-color: rgba(206, 212, 218, 0.7);
+  padding: 20px 30px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: ${fontWeight.medium};
 `;

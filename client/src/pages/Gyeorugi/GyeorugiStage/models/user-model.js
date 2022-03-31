@@ -4,6 +4,7 @@ class UserModel {
   videoActive;
   screenShareActive;
   nickname;
+  country;
   streamManager;
   type; // 'remote' | 'local'
 
@@ -13,6 +14,7 @@ class UserModel {
     this.videoActive = true;
     this.screenShareActive = false;
     this.nickname = "";
+    this.country = "";
     this.streamManager = null;
     this.type = "local";
   }
@@ -35,6 +37,10 @@ class UserModel {
 
   getNickname() {
     return this.nickname;
+  }
+
+  getCountry() {
+    return this.country;
   }
 
   getStreamManager() {
@@ -65,6 +71,9 @@ class UserModel {
   }
   setNickname(nickname) {
     this.nickname = nickname;
+  }
+  setCountry(country) {
+    this.country = country;
   }
   setType(type) {
     if ((type === "local") | (type === "remote")) {
