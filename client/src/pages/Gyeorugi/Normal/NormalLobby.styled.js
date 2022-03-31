@@ -22,8 +22,7 @@ export const Layout = styled.div`
 export const Standby = styled.div`
   height: 100%;
   width: 78%;
-  background-color: red;
-  /* padding-top: 4%; */
+  /* background-color: red; */
 `;
 
 export const ChampionBox = styled.div`
@@ -33,20 +32,17 @@ export const ChampionBox = styled.div`
   gap: 8rem;
 
   padding-bottom: 2rem;
-  /* height: 100vh; */
   height: 85%;
-  /* width: 100%; */
-  background-color: blue;
+
+  /* background-color: blue; */
 `;
 
 export const Champion = styled.div`
   padding-top: 92px;
-  /* position: absolute; */
   width: 24%;
-  /* width: auto; */
   height: 100%;
-  background-color: yellow;
-  /* height: 500px; */
+  /* background-color: yellow; */
+
   background-image: url("/images/badge.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -54,15 +50,42 @@ export const Champion = styled.div`
 `;
 
 export const ChampionInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+
+  padding-top: 4rem;
   color: ${colors.gray0};
 `;
 
 export const Name = styled.div`
   font-size: ${fontSize.h4};
   font-weight: ${fontWeight.medium};
+
+  span {
+    padding: 0 0.3rem;
+  }
 `;
-export const ProfileImg = styled.img``;
-export const Tier = styled.div``;
+export const ProfileImg = styled.img`
+  width: 65%;
+`;
+export const Tier = styled.div`
+  padding: 2rem 0;
+  ${(props) => {
+    if (props.language === "ENG") {
+      return css`
+        font-family: "Dry Brush";
+        font-size: ${fontSize.h1};
+      `;
+    } else {
+      return css`
+        font-family: "Dokdo";
+        font-size: ${fontSize.h1};
+      `;
+    }
+  }}
+`;
 
 export const SearchLayout = styled.div`
   margin-top: 92px;

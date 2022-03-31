@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userDetailModalState, userInfo } from "recoils";
 import axiosInstance from "utils/API";
-import { colors } from "_foundation";
+import { colors, icons } from "_foundation";
 import {
   BackgroundImg,
   Champion,
@@ -23,7 +23,6 @@ import {
   Standby,
   Status,
   Tier,
-  // UserDetail,
   UserImg,
   UserName,
   UserProfile,
@@ -38,6 +37,7 @@ function NormalLobby() {
   const [userList, setUserList] = useState(null);
   const [targetUser, setTargetUser] = useState("");
   const myInfo = useRecoilValue(userInfo);
+  console.log(myInfo);
 
   const onChangeNick = useCallback((e) => {
     setSearchInput(e.target.value);
@@ -73,6 +73,15 @@ function NormalLobby() {
     },
   };
 
+  const tier = {
+    1: "bronze",
+    2: "silver",
+    3: "gold",
+    4: "platinum",
+    5: "diamond",
+    6: "master",
+  };
+
   return (
     <div className="NormalLobby">
       <Layout>
@@ -81,14 +90,19 @@ function NormalLobby() {
           <ChampionBox>
             <Champion>
               <ChampionInfo>
-                <Name>{myInfo.userNick}</Name>
-                <ProfileImg></ProfileImg>
-                <Tier></Tier>
+                <Name>
+                  <Icon width={19} height={15} icon="crown" />
+                  <span>{myInfo.userNick}</span>
+                </Name>
+                {myInfo.userProfilePath ? (
+                  <ProfileImg src={myInfo.userProfilePath} alt="" />
+                ) : (
+                  <ProfileImg src="/images/defaultUser.png" alt="" />
+                )}
+                <Tier language={t("language")}>{t(tier[myInfo.userTier])}</Tier>
               </ChampionInfo>
             </Champion>
-            <Champion>
-              {/* <ChampBackground src="/images/badge.png" alt="" /> */}
-            </Champion>
+            <Champion></Champion>
           </ChampionBox>
           <center>
             <InButton>{t("start")}</InButton>
