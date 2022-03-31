@@ -1,13 +1,12 @@
-import { GetUserInfo } from "api";
 import InButton from "components/atoms/Buttons/in-btns";
 import Icon from "components/atoms/Icons/CustomIcon";
 // import Icon from "components/atoms/Icons/Icon";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { userDetailModalState, userInfo } from "recoils";
+import { useRecoilValue } from "recoil";
+import { userInfo } from "recoils";
 import axiosInstance from "utils/API";
-import { colors, icons } from "_foundation";
+import { colors } from "_foundation";
 import {
   BackgroundImg,
   Champion,
@@ -37,11 +36,10 @@ function NormalLobby() {
   const [userList, setUserList] = useState(null);
   const [targetUser, setTargetUser] = useState("");
   const myInfo = useRecoilValue(userInfo);
-  console.log(myInfo);
 
   const onChangeNick = useCallback((e) => {
     setSearchInput(e.target.value);
-  });
+  }, []);
 
   const searchUserInfo = async () => {
     const userInfo = await axiosInstance.get(`/api/que/select/${searchInput}`);
@@ -124,7 +122,7 @@ function NormalLobby() {
                 <UserProfile
                   key={user.userId}
                   onClick={() =>
-                    setTargetUser(user.userId == targetUser ? "" : user.userId)
+                    setTargetUser(user.userId === targetUser ? "" : user.userId)
                   }
                 >
                   <UserDetail userData={user} target={targetUser} />

@@ -12,7 +12,6 @@ export const BackgroundImg = styled.img`
 `;
 
 export const Layout = styled.div`
-  /* padding-top: 92px; */
   height: 100vh;
   width: 100vw;
 
