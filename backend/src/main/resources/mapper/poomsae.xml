@@ -6,7 +6,7 @@
 	<select id="listPoomsae" resultType="PoomsaeDto">
 		select poomsaestage.poomsae_id, poomsae_name, poomsae_name_e, poomsae_explain, poomsae_explain_e,
 	 	poomsae_img_path, poomsae_movie_path, poomsae_clear, poomsae_score,poomsae_locked,
-	 	poomsae_answer, poomsae_answer_index
+	 	poomsae_answer, poomsae_answer_index, poomsae_desc, poomsae_desc_e
 	 	from poomsaeaction, poomsaestage
 	 	where poomsaestage.poomsae_id = poomsaeaction.poomsae_id
   		and user_id = #{user_id};
