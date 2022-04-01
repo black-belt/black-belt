@@ -7,6 +7,7 @@
   "language": "KOR",
 
   "logout": "로그아웃",
+  "select language": "언어 선택",
   "about tkd": "태권도란?",
   "mypage": "마이페이지",
 
@@ -42,6 +43,20 @@
   "rank": "랭크 모드",
 
   "start": "겨루기 시작",
+  "online": "온라인",
+  "offline": "로그아웃",
+  "battle": "심사중",
+  "test": "겨루기 중",
+  "search": "닉네임 검색",
+  "search output": "해당 닉네임이 존재하지 않습니다",
+  "search msg": "겨루고 싶은 상대를 닉네임으로 검색해보세요",
+
+  "bronze": "브론즈",
+  "silver": "실버",
+  "gold": "골드",
+  "platinum": "플래티넘",
+  "diamond": "다이아",
+  "apply": "겨루기 신청",
 
   "basics description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
   "combos description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."

@@ -22,17 +22,13 @@ function PoomsaeTemplate({
           <TextContainer>
             <Title language={t("language")}>
               {t("language") === "KOR"
-                ? selectedPoomsaeInfo.poomsaeName
-                : selectedPoomsaeInfo.poomsaeNameE}
+                ? selectedPoomsaeInfo.poomsae_name
+                : selectedPoomsaeInfo.poomsae_name_e}
             </Title>
             <Stars>
               <Star>
                 <CustomIcon
-                  icon={
-                    selectedPoomsaeInfo.poomsaeScore > 0
-                      ? "goldStar"
-                      : "blackStar"
-                  }
+                  icon={selectedPoomsaeInfo.poomsae_score > 0 ? "goldStar" : "blackStar"}
                   viewBox="0 0 55 55"
                   width="40"
                   height="40"
@@ -40,11 +36,7 @@ function PoomsaeTemplate({
               </Star>
               <Star>
                 <CustomIcon
-                  icon={
-                    selectedPoomsaeInfo.poomsaeScore > 1
-                      ? "goldStar"
-                      : "blackStar"
-                  }
+                  icon={selectedPoomsaeInfo.poomsae_score > 1 ? "goldStar" : "blackStar"}
                   viewBox="0 0 55 55"
                   width="40"
                   height="40"
@@ -52,11 +44,7 @@ function PoomsaeTemplate({
               </Star>
               <Star>
                 <CustomIcon
-                  icon={
-                    selectedPoomsaeInfo.poomsaeScore > 2
-                      ? "goldStar"
-                      : "blackStar"
-                  }
+                  icon={selectedPoomsaeInfo.poomsae_score > 2 ? "goldStar" : "blackStar"}
                   viewBox="0 0 55 55"
                   width="40"
                   height="40"
@@ -67,8 +55,8 @@ function PoomsaeTemplate({
             {selectedPoomsaeInfo && (
               <Description>
                 {t("language") === "KOR"
-                  ? selectedPoomsaeInfo.poomsaeExplain
-                  : selectedPoomsaeInfo.poomsaeExplainE}
+                  ? selectedPoomsaeInfo.poomsae_explain
+                  : selectedPoomsaeInfo.poomsae_explain_e}
               </Description>
             )}
           </TextContainer>
@@ -76,12 +64,12 @@ function PoomsaeTemplate({
             <PoomsaeCard
               title={
                 t("language") === "KOR"
-                  ? selectedPoomsaeInfo.poomsaeName
-                  : selectedPoomsaeInfo.poomsaeNameE
+                  ? selectedPoomsaeInfo.poomsae_name
+                  : selectedPoomsaeInfo.poomsae_name_e
               }
               img={`/images/combo/combo${imageNum}.png`}
-              clear={selectedPoomsaeInfo.poomsaeClear}
-              score={selectedPoomsaeInfo.poomsaeScore}
+              clear={selectedPoomsaeInfo.poomsae_clear}
+              score={selectedPoomsaeInfo.poomsae_score}
               onClick={goToStage}
             />
           </CardContainer>

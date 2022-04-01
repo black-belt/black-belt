@@ -133,6 +133,8 @@ export const ImgBox = styled.div`
   height: 400px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px) saturate(167%);
+  -webkit-backdrop-filter: blur(10px) saturate(167%);
 
   img {
     width: 400px;
