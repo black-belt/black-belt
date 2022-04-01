@@ -1,4 +1,7 @@
+import { useRecoilValue } from "recoil";
+import { userInfo } from "recoils";
 import {
+  BackgroundImg,
   Carousel,
   GyeorugiInfo,
   ImgBox,
@@ -14,17 +17,35 @@ import {
 } from "./Mypage.styled";
 
 function MyPage() {
+  const user = useRecoilValue(userInfo);
+  const tier = {
+    1: "bronze",
+    2: "silver",
+    3: "gold",
+    4: "platinum",
+    5: "diamond",
+    6: "master",
+  };
+  console.log(user);
   return (
     <div className="MyPage">
+      <BackgroundImg src="/images/practiceBackground.jpg" alt="" />
       <Layout>
         <ProfileBox>
           <ImgBox>
-            <ImgWrapper>{/* <ProfileImg /> */}</ImgWrapper>
+            <ImgWrapper>
+              {user.userProfilePath ? (
+                <ProfileImg src={user.userProfilePath} alt="" />
+              ) : (
+                // <ProfileImg src="/images/IMG_4070.JPG" alt="" />
+                <ProfileImg src="images/defaultUser.png" alt="" />
+              )}
+            </ImgWrapper>
           </ImgBox>
           <UserCountry></UserCountry>
-          <Username></Username>
-          <UserEmail></UserEmail>
-          {/* <TierImg/> */}
+          <Username>{user.userNick}</Username>
+          <UserEmail>{user.userEmail}</UserEmail>
+          <TierImg src={`/images/tier/${tier[user.userTier]}.png`} />
         </ProfileBox>
         <MyInfo>
           <Carousel></Carousel>
