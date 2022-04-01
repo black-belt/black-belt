@@ -46,8 +46,11 @@ public class FileStorageService {
             //저장 경로에 파일을 복사한다. 이미 있는 경우 덮어쓴다.
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-            return new String[] {fileName, targetLocation.toString()};
+            
+            //http://j6a506.p.ssafy.io/uploads/
+            String dbSavePath = "http://j6a506.p.ssafy.io/uploads/" + fileName;
+            return new String[] {fileName, dbSavePath};
+            
         } catch (IOException ex) {
             throw new FileStorageException("파일 생성 불가 " + fileName + ". Please try again!", ex);
         }
