@@ -9,3 +9,5 @@ export const ProfileImg = styled.img``;
 export const Username = styled.div``;
 
 export const UserEmail = styled.div``;
+
+export const Test = styled.div``;
