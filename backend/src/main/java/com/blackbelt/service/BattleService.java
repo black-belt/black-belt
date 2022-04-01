@@ -2,6 +2,7 @@ package com.blackbelt.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -141,88 +142,91 @@ public class BattleService {
 		userRepo.save(user2);
 	}
     
-    public void manageBattleHistory(BattleHistoryDto bhd, char winOrLose) {
+    public Map<String, Object> manageBattleHistory(BattleHistoryDto bhd, char winOrLose, boolean isRed) {
+    	Map<String, Object> resultMap = new HashMap<>();
     	// 1-1. 회원 겨루기 가능 상태로 돌리기
-    	String redId = bhd.getMyId();
-    	String blueId = bhd.getEnemyId();
-    	Optional<UserDto> redUser = userRepo.findById(redId);
-    	Optional<UserDto> blueUser = userRepo.findById(blueId);
-    	redUser.get().setUserState('Y');
-    	blueUser.get().setUserState('Y');
+    	String id = (isRed) ? bhd.getMyId() : bhd.getEnemyId();
+    	Optional<UserDto> user = userRepo.findById(id);
+    	user.get().setUserState('Y');
     	// 2. 방에 종료날짜, 승패여부 업뎃
-    	Date date = new Date();
-    	Calendar cal = Calendar.getInstance();
-    	cal.setTime(date);
-    	cal.add(Calendar.HOUR, +9);
-    	Date koreaDate = cal.getTime();
-
-    	bhd.setEndTime(koreaDate);
-    	bhd.setRedWinLoseDraw(winOrLose);
-    	battleRepo.save(bhd);
+    	if(isRed) {
+    		Date date = new Date();
+    		Calendar cal = Calendar.getInstance();
+    		cal.setTime(date);
+    		cal.add(Calendar.HOUR, +9);
+    		Date koreaDate = cal.getTime();
+    		
+    		bhd.setEndTime(koreaDate);
+    		bhd.setRedWinLoseDraw(winOrLose);
+    		battleRepo.save(bhd);
+    	}
     	// 3. 유저 별 승패 업뎃
-    	int redScore = Integer.parseInt(redUser.get().getUserScore());
-    	int blueScore = Integer.parseInt(blueUser.get().getUserScore());
-    	int[] beforeScore = new int[] {redScore, blueScore};
-    	int[] afterScore = new int[] {redScore, blueScore};
-    	if(winOrLose == 'D') return;
+    	int score = Integer.parseInt(user.get().getUserScore());
+    	int afterScore = score;
+    	if(winOrLose == 'D') {
+    		resultMap.put("tierId", user.get().getTierId());
+        	resultMap.put("userScore", score);
+    		return resultMap;
+    	}
     	else if(winOrLose == 'W') {
-    		afterScore[0] += 50;
-    		afterScore[1] -= 50;
-    		afterScore[1] = afterScore[1] < 500 ? 500 : afterScore[1];
+    		if(isRed)
+    			afterScore += 50;
+    		else {
+    			afterScore -= 50;
+    			afterScore = afterScore < 500 ? 500 : afterScore;
+    		}
     	}
     	else if(winOrLose == 'L') {
-    		afterScore[0] -= 50;
-    		afterScore[1] += 50;
-    		afterScore[0] = afterScore[0] < 500 ? 500 : afterScore[0];
-    	}
-    	char[] tierUp = new char[2];
-    	for(int i = 0 ; i < 2; i++ ) {
-    		int before = 0;
-    		int after = 0;
-    		if(beforeScore[i] < SILVER) {
-    			before = BLONZE;
-    		}else if(beforeScore[i] >= SILVER && beforeScore[i] < GOLD) {
-    			before = SILVER;
-    		}else if(beforeScore[i] >= GOLD && beforeScore[i] < PLATINUM) {
-    			before = GOLD;
-    		}else if(beforeScore[i] >= PLATINUM && beforeScore[i] < DIAMOND) {
-    			before = PLATINUM;
-    		}else if(beforeScore[i] >= DIAMOND) {
-    			before = DIAMOND;
+    		if(isRed) {
+    			afterScore -= 50;
+    			afterScore = afterScore < 500 ? 500 : afterScore;
     		}
-    		if(afterScore[i] < SILVER) {
-    			after = BLONZE;
-    		}else if(afterScore[i] >= SILVER && afterScore[i] < GOLD) {
-    			after = SILVER;
-    		}else if(afterScore[i] >= GOLD && afterScore[i] < PLATINUM) {
-    			after = GOLD;
-    		}else if(afterScore[i] >= PLATINUM && afterScore[i] < DIAMOND) {
-    			after = PLATINUM;
-    		}else if(afterScore[i] >= DIAMOND) {
-    			after = DIAMOND;
-    		}
-    		if(before != after) {
-    			if(before > after) tierUp[i] = 'D';
-    			else tierUp[i] = 'U';
-    		}else tierUp[i] = 'N';
+    		else
+    			afterScore += 50;
     	}
-    	redUser.get().setUserScore(afterScore[0]+"");
-    	blueUser.get().setUserScore(afterScore[1]+"");
-    	for(int i = 0 ; i < 2 ; i++) {
-    		if(tierUp[i] != 'N') {
-    			if(i == 0) { // 레드
-    				int tier = Integer.parseInt(redUser.get().getTierId());
-    				if(tierUp[i] == 'U') redUser.get().setTierId(String.valueOf(tier+1)); 
-    				if(tierUp[i] == 'D') redUser.get().setTierId(String.valueOf(tier-1)); 
-    			}else {//불루
-    				int tier = Integer.parseInt(blueUser.get().getTierId());
-    				if(tierUp[i] == 'U') blueUser.get().setTierId(String.valueOf(tier+1)); 
-    				if(tierUp[i] == 'D') blueUser.get().setTierId(String.valueOf(tier-1)); 
-    			}
-    		}
+    	char tierUp = 'N';
+    	
+    	int before = 0;
+    	int after = 0;
+    	if(score < SILVER) {
+    		before = BLONZE;
+    	}else if(score >= SILVER && score < GOLD) {
+    		before = SILVER;
+    	}else if(score >= GOLD && score < PLATINUM) {
+    		before = GOLD;
+    	}else if(score >= PLATINUM && score < DIAMOND) {
+    		before = PLATINUM;
+    	}else if(score >= DIAMOND) {
+    		before = DIAMOND;
     	}
-    	userRepo.save(redUser.get());
-    	userRepo.save(blueUser.get());
+    	if(afterScore < SILVER) {
+    		after = BLONZE;
+    	}else if(afterScore >= SILVER && afterScore < GOLD) {
+    		after = SILVER;
+    	}else if(afterScore >= GOLD && afterScore < PLATINUM) {
+    		after = GOLD;
+    	}else if(afterScore >= PLATINUM && afterScore < DIAMOND) {
+    		after = PLATINUM;
+   		}else if(afterScore >= DIAMOND) {
+   			after = DIAMOND;
+   		}
+    	if(before != after) {
+    		if(before > after) tierUp = 'D';
+    		else tierUp = 'U';
+    	}
+    	
+    	user.get().setUserScore(afterScore+"");
+    	
+    	if(tierUp != 'N') {
+    		int tier = Integer.parseInt(user.get().getTierId());
+    		if(tierUp == 'U') user.get().setTierId(String.valueOf(tier+1)); 
+    		if(tierUp == 'D') user.get().setTierId(String.valueOf(tier-1)); 	
+    	}
+    	
+    	userRepo.save(user.get());
+    	resultMap.put("tierId", user.get().getTierId());
+    	resultMap.put("userScore", afterScore);
+    	return resultMap;
     }
 }
 
