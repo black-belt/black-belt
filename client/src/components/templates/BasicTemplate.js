@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
-import { colors, fontSize, fontWeight, fontFamily } from "../../_foundation";
+import { colors, fontSize } from "_foundation";
 import { useTranslation } from "react-i18next";
 
 function BasicTemplate({ cards }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const title = "basics";
   const explanations = "basics description";
   return (

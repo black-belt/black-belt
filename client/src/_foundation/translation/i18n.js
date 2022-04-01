@@ -15,7 +15,7 @@ i18n.use(initReactI18next).init({
   resources: resource,
   lng: "ko",
   fallbackLng: "ko",
-  debug: true,
+  debug: false,
   keySeparator: false,
   interpolation: { escapeValue: false },
 });

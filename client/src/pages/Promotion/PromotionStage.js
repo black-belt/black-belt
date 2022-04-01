@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import StageBtn from "components/atoms/Buttons/stage-btn";
 import PromotionStageTemplate from "components/templates/PromotionStageTemplate";
 import UserVideoPromotion from "components/atoms/Videos/UserVideoPromotion";
 import EvaluationTemplate from "components/templates/EvaluationTemplate";
 import DanUpTemplate from "components/templates/DanUpTemplate";
+import axiosInstance from "utils/API";
 
 function PromotionStage() {
+  const [judge, setJudge] = useState();
   const [title, setTitle] = useState("");
   const [dan, setDan] = useState(0);
   const [answerRandom, setAnswerRandom] = useState([]);
@@ -26,47 +28,70 @@ function PromotionStage() {
   const [isDanUp, setIsDanUp] = useState(false);
   const [readyAction, setReadyAction] = useState();
   const [isStar, setIsStar] = useState(false);
-  const videoText = "시작하려면 ‘기본준비자세’를 취해주세요.";
+  const [videoText, setVideoText] = useState("시작하려면 ‘기본준비자세’를 취해주세요."); //영어버전
   const navigate = useNavigate();
+  const state = useLocation().state;
   let tempGrade = 0;
+
+  const getAnswerData = async () => {
+    const data = await axiosInstance.get(`/api/judge`, {});
+    console.log(data);
+    // data.poomsae_answer = [
+    //   ["abaya", "coffee mug", "abaya"],
+    //   ["abaya", "coffee mug", "abaya"],
+    //   ["abaya", "coffee mug", "abaya"],
+    //   ["abaya", "coffee mug", "abaya"],
+    // ];
+    // data.poomsae_movie_path = "https://youtu.be/o9JvP-A4TvY";
+    // data.poomsae_answer_index = [
+    //   [0, 2, 4],
+    //   [1, 3, 5],
+    //   [0, 2, 4],
+    //   [1, 3, 5],
+    // ];
+    // data.poomsae_part = ["1단락", "2단락", "3단락", "4단락"];
+    // data.poomsae_part_e = ["Part1", "Part2", "Part3", "Part4"];
+    setJudge(data);
+  };
 
   useEffect(() => {
     //받기: api 통신해서 title, 답안[] 받음
     //보내기: 서버로 통과 단계를 보냄
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => res.json())
-      .then((json) => {
-        setTitle("1단");
-        setDan(1);
-        setAnswerRandom(["abaya"]); //, "coffee mug", "abaya", "coffee mug"
-        ["abaya", "coffee mug", "abaya", "coffee mug"].forEach((key, index) => {
-          if (answerMapRandom.has(key)) {
-            setAnswerMapRandom((current) =>
-              new Map(current).set(key, [...current.get[key], index])
-            );
-          } else {
-            setAnswerMapRandom((current) => new Map([...current, [key, index]]));
-          }
-        });
+    getAnswerData();
+    // fetch("https://jsonplaceholder.typicode.com/posts")
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     setTitle("1단");
+    //     setDan(1);
+    //     setAnswerRandom(["abaya"]); //, "coffee mug", "abaya", "coffee mug"
+    //     ["abaya", "coffee mug", "abaya", "coffee mug"].forEach((key, index) => {
+    //       if (answerMapRandom.has(key)) {
+    //         setAnswerMapRandom((current) =>
+    //           new Map(current).set(key, [...current.get[key], index])
+    //         );
+    //       } else {
+    //         setAnswerMapRandom((current) => new Map([...current, [key, index]]));
+    //       }
+    //     });
 
-        setAnswerEssential(["abaya"]);
-        ["abaya"].forEach((key, index) => {
-          if (answerMapEssential.has(key)) {
-            setAnswerMapEssential((current) =>
-              new Map(current).set(key, [...current.get[key], index])
-            );
-          } else {
-            setAnswerMapEssential((current) => new Map([...current, [key, index]]));
-          }
-        });
-        setInfo([
-          ["지정품새", "3장"],
-          ["필수품새", "8장"],
-        ]);
-        setReadyAction("abaya");
-        setCurNum(0);
-        setTotalSeconds(10);
-      });
+    //     setAnswerEssential(["abaya"]);
+    //     ["abaya"].forEach((key, index) => {
+    //       if (answerMapEssential.has(key)) {
+    //         setAnswerMapEssential((current) =>
+    //           new Map(current).set(key, [...current.get[key], index])
+    //         );
+    //       } else {
+    //         setAnswerMapEssential((current) => new Map([...current, [key, index]]));
+    //       }
+    //     });
+    //     setInfo([
+    //       ["지정품새", "3장"],
+    //       ["필수품새", "8장"],
+    //     ]);
+    //     setReadyAction("abaya");
+    //     setCurNum(0);
+    //     setTotalSeconds(10);
+    //   });
   }, []);
 
   const updateIsPass = () => {

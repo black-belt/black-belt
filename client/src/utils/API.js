@@ -9,9 +9,9 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("blackbelt_token");
+  const token = JSON.parse(localStorage.getItem("blackbelt_token"));
   if (token) {
-    config.headers.Authorization = `${token}`;
+    config.headers.Authorization = `${token.accessToken}`;
   }
   return config;
 });
