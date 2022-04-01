@@ -47,8 +47,8 @@ public class FileStorageService {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             
-            //http://j6a506.p.ssafy.io/uploads/
-            String dbSavePath = "http://j6a506.p.ssafy.io/uploads/" + fileName;
+            //https://j6a506.p.ssafy.io/uploads/
+            String dbSavePath = "https://j6a506.p.ssafy.io/uploads/" + fileName;
             return new String[] {fileName, dbSavePath};
             
         } catch (IOException ex) {
