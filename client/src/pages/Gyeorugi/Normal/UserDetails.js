@@ -1,6 +1,7 @@
 // import Icon from "components/atoms/Icons/CustomIcon";
 import BasicButton from "components/atoms/Buttons/button";
 import { useTranslation } from "react-i18next";
+import axiosInstance from "utils/API";
 import {
   Contents,
   Gradient,
@@ -28,6 +29,11 @@ const UserDetail = (props) => {
     6: "master",
   };
 
+  const SendInvite = async () => {
+    const answer = await axiosInstance.get(`/api/que/select/apply/${target}`);
+    console.log(answer);
+  };
+
   return (
     <Layout targetUser={target} user={user.userId}>
       <Img>
@@ -47,7 +53,12 @@ const UserDetail = (props) => {
             <Username>{user.userNick}</Username>
             <UserTier>{t(tier[user.tierId])}</UserTier>
           </TextBox>
-          <BasicButton width="115px" height="36px" able={user.userState}>
+          <BasicButton
+            width="115px"
+            height="36px"
+            able={user.userState}
+            onClick={SendInvite}
+          >
             {t("apply")}
           </BasicButton>
         </Contents>

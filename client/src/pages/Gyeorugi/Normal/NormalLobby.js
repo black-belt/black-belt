@@ -1,6 +1,5 @@
 import InButton from "components/atoms/Buttons/in-btns";
 import Icon from "components/atoms/Icons/CustomIcon";
-// import Icon from "components/atoms/Icons/Icon";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
@@ -12,13 +11,17 @@ import {
   Champion,
   ChampionBox,
   ChampionInfo,
+  ImgSize,
+  ImgWrapper,
   Layout,
   Name,
   ProfileImg,
+  ProfileImgBox,
   SearchBox,
   SearchInput,
   SearchLayout,
   SearchList,
+  SearchMsg,
   Standby,
   Status,
   Tier,
@@ -33,6 +36,7 @@ import UserDetail from "./UserDetails";
 function NormalLobby() {
   const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState("");
+  const [finishSearch, setFinishSearch] = useState(false);
   const [userList, setUserList] = useState(null);
   const [targetUser, setTargetUser] = useState("");
   const myInfo = useRecoilValue(userInfo);
@@ -44,6 +48,7 @@ function NormalLobby() {
   const searchUserInfo = async () => {
     const userInfo = await axiosInstance.get(`/api/que/select/${searchInput}`);
     setUserList(userInfo);
+    setFinishSearch(true);
   };
 
   const onKeyEnter = (e) => {
@@ -92,11 +97,15 @@ function NormalLobby() {
                   <Icon width={19} height={15} icon="crown" />
                   <span>{myInfo.userNick}</span>
                 </Name>
-                {myInfo.userProfilePath ? (
-                  <ProfileImg src={myInfo.userProfilePath} alt="" />
-                ) : (
-                  <ProfileImg src="/images/defaultUser.png" alt="" />
-                )}
+                <ProfileImgBox>
+                  <ImgWrapper>
+                    {myInfo.userProfilePath ? (
+                      <ProfileImg src={myInfo.userProfilePath} alt="" />
+                    ) : (
+                      <ProfileImg src="/images/defaultUser.png" alt="" />
+                    )}
+                  </ImgWrapper>
+                </ProfileImgBox>
                 <Tier language={t("language")}>{t(tier[myInfo.userTier])}</Tier>
               </ChampionInfo>
             </Champion>
@@ -108,7 +117,11 @@ function NormalLobby() {
         </Standby>
         <SearchLayout>
           <SearchBox>
-            <SearchInput onKeyPress={onKeyEnter} onChange={onChangeNick} />
+            <SearchInput
+              onKeyPress={onKeyEnter}
+              onChange={onChangeNick}
+              placeholder={t("search")}
+            />
             <Icon
               icon="search"
               onClick={searchUserInfo}
@@ -116,7 +129,7 @@ function NormalLobby() {
               height={27}
             />
           </SearchBox>
-          {userList ? (
+          {userList && userList.length ? (
             <SearchList>
               {userList.map((user) => (
                 <UserProfile
@@ -127,11 +140,15 @@ function NormalLobby() {
                 >
                   <UserDetail userData={user} target={targetUser} />
                   {user.userProfilePath ? (
-                    <UserImg
-                      state={user.userState}
-                      src={user.userProfilePath}
-                      alt=""
-                    />
+                    <ImgSize>
+                      <ImgWrapper>
+                        <UserImg
+                          state={user.userState}
+                          src={user.userProfilePath}
+                          alt=""
+                        />
+                      </ImgWrapper>
+                    </ImgSize>
                   ) : (
                     <Icon
                       state={user.userState}
@@ -142,12 +159,7 @@ function NormalLobby() {
                     />
                   )}
                   <UserTextBox>
-                    <UserName
-                      state={user.userState}
-                      // onClick={() => setOpenDetails(!openDetails)}
-                    >
-                      {user.userNick}
-                    </UserName>
+                    <UserName state={user.userState}>{user.userNick}</UserName>
                     <Status>
                       <svg
                         width="7"
@@ -172,7 +184,13 @@ function NormalLobby() {
               ))}
             </SearchList>
           ) : (
-            <></>
+            <>
+              {finishSearch ? (
+                <SearchMsg>{t("search output")}</SearchMsg>
+              ) : (
+                <SearchMsg>{t("search msg")}</SearchMsg>
+              )}
+            </>
           )}
         </SearchLayout>
       </Layout>

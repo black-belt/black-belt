@@ -7,6 +7,7 @@
   "language": "ENG",
 
   "logout": "Logout",
+  "select language": "Language",
   "about tkd": "About TaeKwonDo",
   "mypage": "My Page",
 
@@ -46,6 +47,9 @@
   "offline": "Offline",
   "battle": "In Gyeorugi",
   "test": "In Promotion Test",
+  "search": "Search Nickname",
+  "search output": "This nickname doesn't exist.",
+  "search msg": "",
 
   "bronze": "Bronze",
   "silver": "Silver",
