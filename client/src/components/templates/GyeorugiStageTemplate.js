@@ -12,7 +12,8 @@ function GyeorugiStageTempalte({
   setIsTimer,
   leftPercent,
   rightPercent,
-  answer,
+  answerAttack,
+  answerDefence,
   isEnd,
   isStart,
   start,
@@ -34,8 +35,8 @@ function GyeorugiStageTempalte({
                 right={subscribers}
                 isTimer={isTimer}
                 setIsTimer={setIsTimer}
-                leftPercent={leftPercent}
-                rightPercent={rightPercent}
+                leftPercent={leftPercent / 10}
+                rightPercent={rightPercent / 10}
               />
             )}
         </ScoreContainer>
@@ -44,7 +45,8 @@ function GyeorugiStageTempalte({
             <LocalUser>
               <StreamComponent
                 user={localUser}
-                answer={answer}
+                answerAttack={answerAttack}
+                answerDefence={answerDefence}
                 isEnd={isEnd}
                 isStart={isStart}
                 start={start}
@@ -54,8 +56,12 @@ function GyeorugiStageTempalte({
             </LocalUser>
           )}
           {subscribers.map((sub, i) => (
-            <RemoteUser>
-              <StreamComponent key={i} user={sub} streamId={sub.streamManager.stream.streamId} />
+            <RemoteUser key={i}>
+              <StreamComponent
+                user={sub}
+                streamId={sub.streamManager.stream.streamId}
+                start={start}
+              />
             </RemoteUser>
           ))}
         </VideoLayout>

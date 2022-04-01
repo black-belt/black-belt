@@ -48,12 +48,15 @@ export default class StreamComponent extends Component {
   render() {
     return (
       <div className="OT_widget-container">
-        {this.props.user !== undefined && this.props.user.getStreamManager() !== undefined ? (
+        {this.props.user !== undefined &&
+        this.props.user.getStreamManager() !== undefined &&
+        this.props.start ? (
           <div className="streamComponent">
             <OvVideoComponent
               user={this.props.user}
               mutedSound={this.state.mutedSound}
-              answer={this.props.answer}
+              answerAttack={this.props.answerAttack}
+              answerDefence={this.props.answerDefence}
               isEnd={this.props.isEnd}
               isStart={this.props.isStart}
               start={this.props.start}

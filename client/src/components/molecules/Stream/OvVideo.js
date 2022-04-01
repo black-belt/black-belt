@@ -2,7 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import "./StreamComponent.css";
 import * as tmPose from "@teachablemachine/pose";
 
-function OvVideoComponent({ user, mutedSound, answer, isEnd, isStart, start, attack, defence }) {
+function OvVideoComponent({
+  user,
+  mutedSound,
+  answerAttack,
+  answerDefence,
+  isEnd,
+  isStart,
+  start,
+  attack,
+  defence,
+}) {
   const videoRef = useRef(null);
   const modelURL = `/models/gyeorugi/model.json`;
   const metadataURL = `/models/gyeorugi/metadata.json`;
@@ -11,6 +21,7 @@ function OvVideoComponent({ user, mutedSound, answer, isEnd, isStart, start, att
   const [webCamElement, setWebCamElement] = useState(undefined);
 
   useEffect(() => {
+    console.log("!!useEffect");
     if (user && user.streamManager && !!videoRef) {
       user.getStreamManager().addVideoElement(videoRef.current);
     }
@@ -26,15 +37,16 @@ function OvVideoComponent({ user, mutedSound, answer, isEnd, isStart, start, att
 
     getWebcam((stream) => {
       videoRef.current.srcObject = stream;
-      setWebCamElement(videoRef.current);
+      // setWebCamElement(videoRef.current);
     });
   }, []);
 
   useEffect(() => {
+    console.log("!!user", user);
     if (user && !!videoRef) {
       user.getStreamManager().addVideoElement(videoRef.current);
     }
-  }, [user, mutedSound]);
+  }, [user]);
 
   const getWebcam = (callback) => {
     try {
@@ -62,8 +74,12 @@ function OvVideoComponent({ user, mutedSound, answer, isEnd, isStart, start, att
     await webCamElement.setup();
     await webCamElement.play();
 
-    while (!isStart) {
-      await isReady();
+    let cnt = 0;
+    if (!isStart) {
+      while (cnt < 5) {
+        cnt += await isReady();
+      }
+      start();
     }
   };
 
@@ -73,10 +89,11 @@ function OvVideoComponent({ user, mutedSound, answer, isEnd, isStart, start, att
     const prediction = await model.predictTopK(posenetOutput, 1);
     const className = prediction[0].className;
     const probability = prediction[0].probability;
-    console.log(className, probability);
-    if (className === "Basic Ready Stance" && probability >= 0.6) {
-      start();
+    if (className === "Basic Ready Stance" && probability >= 0.8) {
+      console.log(className, probability);
+      return 1;
     }
+    return 0;
   };
 
   const analyzeImage = async () => {
@@ -86,41 +103,62 @@ function OvVideoComponent({ user, mutedSound, answer, isEnd, isStart, start, att
     const className = prediction[0].className;
     const probability = prediction[0].probability;
     console.log(className, probability);
-    //내가 공격인지 판단하고 공격이면 신호보냄
+    if (probability >= 0.8) return className;
+    return "";
   };
 
-  const run = async () => {
-    let cnt = 0;
-    let maxProbability = 0.0;
-    let testSum = 0.0;
-    const loop = setInterval(() => {
-      console.log(cnt++);
-      analyzeImage();
-      if (cnt === 80 * 20) {
-        testSum += maxProbability;
-        maxProbability = 0;
-        // motionResult(testSum);
-        testSum = 0;
+  const run = () => {
+    let totalCnt = 0;
+    // let maxProbability = 0.0;
+    // let testSum = 0.0;
+    let prevMotion = "";
+    let difCnt = 0;
+    let prevCnt = 0;
+    const loop = setInterval(async () => {
+      if (++totalCnt === 11 * 20) {
         clearInterval(loop);
+      }
+      let curMotion = await analyzeImage();
+      if (curMotion !== "" && curMotion === prevMotion) {
+        prevCnt++;
+        difCnt = 0;
+        if (prevCnt === 3) {
+          if (answerAttack.includes(curMotion)) {
+            attack(curMotion);
+          } else if (answerDefence.includes(curMotion)) {
+            defence(curMotion);
+          }
+        }
+      } else {
+        difCnt++;
+        if (difCnt === 3) {
+          prevCnt = 1;
+          prevMotion = curMotion;
+          difCnt = 0;
+        }
       }
     }, 50);
   };
 
   useEffect(() => {
-    if (isStart) {
+    console.log("!!isStart", isStart);
+    if (isStart && !isEnd) {
+      console.log("겨루기 시작!");
       run();
     }
   }, [isStart]);
 
   useEffect(() => {
+    console.log("!!WebCamElement, model", webCamElement, model);
     if (webCamElement !== undefined && model !== undefined) {
       setReady();
     }
   }, [webCamElement, model]);
 
   useEffect(() => {
+    console.log("!!isEnd", isEnd);
     if (!isEnd) setWebcam();
-  }, [isEnd, answer]);
+  }, [isEnd]);
 
   return (
     <video

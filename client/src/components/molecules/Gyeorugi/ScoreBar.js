@@ -6,6 +6,7 @@ import InfoBar from "./InfoBar";
 
 function ScoreBar({ left, right, isTimer, setIsTimer, leftPercent, rightPercent }) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const totalSecnds = 10;
 
   const handleTimer = (elapsedSeconds) => {
     setElapsedSeconds(elapsedSeconds);
@@ -18,10 +19,10 @@ function ScoreBar({ left, right, isTimer, setIsTimer, leftPercent, rightPercent 
         {left && <InfoBar left country={left.country} nickname={left.nickname} />}
       </LeftBarContainer>
       <Time>
-        {80 - elapsedSeconds}
+        {totalSecnds - elapsedSeconds}
         <Timer
           initialSeconds={0}
-          totalSeconds={80}
+          totalSeconds={totalSecnds}
           onChange={handleTimer}
           interval={1000}
           isTimer={isTimer}
