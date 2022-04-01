@@ -60,78 +60,94 @@ public class BattleController {
     }
 	
 	@PostMapping
-    public ResponseEntity<Map<String, Object>> createBattle(@RequestBody Map<String,String> map
-    													, HttpServletRequest request) {
+	public ResponseEntity<Map<String, Object>> createBattleToken(@RequestBody Map<String,String> map
+			, HttpServletRequest request) {
 		Map<String, Object> resultMap = new HashMap<>();	
 		HttpStatus status = HttpStatus.OK;
-		String hostToken = null;
-		String guestToken = null;
+		String token = null;
 		BattleHistoryDto battleHistoryDto = null;
 		try {
 			String hostId = map.get("hostId");
 			String guestId = map.get("guestId");
+			boolean isHost = map.get("isHost").equals("1") ? true : false;
+			String roomSeq = map.get("roomSeq");
 			String authorization = request.getHeader("Authorization");
 			if(authorization.indexOf("Bearer") != -1) {
 				authorization = authorization.replaceAll("^Bearer\\s", "");
 			}
-			if (!tokenProvider.validateToken(authorization) || hostId == null || guestId == null || !(String.valueOf(tokenProvider.getSubject(authorization))).equals(hostId)) {
+			if (!tokenProvider.validateToken(authorization) || hostId == null || guestId == null) {
 				status = HttpStatus.FAILED_DEPENDENCY;
 				resultMap.put("statusCode", 424);
 				new ResponseEntity<Map<String, Object>>(resultMap, status);
 			}
 			// 겨루기 입장으로 상태 처리
 			Optional<UserDto> hostUser = userRepo.findById(hostId);
-			if(!hostUser.isEmpty()) { 
-				hostUser.get().setUserState('B');
-			}else {
-				resultMap.put("statusCode",424);
-				resultMap.put("message","can't find user");
-				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
-			}
 			Optional<UserDto> guestUser = userRepo.findById(guestId);
-			if(!guestUser.isEmpty()) { 
-				guestUser.get().setUserState('B');
+			if(isHost) {
+				if(!hostUser.isEmpty()) { 
+					hostUser.get().setUserState('B');
+					userRepo.save(hostUser.get());
+				}else {
+					resultMap.put("statusCode",424);
+					resultMap.put("message","can't find user");
+					return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
+				}
 			}else {
-				resultMap.put("statusCode",424);
-				resultMap.put("message","can't find user");
-				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
+				if(!guestUser.isEmpty()) { 
+					guestUser.get().setUserState('B');
+					userRepo.save(guestUser.get());
+				}else {
+					resultMap.put("statusCode",424);
+					resultMap.put("message","can't find user");
+					return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
+				}
 			}
-			UserDto hostUserInfo = userRepo.save(hostUser.get());   //호스트
-			UserDto guestUserInfo = userRepo.save(guestUser.get()); //게스트
-			String battleUrl = "battle" + hostId +"vs" + guestId;
-			battleHistoryDto = new BattleHistoryDto();
-			battleHistoryDto.setEnemyId(guestUserInfo.getUserId());
-			battleHistoryDto.setEnemyTierId(guestUserInfo.getTierId());
-			battleHistoryDto.setEnemyCountryId(guestUserInfo.getCountryId());
-			battleHistoryDto.setMyId(hostUserInfo.getUserId());
-			battleHistoryDto.setMyTierId(hostUserInfo.getTierId());
-			battleHistoryDto.setMyCountryId(hostUserInfo.getCountryId());
-			battleHistoryDto.setSessionName(battleUrl);
-			battleHistoryDto.setRedWinLoseDraw('D');
-			BattleHistoryDto bhd = battleRepo.save(battleHistoryDto);
-			hostToken = battleService.getToken(openVidu, hostId, battleUrl);
-			guestToken = battleService.getToken(openVidu, guestId, battleUrl);
-			if (hostToken.equals("InternalError") || guestToken.equals("InternalError")) {
+			UserDto hostUserInfo = hostUser.get();   //호스트
+			UserDto guestUserInfo = guestUser.get(); //게스트
+			String battleUrl = "battle" + hostId +"vs" + guestId + roomSeq;
+			Optional<BattleHistoryDto> battlehis = battleRepo.findBysessionName(battleUrl);
+			BattleHistoryDto bhd = null;
+			if(!battlehis.isPresent()) { //먼저 호출한 쪽이면
+				battleHistoryDto = new BattleHistoryDto();
+				battleHistoryDto.setEnemyId(guestUserInfo.getUserId());
+				battleHistoryDto.setEnemyTierId(guestUserInfo.getTierId());
+				battleHistoryDto.setEnemyCountryId(guestUserInfo.getCountryId());
+				battleHistoryDto.setMyId(hostUserInfo.getUserId());
+				battleHistoryDto.setMyTierId(hostUserInfo.getTierId());
+				battleHistoryDto.setMyCountryId(hostUserInfo.getCountryId());
+				battleHistoryDto.setSessionName(battleUrl);
+				battleHistoryDto.setRedWinLoseDraw('D');
+				bhd = battleRepo.save(battleHistoryDto);
+			}else battleHistoryDto = battlehis.get();
+			if(isHost)
+				token = battleService.getToken(openVidu, hostId, battleUrl);
+			else
+				token = battleService.getToken(openVidu, guestId, battleUrl);
+			
+			if (token.equals("InternalError")) {
 				status = HttpStatus.CONFLICT;
 				resultMap.put("statusCode", 409);
 				resultMap.put("message", "Fail : OpenViduJavaClientException");
 				battleService.getAvailUpdateUser(hostUserInfo, guestUserInfo);
 				return new ResponseEntity<Map<String, Object>>(resultMap, status);
 			}
-	        if (hostToken.equals("GenError") || guestToken.equals("GenError")) {
-	        	status = HttpStatus.CONFLICT;
-	        	resultMap.put("statusCode", 409);
-	        	resultMap.put("message", "Fail : Generate meeting room");
-	        	battleService.getAvailUpdateUser(hostUserInfo, guestUserInfo);
-	        	return new ResponseEntity<Map<String, Object>>(resultMap, status);
-	        }
-	        status = HttpStatus.ACCEPTED;
+			if (token.equals("GenError")) {
+				status = HttpStatus.CONFLICT;
+				resultMap.put("statusCode", 409);
+				resultMap.put("message", "Fail : Generate meeting room");
+				battleService.getAvailUpdateUser(hostUserInfo, guestUserInfo);
+				return new ResponseEntity<Map<String, Object>>(resultMap, status);
+			}
+			String battleSeq = battleHistoryDto.getBattleHistoryId();
+			if(bhd != null) {
+				battleSeq = bhd.getBattleHistoryId();
+			}
+			status = HttpStatus.ACCEPTED;
 			resultMap.put("statusCode", 200);
 			resultMap.put("message",  "Success : Enter study room");
-			resultMap.put("hostToken",  hostToken);
-			resultMap.put("guestToken",  guestToken);
+			resultMap.put("token",  token);
 			resultMap.put("BattleInfo", battleRoomService.getBattleRoomInfo(battleHistoryDto));
-			resultMap.put("BattleSeq", bhd.getBattleHistoryId());
+			resultMap.put("BattleSeq", battleSeq);
 		}catch(Exception e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -141,32 +157,43 @@ public class BattleController {
 		
 		// 화면에 출력될 겨루기 정보
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
-    }
+	}
+	
 	@PostMapping("/end")
-    public ResponseEntity<String> endBattle(@RequestBody Map<String,String> map) {
-		
+    public ResponseEntity<Map<String, Object>> endBattle(@RequestBody Map<String,String> map) {
+		Map<String, Object> resultMap = new HashMap<>();
 		char winOrLose  = map.get("redWinLoseDraw").charAt(0);
-		String battleSeq  = map.get("BattleSeq");
-		String hostToken  = map.get("hostToken");
-		String guestToken  = map.get("guestToken");
+		String battleSeq  = map.get("battleSeq");
+		String token  = map.get("token");
+		String team = map.get("team");
 		
 		// 1. 세션정보가져와서제거
 		Optional<BattleHistoryDto> bhd = battleRepo.findById(battleSeq);
 		String sessionName = bhd.get().getSessionName(); 
-		if(sessionName == null) 
-			return new ResponseEntity<String>("can't find session", HttpStatus.FAILED_DEPENDENCY);
-		String result = battleService.removeSession(openVidu);
-		if(!result.equals("OK")) 
-			return new ResponseEntity<String>("FAIL REMOVE SESSION", HttpStatus.CONFLICT);
-		String resultHost = battleService.removeUser(sessionName, hostToken);
-		String resultGuest = battleService.removeUser(sessionName, guestToken);
-		if ("Error".equals(resultHost) || "Error".equals(resultGuest))
-			return new ResponseEntity<String>("FAIL REMOVE USER", HttpStatus.CONFLICT);
+		if(team.equals("red")) {
+			String result = null;
+			if(sessionName == null) {
+				resultMap.put("msg", "can't find session");
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
+			}
+			
+			result = battleService.removeSession(openVidu);
+			
+			if(!result.equals("OK")) {
+				resultMap.put("msg", "FAIL REMOVE SESSION");
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.CONFLICT);
+			}
+		}
+		String removeResult = battleService.removeUser(sessionName, token);
+		if ("Error".equals(removeResult)) {
+			resultMap.put("msg", "FAIL REMOVE SESSION");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.CONFLICT);
+		}
 		
-		battleService.manageBattleHistory(bhd.get(), winOrLose);
+		resultMap = battleService.manageBattleHistory(bhd.get(), winOrLose, team.equals("red"));
 		
 
-		return new ResponseEntity<String>("SUCCESS REMOVE", HttpStatus.ACCEPTED);
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 	
 	
