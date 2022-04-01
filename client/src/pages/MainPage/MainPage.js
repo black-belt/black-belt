@@ -16,7 +16,7 @@ import InButton from "components/atoms/Buttons/in-btns";
 import { useNavigate } from "react-router-dom";
 
 function MainPage() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const slides = [
