@@ -27,6 +27,7 @@
     "react-query": "^3.34.19",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "react-stomp": "^5.1.0",
     "react-transition-group": "^4.4.2",
     "recoil": "^0.6.1",
     "styled-components": "^5.3.3",
