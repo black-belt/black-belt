@@ -11,9 +11,12 @@ import {
   Champion,
   ChampionBox,
   ChampionInfo,
+  ImgSize,
+  ImgWrapper,
   Layout,
   Name,
   ProfileImg,
+  ProfileImgBox,
   SearchBox,
   SearchInput,
   SearchLayout,
@@ -94,11 +97,16 @@ function NormalLobby() {
                   <Icon width={19} height={15} icon="crown" />
                   <span>{myInfo.userNick}</span>
                 </Name>
-                {myInfo.userProfilePath ? (
-                  <ProfileImg src={myInfo.userProfilePath} alt="" />
-                ) : (
-                  <ProfileImg src="/images/defaultUser.png" alt="" />
-                )}
+                <ProfileImgBox>
+                  <ImgWrapper>
+                    {myInfo.userProfilePath ? (
+                      // <ProfileImg src={myInfo.userProfilePath} alt="" />
+                      <ProfileImg src="/images/IMG_4070.JPG" alt="" />
+                    ) : (
+                      <ProfileImg src="/images/defaultUser.png" alt="" />
+                    )}
+                  </ImgWrapper>
+                </ProfileImgBox>
                 <Tier language={t("language")}>{t(tier[myInfo.userTier])}</Tier>
               </ChampionInfo>
             </Champion>
@@ -133,11 +141,15 @@ function NormalLobby() {
                 >
                   <UserDetail userData={user} target={targetUser} />
                   {user.userProfilePath ? (
-                    <UserImg
-                      state={user.userState}
-                      src={user.userProfilePath}
-                      alt=""
-                    />
+                    <ImgSize>
+                      <ImgWrapper>
+                        <UserImg
+                          state={user.userState}
+                          src={user.userProfilePath}
+                          alt=""
+                        />
+                      </ImgWrapper>
+                    </ImgSize>
                   ) : (
                     <Icon
                       state={user.userState}

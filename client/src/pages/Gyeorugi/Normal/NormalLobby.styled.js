@@ -66,9 +66,33 @@ export const Name = styled.div`
     padding: 0 0.3rem;
   }
 `;
-export const ProfileImg = styled.img`
+
+export const ProfileImgBox = styled.div`
   width: 65%;
 `;
+
+export const ImgSize = styled.div`
+  width: 40px;
+  height: 40px;
+`;
+
+export const ImgWrapper = styled.div`
+  position: relative;
+  padding-top: 100%;
+  border-radius: 100%;
+  overflow: hidden;
+`;
+
+export const ProfileImg = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 100%;
+  width: auto;
+`;
+
 export const Tier = styled.div`
   padding: 2rem 0;
   ${(props) => {
@@ -141,6 +165,14 @@ export const UserDetail = styled.div`
 `;
 
 export const UserImg = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 100%;
+  width: auto;
+
   ${(props) => {
     if (props.state === "N") {
       return css`
