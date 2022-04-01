@@ -100,8 +100,7 @@ function NormalLobby() {
                 <ProfileImgBox>
                   <ImgWrapper>
                     {myInfo.userProfilePath ? (
-                      // <ProfileImg src={myInfo.userProfilePath} alt="" />
-                      <ProfileImg src="/images/IMG_4070.JPG" alt="" />
+                      <ProfileImg src={myInfo.userProfilePath} alt="" />
                     ) : (
                       <ProfileImg src="/images/defaultUser.png" alt="" />
                     )}
