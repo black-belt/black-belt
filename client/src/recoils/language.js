@@ -1,5 +1,4 @@
 import { atom, selector } from "recoil";
-import axiosInstance from "utils/API";
 import { localStorageEffect } from "utils/localStorageEffect";
 
 export const language = atom({

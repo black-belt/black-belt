@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import { colors, fontSize, fontWeight } from "_foundation";
 
-const langNow = localStorage.getItem("language");
-console.log(langNow);
-
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,8 +12,8 @@ export const Layout = styled.div`
   border-radius: 6px;
   border: 1px solid ${colors.gray5};
 
-  /* background-color: rgba(0, 0, 0, 0.77); */
-  background-color: ${colors.gray4};
+  background-color: rgba(206, 212, 208, 0.8);
+  /* background-color: ${colors.gray4}; */
   /* opacity: 0.85; */
   /* color: ${colors.gray0}; */
 

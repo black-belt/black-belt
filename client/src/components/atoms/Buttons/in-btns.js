@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { colors, fontSize, fontWeight } from "_foundation";
+import { colors, fontSize } from "_foundation";
 import Icon from "../Icons/Icon";
 
 function InButton({ children, onClick }) {

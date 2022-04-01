@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { colors, fontSize, fontWeight } from "_foundation";
-import Icon from "../Icons/Icon";
+import { colors } from "_foundation";
 
 function BasicButton({ onClick, able, width, height, fontSize, children }) {
   return (
@@ -54,18 +53,6 @@ const StyledBtn = styled.button`
       `;
     }
   }}
-  /* ${(props) => {
-    if (props.able) {
-      return;
-      css`
-        :hover {
-          background: ${colors.blue1};
-          border: 1px solid ${colors.blue1};
-        }
-      `;
-    }
-  }} */
-
   svg {
     width: 22px;
     height: 22px;

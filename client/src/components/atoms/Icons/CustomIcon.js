@@ -34,7 +34,7 @@ const Svg = styled.svg`
 
     if (props.langState && props.langState !== props.icon) {
       return css`
-        filter: grayscale(100%) brightness(45%);
+        filter: grayscale(100%) brightness(60%);
       `;
     }
   }}

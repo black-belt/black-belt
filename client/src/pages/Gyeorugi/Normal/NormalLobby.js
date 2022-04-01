@@ -2,7 +2,7 @@ import InButton from "components/atoms/Buttons/in-btns";
 import Icon from "components/atoms/Icons/CustomIcon";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { userInfo } from "recoils";
 import axiosInstance from "utils/API";
 import { colors } from "_foundation";
@@ -31,7 +31,7 @@ import {
 import UserDetail from "./UserDetails";
 
 function NormalLobby() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState("");
   const [finishSearch, setFinishSearch] = useState(false);
   const [userList, setUserList] = useState(null);
