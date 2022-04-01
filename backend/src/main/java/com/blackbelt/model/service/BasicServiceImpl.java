@@ -25,6 +25,8 @@ public class BasicServiceImpl implements BasicService {
 	}
 	@Override
 	public void updateBasicStage(BasicStageDto basicStageDto) throws Exception {
+		
+		sqlSession.getMapper(BasicMapper.class).levelup(basicStageDto.getUser_id());
 		sqlSession.getMapper(BasicMapper.class).updateBasicStage(basicStageDto);
 		
 	}
@@ -32,6 +34,7 @@ public class BasicServiceImpl implements BasicService {
 	public List<BasicDto> listBasic(String user_id) throws Exception {
 		return sqlSession.getMapper(BasicMapper.class).listBasicuser(user_id);
 	}
+	
 
 
 }

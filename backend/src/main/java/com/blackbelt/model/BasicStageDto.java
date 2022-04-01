@@ -1,5 +1,8 @@
 package com.blackbelt.model;
 
+import lombok.Data;
+
+@Data
 public class BasicStageDto {
 	String user_id;
 	String basic_id;
