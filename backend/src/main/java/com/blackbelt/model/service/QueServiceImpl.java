@@ -20,7 +20,13 @@ public class QueServiceImpl implements QueService{
 	public List<UserDto> searchUserList(String search){
 		List<UserDto> user = userCrudRepository.findByuserNickContaining(search);	// Containing 포함=>다중검색 가능 
 
-		
 		return user;
 	}
+	/*
+	@Transactional
+	public String searchUserTier(String userNick){
+		String userTier = userCrudRepository.finduserTierByuserNick(userNick);	// Containing 포함=>다중검색 가능 
+
+		return userTier;
+	}*/
 }

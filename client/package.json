@@ -21,11 +21,13 @@
     "react-player": "^2.9.0",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "react-stomp": "^5.1.0",
     "react-transition-group": "^4.4.2",
     "recoil": "^0.6.1",
     "styled-components": "^5.3.3",
     "swiper": "^8.0.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "ws": "^8.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

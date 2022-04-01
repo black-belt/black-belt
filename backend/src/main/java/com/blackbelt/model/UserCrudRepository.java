@@ -23,6 +23,9 @@ public interface UserCrudRepository extends JpaRepository<UserDto, String> {
 	// for User 닉네임 검색 
 	List<UserDto> findByuserNickContaining(String search);
 	
+	//@Query(value="SELECT userTier FROM user WHERE user_nick=:nick", nativeQuery = true)
+	//String finduserTierByuserNick(String nick);
+	
 //	@Modifying
 //	@Query(value="update user set user_state = :stateValue WHERE user_id=:userId", nativeQuery = true)
 //	int updateState(String userId, String stateValue);

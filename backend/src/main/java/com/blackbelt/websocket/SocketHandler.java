@@ -1,4 +1,4 @@
-package com.blackbelt.controller;
+package com.blackbelt.websocket;
 
 
 import java.io.IOException;
@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.server.ServerEndpoint;
 
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,22 +17,67 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-@ServerEndpoint("/")
+import com.blackbelt.websocket.ChatMessage.MessageType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.RequiredArgsConstructor;
+
+//@ServerEndpoint("/")
+@Component							//???
+@RequiredArgsConstructor			//???
 public class SocketHandler extends TextWebSocketHandler {
 	
-	Map<String, WebSocketSession> sessions = new ConcurrentHashMap<String, WebSocketSession>(); // 로그인중인 유저 저장
+	//Map<String, WebSocketSession> userSessions = new ConcurrentHashMap<String, WebSocketSession>(); // 로그인중인 유저 저장
+	Map<String, WebSocketSession> userSessions = new HashMap<String, WebSocketSession>(); 
+	// Concurrent로 하면 thread 때메 오류남! 
 	
 	/*
 	// 임시 페이지 렌더링 => test후 삭제 
 	public String hello() { 
-		return "index"; 
+		return "roomlist"; 
 	} */
-	
+    private final BattleRoomRepository battleRoomRepository;
+    //private final SocketRoomRepository socketRoomRepository;
+    private final ObjectMapper objectMapper;
+
+    // 추가된 부분 
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        //log.info("메세지 전송 = {} : {}",session,message.getPayload());
+    	System.out.println(session.toString());
+		System.out.println(message.toString());
+		System.out.println("지금 존재하는 세션 :"+userSessions.toString());
+        String msg = message.getPayload();
+        System.out.println(msg);
+        ChatMessage chatMessage = objectMapper.readValue(msg,ChatMessage.class);
+        // 여기서 부터 내가 추가함 
+        String userId = chatMessage.getSenderId();
+        if(chatMessage.getType() == MessageType.LOGIN) {
+        	System.out.println("로그인도됨");
+        	userSessions.put(userId, session); 
+        	//SocketRoom socketRoom = SocketRoom.create(userId);
+        	//socketRoom.handleMessage(session,chatMessage,objectMapper);
+        }
+        // 여긴 내가 추가한거 아님 
+        else {	//chatMessage.getType() == MessageType.INVITE
+    
+        	BattleRoom battleRoom = battleRoomRepository.findRoomById(chatMessage.getSenderId()+"+"+chatMessage.getRecieverId());
+        	System.out.println(chatMessage.getSenderId()+"+"+chatMessage.getRecieverId());
+
+        	battleRoom.handleMessage(session,chatMessage,objectMapper);
+        }
+
+    }
+
+    /*
 	// 메시지를 받은 경우 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
     	System.out.println(session.toString());
 		System.out.println(message.toString());
+		
+		
+		
 		
 		// 데이터가 전송된 경우,
 		String msg = message.getPayload();
@@ -109,9 +155,9 @@ public class SocketHandler extends TextWebSocketHandler {
 			}
 		}
 		
-    }
+    }*/
     ///////////////////////////////////////////////////
-    
+    /*
     // Socket 연결 성사 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -120,7 +166,6 @@ public class SocketHandler extends TextWebSocketHandler {
 			// 로그인 세션 저장은 handleTextMessage에서 수행 
 			System.out.println("Socket Connection Established:" + session.toString());
 		}
-       
     }
 
     // Socket 연결 해제 
@@ -129,9 +174,9 @@ public class SocketHandler extends TextWebSocketHandler {
         super.afterConnectionClosed(session, status);
 		String mySession = session.getId();
 		if(mySession!=null) {	
-			sessions.remove(mySession);
+			userSessions.remove(mySession);
 			System.out.println("Socket Connection Closed:" + session.toString());
 		}
-    }
+    }*/
     
 }
