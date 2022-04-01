@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { colors, fontSize, fontWeight } from "_foundation";
 
+const langNow = localStorage.getItem("language");
+console.log(langNow);
+
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;
@@ -14,7 +17,7 @@ export const Layout = styled.div`
 
   /* background-color: rgba(0, 0, 0, 0.77); */
   background-color: ${colors.gray4};
-  opacity: 0.8;
+  /* opacity: 0.85; */
   /* color: ${colors.gray0}; */
 
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -33,6 +36,24 @@ export const UserName = styled.div`
 export const UserEmail = styled.div`
   font-size: ${fontSize.standard};
   color: ${colors.gray7};
+`;
+
+export const LangBox = styled.div`
+  padding: 12px 16px;
+  border-bottom: 1px solid ${colors.gray5};
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Select = styled.div``;
+
+export const IconBox = styled.div`
+  display: flex;
+  gap: 0.3rem;
+
+  cursor: pointer;
 `;
 
 export const MenuBox = styled.div`

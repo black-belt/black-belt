@@ -2,16 +2,17 @@ import React from "react";
 import { icons } from "_foundation";
 import styled, { css } from "styled-components";
 
-const Icon = ({ icon, block, state, viewBox, width, height, ...props }) => {
+const Icon = ({ langState, icon, block, state, width, height, ...props }) => {
   return (
     <Svg
-      viewBox={viewBox}
+      langState={langState}
       width={width}
       height={height}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       block={block}
       state={state}
+      icon={icon}
       // stroke="currentColor"
       {...props}
     >
@@ -26,6 +27,12 @@ const Svg = styled.svg`
   display: ${(props) => (props.block ? "block" : "inline-block")};
   ${(props) => {
     if (props.state === "N") {
+      return css`
+        filter: grayscale(100%) brightness(45%);
+      `;
+    }
+
+    if (props.langState && props.langState !== props.icon) {
       return css`
         filter: grayscale(100%) brightness(45%);
       `;
