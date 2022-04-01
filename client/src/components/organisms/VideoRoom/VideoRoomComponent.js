@@ -6,30 +6,32 @@ import UserModel from "pages/Gyeorugi/GyeorugiStage/models/user-model";
 import OpenViduLayout from "components/molecules/Layout/openvidu-layout";
 import DialogExtensionComponent from "components/molecules/DialogExtension/DialogExtension";
 import GyeorugiStageTempalte from "components/templates/GyeorugiStageTemplate";
-import { useLocation } from "react-router-dom";
 
 var localUser = new UserModel();
 
 function VideoRoomComponent({
-  openviduServerUrl,
-  openviduSecret,
-  sessionName,
-  user,
+  openviduServerUrl, //X
+  openviduSecret, //X
+  sessionName, //X
+  user, //X
+  country, //X
+  joinSession, //X
+  leaveSession, //X
+  setResult,
+  setIsWin,
+  info,
   token,
-  country,
-  joinSession,
-  leaveSession,
+  otherNick,
 }) {
   const OPENVIDU_SERVER_URL = openviduServerUrl
     ? openviduServerUrl
     : "https://" + window.location.hostname + ":4443";
   const OPENVIDU_SERVER_SECRET = openviduSecret ? openviduSecret : "MY_SECRET";
-  const state = useLocation().state;
   let hasBeenUpdated = false;
   let layout = new OpenViduLayout();
-  let sessionId = sessionName ? sessionName : "SessionQ";
-  let userName = user ? user : "OpenVidu_User" + Math.floor(Math.random() * 100);
-  let userCountry = country ? country : "korea";
+  let sessionId = sessionName ? sessionName : "SessionA";
+  let userName = info.userNick ? info.userNick : "OpenVidu_User" + Math.floor(Math.random() * 100);
+  let userCountry = info.countryName ? info.countryName : "korea";
   let remotes = [];
   let localUserAccessAllowed = false;
   const [mySessionId, setMySessionId] = useState(sessionId);
@@ -46,15 +48,14 @@ function VideoRoomComponent({
   const [isTimer, setIsTimer] = useState(false);
   const [ready, setReady] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
-  const [answerAttack, setAnswerAttack] = useState(["Inward Punch"]);
-  const [answerDefence, setAnswerDefence] = useState(["Inward Block"]);
   const [leftPercent, setLeftPercent] = useState(1000);
   const [rightPercent, setRightPercent] = useState(1000);
   const [myAttack, setMyAttack] = useState(0);
   const [otherAttack, setOtherAttack] = useState(0);
   const [myDefence, setMyDefence] = useState(0);
   const [otherDefence, setOtherDefence] = useState(0);
-  const [usersInfo, setUsersInfo] = useState([]);
+  const answerAttack = ["Inward Punch"];
+  const answerDefence = ["Inward Block"];
   const damages = {
     1: 100, //상단발차기
     2: 60, //중단발차기
@@ -65,7 +66,7 @@ function VideoRoomComponent({
   };
   let publisher;
   let myHP = 1000;
-  //   let session;
+  let otherHP = 1000;
 
   useEffect(() => {
     const openViduLayoutOptions = {
@@ -205,6 +206,7 @@ function VideoRoomComponent({
     subscribeToAttack();
     subscribeToDefence();
     subscribeToHp();
+    subscribeToDamage();
     sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
 
     setCurrentVideoDevice(() => videoDevices[0]);
@@ -291,7 +293,7 @@ function VideoRoomComponent({
       newUser.setConnectionId(event.stream.connection.connectionId);
       newUser.setType("remote");
       const nickname = event.stream.connection.data.split("%")[0];
-      console.log("여기!!", event.stream.connection.data.split("%")[0]);
+      // console.log("여기!!", event.stream.connection.data.split("%")[0]);
       newUser.setNickname(JSON.parse(nickname).clientData);
       newUser.setCountry(JSON.parse(nickname).country);
       remotes.push(newUser);
@@ -510,7 +512,30 @@ function VideoRoomComponent({
       const nickname = JSON.parse(event.data).nickname;
       if (nickname !== localUser.getNickname()) {
         console.log("!!상대 HP", hp);
+        otherHP = hp;
         setRightPercent((current) => hp);
+      }
+    });
+  };
+
+  const sendSignalDamage = (damage) => {
+    console.log("데미지!!", damage);
+    session.signal({
+      data: JSON.stringify({
+        nickname: localUser.getNickname(),
+        damage: damage,
+      }),
+      type: "damage",
+    });
+  };
+
+  const subscribeToDamage = () => {
+    session.on("signal:damage", (event) => {
+      const damage = JSON.parse(event.data).damage;
+      const nickname = JSON.parse(event.data).nickname;
+      if (nickname !== localUser.getNickname()) {
+        console.log("!!상대 Damage", damage);
+        setOtherAttack(() => damage);
       }
     });
   };
@@ -533,14 +558,17 @@ function VideoRoomComponent({
         console.log("!!상대 공격");
         const attackType = JSON.parse(event.data).attackType;
         let damage = damages[attackType];
-        if (myDefence === attackType % 10) {
+        if (myDefence !== 0) {
+          //myDefence === attackType % 10
           //방어성공
           damage = Math.floor(damage * 0.3);
         }
-        setOtherAttack((current) => attackType);
+        // setOtherAttack((current) => attackType);
         myHP -= damage;
         sendSignalHp(myHP);
+        sendSignalDamage(damage);
         setLeftPercent((current) => current - damage);
+        setMyAttack(() => damage);
         console.log("!!내HP", leftPercent);
       }
     });
@@ -563,19 +591,26 @@ function VideoRoomComponent({
       const nickname = JSON.parse(event.data).nickname;
       if (nickname !== localUser.getNickname()) {
         console.log("!!상대 방어");
-        setOtherDefence((current) => defenceType);
+        setOtherDefence(() => defenceType);
       }
     });
   };
 
   const attack = (attackType) => {
     sendSignalAttack(attackType);
-    setMyAttack(() => attackType);
+    setMyDefence(() => 0);
+    sendSignalDefence(0);
+    // setMyAttack(() => attackType);
   };
 
   const defence = (defenceType) => {
     sendSignalDefence(defenceType);
-    setMyDefence((current) => defenceType);
+    setMyDefence(() => defenceType);
+  };
+
+  const reset = () => {
+    setMyDefence(() => 0);
+    sendSignalDefence(0);
   };
 
   useEffect(() => {
@@ -594,6 +629,26 @@ function VideoRoomComponent({
       setIsTimer(true);
     }
   };
+
+  const end = async () => {
+    setIsEnd(true);
+    setResult((current) => current + 1);
+    let result = false;
+    if (myHP === otherHP) {
+      if (myUserName > otherNick) {
+        result = true;
+      }
+    } else if (myHP > otherHP) {
+      result = true;
+    }
+    setIsWin(result);
+  };
+
+  // useEffect(() => {
+  //   if (isEnd && result === 1) {
+  //     const data = axiosInstance.post
+  //   }
+  // }, [isEnd, result]);
 
   const newLocalUser = myLocalUser;
 
@@ -620,6 +675,12 @@ function VideoRoomComponent({
         start={startMe}
         attack={attack}
         defence={defence}
+        end={end}
+        reset={reset}
+        myDefence={myDefence}
+        otherDefence={otherDefence}
+        myAttack={myAttack}
+        otherAttack={otherAttack}
       />
     </>
   );

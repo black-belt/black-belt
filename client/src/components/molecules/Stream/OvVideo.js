@@ -12,6 +12,8 @@ function OvVideoComponent({
   start,
   attack,
   defence,
+  end,
+  reset,
 }) {
   const videoRef = useRef(null);
   const modelURL = `/models/gyeorugi/model.json`;
@@ -115,7 +117,8 @@ function OvVideoComponent({
     let difCnt = 0;
     let prevCnt = 0;
     const loop = setInterval(async () => {
-      if (++totalCnt === 11 * 20) {
+      if (++totalCnt === 80 * 20) {
+        end();
         clearInterval(loop);
       }
       let curMotion = await analyzeImage();
@@ -132,6 +135,7 @@ function OvVideoComponent({
       } else {
         difCnt++;
         if (difCnt === 3) {
+          reset();
           prevCnt = 1;
           prevMotion = curMotion;
           difCnt = 0;
@@ -157,7 +161,7 @@ function OvVideoComponent({
 
   useEffect(() => {
     console.log("!!isEnd", isEnd);
-    if (!isEnd) setWebcam();
+    if (!isEnd && answerAttack !== undefined) setWebcam();
   }, [isEnd]);
 
   return (
