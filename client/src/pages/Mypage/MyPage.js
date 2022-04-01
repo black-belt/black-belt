@@ -48,8 +48,8 @@ function MyPage() {
           <TierImg src={`/images/tier/${tier[user.userTier]}.png`} />
         </ProfileBox>
         <MyInfo>
-          <Carousel></Carousel>
-          <GyeorugiInfo></GyeorugiInfo>
+          <Carousel>here</Carousel>
+          <GyeorugiInfo>here</GyeorugiInfo>
         </MyInfo>
       </Layout>
     </div>

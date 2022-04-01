@@ -11,7 +11,6 @@ export const BackgroundImg = styled.img`
   z-index: -1;
 `;
 export const Layout = styled.div`
-  /* padding-top: 92px; */
   /* background-color: red; */
 
   padding: 0 12%;
@@ -19,6 +18,7 @@ export const Layout = styled.div`
   height: 100vh;
 
   display: flex;
+  gap: 12%;
 
   color: ${colors.gray0};
 `;
@@ -35,8 +35,6 @@ export const ProfileBox = styled.div`
   background: rgba(49, 54, 59, 0.6);
   backdrop-filter: blur(4px) saturate(100%);
   -webkit-backdrop-filter: blur(4px) saturate(100%);
-  /* gap: 0.5rem; */
-  /* text-align: center; */
 `;
 
 export const ImgBox = styled.div`
@@ -77,11 +75,24 @@ export const UserEmail = styled.div`
 export const TierImg = styled.img`
   filter: grayscale(100%) brightness(50%);
   padding-top: 3rem;
-  width: 50%;
+  width: 65%;
 `;
 
-export const MyInfo = styled.div``;
+export const MyInfo = styled.div`
+  background-color: yellow;
+  padding-top: 92px;
+  width: 58%;
+`;
 
-export const Carousel = styled.div``;
+export const Carousel = styled.div`
+  background-color: red;
+  padding-top: 8%;
+  height: 48%;
+`;
 
-export const GyeorugiInfo = styled.div``;
+export const GyeorugiInfo = styled.div`
+  background-color: blue;
+  /* margin-top: 2rem; */
+  padding-top: 2rem;
+  height: 52%;
+`;
