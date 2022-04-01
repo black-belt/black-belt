@@ -31,7 +31,7 @@ import {
 import UserDetail from "./UserDetails";
 
 function NormalLobby() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [searchInput, setSearchInput] = useState("");
   const [finishSearch, setFinishSearch] = useState(false);
   const [userList, setUserList] = useState(null);
@@ -47,8 +47,6 @@ function NormalLobby() {
     setUserList(userInfo);
     setFinishSearch(true);
   };
-
-  console.log(finishSearch, searchInput);
 
   const onKeyEnter = (e) => {
     if (e.key === "Enter") {
@@ -83,8 +81,6 @@ function NormalLobby() {
     5: "diamond",
     6: "master",
   };
-
-  console.log(userList);
 
   return (
     <div className="NormalLobby">

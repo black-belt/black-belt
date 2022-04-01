@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import LangBtn from "components/atoms/Buttons/lang-btn";
 import Icon from "components/atoms/Icons/CustomIcon";
 
-import { loginModalState, userInfo } from "recoils";
+import { language, loginModalState, userInfo } from "recoils";
 import { useTranslation } from "react-i18next";
 
 import isLogin from "utils/isLogin";
@@ -27,9 +27,8 @@ function Navbar() {
   const [translateEN, setTranslateEn] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const setLoginModalOpen = useSetRecoilState(loginModalState);
-
-  const { t, i18n } = useTranslation();
-
+  const setSelectedLang = useSetRecoilState(language);
+  const { t } = useTranslation();
   const user = useRecoilValue(userInfo);
 
   useEffect(() => {
@@ -52,9 +51,9 @@ function Navbar() {
   const handleEnglish = () => {
     setTranslateEn(!translateEN);
     if (translateEN) {
-      i18n.changeLanguage("en");
+      setSelectedLang("en");
     } else {
-      i18n.changeLanguage("ko");
+      setSelectedLang("ko");
     }
   };
 
