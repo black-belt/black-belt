@@ -10,6 +10,7 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,16 +29,24 @@ import com.blackbelt.model.UserCrudRepository;
 
 // 세션 방 컨트롤러
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/que")			//chat
 public class ChatRoomController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	
-	private final SBattleRoomRepository sBattleRoomRepository;
-	private final UserSessionRepository userSessionRepository;
-	private final UserCrudRepository userRepo;
+	//private final SBattleRoomRepository sBattleRoomRepository;
+	//private final UserSessionRepository userSessionRepository;
+	//private final UserCrudRepository userRepo;
+	
+	@Autowired
+	SBattleRoomRepository sBattleRoomRepository;
+	@Autowired
+	UserSessionRepository userSessionRepository;
+	@Autowired
+	UserCrudRepository userRepo;
 	
 	@Autowired
 	UserService userService;
@@ -56,29 +65,35 @@ public class ChatRoomController {
 	
 	// 양측 대기방 입장 API
 	@GetMapping("/battle/ready")
-	public ResponseEntity<Map<String, Object>> battleready(@RequestBody String hostId, String guestId) {
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> battleready(@RequestBody Map<String, String> ids) {
 		HttpStatus status = null;
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
+		List<Object> usersList = new ArrayList<Object>();
 		// 배틀룸 아이디 찾음 
 		try {
-			//System.out.println("이거다이거" + sBattleRoomRepository.findRoomById(guestId));
+			String hostId = ids.get("hostId");
+			String guestId = ids.get("guestId");
 			SBattleRoom battleRoom = sBattleRoomRepository.findRoomById(guestId);
-			map.put("token",battleRoom.getRoomId());
+			if(battleRoom != null) {
+				resultMap.put("token",battleRoom.getRoomId());
+				
+				Optional<UserDto> hostUser = userRepo.findByuserId(hostId);
+				Optional<UserDto> guestUser = userRepo.findByuserId(guestId);
+				usersList.add(hostUser);
+				usersList.add(guestUser);
+				resultMap.put("users",usersList);
+				
+				status = HttpStatus.OK;
+			}
+			status = HttpStatus.ACCEPTED;
 			
-			Optional<UserDto> hostUser = userRepo.findByuserId(hostId);
-			Optional<UserDto> guestUser = userRepo.findByuserId(guestId);
-			System.out.println("호스트 유저는!!"+hostUser);
-			UserDto hostUserInfo = userRepo.save(hostUser.get());   //호스트
-			UserDto guestUserInfo = userRepo.save(guestUser.get()); //게스트
-			map.put("hostUser",hostUserInfo);
-			map.put("guestUser",guestUserInfo);	
-			status = HttpStatus.OK;
 		}catch(Exception e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
-		return new ResponseEntity<Map<String, Object>>(map, status);
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}	
 	/*
 	// 채팅 리스트 화면
