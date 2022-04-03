@@ -68,10 +68,14 @@ public class JudgeController {
 		result.put("judgeLevelName", lplist.get(0).getLevel_name());
 		ArrayList<String> randomPoomsaeId = new ArrayList<String>();
 		ArrayList<String> randomPoomsaeName = new ArrayList<String>();
+		ArrayList<String> randomPoomsaeName_e = new ArrayList<String>();
+		ArrayList<String> randomPoomsaeTime = new ArrayList<String>();
 		ArrayList<String> randomAnswer = new ArrayList<String>();		
 		ArrayList<String> randomAnswerIndex = new ArrayList<String>();		
 		String essentialPoomsaeId = "";
 		String essentialPoomsaeName = "";
+		String essentialPoomsaeName_e = "";
+		String essentialPoomsaeTime = "";
 		String essentialAnswer = "";
 		String essentialAnswerIndex = "";
 
@@ -79,12 +83,15 @@ public class JudgeController {
 			if(lp.getIs_essential().equals("Y")) {
 				essentialPoomsaeId = lp.getPoomsae_id();
 				essentialPoomsaeName = lp.getPoomsae_name();
+				essentialPoomsaeName_e = lp.getPoomsae_name_e();
+				essentialPoomsaeTime = lp.getPoomsae_time();
 				essentialAnswer = lp.getPoomsae_answer();
 				essentialAnswerIndex = lp.getPoomsae_answer_index();
 			}else if(lp.getIs_essential().equals("N")) {
-				
 				randomPoomsaeId.add(lp.getPoomsae_id());
 				randomPoomsaeName.add(lp.getPoomsae_name());
+				randomPoomsaeName_e.add(lp.getPoomsae_name_e());
+				randomPoomsaeTime.add(lp.getPoomsae_time());
 				randomAnswer.add(lp.getPoomsae_answer());
 				randomAnswerIndex.add(lp.getPoomsae_answer_index());
 			}
@@ -118,6 +125,11 @@ public class JudgeController {
 		//essentialPoomsaeId, essentialPoomsaeName
 		result.put("essentialPoomsaeId", essentialPoomsaeId);
 		result.put("essentialPoomsaeName", essentialPoomsaeName);
+		result.put("essentialPoomsaeName_e", essentialPoomsaeName_e);
+		//randomPoomsaeTime
+		result.put("randomPoomsaeTime", randomPoomsaeTime.get(rint));
+		//essentialPoomsaeTime 
+		result.put("essentialPoomsaeTime", essentialPoomsaeTime);
 		//essentialAnswer
 				String essential_answer_list = essentialAnswer;
 				List<String[]> essential_answer_array = new ArrayList<String[]>();
