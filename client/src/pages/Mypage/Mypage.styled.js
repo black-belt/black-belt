@@ -79,19 +79,19 @@ export const TierImg = styled.img`
 `;
 
 export const MyInfo = styled.div`
-  background-color: yellow;
+  /* background-color: yellow; */
   padding-top: 92px;
   width: 58%;
 `;
 
-export const Carousel = styled.div`
-  background-color: red;
+export const Certification = styled.div`
+  /* background-color: red; */
   padding-top: 8%;
   height: 48%;
 `;
 
 export const GyeorugiInfo = styled.div`
-  background-color: blue;
+  /* background-color: blue; */
   /* margin-top: 2rem; */
   padding-top: 2rem;
   height: 52%;
