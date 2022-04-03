@@ -40,6 +40,7 @@ function NormalLobby() {
   const [userList, setUserList] = useState(null);
   const [targetUser, setTargetUser] = useState("");
   const myInfo = useRecoilValue(userInfo);
+  const ImgURL = process.env.REACT_APP_IMAGE_URL;
 
   const onChangeNick = useCallback((e) => {
     setSearchInput(e.target.value);
@@ -100,7 +101,10 @@ function NormalLobby() {
                 <ProfileImgBox>
                   <ImgWrapper>
                     {myInfo.userProfilePath ? (
-                      <ProfileImg src={myInfo.userProfilePath} alt="" />
+                      <ProfileImg
+                        src={ImgURL + myInfo.userProfilePath}
+                        alt=""
+                      />
                     ) : (
                       <ProfileImg src="/images/defaultUser.png" alt="" />
                     )}
@@ -144,7 +148,7 @@ function NormalLobby() {
                       <ImgWrapper>
                         <UserImg
                           state={user.userState}
-                          src={user.userProfilePath}
+                          src={ImgURL + user.userProfilePath}
                           alt=""
                         />
                       </ImgWrapper>
