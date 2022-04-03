@@ -18,7 +18,6 @@ import { useNavigate } from "react-router-dom";
 function MainPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const slides = [
     {
       title: "practice mode",

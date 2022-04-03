@@ -1,9 +1,9 @@
 import InButton from "components/atoms/Buttons/in-btns";
 import Icon from "components/atoms/Icons/CustomIcon";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { userInfo } from "recoils";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { gyeorugiToken, userInfo } from "recoils";
 import axiosInstance from "utils/API";
 import { colors } from "_foundation";
 import {
@@ -39,8 +39,16 @@ function NormalLobby() {
   const [finishSearch, setFinishSearch] = useState(false);
   const [userList, setUserList] = useState(null);
   const [targetUser, setTargetUser] = useState("");
+  const setGyeorugiToken = useSetRecoilState(gyeorugiToken);
   const myInfo = useRecoilValue(userInfo);
   const ImgURL = process.env.REACT_APP_IMAGE_URL;
+
+  useEffect(() => {
+    console.log(myInfo.userId);
+    axiosInstance.get(`/api/que/select/ready/${myInfo.userId}`).then((res) => {
+      console.log(res);
+    });
+  }, []);
 
   const onChangeNick = useCallback((e) => {
     setSearchInput(e.target.value);

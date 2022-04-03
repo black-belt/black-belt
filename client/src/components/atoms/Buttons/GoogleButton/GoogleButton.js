@@ -42,7 +42,7 @@ export default function GoogleButton() {
   const onFailure = (error) => {
     console.log(error);
   };
-  console.log(setToken);
+
   return (
     <div>
       <GoogleLogin
