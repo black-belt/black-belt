@@ -146,8 +146,8 @@ public class BattleController {
 			resultMap.put("statusCode", 200);
 			resultMap.put("message",  "Success : Enter study room");
 			resultMap.put("token",  token);
-			resultMap.put("BattleInfo", battleRoomService.getBattleRoomInfo(battleHistoryDto));
-			resultMap.put("BattleSeq", battleSeq);
+			resultMap.put("battleInfo", battleRoomService.getBattleRoomInfo(battleHistoryDto));
+			resultMap.put("battleSeq", battleSeq);
 		}catch(Exception e) {
 			e.printStackTrace();
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
