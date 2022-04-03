@@ -148,13 +148,15 @@ function VideoRoomComponent({
   };
 
   const connect = (token) => {
+    console.log("!!connect", session);
     session
       .connect(token, { clientData: myUserName, country: myCountry })
       .then(() => {
-        // console.log("!!!", OV);
+        console.log("!!!then", OV);
         connectWebCam();
       })
       .catch((error) => {
+        console.log("!!error");
         if (error) {
           error({
             error: error.error,

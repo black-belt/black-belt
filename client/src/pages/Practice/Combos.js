@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "utils/API";
 
 function Combos() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [poomsaeList, setPoomsaeList] = useState([]);
   // const [poomsaeListKor, setPoomsaeListKor] = useState([]);
   // const [poomsaeListEng, setPoomsaeListEng] = useState([]);

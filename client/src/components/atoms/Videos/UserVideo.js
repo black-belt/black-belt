@@ -71,7 +71,7 @@ function UserVideo({ answer, testResult, isPass, aiId }) {
 
   useEffect(() => {
     if (webCamElement !== undefined && model !== undefined) {
-      console.log(aiId);
+      // console.log(aiId);
       run();
     }
   }, [webCamElement, model]);

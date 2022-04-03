@@ -1,17 +1,19 @@
 import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import * as mobilenet from "@tensorflow-models/mobilenet";
-import * as tf from "@tensorflow/tfjs";
+import * as tmPose from "@teachablemachine/pose";
 
-function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
+function UserVideoCombo({ answer, testResult, updateNextAction, isPass, aiId }) {
   const videoRef = useRef(null);
-  let net;
+  const modelURL = `/models/combos/${aiId}/model.json`;
+  const metadataURL = `/models/combos/${aiId}/metadata.json`;
   let testSum = 0.0;
   let nextAction = 1;
   let curAction = 0;
   let isLastAction = false;
   let maxProbability = 0.0;
   let frameCnt = 0;
+
+  const [model, setModel] = useState(undefined);
   const [webCamElement, setWebCamElement] = useState();
 
   const getWebcam = (callback) => {
@@ -27,27 +29,31 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
     }
   };
 
-  const run = async () => {
-    net = await mobilenet.load();
-    const webcam = await tf.data.webcam(webCamElement, {
-      resizeWidth: 220,
-      resizeHeight: 227,
-    });
-    while (answer.length > 0 && !isPass) {
-      const img = await webcam.capture();
-      const result = await net.classify(img);
-      const className = result[0].className.split(",")[0];
-      const probability = result[0].probability;
-      console.log(answer, isPass, nextAction, result[0].className, probability);
-      img.dispose();
+  const setWebcam = async () => {
+    let m = await tmPose.load(modelURL, metadataURL);
+    setModel(() => m);
+    const size = 200;
+    const flip = true;
+    let webcam = await new tmPose.Webcam(size, size, flip);
+    setWebCamElement(() => webcam);
+  };
 
+  const run = async () => {
+    await webCamElement.setup();
+    await webCamElement.play();
+    while (answer.length > 0 && !isPass) {
+      webCamElement.update(); // update the webcam frame
+      const { posenetOutput } = await model.estimatePose(webCamElement.canvas);
+      const prediction = await model.predictTopK(posenetOutput, 1);
+      const className = prediction[0].className;
+      const probability = prediction[0].probability;
+      console.log(className, probability);
       if (isLastAction) {
         //마지막 동작
         frameCnt++;
         if (answer[curAction] === className) {
           maxProbability = probability;
         }
-
         if (frameCnt > 40) {
           // console.log("!!저장", curAction, maxProbability);
           testSum += maxProbability;
@@ -73,9 +79,15 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
           isLastAction = true;
         }
       }
-      await tf.nextFrame();
     }
   };
+
+  useEffect(() => {
+    if (webCamElement !== undefined && model !== undefined) {
+      console.log(aiId);
+      run();
+    }
+  }, [webCamElement, model]);
 
   useEffect(() => {
     getWebcam((stream) => {
@@ -85,7 +97,7 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass }) {
   }, []);
 
   useEffect(() => {
-    if (!isPass) run();
+    if (!isPass) setWebcam();
   }, [answer, isPass]);
 
   return (
