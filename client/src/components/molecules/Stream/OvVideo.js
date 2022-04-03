@@ -21,6 +21,8 @@ function OvVideoComponent({
 
   const [model, setModel] = useState(undefined);
   const [webCamElement, setWebCamElement] = useState(undefined);
+  let endGame = false;
+  let playone = 0;
 
   useEffect(() => {
     console.log("!!useEffect");
@@ -109,17 +111,22 @@ function OvVideoComponent({
     return "";
   };
 
-  const run = () => {
-    let totalCnt = 0;
+  const run = async () => {
     // let maxProbability = 0.0;
     // let testSum = 0.0;
+    // while (!isEnd) {
+    //   console.log("!!while");
+    //   await judgeMotion();
+    // }
+    // end();
+    let totalCnt = 0;
     let prevMotion = "";
     let difCnt = 0;
     let prevCnt = 0;
     const loop = setInterval(async () => {
       if (++totalCnt === 80 * 20) {
-        end();
         clearInterval(loop);
+        endGame = true;
       }
       let curMotion = await analyzeImage();
       if (curMotion !== "" && curMotion === prevMotion) {
@@ -145,8 +152,36 @@ function OvVideoComponent({
   };
 
   useEffect(() => {
+    if (endGame) end();
+  }, [endGame]);
+
+  // const judgeMotion = async () => {
+  //   let curMotion = await analyzeImage();
+  //   if (curMotion !== "" && curMotion === prevMotion) {
+  //     prevCnt++;
+  //     difCnt = 0;
+  //     if (prevCnt === 3) {
+  //       if (answerAttack.includes(curMotion)) {
+  //         attack(curMotion);
+  //       } else if (answerDefence.includes(curMotion)) {
+  //         defence(curMotion);
+  //       }
+  //     }
+  //   } else {
+  //     difCnt++;
+  //     if (difCnt === 3) {
+  //       reset();
+  //       prevCnt = 1;
+  //       prevMotion = curMotion;
+  //       difCnt = 0;
+  //     }
+  //   }
+  // };
+
+  useEffect(() => {
     console.log("!!isStart", isStart);
-    if (isStart && !isEnd) {
+    if (isStart && !isEnd && playone === 0) {
+      playone++;
       console.log("겨루기 시작!");
       run();
     }

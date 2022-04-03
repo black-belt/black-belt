@@ -10,31 +10,31 @@ import GyeorugiStageTempalte from "components/templates/GyeorugiStageTemplate";
 var localUser = new UserModel();
 
 function VideoRoomComponent({
-  openviduServerUrl, //X
-  openviduSecret, //X
-  sessionName, //X
-  user, //X
-  country, //X
-  joinSession, //X
-  leaveSession, //X
+  // openviduServerUrl, //X
+  // openviduSecret, //X
+  // sessionName, //X
+  // user, //X
+  // country, //X
+  // joinSession, //X
+  // leaveSession, //X
   setResult,
   setIsWin,
   info,
   token,
   otherNick,
 }) {
-  const OPENVIDU_SERVER_URL = openviduServerUrl
-    ? openviduServerUrl
-    : "https://" + window.location.hostname + ":4443";
-  const OPENVIDU_SERVER_SECRET = openviduSecret ? openviduSecret : "MY_SECRET";
+  // const OPENVIDU_SERVER_URL = openviduServerUrl
+  //   ? openviduServerUrl
+  //   : "https://" + window.location.hostname + ":4443";
+  // const OPENVIDU_SERVER_SECRET = openviduSecret ? openviduSecret : "MY_SECRET";
   let hasBeenUpdated = false;
   let layout = new OpenViduLayout();
-  let sessionId = sessionName ? sessionName : "SessionA";
+  // let sessionId = sessionName ? sessionName : "SessionTE";
   let userName = info.userNick ? info.userNick : "OpenVidu_User" + Math.floor(Math.random() * 100);
   let userCountry = info.countryName ? info.countryName : "korea";
   let remotes = [];
   let localUserAccessAllowed = false;
-  const [mySessionId, setMySessionId] = useState(sessionId);
+  // const [mySessionId, setMySessionId] = useState(sessionId);
   const [myUserName, setMyUserName] = useState(userName);
   const [myCountry, setMyCountry] = useState(userCountry);
   const [session, setSession] = useState(undefined);
@@ -62,7 +62,7 @@ function VideoRoomComponent({
     3: 30, //하단발차기
     11: 70, //상단주먹
     12: 50, //중단주먹
-    "Inward Punch": 50,
+    "Inward Punch": 500,
   };
   let publisher;
   let myHP = 1000;
@@ -122,6 +122,7 @@ function VideoRoomComponent({
 
   const connectToSession = () => {
     //state.token
+    console.log("token!!", token);
     if (token) {
       console.log("token received: ", token);
       connect(token);
@@ -186,9 +187,9 @@ function VideoRoomComponent({
         session.publish(publisher).then(() => {
           updateSubscribers();
           localUserAccessAllowed = true;
-          if (joinSession) {
-            joinSession();
-          }
+          // if (joinSession) {
+          //   joinSession();
+          // }
         });
       });
     }
@@ -207,6 +208,7 @@ function VideoRoomComponent({
     subscribeToDefence();
     subscribeToHp();
     subscribeToDamage();
+    subscribeToStart();
     sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
 
     setCurrentVideoDevice(() => videoDevices[0]);
@@ -262,11 +264,11 @@ function VideoRoomComponent({
     OV = null;
     setSession(undefined);
     setSubscribers([]);
-    setMySessionId("SessionA");
+    // setMySessionId("SessionA");
     setMyUserName("OpenVidu_User" + Math.floor(Math.random() * 100));
     setMyCountry("korea");
     setMyLocalUser(undefined);
-    if (leaveSession) leaveSession();
+    // if (leaveSession) leaveSession();
   };
 
   const deleteSubscriber = (stream) => {
@@ -413,73 +415,73 @@ function VideoRoomComponent({
   };
 
   const getToken = async () => {
-    return createSession(mySessionId).then((sessionId) => createToken(sessionId));
+    // return createSession(mySessionId).then((sessionId) => createToken(sessionId));
   };
 
-  const createSession = (sessionId) => {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({ customSessionId: sessionId });
-      axios
-        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
-          headers: {
-            Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log("CREATE SESION", response);
-          resolve(response.data.id);
-        })
-        .catch((response) => {
-          var error = Object.assign({}, response);
-          if (error.response && error.response.status === 409) {
-            resolve(sessionId);
-          } else {
-            console.log(error);
-            console.warn(
-              "No connection to OpenVidu Server. This may be a certificate error at " +
-                OPENVIDU_SERVER_URL
-            );
-            if (
-              window.confirm(
-                'No connection to OpenVidu Server. This may be a certificate error at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"\n\nClick OK to navigate and accept it. ' +
-                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"'
-              )
-            ) {
-              window.location.assign(OPENVIDU_SERVER_URL + "/accept-certificate");
-            }
-          }
-        });
-    });
-  };
+  // const createSession = (sessionId) => {
+  //   return new Promise((resolve, reject) => {
+  //     var data = JSON.stringify({ customSessionId: sessionId });
+  //     axios
+  //       .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
+  //         headers: {
+  //           Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+  //           "Content-Type": "application/json",
+  //         },
+  //       })
+  //       .then((response) => {
+  //         console.log("CREATE SESION", response);
+  //         resolve(response.data.id);
+  //       })
+  //       .catch((response) => {
+  //         var error = Object.assign({}, response);
+  //         if (error.response && error.response.status === 409) {
+  //           resolve(sessionId);
+  //         } else {
+  //           console.log(error);
+  //           console.warn(
+  //             "No connection to OpenVidu Server. This may be a certificate error at " +
+  //               OPENVIDU_SERVER_URL
+  //           );
+  //           if (
+  //             window.confirm(
+  //               'No connection to OpenVidu Server. This may be a certificate error at "' +
+  //                 OPENVIDU_SERVER_URL +
+  //                 '"\n\nClick OK to navigate and accept it. ' +
+  //                 'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+  //                 OPENVIDU_SERVER_URL +
+  //                 '"'
+  //             )
+  //           ) {
+  //             window.location.assign(OPENVIDU_SERVER_URL + "/accept-certificate");
+  //           }
+  //         }
+  //       });
+  //   });
+  // };
 
-  const createToken = (sessionId) => {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({});
-      axios
-        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
-          headers: {
-            Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log("TOKEN", response);
-          resolve(response.data.token);
-        })
-        .catch((error) => reject(error));
-    });
-  };
+  // const createToken = (sessionId) => {
+  //   return new Promise((resolve, reject) => {
+  //     var data = JSON.stringify({});
+  //     axios
+  //       .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
+  //         headers: {
+  //           Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+  //           "Content-Type": "application/json",
+  //         },
+  //       })
+  //       .then((response) => {
+  //         console.log("TOKEN", response);
+  //         resolve(response.data.token);
+  //       })
+  //       .catch((error) => reject(error));
+  //   });
+  // };
 
   const sendSignalReady = () => {
     console.log("!!내준비");
     session.signal({
       data: JSON.stringify({
-        nickname: localUser.getNickname(),
+        streamId: localUser.getStreamManager().stream.streamId,
       }),
       type: "ready",
     });
@@ -487,11 +489,32 @@ function VideoRoomComponent({
 
   const subscribeToReady = () => {
     session.on("signal:ready", (event) => {
-      const nickname = JSON.parse(event.data).nickname;
-      console.log(nickname, localUser.getNickname());
-      if (nickname !== localUser.getNickname()) {
+      const streamId = JSON.parse(event.data).streamId;
+      console.log(streamId, localUser.getStreamManager().stream.streamId);
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 준비");
         setReady((current) => current + 1);
+      }
+    });
+  };
+
+  const sendSignalStart = () => {
+    console.log("!!시작보냄");
+    session.signal({
+      data: JSON.stringify({
+        streamId: localUser.getStreamManager().stream.streamId,
+      }),
+      type: "start",
+    });
+  };
+
+  const subscribeToStart = () => {
+    session.on("signal:start", (event) => {
+      const streamId = JSON.parse(event.data).streamId;
+      console.log(streamId, localUser.getStreamManager().stream.streamId);
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
+        console.log("!!상대 시작");
+        start();
       }
     });
   };
@@ -499,7 +522,7 @@ function VideoRoomComponent({
   const sendSignalHp = (hp) => {
     session.signal({
       data: JSON.stringify({
-        nickname: localUser.getNickname(),
+        streamId: localUser.getStreamManager().stream.streamId,
         hp: hp,
       }),
       type: "hp",
@@ -509,8 +532,8 @@ function VideoRoomComponent({
   const subscribeToHp = () => {
     session.on("signal:hp", (event) => {
       const hp = JSON.parse(event.data).hp;
-      const nickname = JSON.parse(event.data).nickname;
-      if (nickname !== localUser.getNickname()) {
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 HP", hp);
         otherHP = hp;
         setRightPercent((current) => hp);
@@ -522,7 +545,7 @@ function VideoRoomComponent({
     console.log("데미지!!", damage);
     session.signal({
       data: JSON.stringify({
-        nickname: localUser.getNickname(),
+        streamId: localUser.getStreamManager().stream.streamId,
         damage: damage,
       }),
       type: "damage",
@@ -532,10 +555,14 @@ function VideoRoomComponent({
   const subscribeToDamage = () => {
     session.on("signal:damage", (event) => {
       const damage = JSON.parse(event.data).damage;
-      const nickname = JSON.parse(event.data).nickname;
-      if (nickname !== localUser.getNickname()) {
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 Damage", damage);
         setOtherAttack(() => damage);
+        const clearOtherAttack = setInterval(() => {
+          setOtherAttack(0);
+          clearInterval(clearOtherAttack);
+        }, 1000);
       }
     });
   };
@@ -544,7 +571,7 @@ function VideoRoomComponent({
     console.log("공격함!!", attackType);
     session.signal({
       data: JSON.stringify({
-        nickname: localUser.getNickname(),
+        streamId: localUser.getStreamManager().stream.streamId,
         attackType: attackType,
       }),
       type: "attack",
@@ -553,8 +580,8 @@ function VideoRoomComponent({
 
   const subscribeToAttack = () => {
     session.on("signal:attack", (event) => {
-      const nickname = JSON.parse(event.data).nickname;
-      if (nickname !== localUser.getNickname()) {
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 공격");
         const attackType = JSON.parse(event.data).attackType;
         let damage = damages[attackType];
@@ -567,8 +594,12 @@ function VideoRoomComponent({
         myHP -= damage;
         sendSignalHp(myHP);
         sendSignalDamage(damage);
-        setLeftPercent((current) => current - damage);
-        setMyAttack(() => damage);
+        setLeftPercent(myHP);
+        setMyAttack(damage);
+        const clearAttack = setInterval(() => {
+          setMyAttack(0);
+          clearInterval(clearAttack);
+        }, 1000);
         console.log("!!내HP", leftPercent);
       }
     });
@@ -578,7 +609,7 @@ function VideoRoomComponent({
     console.log("방어함!!", defenceType);
     session.signal({
       data: JSON.stringify({
-        nickname: localUser.getNickname(),
+        streamId: localUser.getStreamManager().stream.streamId,
         defenceType: defenceType,
       }),
       type: "defence",
@@ -588,8 +619,8 @@ function VideoRoomComponent({
   const subscribeToDefence = () => {
     session.on("signal:defence", (event) => {
       const defenceType = JSON.parse(event.data).defenceType;
-      const nickname = JSON.parse(event.data).nickname;
-      if (nickname !== localUser.getNickname()) {
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 방어");
         setOtherDefence(() => defenceType);
       }
@@ -626,23 +657,30 @@ function VideoRoomComponent({
 
   const start = () => {
     if (!isTimer) {
+      sendSignalStart();
       setIsTimer(true);
     }
   };
 
-  const end = async () => {
+  const end = () => {
     setIsEnd(true);
-    setResult((current) => current + 1);
-    let result = false;
-    if (myHP === otherHP) {
-      if (myUserName > otherNick) {
+  };
+
+  useEffect(() => {
+    if (isEnd) {
+      let result = false;
+      if (leftPercent === rightPercent) {
+        if (myUserName > otherNick) {
+          result = true;
+        }
+      } else if (leftPercent > rightPercent) {
         result = true;
       }
-    } else if (myHP > otherHP) {
-      result = true;
+      console.log("!!결과", leftPercent, rightPercent);
+      setIsWin(result);
+      setResult((current) => current + 1);
     }
-    setIsWin(result);
-  };
+  }, [isEnd]);
 
   // useEffect(() => {
   //   if (isEnd && result === 1) {

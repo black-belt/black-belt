@@ -8,7 +8,6 @@ import VideoRoomComponent from "../../../components/organisms/VideoRoom/VideoRoo
 function NormalStage() {
   const [result, setResult] = useState(0);
   const [tier, setTier] = useState(undefined);
-  const [token, setToken] = useState(undefined);
   const [isWin, setIsWin] = useState(undefined);
   const [info, setInfo] = useState(undefined);
   const [myInfo, setMyInfo] = useState(undefined);
@@ -27,48 +26,59 @@ function NormalStage() {
 
   const getInfoData = async () => {
     // const data = await axiosInstance.post("/api/battle", {
-    //   id: state.userId,
+    //   hostId: state.hostId,
+    //   guestId: state.guestId,
     //   isHost: state.isHost,
     //   roomSeq: state.roomSeq,
     // });
     // const imHost = state.isHost === 1 ? true : false;
-    const imHost = true;
-    const data = {
-      token: undefined,
-      battleInfo: [
-        {
-          isHost: "true",
-          tierId: 1,
-          userNick: "anonymous9",
-          tierName: "브론즈",
-          userScore: 999,
-          countryName: "china",
-          tierNameE: "bronze",
-          userId: 2,
-          countryId: 3,
-          defaultLang: "K",
-        },
-        {
-          isHost: "false",
-          tierId: 1,
-          userNick: "anonymous11",
-          userProfilePath: "C:\\var\\lib\\jenkins\\upload\\캡처_2022_02_22_15_06_14_185.png",
-          tierName: "브론즈",
-          userScore: 999,
-          countryName: "korea",
-          tierNameE: "bronze",
-          userId: 12,
-          countryId: 1,
-          defaultLang: "K",
-        },
-      ],
-      battleSeq: "5",
-      message: "Success : Enter study room",
-      statusCode: 200,
-    };
+
+    // const imHost = true;
+    // const data = {
+    //   token: undefined,
+    //   battleInfo: [
+    //     {
+    //       isHost: "true",
+    //       tierId: 1,
+    //       userNick: "anonymous9",
+    //       tierName: "브론즈",
+    //       userScore: 999,
+    //       countryName: "korea",
+    //       tierNameE: "bronze",
+    //       userId: 2,
+    //       countryId: 3,
+    //       defaultLang: "K",
+    //     },
+    //     {
+    //       isHost: "false",
+    //       tierId: 1,
+    //       userNick: "anonymous11",
+    //       userProfilePath: "C:\\var\\lib\\jenkins\\upload\\캡처_2022_02_22_15_06_14_185.png",
+    //       tierName: "브론즈",
+    //       userScore: 999,
+    //       countryName: "korea",
+    //       tierNameE: "bronze",
+    //       userId: 12,
+    //       countryId: 1,
+    //       defaultLang: "K",
+    //     },
+    //   ],
+    //   battleSeq: "5",
+    //   message: "Success : Enter study room",
+    //   statusCode: 200,
+    // };
+
+    const data = await axiosInstance.post("/api/battle", {
+      hostId: 3,
+      guestId: 4,
+      isHost: 1,
+      roomSeq: 100,
+    });
+    let imHost = true;
     setInfo(data);
-    setMyInfo(imHost ? data.battleInfo[0] : data.battleInfo[1]);
-    otherNick = imHost ? data.battleInfo[1].userNick : data.battleInfo[0].userNick;
+    console.log("data!!", data);
+    setMyInfo(imHost ? data.BattleInfo[0] : data.BattleInfo[1]);
+    otherNick = imHost ? data.BattleInfo[1].userNick : data.BattleInfo[0].userNick;
   };
 
   useEffect(() => {
@@ -76,7 +86,8 @@ function NormalStage() {
   }, []);
 
   useEffect(() => {
-    if (result === 1) {
+    console.log(result, isWin, "!!??");
+    if (result === 1 && isWin !== undefined) {
       getResultData().then((result) => {
         // setIsWin(false);
         setTier({ tier: tiers[result.tierId], score: result.userScore });
@@ -86,18 +97,21 @@ function NormalStage() {
       // console.log(data, tiers[data.tierId], data.userScore);
       // setTier({ tier: tiers[data.tierId], score: data.userScore });
     }
-  }, [result]);
+  }, [result, isWin]);
 
   const getResultData = async () => {
-    let data = {};
-    // const data = await axiosInstance.post("/api/battle/end", {
-    //   team: "red",
-    //   redWinLoseDraw: "W",
-    //   battleSeq: 5,
-    //   token: token,
-    // });
-    data.tierId = 1;
-    data.userScore = 999;
+    // const imHost = state.isHost === 1 ? true : false;
+    // let data = {};
+    const data = await axiosInstance.post("/api/battle/end", {
+      // team: info.isHost === 1 ? "red" : "blue",
+      team: "red",
+      redWinLoseDraw: isWin ? "W" : "L",
+      // battleSeq: info.battleInfo,
+      battleSeq: info.BattleInfo,
+      token: info.token,
+    });
+    // data.tierId = 1;
+    // data.userScore = 999;
     return data;
   };
 
@@ -119,7 +133,7 @@ function NormalStage() {
           otherNick={otherNick}
         />
       )}
-      {tier !== undefined ? (
+      {tier !== undefined && isWin !== undefined ? (
         <EvaluationTemplateGyeorugi
           isWin={isWin}
           tier={tier}
