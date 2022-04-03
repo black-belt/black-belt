@@ -3,14 +3,12 @@
 // import { token } from "recoils";
 import SockJs from "sockjs-client";
 import StompJs from "stompjs";
-// import Stomp from "stompjs"
 
-// function StartWS() {
-// const user = useRecoilValue(userInfo);
-const sock = new SockJs("http://j6a506.p.ssafy.io:8000/ws-stomp");
+const sock = new SockJs("https://j6a506.p.ssafy.io/stomp/");
 const stomp = StompJs.over(sock);
-// const stompClient: Stomp.Client = Stomp.over(sock)
-// stompClient.debug = () => {};
+
+let Msg = [];
+const recvMsg = () => {};
 
 export const StartWS = (userId) => {
   console.log("here?");
@@ -18,7 +16,8 @@ export const StartWS = (userId) => {
     stomp.connect({}, () => {
       console.log("connected");
       stomp.subscribe(`/sub/api/que/user/${userId}`, (data) => {
-        // const newMessage = JSON.parse(data.body);
+        const newMessage = JSON.parse(data.body);
+        console.log(newMessage);
       });
     });
   } catch (err) {}
@@ -27,14 +26,12 @@ export const StartWS = (userId) => {
   // };
 };
 
-export const Invite = (hostId, guestId, token) => {
+export const Invite = (props) => {
   const data = {
     type: "INVITE",
-    hostId: hostId,
-    guestId: guestId,
-    token: token,
+    hostId: props.hostId,
+    guestId: props.guestId,
+    token: props.token,
   };
-  stomp.send(`pub/api/que/user/${guestId}`, JSON.stringify(data));
+  stomp.send(`pub/api/que/user/${props.guestId}`, JSON.stringify(data));
 };
-// }
-// export default StartWS;

@@ -32,8 +32,13 @@ const UserDetail = (props) => {
     5: "diamond",
     6: "master",
   };
-  console.log(target);
 
+  const data = {
+    token: token,
+    hostId: props.hostId,
+    guestId: target,
+  };
+  console.log(data);
   const SendInvite = async () => {
     const answer = await axiosInstance.get(`/api/que/select/apply/${target}`);
     console.log(answer);
@@ -62,7 +67,7 @@ const UserDetail = (props) => {
             width="115px"
             height="36px"
             able={user.userState}
-            onClick={() => Invite()}
+            onClick={() => Invite(data)}
           >
             {t("apply")}
           </BasicButton>

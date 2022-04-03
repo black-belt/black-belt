@@ -151,7 +151,11 @@ function NormalLobby() {
                     setTargetUser(user.userId === targetUser ? "" : user.userId)
                   }
                 >
-                  <UserDetail userData={user} target={targetUser} />
+                  <UserDetail
+                    userData={user}
+                    target={targetUser}
+                    hostId={myInfo.userId}
+                  />
                   {user.userProfilePath ? (
                     <ImgSize>
                       <ImgWrapper>
