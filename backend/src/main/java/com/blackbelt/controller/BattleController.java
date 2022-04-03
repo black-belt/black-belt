@@ -166,6 +166,7 @@ public class BattleController {
 		String battleSeq  = map.get("battleSeq");
 		String token  = map.get("token");
 		String team = map.get("team");
+		Boolean isRank = map.get("isRank").equals("1");
 		
 		// 1. 세션정보가져와서제거
 		Optional<BattleHistoryDto> bhd = battleRepo.findById(battleSeq);
@@ -189,8 +190,8 @@ public class BattleController {
 			resultMap.put("msg", "FAIL REMOVE SESSION");
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.CONFLICT);
 		}
-		
-		resultMap = battleService.manageBattleHistory(bhd.get(), winOrLose, team.equals("red"));
+		if(isRank)
+			resultMap = battleService.manageBattleHistory(bhd.get(), winOrLose, team.equals("red"));
 		
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
