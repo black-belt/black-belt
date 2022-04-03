@@ -3,7 +3,7 @@ import Icon from "components/atoms/Icons/CustomIcon";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { battleToken, gyeorugiToken, userInfo } from "recoils";
+import { battleToken, gyeorugiToken, token, userInfo } from "recoils";
 import axiosInstance from "utils/API";
 import { colors } from "_foundation";
 import {
@@ -40,13 +40,14 @@ function NormalLobby() {
   const [userList, setUserList] = useState(null);
   const [targetUser, setTargetUser] = useState("");
   const setGyeorugiToken = useSetRecoilState(battleToken);
-  const token = useRecoilValue(gyeorugiToken);
+  // const token = useRecoilValue(gyeorugiToken);
   const myInfo = useRecoilValue(userInfo);
   const ImgURL = process.env.REACT_APP_IMAGE_URL;
 
   useEffect(() => {
     axiosInstance.get(`/api/que/select/ready/${myInfo.userId}`).then((res) => {
       setGyeorugiToken(res);
+      // localStorage.setItem("blackbelt_token", { gyeorugiToken: res });
     });
   }, []);
 
