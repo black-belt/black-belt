@@ -60,7 +60,7 @@ public class SocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("https://j6a506.p.ssafy.io/ws-stomp").setAllowedOriginPatterns("*")			//.setAllowedOrigins("*")
+        registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("*")			//.setAllowedOrigins("*")
                 .withSockJS();
     }
 }
