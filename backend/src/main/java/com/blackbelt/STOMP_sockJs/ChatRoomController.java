@@ -25,24 +25,28 @@ import lombok.RequiredArgsConstructor;
 import com.blackbelt.model.service.UserService;
 import com.blackbelt.model.UserDto;
 import com.blackbelt.model.UserCrudRepository;
+import com.blackbelt.STOMP_sockJs.RBattleRoomRepository;
 
 
 // 세션 방 컨트롤러
 
 //@RequiredArgsConstructor
-@RestController
+@Controller					// @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/que")			//chat
 public class ChatRoomController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	
+	//private final RBattleRoomRepository rBattleRoomRepository;
 	//private final SBattleRoomRepository sBattleRoomRepository;
 	//private final UserSessionRepository userSessionRepository;
 	//private final UserCrudRepository userRepo;
 	
 	@Autowired
 	SBattleRoomRepository sBattleRoomRepository;
+	@Autowired
+	RBattleRoomRepository rBattleRoomRepository;
 	@Autowired
 	UserSessionRepository userSessionRepository;
 	@Autowired
@@ -95,10 +99,43 @@ public class ChatRoomController {
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}	
+	
+	// [랜덤큐] 상대 찾기 API
+	@GetMapping("/que/random/{userId}")
+	public ResponseEntity<Map<String, Object>> queRandom(@PathVariable String userId){
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		// 실패, 성공 여부 , 상대 userId + 상대 user 정보 
+		// 임시 더미 데이터 저장 
+		//rBattleRoomRepository.createRBattleRoom("other", "bronze"); 
+		//rBattleRoomRepository.createRBattleRoom("other", "silver"); 
+		//rBattleRoomRepository.createRBattleRoom("gold", "gold"); 
+		//rBattleRoomRepository.createRBattleRoom("pla", "platinum"); 
+		//rBattleRoomRepository.createRBattleRoom("dia", "Diamond"); 
+		
+		try {
+			RBattleRoom other= rBattleRoomRepository.matchBattle(userId, "bronze");
+			if(other!=null) {
+				resultMap.put("otherId:",other.getUserId());
+				status = HttpStatus.OK;
+			}else {
+				status = HttpStatus.ACCEPTED;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	
 	/*
 	// 채팅 리스트 화면
-	@GetMapping("/room")
+	@GetMapping("/room")				// responsebody 어노테이션 붙어있으면 절대 안됨 !!! 
 	public String rooms(Model model) {
+		System.out.println("룸에 왔다 ");
 		return "room";			//"/chat/room";
 	}
 	// 모든 채팅방 목록 반환

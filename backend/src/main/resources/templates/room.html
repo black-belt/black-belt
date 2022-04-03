@@ -13,6 +13,8 @@
     </style>
   </head>
   <body>
+  	<div>안녕 발 해결되주라</div>
+  	<script></script>
     <div class="container" id="app" v-cloak>
         <div class="row">
             <div class="col-md-12">
@@ -30,7 +32,7 @@
         </div>
         <ul class="list-group">
             <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.userId" v-on:click="enterRoom(item.userId)">
-                {{item.name}}
+                {{item.userId}}
             </li>
         </ul>
     </div>
@@ -56,7 +58,7 @@
                 	axios.get('/api/que/users').then(response => { this.chatrooms = response.data; });
                 },
                 // 내가 추가함
-                
+                /*
                 recvMessage: function(recv) {
                     this.messages.unshift({"type":recv.type,"userId":recv.userId,"message":recv.message})
                 },
@@ -76,7 +78,7 @@
                         .then(
                             response => {
                                 alert(response.data.userId+"방 개설에 성공하였습니다")
-                                //this.room_name = '';	// 방 이름 초기화 해줌 
+                                this.room_name = '';	// 방 이름 초기화 해줌 
                                 this.findAllRoom();
                             }
                         )
@@ -93,7 +95,7 @@
         	                console.log("에러다 어쩔래");
         	            });
                     }
-                },
+                },*/
                 enterRoom: function(userId) {
                     var sender = prompt('대화명을 입력해주세요.');
                     if(sender != "") {
