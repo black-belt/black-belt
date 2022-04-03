@@ -62,7 +62,7 @@ function VideoRoomComponent({
     3: 30, //하단발차기
     11: 70, //상단주먹
     12: 50, //중단주먹
-    "Inward Punch": 500,
+    "Inward Punch": 50,
   };
   let publisher;
   let myHP = 1000;
@@ -538,7 +538,7 @@ function VideoRoomComponent({
       if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 HP", hp);
         otherHP = hp;
-        setRightPercent((current) => hp);
+        setRightPercent(hp);
       }
     });
   };
@@ -658,8 +658,8 @@ function VideoRoomComponent({
   };
 
   const start = () => {
-    if (!isTimer) {
-      sendSignalStart();
+    if (!isTimer && !isEnd) {
+      // sendSignalStart();
       setIsTimer(true);
     }
   };

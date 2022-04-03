@@ -6,7 +6,9 @@ function EvaluationTemplateGyeorugi({ isWin, restart, home, tier }) {
   return (
     <Background>
       <Middle>
-        <Text isWin={isWin}>{isWin ? "Victory" : "Defeat"}</Text>
+        <Text isWin={isWin} tier={tier}>
+          {isWin ? "Victory" : "Defeat"}
+        </Text>
         {tier && (
           <TierContainer>
             <TierImage src={`/images/tier/${tier.tier}.png`} />
@@ -70,7 +72,7 @@ const Middle = styled.div`
 
 const Text = styled.div`
   position: absolute;
-  top: 10%;
+  top: ${(props) => (props.tier ? "10%" : "20%")};
   font-size: 7rem;
   font-family: Dry Brush;
   font-weight: ${fontWeight.extrabold};

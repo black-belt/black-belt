@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "utils/API";
 import VideoRoomComponent from "../../../components/organisms/VideoRoom/VideoRoomComponent";
 
-function NormalStage() {
+function GyeorugiNormalStage() {
   const [result, setResult] = useState(0);
   const [tier, setTier] = useState(undefined);
   const [isWin, setIsWin] = useState(undefined);
@@ -71,14 +71,14 @@ function NormalStage() {
     const data = await axiosInstance.post("/api/battle", {
       hostId: 3,
       guestId: 4,
-      isHost: 1,
-      roomSeq: 100,
+      isHost: 0,
+      roomSeq: "225",
     });
     let imHost = true;
     setInfo(data);
     console.log("data!!", data);
-    setMyInfo(imHost ? data.BattleInfo[0] : data.BattleInfo[1]);
-    otherNick = imHost ? data.BattleInfo[1].userNick : data.BattleInfo[0].userNick;
+    setMyInfo(imHost ? data.battleInfo[0] : data.battleInfo[1]);
+    otherNick = imHost ? data.battleInfo[1].userNick : data.battleInfo[0].userNick;
   };
 
   useEffect(() => {
@@ -107,8 +107,9 @@ function NormalStage() {
       team: "red",
       redWinLoseDraw: isWin ? "W" : "L",
       // battleSeq: info.battleInfo,
-      battleSeq: info.BattleInfo,
+      battleSeq: info.battleSeq,
       token: info.token,
+      isRank: 0,
     });
     // data.tierId = 1;
     // data.userScore = 999;
@@ -148,4 +149,4 @@ function NormalStage() {
     </>
   );
 }
-export default NormalStage;
+export default GyeorugiNormalStage;

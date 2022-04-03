@@ -128,7 +128,7 @@ const VideoLayout = styled.div`
   min-width: 400px !important;
   font-family: Dry Brush;
   color: #ed4c5c;
-  font-size: 3rem;
+  font-size: 5rem;
   /* position: relative; */
 `;
 

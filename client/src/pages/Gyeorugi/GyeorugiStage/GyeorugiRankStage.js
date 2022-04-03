@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "utils/API";
 import VideoRoomComponent from "../../../components/organisms/VideoRoom/VideoRoomComponent";
 
-function RankStage() {
+function GyeorugiRankStage() {
   const [result, setResult] = useState(0);
   const [tier, setTier] = useState(undefined);
   const [isWin, setIsWin] = useState(undefined);
@@ -109,6 +109,7 @@ function RankStage() {
       // battleSeq: info.battleInfo,
       battleSeq: info.BattleInfo,
       token: info.token,
+      isRank: 1,
     });
     // data.tierId = 1;
     // data.userScore = 999;
@@ -148,4 +149,4 @@ function RankStage() {
     </>
   );
 }
-export default RankStage;
+export default GyeorugiRankStage;
