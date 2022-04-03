@@ -2,14 +2,14 @@ import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import * as tmPose from "@teachablemachine/pose";
 
-function UserVideo({ answer, testResult, isPass, stageId }) {
+function UserVideo({ answer, testResult, isPass, aiId }) {
   const videoRef = useRef(null);
+  const modelURL = `/models/basics/${aiId}/model.json`;
+  const metadataURL = `/models/basics/${aiId}/metadata.json`;
   let isFindMax = false;
   let maxProbability = 0.0;
   let frameCnt = 0;
   let answerNum = 0;
-  const modelURL = `/models/basics/${stageId}/model.json`;
-  const metadataURL = `/models/basics/${stageId}/metadata.json`;
 
   const [model, setModel] = useState(undefined);
   const [webCamElement, setWebCamElement] = useState(undefined);
@@ -71,6 +71,7 @@ function UserVideo({ answer, testResult, isPass, stageId }) {
 
   useEffect(() => {
     if (webCamElement !== undefined && model !== undefined) {
+      console.log(aiId);
       run();
     }
   }, [webCamElement, model]);

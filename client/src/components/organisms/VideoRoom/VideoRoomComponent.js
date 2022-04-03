@@ -1,12 +1,12 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./VideoRoomComponent.css";
 import { OpenVidu, Subscriber } from "openvidu-browser";
 import UserModel from "pages/Gyeorugi/GyeorugiStage/models/user-model";
 import OpenViduLayout from "components/molecules/Layout/openvidu-layout";
 import DialogExtensionComponent from "components/molecules/DialogExtension/DialogExtension";
-import StreamComponent from "components/molecules/Stream/StreamComponent";
 import GyeorugiStageTempalte from "components/templates/GyeorugiStageTemplate";
+import { useLocation } from "react-router-dom";
 
 var localUser = new UserModel();
 
@@ -16,6 +16,7 @@ function VideoRoomComponent({
   sessionName,
   user,
   token,
+  country,
   joinSession,
   leaveSession,
 }) {
@@ -23,14 +24,17 @@ function VideoRoomComponent({
     ? openviduServerUrl
     : "https://" + window.location.hostname + ":4443";
   const OPENVIDU_SERVER_SECRET = openviduSecret ? openviduSecret : "MY_SECRET";
+  const state = useLocation().state;
   let hasBeenUpdated = false;
   let layout = new OpenViduLayout();
-  let sessionId = sessionName ? sessionName : "SessionA";
+  let sessionId = sessionName ? sessionName : "SessionQ";
   let userName = user ? user : "OpenVidu_User" + Math.floor(Math.random() * 100);
+  let userCountry = country ? country : "korea";
   let remotes = [];
   let localUserAccessAllowed = false;
   const [mySessionId, setMySessionId] = useState(sessionId);
   const [myUserName, setMyUserName] = useState(userName);
+  const [myCountry, setMyCountry] = useState(userCountry);
   const [session, setSession] = useState(undefined);
   const [myLocalUser, setMyLocalUser] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
@@ -39,7 +43,28 @@ function VideoRoomComponent({
   const [messageReceived, setMessageReceived] = useState("");
   const [showExtensionDialog, setShowExtensionDialog] = useState(false);
   const [OV, setOV] = useState(undefined);
+  const [isTimer, setIsTimer] = useState(false);
+  const [ready, setReady] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
+  const [answerAttack, setAnswerAttack] = useState(["Inward Punch"]);
+  const [answerDefence, setAnswerDefence] = useState(["Inward Block"]);
+  const [leftPercent, setLeftPercent] = useState(1000);
+  const [rightPercent, setRightPercent] = useState(1000);
+  const [myAttack, setMyAttack] = useState(0);
+  const [otherAttack, setOtherAttack] = useState(0);
+  const [myDefence, setMyDefence] = useState(0);
+  const [otherDefence, setOtherDefence] = useState(0);
+  const [usersInfo, setUsersInfo] = useState([]);
+  const damages = {
+    1: 100, //상단발차기
+    2: 60, //중단발차기
+    3: 30, //하단발차기
+    11: 70, //상단주먹
+    12: 50, //중단주먹
+    "Inward Punch": 50,
+  };
   let publisher;
+  let myHP = 1000;
   //   let session;
 
   useEffect(() => {
@@ -66,8 +91,8 @@ function VideoRoomComponent({
       window.removeEventListener("beforeunload", onbeforeunload);
       window.removeEventListener("resize", updateLayout);
       window.removeEventListener("resize", checkSize);
-      console.log("BB", OV);
-      console.log("BB", session);
+      // console.log("BB", OV);
+      // console.log("BB", session);
       myLeaveSession();
     };
   }, []);
@@ -81,7 +106,6 @@ function VideoRoomComponent({
     setOV((current) => {
       return newOV;
     });
-    // session = newOV.initSession();
     setSession((current) => {
       return newOV.initSession();
     });
@@ -96,7 +120,8 @@ function VideoRoomComponent({
   }, [session, OV]);
 
   const connectToSession = () => {
-    if (token !== undefined) {
+    //state.token
+    if (token) {
       console.log("token received: ", token);
       connect(token);
     } else {
@@ -122,9 +147,9 @@ function VideoRoomComponent({
 
   const connect = (token) => {
     session
-      .connect(token, { clientData: myUserName })
+      .connect(token, { clientData: myUserName, country: myCountry })
       .then(() => {
-        console.log("!!!", OV);
+        // console.log("!!!", OV);
         connectWebCam();
       })
       .catch((error) => {
@@ -142,7 +167,6 @@ function VideoRoomComponent({
   };
 
   const connectWebCam = async () => {
-    console.log("!!!!", OV);
     var devices = await OV.getDevices();
     var videoDevices = devices.filter((device) => device.kind === "videoinput");
 
@@ -167,14 +191,20 @@ function VideoRoomComponent({
         });
       });
     }
-    console.log("여기pub", publisher);
 
+    //state.name
     localUser.setNickname(myUserName);
     localUser.setConnectionId(session.connection.connectionId);
     localUser.setScreenShareActive(false);
     localUser.setStreamManager(publisher);
+    //state.country
+    localUser.setCountry(myCountry);
     subscribeToUserChanged();
     subscribeToStreamDestroyed();
+    subscribeToReady();
+    subscribeToAttack();
+    subscribeToDefence();
+    subscribeToHp();
     sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
 
     setCurrentVideoDevice(() => videoDevices[0]);
@@ -207,6 +237,7 @@ function VideoRoomComponent({
           isAudioActive: myLocalUser.isAudioActive(),
           isVideoActive: myLocalUser.isVideoActive(),
           nickname: myLocalUser.getNickname(),
+          country: myLocalUser.getCountry(),
           isScreenShareActive: myLocalUser.isScreenShareActive(),
         });
       }
@@ -231,29 +262,9 @@ function VideoRoomComponent({
     setSubscribers([]);
     setMySessionId("SessionA");
     setMyUserName("OpenVidu_User" + Math.floor(Math.random() * 100));
+    setMyCountry("korea");
     setMyLocalUser(undefined);
     if (leaveSession) leaveSession();
-  };
-
-  const camStatusChanged = () => {
-    localUser.setVideoActive(!localUser.isVideoActive());
-    localUser.getStreamManager().publishVideo(localUser.isVideoActive());
-    sendSignalUserChanged({ isVideoActive: localUser.isVideoActive() });
-    setMyLocalUser(() => localUser);
-  };
-
-  const micStatusChanged = () => {
-    localUser.setAudioActive(!localUser.isAudioActive());
-    localUser.getStreamManager().publishAudio(localUser.isAudioActive());
-    sendSignalUserChanged({ isAudioActive: localUser.isAudioActive() });
-    setMyLocalUser(() => localUser);
-  };
-
-  const nicknameChanged = (nickname) => {
-    let localUser = myLocalUser;
-    localUser.setNickname(nickname);
-    setMyLocalUser(() => localUser);
-    sendSignalUserChanged({ nickname: myLocalUser.getNickname() });
   };
 
   const deleteSubscriber = (stream) => {
@@ -267,7 +278,7 @@ function VideoRoomComponent({
   };
 
   const subscribeToStreamCreated = () => {
-    console.log("여기session", session);
+    // console.log("여기session", session);
     session.on("streamCreated", (event) => {
       const subscriber = session.subscribe(event.stream, undefined);
       // var subscribers = this.state.subscribers;
@@ -280,7 +291,9 @@ function VideoRoomComponent({
       newUser.setConnectionId(event.stream.connection.connectionId);
       newUser.setType("remote");
       const nickname = event.stream.connection.data.split("%")[0];
+      console.log("여기!!", event.stream.connection.data.split("%")[0]);
       newUser.setNickname(JSON.parse(nickname).clientData);
+      newUser.setCountry(JSON.parse(nickname).country);
       remotes.push(newUser);
       if (localUserAccessAllowed) {
         updateSubscribers();
@@ -317,6 +330,9 @@ function VideoRoomComponent({
           if (data.nickname !== undefined) {
             user.setNickname(data.nickname);
           }
+          if (data.country !== undefined) {
+            user.setCountry(data.country);
+          }
           if (data.isScreenShareActive !== undefined) {
             user.setScreenShareActive(data.isScreenShareActive);
           }
@@ -343,116 +359,8 @@ function VideoRoomComponent({
     session.signal(signalOptions);
   };
 
-  const toggleFullscreen = () => {
-    const document = window.document;
-    const fs = document.getElementById("container");
-    if (
-      !document.fullscreenElement &&
-      !document.mozFullScreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.msFullscreenElement
-    ) {
-      if (fs.requestFullscreen) {
-        fs.requestFullscreen();
-      } else if (fs.msRequestFullscreen) {
-        fs.msRequestFullscreen();
-      } else if (fs.mozRequestFullScreen) {
-        fs.mozRequestFullScreen();
-      } else if (fs.webkitRequestFullscreen) {
-        fs.webkitRequestFullscreen();
-      }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
-    }
-  };
-
-  const switchCamera = async () => {
-    try {
-      const devices = await OV.getDevices();
-      var videoDevices = devices.filter((device) => device.kind === "videoinput");
-
-      if (videoDevices && videoDevices.length > 1) {
-        var newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== currentVideoDevice.deviceId
-        );
-
-        if (newVideoDevice.length > 0) {
-          // Creating a new publisher with specific videoSource
-          // In mobile devices the default and first camera is the front one
-          var newPublisher = OV.initPublisher(undefined, {
-            audioSource: undefined,
-            videoSource: newVideoDevice[0].deviceId,
-            publishAudio: localUser.isAudioActive(),
-            publishVideo: localUser.isVideoActive(),
-            mirror: true,
-          });
-
-          //newPublisher.once("accessAllowed", () => {
-          await session.unpublish(localUser.getStreamManager());
-          await session.publish(newPublisher);
-          myLocalUser.setStreamManager(newPublisher);
-          setCurrentVideoDevice(() => newVideoDevice);
-          setMyLocalUser(() => localUser);
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const screenShare = () => {
-    const videoSource = navigator.userAgent.indexOf("Firefox") !== -1 ? "window" : "screen";
-    const publisher = OV.initPublisher(
-      undefined,
-      {
-        videoSource: videoSource,
-        publishAudio: localUser.isAudioActive(),
-        publishVideo: localUser.isVideoActive(),
-        mirror: false,
-      },
-      (error) => {
-        if (error && error.name === "SCREEN_EXTENSION_NOT_INSTALLED") {
-          alert("Your browser does not support screen EXTENSION");
-        } else if (error && error.name === "SCREEN_SHARING_NOT_SUPPORTED") {
-          alert("Your browser does not support screen sharing");
-        } else if (error && error.name === "SCREEN_EXTENSION_DISABLED") {
-          alert("You need to enable screen sharing extension");
-        } else if (error && error.name === "SCREEN_CAPTURE_DENIED") {
-          alert("You need to choose a window or application to share");
-        }
-      }
-    );
-
-    publisher.once("accessAllowed", () => {
-      session.unpublish(localUser.getStreamManager());
-      localUser.setStreamManager(publisher);
-      session.publish(localUser.getStreamManager()).then(() => {
-        localUser.setScreenShareActive(true);
-        setMyLocalUser(() => localUser);
-      });
-      sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
-    });
-    publisher.on("streamPlaying", () => {
-      updateLayout();
-      publisher.videos[0].video.parentElement.classList.remove("custom-class");
-    });
-  };
-
   const closeDialogExtension = () => {
     setShowExtensionDialog(false);
-  };
-
-  const stopScreenShare = () => {
-    session.unpublish(localUser.getStreamManager());
-    connectWebCam();
   };
 
   const checkSomeoneShareScreen = () => {
@@ -492,10 +400,6 @@ function VideoRoomComponent({
     updateLayout();
   };
 
-  const checkNotification = (event) => {
-    setMessageReceived(chatDisplay === "none");
-  };
-
   const checkSize = () => {
     if (document.getElementById("layout").offsetWidth <= 700 && !hasBeenUpdated) {
       toggleChat("none");
@@ -506,7 +410,7 @@ function VideoRoomComponent({
     }
   };
 
-  const getToken = () => {
+  const getToken = async () => {
     return createSession(mySessionId).then((sessionId) => createToken(sessionId));
   };
 
@@ -569,6 +473,128 @@ function VideoRoomComponent({
     });
   };
 
+  const sendSignalReady = () => {
+    console.log("!!내준비");
+    session.signal({
+      data: JSON.stringify({
+        nickname: localUser.getNickname(),
+      }),
+      type: "ready",
+    });
+  };
+
+  const subscribeToReady = () => {
+    session.on("signal:ready", (event) => {
+      const nickname = JSON.parse(event.data).nickname;
+      console.log(nickname, localUser.getNickname());
+      if (nickname !== localUser.getNickname()) {
+        console.log("!!상대 준비");
+        setReady((current) => current + 1);
+      }
+    });
+  };
+
+  const sendSignalHp = (hp) => {
+    session.signal({
+      data: JSON.stringify({
+        nickname: localUser.getNickname(),
+        hp: hp,
+      }),
+      type: "hp",
+    });
+  };
+
+  const subscribeToHp = () => {
+    session.on("signal:hp", (event) => {
+      const hp = JSON.parse(event.data).hp;
+      const nickname = JSON.parse(event.data).nickname;
+      if (nickname !== localUser.getNickname()) {
+        console.log("!!상대 HP", hp);
+        setRightPercent((current) => hp);
+      }
+    });
+  };
+
+  const sendSignalAttack = (attackType) => {
+    console.log("공격함!!", attackType);
+    session.signal({
+      data: JSON.stringify({
+        nickname: localUser.getNickname(),
+        attackType: attackType,
+      }),
+      type: "attack",
+    });
+  };
+
+  const subscribeToAttack = () => {
+    session.on("signal:attack", (event) => {
+      const nickname = JSON.parse(event.data).nickname;
+      if (nickname !== localUser.getNickname()) {
+        console.log("!!상대 공격");
+        const attackType = JSON.parse(event.data).attackType;
+        let damage = damages[attackType];
+        if (myDefence === attackType % 10) {
+          //방어성공
+          damage = Math.floor(damage * 0.3);
+        }
+        setOtherAttack((current) => attackType);
+        myHP -= damage;
+        sendSignalHp(myHP);
+        setLeftPercent((current) => current - damage);
+        console.log("!!내HP", leftPercent);
+      }
+    });
+  };
+
+  const sendSignalDefence = (defenceType) => {
+    console.log("방어함!!", defenceType);
+    session.signal({
+      data: JSON.stringify({
+        nickname: localUser.getNickname(),
+        defenceType: defenceType,
+      }),
+      type: "defence",
+    });
+  };
+
+  const subscribeToDefence = () => {
+    session.on("signal:defence", (event) => {
+      const defenceType = JSON.parse(event.data).defenceType;
+      const nickname = JSON.parse(event.data).nickname;
+      if (nickname !== localUser.getNickname()) {
+        console.log("!!상대 방어");
+        setOtherDefence((current) => defenceType);
+      }
+    });
+  };
+
+  const attack = (attackType) => {
+    sendSignalAttack(attackType);
+    setMyAttack(() => attackType);
+  };
+
+  const defence = (defenceType) => {
+    sendSignalDefence(defenceType);
+    setMyDefence((current) => defenceType);
+  };
+
+  useEffect(() => {
+    if (ready === 2) {
+      start();
+    }
+  }, [ready]);
+
+  const startMe = () => {
+    setReady((current) => current + 1);
+    sendSignalReady();
+  };
+
+  const start = () => {
+    if (!isTimer) {
+      setIsTimer(true);
+    }
+  };
+
   const newLocalUser = myLocalUser;
 
   return (
@@ -582,25 +608,19 @@ function VideoRoomComponent({
         }
         localUser={newLocalUser}
         subscribers={subscribers}
+        guide={"상대방에 대한 예의를 갖추고 인사를 하면 겨루기가 시작됩니다."}
+        isTimer={isTimer}
+        setIsTimer={setIsTimer}
+        leftPercent={leftPercent}
+        rightPercent={rightPercent}
+        answerAttack={answerAttack}
+        answerDefence={answerDefence}
+        isEnd={isEnd}
+        isStart={isTimer}
+        start={startMe}
+        attack={attack}
+        defence={defence}
       />
-      {/* <div className="container" id="container">
-        <DialogExtensionComponent
-          showDialog={showExtensionDialog}
-          cancelClicked={closeDialogExtension}
-        />
-        <div id="layout" className="bounds">
-          {newLocalUser !== undefined && newLocalUser.getStreamManager() !== undefined && (
-            <div className="OT_root OT_publisher custom-class" id="localUser">
-              <StreamComponent user={newLocalUser} />
-            </div>
-          )}
-          {subscribers.map((sub, i) => (
-            <div key={i} className="OT_root OT_publisher custom-class" id="remoteUsers">
-              <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
-            </div>
-          ))}
-        </div>
-      </div> */}
     </>
   );
 }

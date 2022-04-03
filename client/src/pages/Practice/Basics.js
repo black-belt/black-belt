@@ -20,7 +20,15 @@ function Basics() {
   };
 
   const goToStage = (stageId) => {
-    navigate(`/practice/basics/stage`, { state: { stageId: stageId } });
+    let aiId = 1;
+    if (stageId === "3") {
+      aiId = 2;
+    } else if (stageId === "5") {
+      aiId = 3;
+    } else if (stageId === "6" || stageId === "7") {
+      aiId = 4;
+    }
+    navigate(`/practice/basics/stage`, { state: { stageId: stageId, aiId: aiId } });
   };
 
   return (
@@ -33,16 +41,8 @@ function Basics() {
                 onClick={goToStage}
                 key={index}
                 stageId={value.basic_id}
-                title={
-                  t("language") === "KOR"
-                    ? value.basic_name
-                    : value.basic_name_e
-                }
-                desc={
-                  t("language") === "KOR"
-                    ? value.basic_explain
-                    : value.basic_explain_e
-                }
+                title={t("language") === "KOR" ? value.basic_name : value.basic_name_e}
+                desc={t("language") === "KOR" ? value.basic_explain : value.basic_explain_e}
                 img="/images/card2.png"
                 clear={value.basic_clear}
                 score={value.basic_score}
