@@ -6,33 +6,35 @@ import UserModel from "pages/Gyeorugi/GyeorugiStage/models/user-model";
 import OpenViduLayout from "components/molecules/Layout/openvidu-layout";
 import DialogExtensionComponent from "components/molecules/DialogExtension/DialogExtension";
 import GyeorugiStageTempalte from "components/templates/GyeorugiStageTemplate";
-import { useLocation } from "react-router-dom";
 
 var localUser = new UserModel();
 
 function VideoRoomComponent({
-  openviduServerUrl,
-  openviduSecret,
-  sessionName,
-  user,
+  // openviduServerUrl, //X
+  // openviduSecret, //X
+  // sessionName, //X
+  // user, //X
+  // country, //X
+  // joinSession, //X
+  // leaveSession, //X
+  setResult,
+  setIsWin,
+  info,
   token,
-  country,
-  joinSession,
-  leaveSession,
+  otherNick,
 }) {
-  const OPENVIDU_SERVER_URL = openviduServerUrl
-    ? openviduServerUrl
-    : "https://" + window.location.hostname + ":4443";
-  const OPENVIDU_SERVER_SECRET = openviduSecret ? openviduSecret : "MY_SECRET";
-  const state = useLocation().state;
+  // const OPENVIDU_SERVER_URL = openviduServerUrl
+  //   ? openviduServerUrl
+  //   : "https://" + window.location.hostname + ":4443";
+  // const OPENVIDU_SERVER_SECRET = openviduSecret ? openviduSecret : "MY_SECRET";
   let hasBeenUpdated = false;
   let layout = new OpenViduLayout();
-  let sessionId = sessionName ? sessionName : "SessionQ";
-  let userName = user ? user : "OpenVidu_User" + Math.floor(Math.random() * 100);
-  let userCountry = country ? country : "korea";
+  // let sessionId = sessionName ? sessionName : "SessionTE";
+  let userName = info.userNick ? info.userNick : "OpenVidu_User" + Math.floor(Math.random() * 100);
+  let userCountry = info.countryName ? info.countryName : "korea";
   let remotes = [];
   let localUserAccessAllowed = false;
-  const [mySessionId, setMySessionId] = useState(sessionId);
+  // const [mySessionId, setMySessionId] = useState(sessionId);
   const [myUserName, setMyUserName] = useState(userName);
   const [myCountry, setMyCountry] = useState(userCountry);
   const [session, setSession] = useState(undefined);
@@ -46,15 +48,14 @@ function VideoRoomComponent({
   const [isTimer, setIsTimer] = useState(false);
   const [ready, setReady] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
-  const [answerAttack, setAnswerAttack] = useState(["Inward Punch"]);
-  const [answerDefence, setAnswerDefence] = useState(["Inward Block"]);
   const [leftPercent, setLeftPercent] = useState(1000);
   const [rightPercent, setRightPercent] = useState(1000);
   const [myAttack, setMyAttack] = useState(0);
   const [otherAttack, setOtherAttack] = useState(0);
   const [myDefence, setMyDefence] = useState(0);
   const [otherDefence, setOtherDefence] = useState(0);
-  const [usersInfo, setUsersInfo] = useState([]);
+  const answerAttack = ["Inward Punch"];
+  const answerDefence = ["Inward Block"];
   const damages = {
     1: 100, //상단발차기
     2: 60, //중단발차기
@@ -65,7 +66,7 @@ function VideoRoomComponent({
   };
   let publisher;
   let myHP = 1000;
-  //   let session;
+  let otherHP = 1000;
 
   useEffect(() => {
     const openViduLayoutOptions = {
@@ -121,6 +122,7 @@ function VideoRoomComponent({
 
   const connectToSession = () => {
     //state.token
+    console.log("token!!", token);
     if (token) {
       console.log("token received: ", token);
       connect(token);
@@ -146,13 +148,15 @@ function VideoRoomComponent({
   };
 
   const connect = (token) => {
+    console.log("!!connect", session);
     session
       .connect(token, { clientData: myUserName, country: myCountry })
       .then(() => {
-        // console.log("!!!", OV);
+        console.log("!!!then", OV);
         connectWebCam();
       })
       .catch((error) => {
+        console.log("!!error");
         if (error) {
           error({
             error: error.error,
@@ -185,9 +189,9 @@ function VideoRoomComponent({
         session.publish(publisher).then(() => {
           updateSubscribers();
           localUserAccessAllowed = true;
-          if (joinSession) {
-            joinSession();
-          }
+          // if (joinSession) {
+          //   joinSession();
+          // }
         });
       });
     }
@@ -205,6 +209,8 @@ function VideoRoomComponent({
     subscribeToAttack();
     subscribeToDefence();
     subscribeToHp();
+    subscribeToDamage();
+    subscribeToStart();
     sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
 
     setCurrentVideoDevice(() => videoDevices[0]);
@@ -260,11 +266,11 @@ function VideoRoomComponent({
     OV = null;
     setSession(undefined);
     setSubscribers([]);
-    setMySessionId("SessionA");
+    // setMySessionId("SessionA");
     setMyUserName("OpenVidu_User" + Math.floor(Math.random() * 100));
     setMyCountry("korea");
     setMyLocalUser(undefined);
-    if (leaveSession) leaveSession();
+    // if (leaveSession) leaveSession();
   };
 
   const deleteSubscriber = (stream) => {
@@ -291,7 +297,7 @@ function VideoRoomComponent({
       newUser.setConnectionId(event.stream.connection.connectionId);
       newUser.setType("remote");
       const nickname = event.stream.connection.data.split("%")[0];
-      console.log("여기!!", event.stream.connection.data.split("%")[0]);
+      // console.log("여기!!", event.stream.connection.data.split("%")[0]);
       newUser.setNickname(JSON.parse(nickname).clientData);
       newUser.setCountry(JSON.parse(nickname).country);
       remotes.push(newUser);
@@ -411,73 +417,73 @@ function VideoRoomComponent({
   };
 
   const getToken = async () => {
-    return createSession(mySessionId).then((sessionId) => createToken(sessionId));
+    // return createSession(mySessionId).then((sessionId) => createToken(sessionId));
   };
 
-  const createSession = (sessionId) => {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({ customSessionId: sessionId });
-      axios
-        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
-          headers: {
-            Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log("CREATE SESION", response);
-          resolve(response.data.id);
-        })
-        .catch((response) => {
-          var error = Object.assign({}, response);
-          if (error.response && error.response.status === 409) {
-            resolve(sessionId);
-          } else {
-            console.log(error);
-            console.warn(
-              "No connection to OpenVidu Server. This may be a certificate error at " +
-                OPENVIDU_SERVER_URL
-            );
-            if (
-              window.confirm(
-                'No connection to OpenVidu Server. This may be a certificate error at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"\n\nClick OK to navigate and accept it. ' +
-                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"'
-              )
-            ) {
-              window.location.assign(OPENVIDU_SERVER_URL + "/accept-certificate");
-            }
-          }
-        });
-    });
-  };
+  // const createSession = (sessionId) => {
+  //   return new Promise((resolve, reject) => {
+  //     var data = JSON.stringify({ customSessionId: sessionId });
+  //     axios
+  //       .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
+  //         headers: {
+  //           Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+  //           "Content-Type": "application/json",
+  //         },
+  //       })
+  //       .then((response) => {
+  //         console.log("CREATE SESION", response);
+  //         resolve(response.data.id);
+  //       })
+  //       .catch((response) => {
+  //         var error = Object.assign({}, response);
+  //         if (error.response && error.response.status === 409) {
+  //           resolve(sessionId);
+  //         } else {
+  //           console.log(error);
+  //           console.warn(
+  //             "No connection to OpenVidu Server. This may be a certificate error at " +
+  //               OPENVIDU_SERVER_URL
+  //           );
+  //           if (
+  //             window.confirm(
+  //               'No connection to OpenVidu Server. This may be a certificate error at "' +
+  //                 OPENVIDU_SERVER_URL +
+  //                 '"\n\nClick OK to navigate and accept it. ' +
+  //                 'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+  //                 OPENVIDU_SERVER_URL +
+  //                 '"'
+  //             )
+  //           ) {
+  //             window.location.assign(OPENVIDU_SERVER_URL + "/accept-certificate");
+  //           }
+  //         }
+  //       });
+  //   });
+  // };
 
-  const createToken = (sessionId) => {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({});
-      axios
-        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
-          headers: {
-            Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log("TOKEN", response);
-          resolve(response.data.token);
-        })
-        .catch((error) => reject(error));
-    });
-  };
+  // const createToken = (sessionId) => {
+  //   return new Promise((resolve, reject) => {
+  //     var data = JSON.stringify({});
+  //     axios
+  //       .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
+  //         headers: {
+  //           Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+  //           "Content-Type": "application/json",
+  //         },
+  //       })
+  //       .then((response) => {
+  //         console.log("TOKEN", response);
+  //         resolve(response.data.token);
+  //       })
+  //       .catch((error) => reject(error));
+  //   });
+  // };
 
   const sendSignalReady = () => {
     console.log("!!내준비");
     session.signal({
       data: JSON.stringify({
-        nickname: localUser.getNickname(),
+        streamId: localUser.getStreamManager().stream.streamId,
       }),
       type: "ready",
     });
@@ -485,11 +491,32 @@ function VideoRoomComponent({
 
   const subscribeToReady = () => {
     session.on("signal:ready", (event) => {
-      const nickname = JSON.parse(event.data).nickname;
-      console.log(nickname, localUser.getNickname());
-      if (nickname !== localUser.getNickname()) {
+      const streamId = JSON.parse(event.data).streamId;
+      console.log(streamId, localUser.getStreamManager().stream.streamId);
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 준비");
         setReady((current) => current + 1);
+      }
+    });
+  };
+
+  const sendSignalStart = () => {
+    console.log("!!시작보냄");
+    session.signal({
+      data: JSON.stringify({
+        streamId: localUser.getStreamManager().stream.streamId,
+      }),
+      type: "start",
+    });
+  };
+
+  const subscribeToStart = () => {
+    session.on("signal:start", (event) => {
+      const streamId = JSON.parse(event.data).streamId;
+      console.log(streamId, localUser.getStreamManager().stream.streamId);
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
+        console.log("!!상대 시작");
+        start();
       }
     });
   };
@@ -497,7 +524,7 @@ function VideoRoomComponent({
   const sendSignalHp = (hp) => {
     session.signal({
       data: JSON.stringify({
-        nickname: localUser.getNickname(),
+        streamId: localUser.getStreamManager().stream.streamId,
         hp: hp,
       }),
       type: "hp",
@@ -507,10 +534,37 @@ function VideoRoomComponent({
   const subscribeToHp = () => {
     session.on("signal:hp", (event) => {
       const hp = JSON.parse(event.data).hp;
-      const nickname = JSON.parse(event.data).nickname;
-      if (nickname !== localUser.getNickname()) {
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 HP", hp);
-        setRightPercent((current) => hp);
+        otherHP = hp;
+        setRightPercent(hp);
+      }
+    });
+  };
+
+  const sendSignalDamage = (damage) => {
+    console.log("데미지!!", damage);
+    session.signal({
+      data: JSON.stringify({
+        streamId: localUser.getStreamManager().stream.streamId,
+        damage: damage,
+      }),
+      type: "damage",
+    });
+  };
+
+  const subscribeToDamage = () => {
+    session.on("signal:damage", (event) => {
+      const damage = JSON.parse(event.data).damage;
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
+        console.log("!!상대 Damage", damage);
+        setOtherAttack(() => damage);
+        const clearOtherAttack = setInterval(() => {
+          setOtherAttack(0);
+          clearInterval(clearOtherAttack);
+        }, 1000);
       }
     });
   };
@@ -519,7 +573,7 @@ function VideoRoomComponent({
     console.log("공격함!!", attackType);
     session.signal({
       data: JSON.stringify({
-        nickname: localUser.getNickname(),
+        streamId: localUser.getStreamManager().stream.streamId,
         attackType: attackType,
       }),
       type: "attack",
@@ -528,19 +582,26 @@ function VideoRoomComponent({
 
   const subscribeToAttack = () => {
     session.on("signal:attack", (event) => {
-      const nickname = JSON.parse(event.data).nickname;
-      if (nickname !== localUser.getNickname()) {
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 공격");
         const attackType = JSON.parse(event.data).attackType;
         let damage = damages[attackType];
-        if (myDefence === attackType % 10) {
+        if (myDefence !== 0) {
+          //myDefence === attackType % 10
           //방어성공
           damage = Math.floor(damage * 0.3);
         }
-        setOtherAttack((current) => attackType);
+        // setOtherAttack((current) => attackType);
         myHP -= damage;
         sendSignalHp(myHP);
-        setLeftPercent((current) => current - damage);
+        sendSignalDamage(damage);
+        setLeftPercent(myHP);
+        setMyAttack(damage);
+        const clearAttack = setInterval(() => {
+          setMyAttack(0);
+          clearInterval(clearAttack);
+        }, 1000);
         console.log("!!내HP", leftPercent);
       }
     });
@@ -550,7 +611,7 @@ function VideoRoomComponent({
     console.log("방어함!!", defenceType);
     session.signal({
       data: JSON.stringify({
-        nickname: localUser.getNickname(),
+        streamId: localUser.getStreamManager().stream.streamId,
         defenceType: defenceType,
       }),
       type: "defence",
@@ -560,22 +621,29 @@ function VideoRoomComponent({
   const subscribeToDefence = () => {
     session.on("signal:defence", (event) => {
       const defenceType = JSON.parse(event.data).defenceType;
-      const nickname = JSON.parse(event.data).nickname;
-      if (nickname !== localUser.getNickname()) {
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
         console.log("!!상대 방어");
-        setOtherDefence((current) => defenceType);
+        setOtherDefence(() => defenceType);
       }
     });
   };
 
   const attack = (attackType) => {
     sendSignalAttack(attackType);
-    setMyAttack(() => attackType);
+    setMyDefence(() => 0);
+    sendSignalDefence(0);
+    // setMyAttack(() => attackType);
   };
 
   const defence = (defenceType) => {
     sendSignalDefence(defenceType);
-    setMyDefence((current) => defenceType);
+    setMyDefence(() => defenceType);
+  };
+
+  const reset = () => {
+    setMyDefence(() => 0);
+    sendSignalDefence(0);
   };
 
   useEffect(() => {
@@ -590,10 +658,37 @@ function VideoRoomComponent({
   };
 
   const start = () => {
-    if (!isTimer) {
+    if (!isTimer && !isEnd) {
+      // sendSignalStart();
       setIsTimer(true);
     }
   };
+
+  const end = () => {
+    setIsEnd(true);
+  };
+
+  useEffect(() => {
+    if (isEnd) {
+      let result = false;
+      if (leftPercent === rightPercent) {
+        if (myUserName > otherNick) {
+          result = true;
+        }
+      } else if (leftPercent > rightPercent) {
+        result = true;
+      }
+      console.log("!!결과", leftPercent, rightPercent);
+      setIsWin(result);
+      setResult((current) => current + 1);
+    }
+  }, [isEnd]);
+
+  // useEffect(() => {
+  //   if (isEnd && result === 1) {
+  //     const data = axiosInstance.post
+  //   }
+  // }, [isEnd, result]);
 
   const newLocalUser = myLocalUser;
 
@@ -620,6 +715,12 @@ function VideoRoomComponent({
         start={startMe}
         attack={attack}
         defence={defence}
+        end={end}
+        reset={reset}
+        myDefence={myDefence}
+        otherDefence={otherDefence}
+        myAttack={myAttack}
+        otherAttack={otherAttack}
       />
     </>
   );

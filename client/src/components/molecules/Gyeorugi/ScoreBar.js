@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { colors } from "../../../_foundation";
 import InfoBar from "./InfoBar";
 
-function ScoreBar({ left, right, isTimer, setIsTimer, leftPercent, rightPercent }) {
+function ScoreBar({ left, right, isTimer, setIsTimer, leftPercent, rightPercent, end }) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const totalSecnds = 10;
+  const totalSecnds = 80;
 
   const handleTimer = (elapsedSeconds) => {
     setElapsedSeconds(elapsedSeconds);
@@ -27,6 +27,7 @@ function ScoreBar({ left, right, isTimer, setIsTimer, leftPercent, rightPercent 
           interval={1000}
           isTimer={isTimer}
           setIsTimer={setIsTimer}
+          end={end}
         />
       </Time>
       <RightBarContainer>

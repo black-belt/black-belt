@@ -62,6 +62,8 @@ export default class StreamComponent extends Component {
               start={this.props.start}
               attack={this.props.attack}
               defence={this.props.defence}
+              end={this.props.end}
+              reset={this.props.reset}
             />
           </div>
         ) : null}

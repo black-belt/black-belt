@@ -96,12 +96,15 @@ function NewItem({ level, onClick, title, score, imageNum }) {
         className={`item level${level}`}
         onClick={onClick}
         style={{
-          background: score > 0 ? "rgba(100,100,100,0.6)" : "rgba(0, 0, 0, 0.6)",
+          // padding: "10px",
+          backgroundColor: score > 0 ? "rgba(100,100,100,0.6)" : "rgba(0, 0, 0, 0.6)",
           backgroundImage: `url("/images/combo/combo${imageNum}.png")`,
-          backgroundSize: "contain",
+          // backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
-          backgroundPosition: "center center",
           filter: score > 0 ? "grayscale(0%)" : "grayscale(100%) brightness(50%)",
+          backgroundSize: "contain",
+          backgroundPosition: "center center",
+          backgroundOrigin: "padding-box",
         }}
       >
         <InfoContainer>
