@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "utils/API";
 import VideoRoomComponent from "../../../components/organisms/VideoRoom/VideoRoomComponent";
 
-function NormalStage() {
+function RankStage() {
   const [result, setResult] = useState(0);
   const [tier, setTier] = useState(undefined);
   const [isWin, setIsWin] = useState(undefined);
@@ -133,10 +133,10 @@ function NormalStage() {
           otherNick={otherNick}
         />
       )}
-      {isWin !== undefined ? (
+      {tier !== undefined && isWin !== undefined ? (
         <EvaluationTemplateGyeorugi
           isWin={isWin}
-          // tier={tier}
+          tier={tier}
           restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
           home={
             <StageBtn onClick={homeFunc} isHome>
@@ -148,4 +148,4 @@ function NormalStage() {
     </>
   );
 }
-export default NormalStage;
+export default RankStage;

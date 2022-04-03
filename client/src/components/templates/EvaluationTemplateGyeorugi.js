@@ -7,10 +7,12 @@ function EvaluationTemplateGyeorugi({ isWin, restart, home, tier }) {
     <Background>
       <Middle>
         <Text isWin={isWin}>{isWin ? "Victory" : "Defeat"}</Text>
-        <TierContainer>
-          <TierImage src={`/images/tier/${tier.tier}.png`} />
-          <Score>{tier.score}</Score>
-        </TierContainer>
+        {tier && (
+          <TierContainer>
+            <TierImage src={`/images/tier/${tier.tier}.png`} />
+            <Score>{tier.score}</Score>
+          </TierContainer>
+        )}
         {restart && (
           <ButtonContainer>
             <RestartButton>{restart}</RestartButton>
