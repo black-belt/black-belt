@@ -111,6 +111,8 @@ public class JudgeController {
 				random_answer_array.add(random_answer_str);
 			}
 			result.put("randomAnswer", random_answer_array);
+		}else {
+			result.put("randomAnswer", "");
 		}
 		//randomAnswerIndex
 		String random_answer_index_list = randomAnswerIndex.get(rint);
@@ -122,6 +124,8 @@ public class JudgeController {
 				random_answer_index_array.add(random_answer_index_str);
 			}
 			result.put("randomAnswerIndex", random_answer_index_array);
+		}else {
+			result.put("randomAnswerIndex", "");
 		}
 		//essentialPoomsaeId, essentialPoomsaeName
 		result.put("essentialPoomsaeId", essentialPoomsaeId);
@@ -141,6 +145,8 @@ public class JudgeController {
 						essential_answer_array.add(essential_answer_str);
 					}
 					result.put("essentialAnswer", essential_answer_array);
+				}else {
+					result.put("essentialAnswer", "");
 				}
 				//essentialAnswerIndex
 				String essential_answer_index_list = essentialAnswerIndex;
@@ -152,6 +158,8 @@ public class JudgeController {
 						essential_answer_index_array.add(essential_answer_index_str);
 					}
 					result.put("essentialAnswerIndex", essential_answer_index_array);
+				}else {
+					result.put("essentialAnswerIndex", "");
 				}
 				//result.put("essentialAnswerIndex", essentialAnswerIndex);
 
