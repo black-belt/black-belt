@@ -4,7 +4,10 @@ import { localStorageEffect } from "utils/localStorageEffect";
 
 export const token = atom({
   key: "token",
-  default: { accessToken: undefined },
+  default: {
+    accessToken: undefined,
+    // gyeorugiToken: undefined,
+  },
   effects_UNSTABLE: [localStorageEffect("blackbelt_token")],
 });
 

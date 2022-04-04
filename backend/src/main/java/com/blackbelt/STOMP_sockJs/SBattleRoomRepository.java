@@ -26,7 +26,6 @@ public class SBattleRoomRepository {
  }
 
  public SBattleRoom findRoomById(String id) {
-	 System.out.println("findRoomById");
      return sbattleRoomMap.get(id);
  }
 
