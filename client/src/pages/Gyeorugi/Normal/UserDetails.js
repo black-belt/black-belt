@@ -38,7 +38,7 @@ const UserDetail = (props) => {
     hostId: props.hostId,
     guestId: target,
   };
-  console.log(data);
+
   const SendInvite = async () => {
     const answer = await axiosInstance.get(`/api/que/select/apply/${target}`);
     console.log(answer);
