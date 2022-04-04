@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { colors, fontSize } from "_foundation";
 
 export const OverLay = styled.div`
-  position: fixed;
+  /* position: fixed;
   top: 150px;
   right: 0;
   bottom: 0;
@@ -11,7 +11,7 @@ export const OverLay = styled.div`
 
   /* background-color: rgba(0, 0, 0, 0.6); */
   /* backdrop-filter: blur(15px); */
-  animation: modal-show 0.3s cubic-bezier(0.3, 0, 0, 1);
+  /* animation: modal-show 0.3s cubic-bezier(0.3, 0, 0, 1); */
 `;
 
 export const ModalBox = styled.div`
@@ -73,6 +73,9 @@ export const ModalContent = styled.div`
   color: ${colors.gray1};
 `;
 
-export const ButtonBox = styled.div``;
+export const ButtonBox = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
 
 // export const

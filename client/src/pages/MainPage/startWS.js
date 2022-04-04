@@ -1,6 +1,3 @@
-import { SmokingRooms } from "@material-ui/icons";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { gyeorugiMsg, message } from "recoils";
 import SockJs from "sockjs-client";
 import StompJs from "stompjs";
 
@@ -16,7 +13,7 @@ export const StartWS = (userId) => {
         const newMessage = JSON.parse(data.body);
         // msg(newMessage);
         // console.log(test);
-        return newMessage;
+        // return newMessage;
         console.log(newMessage);
       });
     });
@@ -32,6 +29,16 @@ export const Invite = (props) => {
     hostId: props.hostId,
     guestId: Number(props.guestId),
     token: props.token,
+  };
+  stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
+};
+
+export const Accept = (props) => {
+  const data = {
+    type: "ACCEPT",
+    hostId: props.hostId,
+    guestId: Number(props.guestId),
+    // token: props.token,
   };
   stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
 };
