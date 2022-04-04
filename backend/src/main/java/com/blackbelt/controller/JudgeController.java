@@ -71,13 +71,17 @@ public class JudgeController {
 		ArrayList<String> randomPoomsaeName_e = new ArrayList<String>();
 		ArrayList<String> randomPoomsaeTime = new ArrayList<String>();
 		ArrayList<String> randomAnswer = new ArrayList<String>();		
-		ArrayList<String> randomAnswerIndex = new ArrayList<String>();		
+		ArrayList<String> randomAnswerIndex = new ArrayList<String>();
+		ArrayList<String> randomPoomsaeExplain = new ArrayList<String>();
+		ArrayList<String> randomPoomsaeExplainE = new ArrayList<String>();
 		String essentialPoomsaeId = "";
 		String essentialPoomsaeName = "";
 		String essentialPoomsaeName_e = "";
 		String essentialPoomsaeTime = "";
 		String essentialAnswer = "";
 		String essentialAnswerIndex = "";
+		String essentialPoomsaeExplain = "";
+		String essentialPoomsaeExplainE = "";
 
 		for(LevelPoomsaeDto lp:lplist) {
 			if(lp.getIs_essential().equals("Y")) {
@@ -87,6 +91,8 @@ public class JudgeController {
 				essentialPoomsaeTime = lp.getPoomsae_time();
 				essentialAnswer = lp.getPoomsae_answer();
 				essentialAnswerIndex = lp.getPoomsae_answer_index();
+				essentialPoomsaeExplain = lp.getPoomsae_explain();
+				essentialPoomsaeExplainE = lp.getPoomsae_explain_e();
 			}else if(lp.getIs_essential().equals("N")) {
 				randomPoomsaeId.add(lp.getPoomsae_id());
 				randomPoomsaeName.add(lp.getPoomsae_name());
@@ -94,6 +100,8 @@ public class JudgeController {
 				randomPoomsaeTime.add(lp.getPoomsae_time());
 				randomAnswer.add(lp.getPoomsae_answer());
 				randomAnswerIndex.add(lp.getPoomsae_answer_index());
+				randomPoomsaeExplain.add(lp.getPoomsae_explain());
+				randomPoomsaeExplainE.add(lp.getPoomsae_explain_e());
 			}
 		}
 		Random rand = new Random();
@@ -126,6 +134,28 @@ public class JudgeController {
 			result.put("randomAnswerIndex", random_answer_index_array);
 		}else {
 			result.put("randomAnswerIndex", "");
+		}
+		//randomPoomsaeExplain
+		String random_poomsae_explain_list = randomPoomsaeExplain.get(rint);
+		List<String> random_poomsae_explain_array = new ArrayList<String>();
+		if(random_poomsae_explain_list != null) {
+			for(String random_poomsae_explain: random_poomsae_explain_list.split("/|#")) {
+				random_poomsae_explain_array.add(random_poomsae_explain);
+			}
+			result.put("randomPoomsaeExplain", random_poomsae_explain_array);
+		}else {
+			result.put("randomPoomsaeExplain", "");
+		}
+		//randomPoomsaeExplainE
+		String random_poomsae_explain_e_list = randomPoomsaeExplainE.get(rint);
+		List<String> random_poomsae_explain_e_array = new ArrayList<String>();
+		if(random_poomsae_explain_e_list != null) {
+			for(String random_poomsae_e_explain: random_poomsae_explain_e_list.split("/|#")) {
+				random_poomsae_explain_e_array.add(random_poomsae_e_explain);
+			}
+			result.put("randomPoomsaeExplainE", random_poomsae_explain_e_array);
+		}else {
+			result.put("randomPoomsaeExplainE", "");
 		}
 		//essentialPoomsaeId, essentialPoomsaeName
 		result.put("essentialPoomsaeId", essentialPoomsaeId);
@@ -162,8 +192,28 @@ public class JudgeController {
 					result.put("essentialAnswerIndex", "");
 				}
 				//result.put("essentialAnswerIndex", essentialAnswerIndex);
-
-		
+		//essentialPoomsaeExplain
+		String essential_poomsae_explain_list = essentialPoomsaeExplain;
+		List<String> essential_poomsae_explain_array = new ArrayList<String>();
+		if(essential_poomsae_explain_list != null) {
+			for(String essential_poomsae_explain: essential_poomsae_explain_list.split("/|#")) {
+				essential_poomsae_explain_array.add(essential_poomsae_explain);
+			}
+			result.put("enssentialPoomsaeExplain", essential_poomsae_explain_array);
+		}else {
+			result.put("enssentialPoomsaeExplain", "");
+		}
+		//essentialPoomsaeExplainE
+		String essential_poomsae_explain_e_list = essentialPoomsaeExplainE;
+		List<String> essential_poomsae_explain_e_array = new ArrayList<String>();
+		if(essential_poomsae_explain_e_list != null) {
+			for(String essential_poomsae_explain_e: essential_poomsae_explain_e_list.split("/|#")) {
+				essential_poomsae_explain_e_array.add(essential_poomsae_explain_e);
+			}
+			result.put("enssentialPoomsaeExplainE", essential_poomsae_explain_e_array);
+		}else {
+			result.put("enssentialPoomsaeExplainE", "");
+		}
 		return ResponseEntity.status(200).body(result);
 	}
 }
