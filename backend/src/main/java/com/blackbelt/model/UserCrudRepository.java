@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface UserCrudRepository extends JpaRepository<UserDto, String> { ㄴ
+public interface UserCrudRepository extends JpaRepository<UserDto, String> { 
 	
 	@Query(value="SELECT * FROM user WHERE user_id = (SELECT max(user_id) FROM user)", nativeQuery = true)
 	UserDto findLastUser();
