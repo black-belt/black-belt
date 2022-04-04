@@ -117,15 +117,8 @@ public class ChatRoomController {
 		
 		try {
 			// 상대 찾기 
-			
-			
-			Optional<UserDto> user =  userRepo.findByuserId(userId);
 			String userTier = userRepo.findtierNameBytierId(userRepo.finduserTierByuserId(userId));
 			
-			//findtierNamdBytierId(String id);
-			System.out.println(userTier);
-			//System.out.println(user.get(tierId).getTierId);
-			System.out.println(user);
 			
 			RBattleRoom other= rBattleRoomRepository.matchRBattle(userId, userTier);
 			if(other.getUserId()!=null) {
@@ -146,41 +139,6 @@ public class ChatRoomController {
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
-	/*
-	@GetMapping("/random/{userId}")
-	public ResponseEntity<Map<String,String>> queRandom(
-			@PathVariable("userId") String userId) throws Exception{
-		//String userTier = queService.searchUserTier(userNick);
-		Map<String,String> match = new HashMap<>();
-		//Map<String,String> user = new HashMap<>();
-		//NickTier.uid = userId;
-		//NickTier.utier = userTier;
-		//user.put(userId, userTier);
-		userQue.add(userId);
-		if(!userQue.isEmpty() && userQue.size()%2==0) {
-			String a = userQue.poll();
-			String b = userQue.poll();
-			match.put(a,b);
-			// userscore로 해야됨 
-			// 큐 매칭 중 => Y인 사람만 뽑음 
-			// 글구 정렬 que 
-			// 점수순으로 정렬 을 함 
-			// DB - 컬럼 을 쓰면 매칭을 취소하면 N으로 바뀜  => userId 겨루기 신청 여부 큐 매칭 알고리즘 . 
-			// while 2 로 해놓고 겨루기 신청을 해줌 
-			// 랜덤 큐를 돌려놓는 상태라는 걸 db 
-
-			// 신청한 쪽 ID를 꺼내고 다시 넣을 수 있음 
-			// 클릭버튼 누른 사람만 
-			// 웹소켓 DB :=> 러
-			// 세션에 값을 웹소켓 
-			// recoil : 세션 정보 넣어줘야 됨 
-			// 
-		}
-		System.out.println(userQue);
-		return new ResponseEntity<Map<String,String>> (match, HttpStatus.OK);
-	}*/
-	
 	
 	/*
 	// 채팅 리스트 화면
