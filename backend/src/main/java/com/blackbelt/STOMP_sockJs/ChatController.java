@@ -47,7 +47,7 @@ public class ChatController {
  
  // [유저 큐] 개별 세션 생성
  // [지정 큐] 메시지 핸들러
- @MessageMapping("/api/que/user/")
+ @MessageMapping("/api/que/user")
  public void userque(ChatMessage message) {
 	 logger.info("Socket Message '백'에서 수신" );
 	 
