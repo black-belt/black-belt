@@ -124,7 +124,7 @@ function OvVideoComponent({
     let difCnt = 0;
     let prevCnt = 0;
     const loop = setInterval(async () => {
-      if (++totalCnt === 80 * 20) {
+      if (++totalCnt === 60 * 20) {
         clearInterval(loop);
         endGame = true;
       }
