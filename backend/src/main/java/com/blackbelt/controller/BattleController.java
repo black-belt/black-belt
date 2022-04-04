@@ -107,7 +107,7 @@ public class BattleController {
 			String battleUrl = "battle" + hostId +"vs" + guestId + roomSeq;
 			Optional<BattleHistoryDto> battlehis = battleRepo.findBysessionName(battleUrl);
 			BattleHistoryDto bhd = null;
-			if(!battlehis.isPresent()) { //먼저 호출한 쪽이면
+			if(!battlehis.isEmpty()) { //먼저 호출한 쪽이면
 				battleHistoryDto = new BattleHistoryDto();
 				battleHistoryDto.setEnemyId(guestUserInfo.getUserId());
 				battleHistoryDto.setEnemyTierId(guestUserInfo.getTierId());
