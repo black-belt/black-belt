@@ -23,11 +23,11 @@ public interface UserCrudRepository extends JpaRepository<UserDto, String> {
 	// for User 닉네임 검색 
 	List<UserDto> findByuserNickContaining(String search);
 	
-	@Query(value="SELECT userTier FROM user WHERE user_id=:id", nativeQuery = true)
+	@Query(value="SELECT user_tier FROM user WHERE user_id=:id", nativeQuery = true)
 	String finduserTierByuserId(String id);
 
 	
-	@Query(value="SELECT userNick FROM user WHERE user_id=:id", nativeQuery = true)
+	@Query(value="SELECT user_nick FROM user WHERE user_id=:id", nativeQuery = true)
 	String finduserNickByuserId(String id);
 
 	
