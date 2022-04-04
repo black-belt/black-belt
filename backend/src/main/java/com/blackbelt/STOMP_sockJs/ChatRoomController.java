@@ -101,35 +101,44 @@ public class ChatRoomController {
 	}	
 	
 	// [랜덤큐] 상대 찾기 API
-	@GetMapping("/que/random/{userId}")
+	@GetMapping("/random/{userId}")
 	public ResponseEntity<Map<String, Object>> queRandom(@PathVariable String userId){
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		// 실패, 성공 여부 , 상대 userId + 상대 user 정보 
-		// 임시 더미 데이터 저장 
-		//rBattleRoomRepository.createRBattleRoom("other", "bronze"); 
-		//rBattleRoomRepository.createRBattleRoom("other", "silver"); 
+		
+		// 임시 더미 데이터 저장 (TEST용)
+		//rBattleRoomRepository.clearRBattleRoom();
+		//rBattleRoomRepository.createRBattleRoom("bronze", "bronze");
+		//rBattleRoomRepository.createRBattleRoom("silver", "silver"); 
 		//rBattleRoomRepository.createRBattleRoom("gold", "gold"); 
 		//rBattleRoomRepository.createRBattleRoom("pla", "platinum"); 
 		//rBattleRoomRepository.createRBattleRoom("dia", "Diamond"); 
 		
 		try {
-			RBattleRoom other= rBattleRoomRepository.matchBattle(userId, "bronze");
-			if(other!=null) {
-				resultMap.put("otherId:",other.getUserId());
+			// 상대 찾기 
+			String userTier = userRepo.findtierNameBytierId(userRepo.finduserTierByuserId(userId));
+			
+			
+			RBattleRoom other= rBattleRoomRepository.matchRBattle(userId, userTier);
+			if(other.getUserId()!=null) {
+				resultMap.put("otherId",other.getUserId());
+				resultMap.put("msg", "매칭되었습니다!");
 				status = HttpStatus.OK;
 			}else {
+				rBattleRoomRepository.queueRBattleRoom(userId, userTier);
+				resultMap.put("other", "");
+				resultMap.put("msg", "매칭 상대를 찾는 중입니다(현재는 없음)");
 				status = HttpStatus.ACCEPTED;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			status = HttpStatus.EXPECTATION_FAILED;
 		}
 		
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
 	
 	/*
 	// 채팅 리스트 화면
