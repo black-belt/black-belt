@@ -5,13 +5,17 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
+
 import java.util.Optional;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import lombok.Getter;
 import lombok.Setter;
+
 import lombok.RequiredArgsConstructor;
 
 import com.blackbelt.model.UserDto;
@@ -55,6 +59,7 @@ public class ChatController {
 		logger.info("로그인 시: " + message);
 		String UserNick = userRepo.finduserNickByuserId(message.getUserId());
         message.setMessage(UserNick + "님이 로그인해서, 유저세션에 추가되었습니다");
+
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getUserId(), message);
          }
 	 // 신청 보냈을 때
@@ -62,6 +67,7 @@ public class ChatController {
 		logger.info("신청 시: "+ message );
 		String hostNick = userRepo.finduserNickByuserId(message.getHostId());
         message.setMessage(hostNick + "님이 초대를 보냈습니다");
+
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
          }
 	 // 수락 했을 때
@@ -69,6 +75,7 @@ public class ChatController {
 		logger.info("초대 시: " + message);
 		String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
         message.setMessage(guestNick + "님이 수락하셨습니다.");
+
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
  		}
    	 // 거절 했을 때
@@ -76,6 +83,7 @@ public class ChatController {
    		logger.info("거절 시: "+ message );
    		String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
         message.setMessage(guestNick + "님이 거절하셨습니다.");
+
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
  	}
 }

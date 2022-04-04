@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function Timer({ initialSeconds, totalSeconds, onChange, interval, isTimer, setIsTimer }) {
+function Timer({ initialSeconds, totalSeconds, onChange, interval, isTimer, setIsTimer, end }) {
   const [elapsed, setElapsed] = useState(initialSeconds); //경과된 시간
   const [intervalId, setIntervalId] = useState(0);
 
@@ -27,6 +27,7 @@ function Timer({ initialSeconds, totalSeconds, onChange, interval, isTimer, setI
       if (time + initialSeconds === totalSeconds) {
         setIsTimer(false);
         clear(newIntervalId);
+        if (end) end();
         return;
       }
       time++;

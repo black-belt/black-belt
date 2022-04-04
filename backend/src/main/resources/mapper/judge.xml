@@ -5,7 +5,7 @@
 <mapper namespace="com.blackbelt.model.mapper.JudgeMapper">
 	<select id="getJudge" resultType="LevelPoomsaeDto">
 		select level.level_id, level_name, levelpoomsae.poomsae_id,
-		poomsae_name, is_essential, poomsae_answer, poomsae_answer_index
+		poomsae_name, poomsae_name_e, poomsae_time, is_essential, poomsae_answer, poomsae_answer_index
 		from taekwondo.level, levelpoomsae, poomsaeaction
         where
         level.level_id = levelpoomsae.level_id

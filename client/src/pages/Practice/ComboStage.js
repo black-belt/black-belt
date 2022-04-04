@@ -29,9 +29,9 @@ function ComboStage() {
     const data = await axiosInstance.get(`/api/combo/${state.stageId}`, {});
     console.log(data);
     console.log(state.stageId);
-    data.combo_answer = ["abaya", "coffee mug", "abaya"];
-    data.combo_movie_path = "https://youtu.be/o9JvP-A4TvY";
-    data.combo_answer_index = [0, 2, 4];
+    data.combo_answer = ["step1", "step2", "step3", "step4", "step5", "step6"];
+    data.combo_movie_path = "https://youtu.be/QyFEpalvbns";
+    data.combo_answer_index = [0, 1, 2, 3, 4, 5];
     setInfo(data);
   };
 
@@ -91,6 +91,7 @@ function ComboStage() {
           video={<LocalVideo url={info.combo_movie_path} />}
           camera={
             <UserVideoCombo
+              aiId={state.stageId}
               answer={info.combo_answer}
               testResult={testResult}
               updateNextAction={updateNextAction}

@@ -30,5 +30,6 @@ export const Invite = (props) => {
     guestId: Number(props.guestId),
     token: props.token,
   };
-  stomp.send(`/pub/api/que/user/${props.guestId}`, {}, JSON.stringify(data));
+  // stomp.send(`/pub/api/que/user/${props.guestId}`, {}, JSON.stringify(data));
+  stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
 };
