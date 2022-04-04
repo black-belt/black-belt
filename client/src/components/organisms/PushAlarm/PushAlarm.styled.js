@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "_foundation";
+import { colors, fontSize } from "_foundation";
 
 export const OverLay = styled.div`
   position: fixed;
@@ -47,12 +47,21 @@ export const ModalSection = styled.div`
 `;
 
 export const ModalHeader = styled.div`
-  background-color: yellow;
+  /* background-color: yellow; */
   /* height: 30px; */
   height: 32%;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: ${colors.gray1};
+  font-family: "Dry Brush";
+  font-size: ${fontSize.h4};
+
   Svg {
-    width: 28px;
+    /* width: 28px; */
+    padding-top: 3px;
     cursor: pointer;
   }
 `;
@@ -60,6 +69,10 @@ export const ModalHeader = styled.div`
 export const ModalContent = styled.div`
   background-color: red;
   height: 68%;
+
+  color: ${colors.gray1};
 `;
+
+export const ButtonBox = styled.div``;
 
 // export const
