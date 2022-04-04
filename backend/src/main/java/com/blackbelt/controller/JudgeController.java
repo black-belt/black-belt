@@ -100,6 +100,7 @@ public class JudgeController {
 		int rint = rand.nextInt(randomPoomsaeId.size());
 		result.put("randomPoomsaeId", randomPoomsaeId.get(rint));
 		result.put("randomPoomsaeName", randomPoomsaeName.get(rint));
+		result.put("randomPoomsaeNameE", randomPoomsaeName_e.get(rint));
 		//randomAnswer
 		String random_answer_list = randomAnswer.get(rint);
 		List<String[]> random_answer_array = new ArrayList<String[]>();
@@ -125,7 +126,7 @@ public class JudgeController {
 		//essentialPoomsaeId, essentialPoomsaeName
 		result.put("essentialPoomsaeId", essentialPoomsaeId);
 		result.put("essentialPoomsaeName", essentialPoomsaeName);
-		result.put("essentialPoomsaeName_e", essentialPoomsaeName_e);
+		result.put("essentialPoomsaeNameE", essentialPoomsaeName_e);
 		//randomPoomsaeTime
 		result.put("randomPoomsaeTime", randomPoomsaeTime.get(rint));
 		//essentialPoomsaeTime 
