@@ -81,7 +81,7 @@ public class BattleController {
 			}
 			// 겨루기 입장으로 상태 처리
 			Optional<UserDto> hostUser = userRepo.findById(hostId);
-			if(!hostUser.isEmpty()) { 
+			if(!hostUser.isPresent()) { 
 				hostUser.get().setUserState('B');
 			}else {
 				resultMap.put("statusCode",424);
@@ -89,7 +89,7 @@ public class BattleController {
 				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
 			}
 			Optional<UserDto> guestUser = userRepo.findById(guestId);
-			if(!guestUser.isEmpty()) { 
+			if(!guestUser.isPresent()) { 
 				guestUser.get().setUserState('B');
 			}else {
 				resultMap.put("statusCode",424);
