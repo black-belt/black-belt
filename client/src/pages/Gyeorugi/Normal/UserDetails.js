@@ -1,6 +1,9 @@
 // import Icon from "components/atoms/Icons/CustomIcon";
 import BasicButton from "components/atoms/Buttons/button";
+import { Invite } from "pages/MainPage/startWS";
 import { useTranslation } from "react-i18next";
+import { useRecoilValue } from "recoil";
+import { gyeorugiToken } from "recoils";
 import axiosInstance from "utils/API";
 import {
   Contents,
@@ -20,6 +23,7 @@ const UserDetail = (props) => {
   const { t } = useTranslation();
   const user = props.userData;
   const target = props.target;
+  const token = useRecoilValue(gyeorugiToken);
   const tier = {
     1: "bronze",
     2: "silver",
@@ -27,6 +31,12 @@ const UserDetail = (props) => {
     4: "platinum",
     5: "diamond",
     6: "master",
+  };
+
+  const data = {
+    token: token,
+    hostId: props.hostId,
+    guestId: target,
   };
 
   const SendInvite = async () => {
@@ -57,7 +67,7 @@ const UserDetail = (props) => {
             width="115px"
             height="36px"
             able={user.userState}
-            onClick={SendInvite}
+            onClick={() => Invite(data)}
           >
             {t("apply")}
           </BasicButton>
