@@ -27,7 +27,7 @@ export const Invite = (props) => {
   const data = {
     type: "INVITE",
     hostId: props.hostId,
-    guestId: Number(props.guestId),
+    guestId: props.guestId,
     token: props.token,
   };
   stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
@@ -37,7 +37,7 @@ export const Accept = (props) => {
   const data = {
     type: "ACCEPT",
     hostId: props.hostId,
-    guestId: Number(props.guestId),
+    guestId: props.guestId,
     // token: props.token,
   };
   stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
