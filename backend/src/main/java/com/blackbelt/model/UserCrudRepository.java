@@ -33,6 +33,9 @@ public interface UserCrudRepository extends JpaRepository<UserDto, String> {
 	@Query(value="SELECT tier_name FROM tier WHERE tier_id=:id", nativeQuery = true)
 	String findtierNameBytierId(String id);
 	
+	@Query(value="SELECT * FROM tier WHERE tier_id=:id", nativeQuery = true)
+	Optional<TierDto> findBytierId(String id);
+	
 //	@Modifying
 //	@Query(value="update user set user_state = :stateValue WHERE user_id=:userId", nativeQuery = true)
 //	int updateState(String userId, String stateValue);

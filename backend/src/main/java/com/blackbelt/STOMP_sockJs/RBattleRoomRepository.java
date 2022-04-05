@@ -36,11 +36,11 @@ public class RBattleRoomRepository {
      tierIndex.put("platinum",3);
      tierIndex.put("Diamond",4);*/
      
-     tierIndex.put("브론즈",0);
-     tierIndex.put("실버",1);
-     tierIndex.put("골드",2);
-     tierIndex.put("플래티넘",3);
-     tierIndex.put("다이아몬드",4);
+     //tierIndex.put("브론즈",0);
+     //tierIndex.put("실버",1);
+     //tierIndex.put("골드",2);
+     //tierIndex.put("플래티넘",3);
+     //tierIndex.put("다이아몬드",4);
  }
 
 /*

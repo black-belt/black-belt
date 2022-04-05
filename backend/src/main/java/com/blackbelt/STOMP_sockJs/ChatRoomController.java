@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.blackbelt.model.service.UserService;
 import com.blackbelt.model.UserDto;
+import com.blackbelt.model.TierDto;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.STOMP_sockJs.RBattleRoomRepository;
 
@@ -68,7 +69,7 @@ public class ChatRoomController {
 	}
 	
 	// 양측 대기방 입장 API
-	@GetMapping("/battle/ready")
+	@PostMapping("/battle/ready")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> battleready(@RequestBody Map<String, String> ids) {
 		HttpStatus status = null;
@@ -79,11 +80,13 @@ public class ChatRoomController {
 			String hostId = ids.get("hostId");
 			String guestId = ids.get("guestId");
 			SBattleRoom battleRoom = sBattleRoomRepository.findRoomById(guestId);
-			if(battleRoom != null) {
+			if(battleRoom != null) {		//battleRoom != null
 				resultMap.put("token",battleRoom.getRoomId());
 				
 				Optional<UserDto> hostUser = userRepo.findByuserId(hostId);
 				Optional<UserDto> guestUser = userRepo.findByuserId(guestId);
+				//Optional<TierDto> hostUserTier = userRepo.findBytierId(hostTier);
+				//Optional<TierDto> guestUserTier = userRepo.findBytierId(guestTier);
 				usersList.add(hostUser);
 				usersList.add(guestUser);
 				resultMap.put("users",usersList);
@@ -94,6 +97,7 @@ public class ChatRoomController {
 			
 		}catch(Exception e) {
 			e.printStackTrace();
+			resultMap.put("msg","배틀룸이 존재하지 않습니다");
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
