@@ -19,6 +19,7 @@ import lombok.Setter;
 import lombok.RequiredArgsConstructor;
 
 import com.blackbelt.model.UserDto;
+import com.blackbelt.model.CountryCrudRepository;
 import com.blackbelt.model.UserCrudRepository;
 
 // 데이터 전송 controller
@@ -31,6 +32,9 @@ public class ChatController {
 
  public static final Logger logger = LoggerFactory.getLogger(ChatController.class);
  private final SimpMessageSendingOperations messagingTemplate;
+ 
+ @Autowired
+ SBattleRoomRepository sbattleRepo;
  
 	@Autowired
 	UserCrudRepository userRepo;
@@ -75,7 +79,8 @@ public class ChatController {
 		logger.info("초대 시: " + message);
 		String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
         message.setMessage(guestNick + "님이 수락하셨습니다.");
-
+        message.setRoomId(sbattleRepo.findRoomById(message.getHostId()).getRoomId());
+        // room 
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
  		}

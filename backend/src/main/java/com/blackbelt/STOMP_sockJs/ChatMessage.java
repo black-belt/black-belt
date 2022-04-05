@@ -3,11 +3,15 @@ package com.blackbelt.STOMP_sockJs;
 import lombok.Getter;
 import lombok.Setter;
 
+
 // 데이터 형태 정의 
 
 @Getter
 @Setter
 public class ChatMessage {
+	
+	
+	
     // 메시지 타입 : 입장, 채팅
     public enum MessageType {
     	// 유저 세션에 넣을 용
