@@ -84,7 +84,7 @@ public class UserController {
 			if (userEmail != null) {
 				Optional<UserDto> user = userRepo.findByuserEmail(userEmail);
 				String lastId = null; String userNick = null;
-				if(user.isEmpty()) {					// isEmpty 를 바꿈 java version 차이
+				if(user.isPresent()) {					// isEmpty 를 바꿈 java version 차이
 					//회원가입 처리 추가할 부분
 					lastId = String.valueOf(Integer.parseInt(userRepo.findLastUser().getUserId()) + 1) ;
 					userNick = "anonymous" + lastId;
