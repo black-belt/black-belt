@@ -29,7 +29,7 @@ export const Invite = (props) => {
     type: "INVITE",
     hostId: props.hostId,
     guestId: props.guestId,
-    token: props.token,
+    roomId: props.token,
   };
   stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
 };
