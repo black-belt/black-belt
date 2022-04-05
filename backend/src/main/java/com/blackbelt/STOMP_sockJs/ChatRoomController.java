@@ -79,7 +79,7 @@ public class ChatRoomController {
 		try {
 			String hostId = ids.get("hostId");
 			String guestId = ids.get("guestId");
-			SBattleRoom battleRoom = sBattleRoomRepository.findRoomById(guestId);
+			SBattleRoom battleRoom = sBattleRoomRepository.findRoomById(hostId);
 			if(battleRoom != null) {		//battleRoom != null
 				resultMap.put("token",battleRoom.getRoomId());
 				
@@ -92,12 +92,16 @@ public class ChatRoomController {
 				resultMap.put("users",usersList);
 				
 				status = HttpStatus.OK;
+			}else {
+				resultMap.put("msg","배틀룸이 존재하지 않습니다");
+				status = HttpStatus.ACCEPTED;
+				
 			}
-			status = HttpStatus.ACCEPTED;
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
-			resultMap.put("msg","배틀룸이 존재하지 않습니다");
+			resultMap.put("msg","Error 발생");
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
