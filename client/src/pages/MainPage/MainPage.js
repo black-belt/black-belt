@@ -16,9 +16,8 @@ import InButton from "components/atoms/Buttons/in-btns";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import isLogin from "utils/isLogin";
-import { StartWS } from "./startWS";
-import { useRecoilValue } from "recoil";
-import { userInfo } from "recoils";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { message, userInfo } from "recoils";
 
 import SockJs from "sockjs-client";
 import StompJs from "stompjs";
@@ -27,30 +26,26 @@ function MainPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const userId = useRecoilValue(userInfo);
+  const msg = useSetRecoilState(message);
 
-  // const sock = new SockJs("http://j6a506.p.ssafy.io:8000/ws-stomp");
-  // const stomp = StompJs.over(sock);
+  const sock = new SockJs("https://j6a506.p.ssafy.io/stomp/");
+  const stomp = StompJs.over(sock);
 
-  // const StartWS = (userId) => {
-  //   console.log("here?");
-  //   try {
-  //     stomp.connect({}, () => {
-  //       console.log("connected");
-  //       stomp.subscribe(`/sub/api/que/user/${userId}`, (data) => {
-  //         // const newMessage = JSON.parse(data.body);
-  //       });
-  //     });
-  //   } catch (err) {
-  //     console.log("error");
-  //   }
-  // };
-  // stomp.onopen = function (event) {
-  //   console.log("connected");
-  // };
+  const StartWS = (userId) => {
+    try {
+      stomp.connect({}, () => {
+        stomp.subscribe(`/sub/api/que/user/${userId}`, (data) => {
+          const newMessage = JSON.parse(data.body);
+          msg(newMessage);
+        });
+      });
+    } catch (err) {
+      console.log("error");
+    }
+  };
 
   useEffect(() => {
     if (isLogin()) {
-      console.log(userId.userId);
       StartWS(userId.userId);
     }
   }, [isLogin]);

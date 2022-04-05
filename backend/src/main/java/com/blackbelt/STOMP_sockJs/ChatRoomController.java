@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.blackbelt.model.service.UserService;
 import com.blackbelt.model.UserDto;
+import com.blackbelt.model.TierDto;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.STOMP_sockJs.RBattleRoomRepository;
 
@@ -68,7 +69,7 @@ public class ChatRoomController {
 	}
 	
 	// 양측 대기방 입장 API
-	@GetMapping("/battle/ready")
+	@PostMapping("/battle/ready")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> battleready(@RequestBody Map<String, String> ids) {
 		HttpStatus status = null;
@@ -79,11 +80,13 @@ public class ChatRoomController {
 			String hostId = ids.get("hostId");
 			String guestId = ids.get("guestId");
 			SBattleRoom battleRoom = sBattleRoomRepository.findRoomById(guestId);
-			if(battleRoom != null) {
+			if(battleRoom != null) {		//battleRoom != null
 				resultMap.put("token",battleRoom.getRoomId());
 				
 				Optional<UserDto> hostUser = userRepo.findByuserId(hostId);
 				Optional<UserDto> guestUser = userRepo.findByuserId(guestId);
+				//Optional<TierDto> hostUserTier = userRepo.findBytierId(hostTier);
+				//Optional<TierDto> guestUserTier = userRepo.findBytierId(guestTier);
 				usersList.add(hostUser);
 				usersList.add(guestUser);
 				resultMap.put("users",usersList);
@@ -94,6 +97,7 @@ public class ChatRoomController {
 			
 		}catch(Exception e) {
 			e.printStackTrace();
+			resultMap.put("msg","배틀룸이 존재하지 않습니다");
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
@@ -101,35 +105,44 @@ public class ChatRoomController {
 	}	
 	
 	// [랜덤큐] 상대 찾기 API
-	@GetMapping("/que/random/{userId}")
+	@GetMapping("/random/{userId}")
 	public ResponseEntity<Map<String, Object>> queRandom(@PathVariable String userId){
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		// 실패, 성공 여부 , 상대 userId + 상대 user 정보 
-		// 임시 더미 데이터 저장 
-		//rBattleRoomRepository.createRBattleRoom("other", "bronze"); 
-		//rBattleRoomRepository.createRBattleRoom("other", "silver"); 
+		
+		// 임시 더미 데이터 저장 (TEST용)
+		//rBattleRoomRepository.clearRBattleRoom();
+		//rBattleRoomRepository.createRBattleRoom("bronze", "bronze");
+		//rBattleRoomRepository.createRBattleRoom("silver", "silver"); 
 		//rBattleRoomRepository.createRBattleRoom("gold", "gold"); 
 		//rBattleRoomRepository.createRBattleRoom("pla", "platinum"); 
 		//rBattleRoomRepository.createRBattleRoom("dia", "Diamond"); 
 		
 		try {
-			RBattleRoom other= rBattleRoomRepository.matchBattle(userId, "bronze");
-			if(other!=null) {
-				resultMap.put("otherId:",other.getUserId());
+			// 상대 찾기 
+			String userTier = userRepo.findtierNameBytierId(userRepo.finduserTierByuserId(userId));
+			
+			
+			RBattleRoom other= rBattleRoomRepository.matchRBattle(userId, userTier);
+			if(other.getUserId()!=null) {
+				resultMap.put("otherId",other.getUserId());
+				resultMap.put("msg", "매칭되었습니다!");
 				status = HttpStatus.OK;
 			}else {
+				rBattleRoomRepository.queueRBattleRoom(userId, userTier);
+				resultMap.put("other", "");
+				resultMap.put("msg", "매칭 상대를 찾는 중입니다(현재는 없음)");
 				status = HttpStatus.ACCEPTED;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			status = HttpStatus.EXPECTATION_FAILED;
 		}
 		
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
 	
 	/*
 	// 채팅 리스트 화면

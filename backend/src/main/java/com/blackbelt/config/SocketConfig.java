@@ -37,8 +37,6 @@ public class SocketConfig implements  WebSocketConfigurer{	// WebSocketConfigure
 				.setAllowedOrigins("*");
 	}
 	
-	
-	
     //@Bean
     //public WebSocketHandler myHandler() {
     //    return new SocketHandler();
@@ -66,24 +64,3 @@ public class SocketConfig implements WebSocketMessageBrokerConfigurer {
 
     }
 }
-
-/*
-@Configuration
-@EnableWebSocketMessageBroker
-public class SocketConfig implements WebSocketMessageBrokerConfigurer {
-
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat")
-        		.setAllowedOriginPatterns("*")
-        		.withSockJS();
-    }
-	
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/SUB");
-        config.setApplicationDestinationPrefixes("/PUB");
-    }
-
-
-}*/
