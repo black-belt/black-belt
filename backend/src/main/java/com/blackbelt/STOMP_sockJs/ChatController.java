@@ -77,6 +77,7 @@ public class ChatController {
         message.setMessage(guestNick + "님이 수락하셨습니다.");
 
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
+     	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
  		}
    	 // 거절 했을 때
    	 else if (ChatMessage.MessageType.REFUSE.equals(message.getType()))	{	// 
