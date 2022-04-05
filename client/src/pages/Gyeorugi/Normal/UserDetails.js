@@ -4,7 +4,6 @@ import { Invite } from "pages/MainPage/startWS";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { gyeorugiToken } from "recoils";
-import axiosInstance from "utils/API";
 import {
   Contents,
   Gradient,
@@ -37,11 +36,6 @@ const UserDetail = (props) => {
     token: token,
     hostId: props.hostId,
     guestId: target,
-  };
-
-  const SendInvite = async () => {
-    const answer = await axiosInstance.get(`/api/que/select/apply/${target}`);
-    console.log(answer);
   };
 
   return (
