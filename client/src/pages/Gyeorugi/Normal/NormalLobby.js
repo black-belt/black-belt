@@ -1,7 +1,9 @@
 import InButton from "components/atoms/Buttons/in-btns";
 import Icon from "components/atoms/Icons/CustomIcon";
+import { Enter } from "pages/MainPage/startWS";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { battleToken, gyeorugiMsg, userInfo } from "recoils";
 import axiosInstance from "utils/API";
@@ -46,8 +48,10 @@ function NormalLobby() {
   const myInfo = useRecoilValue(userInfo);
   const ImgURL = process.env.REACT_APP_IMAGE_URL;
 
+  const [isHost, setIsHost] = useState(false);
   const [hostInfo, setHostInfo] = useState(null);
   const [guestInfo, setGuestInfo] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosInstance.get(`/api/que/select/ready/${myInfo.userId}`).then((res) => {
@@ -68,8 +72,21 @@ function NormalLobby() {
           setGuestInfo(res.Guest);
         });
     }
+    if (hostInfo && hostInfo.userNick === myInfo.userNick) {
+      setIsHost(true);
+    }
   }, [acceptMsg]);
 
+  const startGyeorugi = () => {
+    Enter();
+    navigate(`/gyeorugi/normal/stage`, {
+      state: {
+        isHost: isHost,
+        hostId: acceptMsg.hostId,
+        guestId: acceptMsg.guestId,
+      },
+    });
+  };
   const onChangeNick = useCallback((e) => {
     setSearchInput(e.target.value);
   }, []);
@@ -149,7 +166,7 @@ function NormalLobby() {
               {guestInfo && (
                 <ChampionInfo>
                   <Name>
-                    <Icon width={19} height={15} icon="crown" />
+                    {/* <Icon width={19} height={15} icon="crown" /> */}
                     <span>{guestInfo.userNick}</span>
                   </Name>
                   <ProfileImgBox>
@@ -172,7 +189,7 @@ function NormalLobby() {
             </Champion>
           </ChampionBox>
           <center>
-            <InButton>{t("start")}</InButton>
+            <InButton onClick={startGyeorugi}>{t("start")}</InButton>
           </center>
         </Standby>
         <SearchLayout>

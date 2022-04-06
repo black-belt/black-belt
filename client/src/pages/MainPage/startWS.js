@@ -50,3 +50,28 @@ export const Deny = (props) => {
   };
   stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
 };
+
+// export const Enter = (props) => {
+//   const data = {
+//     type: "ENTER",
+//     hostId: props.hostId,
+//     guestId: props.guestId,
+//   };
+//   stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
+// };
+
+export const Enter = (roomId) => {
+  // const msg = useSetRecoilState(message);
+  // const test = useRecoilValue(gyeorugiMsg);
+  try {
+    stomp.connect({}, () => {
+      stomp.subscribe(`/sub/api/battle/${roomId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        // msg(newMessage);
+      });
+    });
+  } catch (err) {}
+  // stomp.onopen = function (event) {
+  //   console.log("connected");
+  // };
+};
