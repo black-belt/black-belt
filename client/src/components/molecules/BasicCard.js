@@ -9,10 +9,10 @@ function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId })
 
   return (
     <Card>
-      <ImageContainer onClick={selectStage}>
+      <ImageContainer onClick={locked === "N" ? selectStage : null}>
         <Image img={img} locked={locked}></Image>
         <DescriptionContainer>
-          <Description>{desc}</Description>
+          <Description>{desc.length > 73 ? desc.substr(0, 73) + "..." : desc}</Description>
           <Arrow>
             <CustomIcon icon="inPointer" viewBox="0 0 50 50" width="55" height="55" />
           </Arrow>
@@ -97,7 +97,7 @@ const Image = styled.div`
   width: 100%;
   height: 100%;
   ${(props) =>
-    props.clear === "Y"
+    props.locked === "N"
       ? css`
           background: rgb(100, 100, 100, 0.7);
           filter: grayscale(100%) brightness(100%);

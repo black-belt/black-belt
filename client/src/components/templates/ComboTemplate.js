@@ -129,7 +129,7 @@ const Title = styled.div`
     props.language === "ENG" &&
     css`
       line-height: 150%;
-      font-size: 5rem;
+      font-size: 4rem;
     `}
   ${(props) =>
     props.language === "KOR" &&

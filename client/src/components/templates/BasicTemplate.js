@@ -57,6 +57,7 @@ const Description = styled.div`
   font-family: inherit;
   font-size: ${fontSize.xl};
   letter-spacing: 0.5px;
+  line-height: 1.8rem;
 `;
 
 const CardContainer = styled.div`
