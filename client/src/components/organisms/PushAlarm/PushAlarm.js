@@ -44,6 +44,16 @@ const PushAlarm = () => {
     navigate("/gyeorugi/normal");
   };
 
+  const Deny = (props) => {
+    const data = {
+      type: "REFUSE",
+      hostId: props.hostId,
+      guestId: props.guestId,
+    };
+    stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
+    resetMsg();
+  };
+
   return (
     <>
       <OverLay>
@@ -56,7 +66,7 @@ const PushAlarm = () => {
             <ModalContent>{savedMsg.message}</ModalContent>
             <ButtonBox>
               <PushAlarmBtn onClick={() => Accept(data)}>Yes</PushAlarmBtn>
-              <PushAlarmBtn>No</PushAlarmBtn>
+              <PushAlarmBtn onClick={() => Deny(data)}>No</PushAlarmBtn>
             </ButtonBox>
           </ModalSection>
         </ModalBox>
