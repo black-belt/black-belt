@@ -4,7 +4,7 @@ import "./LocalVideo.css";
 function LocalVideo({ url }) {
   return (
     <ReactPlayer
-      // className="react-player"
+      className="local-video"
       url={url}
       // width="90%"
       // height="100%"
