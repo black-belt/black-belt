@@ -61,8 +61,8 @@ public class ChatController {
 	 
 	 if (ChatMessage.MessageType.LOGIN.equals(message.getType())) {		// 
 		logger.info("로그인 시: " + message);
-		String UserNick = userRepo.finduserNickByuserId(message.getUserId());
-        message.setMessage(UserNick + "님이 로그인해서, 유저세션에 추가되었습니다");
+		//String UserNick = userRepo.finduserNickByuserId(message.getUserId());
+        //message.setMessage(UserNick + "님이 로그인해서, 유저세션에 추가되었습니다");
 
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getUserId(), message);
          }
