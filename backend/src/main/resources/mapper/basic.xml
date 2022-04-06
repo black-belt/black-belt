@@ -40,4 +40,11 @@
 		  call UPDATE_STAGE_LOCK(#{user_id});
 		 
 	</select>
+	
+	<select id="nowlevel" parameterType="int" resultType="String">
+		 
+		  SELECT level_id FROM taekwondo.user where user_id=#{user_id};
+		 
+	</select>
+	
 </mapper>
