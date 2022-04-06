@@ -126,9 +126,9 @@ export const GyeorugiTR = styled.div`
 
 export const RecentGames = styled.div`
   display: flex;
+  gap: 0.6rem;
 
   img {
-    width: 40px;
-    /* padding-top: 3px; */
+    width: 30px;
   }
 `;
