@@ -2,7 +2,7 @@ import SockJs from "sockjs-client";
 import StompJs from "stompjs";
 // import { useNavigate } from "react-router-dom";
 
-const sock = new SockJs("http://localhost:8000/ws-stomp/");
+const sock = new SockJs("https://j6a506.p.ssafy.io/stomp/");
 const stomp = StompJs.over(sock);
 
 export const StartWS = (userId) => {
