@@ -168,7 +168,6 @@ function NormalLobby() {
               {guestInfo && (
                 <ChampionInfo>
                   <Name>
-                    {/* <Icon width={19} height={15} icon="crown" /> */}
                     <span>{guestInfo.userNick}</span>
                   </Name>
                   <ProfileImgBox>
