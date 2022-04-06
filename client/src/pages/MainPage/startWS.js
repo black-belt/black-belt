@@ -1,6 +1,6 @@
 import SockJs from "sockjs-client";
 import StompJs from "stompjs";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const sock = new SockJs("https://j6a506.p.ssafy.io/stomp/");
 const stomp = StompJs.over(sock);
@@ -35,12 +35,12 @@ export const Invite = (props) => {
 };
 
 export const Accept = (props) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const data = {
     type: "ACCEPT",
     hostId: props.hostId,
     guestId: props.guestId,
   };
   stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
-  navigate("/gyeorugi/normal");
+  // navigate("/gyeorugi/normal");
 };
