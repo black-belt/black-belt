@@ -10,7 +10,7 @@ function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId })
   return (
     <Card>
       <ImageContainer onClick={selectStage}>
-        <Image img={img} clear={clear}></Image>
+        <Image img={img} locked={locked}></Image>
         <DescriptionContainer>
           <Description>{desc}</Description>
           <Arrow>
@@ -103,7 +103,11 @@ const Image = styled.div`
   background-origin: content-box;
   background-position: center;
   ${(props) =>
+<<<<<<< Updated upstream
     !props.clear
+=======
+    props.locked === "N"
+>>>>>>> Stashed changes
       ? css`
           filter: grayscale(100%) brightness(100%);
         `

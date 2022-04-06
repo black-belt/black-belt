@@ -1,15 +1,18 @@
 import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import * as mobilenet from "@tensorflow-models/mobilenet";
-import * as tf from "@tensorflow/tfjs";
+import * as tmPose from "@teachablemachine/pose";
 
-function UserVideo({ answer, testResult, isPass }) {
+function UserVideo({ answer, testResult, isPass, aiId }) {
   const videoRef = useRef(null);
-  let net;
+  const modelURL = `/models/basics/${aiId}/model.json`;
+  const metadataURL = `/models/basics/${aiId}/metadata.json`;
   let isFindMax = false;
   let maxProbability = 0.0;
   let frameCnt = 0;
-  const [webCamElement, setWebCamElement] = useState();
+  let answerNum = 0;
+
+  const [model, setModel] = useState(undefined);
+  const [webCamElement, setWebCamElement] = useState(undefined);
 
   const getWebcam = (callback) => {
     try {
@@ -24,42 +27,54 @@ function UserVideo({ answer, testResult, isPass }) {
     }
   };
 
+  const setWebcam = async () => {
+    let m = await tmPose.load(modelURL, metadataURL);
+    setModel(() => m);
+    const size = 200;
+    const flip = true;
+    let webcam = await new tmPose.Webcam(size, size, flip);
+    setWebCamElement(() => webcam);
+  };
+
   const run = async () => {
-    net = await mobilenet.load();
-    const webcam = await tf.data.webcam(webCamElement, {
-      resizeWidth: 220,
-      resizeHeight: 227,
-    });
+    await webCamElement.setup();
+    await webCamElement.play();
     while (answer !== "" && !isPass) {
-      const img = await webcam.capture();
-      const result = await net.classify(img);
-      console.log(answer, isPass, result[0].className, result[0].probability);
-      img.dispose();
-      if (isFindMax) {
-        if (++frameCnt > 60) {
+      webCamElement.update(); // update the webcam frame
+      const { posenetOutput } = await model.estimatePose(webCamElement.canvas);
+      const prediction = await model.predictTopK(posenetOutput, 1);
+      const className = prediction[0].className;
+      const probability = prediction[0].probability;
+      console.log(className, probability);
+      if (isFindMax && answerNum >= 5) {
+        if (++frameCnt > 30) {
           isFindMax = false;
           frameCnt = 0;
           testResult(maxProbability);
           break;
         }
-        if (
-          answer === result[0].className.split(",")[0] &&
-          result[0].probability > maxProbability
-        ) {
-          maxProbability = result[0].probability;
+        if (answer === className && probability > maxProbability) {
+          maxProbability = probability;
         }
-      } else if (answer === result[0].className.split(",")[0]) {
+      } else if (answer === className) {
         isFindMax = true;
-        maxProbability = result[0].probability;
+        maxProbability = probability;
+        answerNum++;
         // const s = videoRef.current.srcObject;
         // s.getTracks().forEach((track) => {
         //   track.stop();
         // });
         // break;
       }
-      await tf.nextFrame();
     }
   };
+
+  useEffect(() => {
+    if (webCamElement !== undefined && model !== undefined) {
+      // console.log(aiId);
+      run();
+    }
+  }, [webCamElement, model]);
 
   useEffect(() => {
     // if (!isPass)
@@ -71,7 +86,7 @@ function UserVideo({ answer, testResult, isPass }) {
   }, []);
 
   useEffect(() => {
-    if (!isPass) run();
+    if (!isPass) setWebcam();
   }, [isPass, answer]);
 
   return (
@@ -85,6 +100,7 @@ export default UserVideo;
 
 const VideoContainer = styled.video`
   height: 22vw;
+  width: 35vw;
   margin-bottom: 60px;
   border-radius: 10px;
 `;
