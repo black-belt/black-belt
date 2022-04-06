@@ -23,10 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 import com.blackbelt.model.service.UserService;
+import com.google.gson.JsonObject;
 import com.blackbelt.model.UserDto;
 import com.blackbelt.model.TierDto;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.STOMP_sockJs.RBattleRoomRepository;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 
 // 세션 방 컨트롤러
@@ -74,7 +80,11 @@ public class ChatRoomController {
 	public ResponseEntity<Map<String, Object>> battleready(@RequestBody Map<String, String> ids) {
 		HttpStatus status = null;
 		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, Object> hostMap = new HashMap<>();
+		Map<String, Object> guestMap = new HashMap<>();
 		//List<Object> usersList = new ArrayList<Object>();
+		//JsonObject UserTier = new JsonObject();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		// 배틀룸 아이디 찾음 
 		try {
 			String hostId = ids.get("hostId");
@@ -83,12 +93,11 @@ public class ChatRoomController {
 			if(battleRoom != null) {		//battleRoom != null
 				resultMap.put("token",battleRoom.getRoomId());
 				
-				Optional<UserDto> hostUser = userRepo.findByuserId(hostId);
-				Optional<UserDto> guestUser = userRepo.findByuserId(guestId);
-				//Optional<TierDto> hostUserTier = userRepo.findBytierId(hostTier);
-				//Optional<TierDto> guestUserTier = userRepo.findBytierId(guestTier);
-				resultMap.put("Host",hostUser);
-				resultMap.put("Guest",guestUser);
+				hostMap = userService.getUserInfo(hostId);
+				guestMap = userService.getUserInfo(guestId);
+
+				resultMap.put("Host",hostMap);
+				resultMap.put("Guest",guestMap);
 				
 				status = HttpStatus.OK;
 			}else {
