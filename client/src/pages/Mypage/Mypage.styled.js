@@ -38,7 +38,7 @@ export const ProfileBox = styled.div`
 `;
 
 export const ImgBox = styled.div`
-  padding-top: 30%;
+  padding-top: 26%;
   padding-bottom: 0.8rem;
   width: 60%;
 `;
@@ -102,8 +102,23 @@ export const Certification = styled.div`
 export const GyeorugiInfo = styled.div`
   /* background-color: blue; */
   /* margin-top: 2rem; */
-  padding-top: 2rem;
-  height: 52%;
+  /* padding-top: 2rem; */
+  /* height: 52%; */
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+
+  border-radius: 6px;
+
+  background-color: rgba(248, 249, 250, 0.15);
+  /* backdrop-filter: blur(4px) saturate(10%);
+  -webkit-backdrop-filter: blur(4px) saturate(10%); */
 `;
 
-export const GyeorugiTR = styled.div``;
+export const GyeorugiTR = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  padding: 0.8rem 0;
+
+  border-bottom: 1px solid ${colors.gray9};
+`;

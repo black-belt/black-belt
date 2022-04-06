@@ -41,12 +41,13 @@
   "black belt 8 Dan": "Black Belt Dan 8th",
   "black belt 9 Dan": "Black Belt Dan 9th",
   "black belt 10 Dan": "Black Belt Dan 10th",
+  "points unit": "Points",
 
-  "socre": "",
-  "recents": "",
-  "tier": "",
-  "points": "",
-  "dan": "",
+  "score": "Gyeorugi Score",
+  "recents": "Recent Games",
+  "tier": "Tier",
+  "points": "Points",
+  "dan": "Dan",
 
   "gyeorugi": "Gyeorugi",
   "gyeorugi explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",

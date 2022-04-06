@@ -48,7 +48,7 @@ function MyPage() {
   const infoTable = [
     {
       title: "score",
-      contents: `${user.userWin}Wins ${user.userLose}Loses ${user.userDraw}Draws`,
+      contents: `${user.userWin} Wins  ${user.userLose} Loses  ${user.userDraw} Draws`,
     },
     {
       title: "recents",
@@ -56,15 +56,15 @@ function MyPage() {
     },
     {
       title: "tier",
-      contents: tier[user.userTier],
+      contents: `${t(tier[user.userTier])}`,
     },
     {
       title: "points",
-      contents: user.userScore,
+      contents: `${user.userScore} ${t("points unit")}`,
     },
     {
       title: "dan",
-      contents: user.levelName,
+      contents: `${t(user.levelName)}`,
     },
   ];
 
@@ -102,12 +102,13 @@ function MyPage() {
             />
           </Certification>
           <GyeorugiInfo>
-            <GyeorugiTR>
-              <span>{t()}</span>
-              <span>
-                {user.userWin}승 {user.userLose}패 {user.userDraw}무
-              </span>
-            </GyeorugiTR>
+            {user &&
+              infoTable.map((info) => (
+                <GyeorugiTR key={info.title}>
+                  <span>{t(info.title)}</span>
+                  <span>{info.contents}</span>
+                </GyeorugiTR>
+              ))}
           </GyeorugiInfo>
         </MyInfo>
       </Layout>

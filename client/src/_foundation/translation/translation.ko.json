@@ -41,9 +41,10 @@
   "black belt 8 Dan": "검은띠 8단",
   "black belt 9 Dan": "검은띠 9단",
   "black belt 10 Dan": "검은띠 10단",
+  "points unit": "점",
 
-  "socre": "겨루기 전적",
-  "recents": "최근 게임(10회)",
+  "score": "겨루기 전적",
+  "recents": "최근 게임 (10회)",
   "tier": "티어",
   "points": "포인트",
   "dan": "급",
