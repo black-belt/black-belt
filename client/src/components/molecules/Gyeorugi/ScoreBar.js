@@ -6,7 +6,7 @@ import InfoBar from "./InfoBar";
 
 function ScoreBar({ left, right, isTimer, setIsTimer, leftPercent, rightPercent, end }) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const totalSecnds = 80;
+  const totalSecnds = 60;
 
   const handleTimer = (elapsedSeconds) => {
     setElapsedSeconds(elapsedSeconds);

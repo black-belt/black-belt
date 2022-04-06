@@ -1,38 +1,16 @@
 import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import * as mobilenet from "@tensorflow-models/mobilenet";
-import * as tf from "@tensorflow/tfjs";
+import * as tmPose from "@teachablemachine/pose";
+import { useTranslation } from "react-i18next";
 
-function UserVideoPromotion({
-  answerRandom,
-  answerMapRandom,
-  answerEssential,
-  answerMapEssential,
-  testResult,
-  // updatePartIndex,
-  isPass,
-  startTimer,
-  // isTimer,
-  readyAction,
-  totalSeconds,
-  curNum,
-}) {
+function UserVideoPromotion({ testResult, isPass, startTimer, curNum, info, setCurMotion }) {
+  const { t } = useTranslation();
   const videoRef = useRef(null);
-  let net;
-  let webcam;
   let isStart = false;
-  let testSum = 0.0;
-  let nextAction = 1;
-  let curAction = 0;
-  let curPart = 0;
-  // let partIndex = 0;
-  // let isFindMax = false;
-  let isLastAction = false;
-  let maxProbability = 0.0;
   let answer;
-  let answerMap;
-  // let frameGoal = 5;
-  const [webCamElement, setWebCamElement] = useState();
+  let model;
+
+  const [webCamElement, setWebCamElement] = useState(undefined);
 
   const getWebcam = (callback) => {
     try {
@@ -42,110 +20,122 @@ function UserVideoPromotion({
       };
       navigator.mediaDevices.getUserMedia(constraints).then(callback);
     } catch (err) {
-      // console.log(err);
+      console.log(err);
       return undefined;
     }
   };
 
-  //이미지 하나 분석용 함수 만들어서
-  //interval로 1000/20 = 50ms당 한번씩 하도록 만드는거임
-  //그래서 45초면 반복문을 20*45번돌게하는거
+  const changeModel = async (poomsae, chapter) => {
+    model = await tmPose.load(
+      `/models/combos/${(poomsae - 1) * 4 + chapter}/model.json`,
+      `/models/combos/${(poomsae - 1) * 4 + chapter}/metadata.json`
+    );
+    // console.log("!!change", model, poomsae, chapter);
+    // setModel(() => m);
+  };
 
-  //얘가 끝나면??
+  const setWebcam = async () => {
+    const size = 200;
+    const flip = true;
+    let webcam = await new tmPose.Webcam(size, size, flip);
+    setWebCamElement(() => webcam);
+  };
 
-  //바로 시작해.. 테스트result보내고 curNum ++을 stage에서 해주면 얘 리렌더링시키도록
-  //
+  const setReady = async () => {
+    // console.log(info.randomPoomsaeId, curNum);
+    if (curNum === 0) await changeModel(info.randomPoomsaeId, 1);
+    else await changeModel(info.essentialPoomsaeId, 1);
+    // console.log("!!model", model);
+    await webCamElement.setup();
+    await webCamElement.play();
 
-  const isReady = async () => {
-    const img = await webcam.capture();
-    const result = await net.classify(img);
-    const className = result[0].className.split(",")[0];
-    const probability = result[0].probability;
-    img.dispose();
-    console.log(curPart, curAction, answer[curPart], result[0].className, result[0].probability);
-    console.log(className, readyAction, probability);
-    // await tf.nextFrame();
-    if (className === readyAction && probability >= 0.6) {
+    let cnt = 0;
+    if (!isStart) {
+      while (cnt < 5) {
+        cnt += await isReady();
+      }
       isStart = true;
       startTimer();
-      // console.log("시작~!");
-      return true;
+      run();
     }
-    return false;
+  };
+
+  const isReady = async () => {
+    webCamElement.update(); // update the webcam frame
+    const { posenetOutput } = await model.estimatePose(webCamElement.canvas);
+    const prediction = await model.predictTopK(posenetOutput, 1);
+    const className = prediction[0].className;
+    const probability = prediction[0].probability;
+    // console.log(className, probability);
+    if (className === "no one" && probability >= 0.8) {
+      // console.log(className, probability);
+      return 1;
+    }
+    return 0;
   };
 
   const analyzeImage = async () => {
-    const img = await webcam.capture();
-    const result = await net.classify(img);
-    const className = result[0].className.split(",")[0];
-    const probability = result[0].probability;
-    console.log(curPart, curAction, answer[curPart], result[0].className, result[0].probability);
-    img.dispose();
-
-    if (isLastAction) {
-      if (answer[curAction] === className && probability > maxProbability) {
-        maxProbability = probability;
-        // console.log("!!", curNum, curAction, className, maxProbability);
-      }
-    } else if (answer[curAction] === className && probability > maxProbability) {
-      maxProbability = probability;
-      // console.log("!!", curNum, curAction, className, maxProbability);
-    } else if (answer[nextAction] === className) {
-      testSum += maxProbability;
-      maxProbability = probability;
-      curAction = nextAction++;
-      // console.log("!!", curNum, curAction, className, maxProbability);
-    } else if (probability >= 0.8 && answerMap.has(className)) {
-      const idxArr = answerMap.get(className);
-      idxArr.forEach((value) => {
-        if (value > curAction) {
-          testSum += maxProbability;
-          maxProbability = probability;
-          curAction = answerMap.get(className);
-          nextAction = curAction + 1;
-          return false;
-        }
-      });
-      // console.log("!!", curNum, curAction, className, maxProbability);
-    }
-
-    if (nextAction === answer.length) {
-      isLastAction = true;
-    }
+    webCamElement.update(); // update the webcam frame
+    const { posenetOutput } = await model.estimatePose(webCamElement.canvas);
+    const prediction = await model.predictTopK(posenetOutput, 1);
+    const className = prediction[0].className;
+    const probability = prediction[0].probability;
+    // console.log(className, probability);
+    return { className: className, probability: probability };
   };
 
   const run = async () => {
+    startTimer();
+    let time;
+    let totalCnt = 0;
+    let probSum = 0;
+    let motionCnt = 0;
+    let maxProbability = 0;
+    let curChapter = 1;
+    let curIdx = 0;
+    let explainIdx = 0;
+    let answer, answerIndex;
+    let explain;
+    let poomsaeId;
     if (curNum === 0) {
-      answer = answerRandom;
-      answerMap = answerMapRandom;
+      time = info.randomPoomsaeTime;
+      info.randomAnswer.forEach((value) => (motionCnt += value.length));
+      answer = info.randomAnswer;
+      explain = t("language") === "KOR" ? info.randomPoomsaeExplain : info.randomPoomsaeExplainE;
+      poomsaeId = info.randomPoomsaeId;
     } else {
-      answer = answerEssential;
-      answerMap = answerMapEssential;
+      time = info.essentialPoomsaeTime;
+      info.essentialAnswer.forEach((value) => (motionCnt += value.length));
+      answer = info.essentialAnswer;
+      explain =
+        t("language") === "KOR" ? info.enssentialPoomsaeExplain : info.enssentialPoomsaeExplainE;
+      poomsaeId = info.essentialPoomsaeId;
     }
-    // if (curNum === 0) {
-    net = await mobilenet.load();
-    webcam = await tf.data.webcam(webCamElement, {
-      resizeWidth: 220,
-      resizeHeight: 227,
-    });
-    // }
-    let cnt = 0;
-    // await isReady();
-
-    while (!isStart) {
-      await isReady();
-    }
-    maxProbability = 0.0;
-    testSum = 0.0;
-    const loop = setInterval(() => {
-      console.log(cnt++);
-      analyzeImage();
-      if (cnt === (totalSeconds + 2) * 20) {
-        testSum += maxProbability;
+    // console.log("!!answer", answer);
+    // console.log("!!time, motionCnt", time, motionCnt);
+    const loop = setInterval(async () => {
+      if (++totalCnt % 20 === 0) {
+        // console.log("!!answer", curChapter, curIdx, answer[curChapter][curIdx], maxProbability);
+        probSum += maxProbability;
         maxProbability = 0;
-        testResult(testSum);
-        testSum = 0;
+        setCurMotion(explain[++explainIdx]);
+        if (++curIdx === answer[curChapter].length) {
+          curIdx = 0;
+          curChapter++;
+          await changeModel(poomsaeId, curChapter);
+        }
+      }
+      if (totalCnt === time * 20) {
         clearInterval(loop);
+        // console.log("!!end", probSum, motionCnt, probSum / motionCnt);
+        testResult(probSum / motionCnt);
+      }
+      let imageResult = await analyzeImage();
+      if (
+        answer[curChapter][curIdx] === imageResult.className &&
+        maxProbability < imageResult.probability
+      ) {
+        maxProbability = imageResult.probability;
       }
     }, 50);
   };
@@ -153,17 +143,20 @@ function UserVideoPromotion({
   useEffect(() => {
     getWebcam((stream) => {
       videoRef.current.srcObject = stream;
-      setWebCamElement(videoRef.current);
+      // setWebCamElement(videoRef.current);
     });
   }, []);
 
   useEffect(() => {
-    // console.log("!!run", curNum, isPass, answerRandom, totalSeconds, answerMapRandom);
-    if (!isPass && answerRandom.length > 0 && totalSeconds > 0 && answerMapRandom.size > 0) {
-      // console.log("!!run실행~~");
-      run();
+    if (!isPass) setWebcam();
+  }, [answer, isPass]);
+
+  useEffect(() => {
+    // console.log("실행!");
+    if (!isPass && webCamElement !== undefined) {
+      setReady();
     }
-  }, [answerRandom, isPass, totalSeconds, curNum]);
+  }, [webCamElement, curNum]);
 
   return (
     <>
@@ -175,7 +168,8 @@ function UserVideoPromotion({
 export default UserVideoPromotion;
 
 const VideoContainer = styled.video`
-  height: 28vw;
+  height: 60vh;
+  width: 50vw;
   // margin-bottom: 60px;
   border-radius: 10px;
 `;
