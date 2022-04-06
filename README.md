@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/black-belt/black-belt/blob/main/README.assets/logo.png?raw=true"/>
+  ![image](./README.assets/logo.png)
 </div>
 
 <br>

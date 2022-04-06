@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blackbelt.model.mapper.BattleMapper">
+	<select id="getBattleRoomInfo" parameterType="BattleHistoryDto" resultType="map">
+		SELECT user_id as userId, country_id as countryId, tier_id as tierId, user_nick as userNick, user_score as userScore
+		, isHost, user_profile_path as userProfilePath, default_lang as defaultLang, country_name as countryName, tier_name as tierName, tier_name_e as tierNameE
+		FROM
+		(SELECT h.user_id, h.country_id, h.tier_id, h.user_nick, h.user_score, 'true' as isHost, h.user_profile_path
+				, h.default_lang, c.country_name, t.tier_name, t.tier_name_e
+		FROM user h
+			 LEFT JOIN country c on c.country_id = h.country_id
+		     LEFT JOIN tier t on t.tier_id = h.tier_id
+		WHERE h.user_id = #{myId}
+		UNION
+		SELECT h.user_id, h.country_id, h.tier_id, h.user_nick, h.user_score, 'false' as isHost, h.user_profile_path
+				, h.default_lang, c.country_name, t.tier_name, t.tier_name_e
+		FROM user h
+			 LEFT JOIN country c on c.country_id = h.country_id
+		     LEFT JOIN tier t on t.tier_id = h.tier_id
+		WHERE h.user_id = #{enemyId}) d
+	</select>
+</mapper>

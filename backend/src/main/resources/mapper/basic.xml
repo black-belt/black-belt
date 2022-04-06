@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blackbelt.model.mapper.BasicMapper">
+	<select id="listBasic" resultType="BasicDto">
+		select basicaction.basic_id, basic_name, basic_name_e, basic_explain,
+		basic_explain_e, basic_img_path, basic_movie_path
+		from basicaction
+	</select>
+	<select id="listBasicuser" resultType="BasicDto">
+		select basicaction.basic_id, basic_name, basic_name_e, basic_explain,
+		basic_explain_e, basic_img_path, basic_movie_path, basic_clear, basic_score, basic_locked
+		from basicaction, basicstage
+		where basicaction.basic_id = basicstage.basic_id
+		and user_id = #{user_id};
+	</select>
+	
+	<select id="getBasic"  parameterType="int" resultType="BasicDto">
+		select basicaction.basic_id, basic_name, basic_name_e, basic_explain,
+		basic_explain_e, basic_img_path, basic_movie_path, basic_clear, basic_score, basic_locked,
+		basic_answer, basic_answer_index
+		from basicaction, basicstage
+		where basicaction.basic_id = basicstage.basic_id
+		and basicstage.basic_id= #{basicid}
+		and user_id = #{user_id};
+	</select>
+	
+	<update id="updateBasicStage" parameterType="BasicStageDto">
+		update basicstage
+		set
+		basic_score = #{basic_score},
+		basic_clear = #{basic_clear},
+		basic_date = now(),
+		basic_locked = "N"
+		where basic_id = #{basic_id} and user_id = #{user_id}
+	</update>
+	<select id="levelup" statementType="CALLABLE">
+		 
+		  call UPDATE_STAGE_LOCK(#{user_id});
+		 
+	</select>
+</mapper>

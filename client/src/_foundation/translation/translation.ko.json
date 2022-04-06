@@ -1,0 +1,63 @@
+{
+  "logo url": "/images/logo_kor.png",
+  "login": "로그인",
+  "signup": "회원가입",
+  "welcome": "안녕하세요,",
+  "welcome_korean": "님",
+  "language": "KOR",
+
+  "logout": "로그아웃",
+  "select language": "언어 선택",
+  "about tkd": "태권도란?",
+  "mypage": "마이페이지",
+
+  "welcome google": "구글 계정으로 계속하기",
+  "new?": "New to BlackBelt?",
+  "loginLink": "",
+  "signupLink": "Create an Account",
+
+  "practice mode": "연습모드",
+  "practice mode explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "practice mode explanation2": "",
+
+  "basics": "기본동작",
+  "combos": "연결동작",
+  "poomsae": "품새",
+
+  "promotion test": "심사모드",
+  "promotion test explanation": "",
+  "promotion test explanation2": "",
+  "1단": "1단",
+  "2단": "2단",
+  "3단": "3단",
+  "4단": "4단",
+  "5단": "5단",
+  "6단": "6단",
+  "7단": "7단",
+  "8단": "8단",
+
+  "gyeorugi": "겨루기",
+  "gyeorugi explanation": "",
+  "gyeorugi explanation2": "",
+  "normal": "일반 모드",
+  "rank": "랭크 모드",
+
+  "start": "겨루기 시작",
+  "online": "온라인",
+  "offline": "로그아웃",
+  "battle": "심사중",
+  "test": "겨루기 중",
+  "search": "닉네임 검색",
+  "search output": "해당 닉네임이 존재하지 않습니다",
+  "search msg": "겨루고 싶은 상대를 닉네임으로 검색해보세요",
+
+  "bronze": "브론즈",
+  "silver": "실버",
+  "gold": "골드",
+  "platinum": "플래티넘",
+  "diamond": "다이아",
+  "apply": "겨루기 신청",
+
+  "basics description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "combos description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."
+}
