@@ -118,9 +118,12 @@ function MyPage() {
               infoTable.map((info) => (
                 <GyeorugiTR key={info.title}>
                   <div>{t(info.title)}</div>
-                  {/* <div>{info.contents}</div> */}
                   {info.title === "recents" ? (
-                    <RecentGames>hi</RecentGames>
+                    <RecentGames>
+                      {user.battleHistories.map((battle) => (
+                        <img src={`/images/${battle.winLoseDraw}.png`} alt="" />
+                      ))}{" "}
+                    </RecentGames>
                   ) : (
                     <div>{info.contents}</div>
                   )}
