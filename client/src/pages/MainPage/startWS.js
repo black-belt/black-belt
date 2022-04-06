@@ -2,7 +2,7 @@ import SockJs from "sockjs-client";
 import StompJs from "stompjs";
 import { useNavigate } from "react-router-dom";
 
-const sock = new SockJs("https://j6a506.p.ssafy.io/stomp/");
+const sock = new SockJs("http://localhost:8000/ws-stomp/");
 const stomp = StompJs.over(sock);
 
 export const StartWS = (userId) => {
@@ -29,9 +29,11 @@ export const Invite = (props) => {
     type: "INVITE",
     hostId: props.hostId,
     guestId: props.guestId,
+
     token: props.token,
   };
   stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
+  navigate("/gyeorugi/normal");
 };
 
 export const Accept = (props) => {
