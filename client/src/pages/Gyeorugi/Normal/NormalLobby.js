@@ -84,6 +84,7 @@ function NormalLobby() {
         isHost: isHost,
         hostId: acceptMsg.hostId,
         guestId: acceptMsg.guestId,
+        roomSeq: acceptMsg.roomId,
       },
     });
   };
