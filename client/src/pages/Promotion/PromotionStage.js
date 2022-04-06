@@ -46,12 +46,12 @@ function PromotionStage() {
     getAnswerData();
   }, []);
 
-  const updateIsPass = async () => {
+  const updateIsPass = async (g) => {
     await axiosInstance.post(`/api/judge`, {
       user_id: userId,
       level_id: info.judgeLevelId,
-      fail: gradeNum === 0 ? "0" : "1",
-      judge_score: gradeNum,
+      fail: g === 0 ? "0" : "1",
+      judge_score: g,
     });
 
     setIsStar(true);
@@ -65,11 +65,12 @@ function PromotionStage() {
   };
 
   const testResult = (avg) => {
+    let g = 0;
     if (curNum === 0) {
       if (avg < 0.6) {
         setGrade("Try Again");
         setGradeNum(0);
-        updateIsPass();
+        updateIsPass(g);
         return;
       }
       setPrevAvg(() => avg);
@@ -81,19 +82,22 @@ function PromotionStage() {
         setGrade("Perfect!");
         setGradeNum(3);
         tempGrade = 3;
+        g = 3;
       } else if (avg >= 0.7) {
         setGrade("Great");
         setGradeNum(2);
         tempGrade = 2;
+        g = 2;
       } else if (avg >= 0.6) {
         setGrade("Good");
         setGradeNum(1);
         tempGrade = 1;
+        g = 1;
       } else {
         setGrade("Try Again");
         setGradeNum(0);
       }
-      updateIsPass();
+      updateIsPass(g);
     }
   };
 

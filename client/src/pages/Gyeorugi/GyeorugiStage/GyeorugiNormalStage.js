@@ -1,5 +1,6 @@
 import StageBtn from "components/atoms/Buttons/stage-btn";
 import EvaluationTemplateGyeorugi from "components/templates/EvaluationTemplateGyeorugi";
+import VSTemplate from "components/templates/VSTemplate";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "utils/API";
@@ -11,6 +12,9 @@ function GyeorugiNormalStage() {
   const [isWin, setIsWin] = useState(undefined);
   const [info, setInfo] = useState(undefined);
   const [myInfo, setMyInfo] = useState(undefined);
+  const [red, setRed] = useState(undefined);
+  const [blue, setBlue] = useState(undefined);
+  const [introduce, setIntroduce] = useState(true);
   const navigate = useNavigate();
   const state = useLocation();
   let otherNick;
@@ -25,64 +29,32 @@ function GyeorugiNormalStage() {
   };
 
   const getInfoData = async () => {
-    // const data = await axiosInstance.post("/api/battle", {
-    //   hostId: state.hostId,
-    //   guestId: state.guestId,
-    //   isHost: state.isHost,
-    //   roomSeq: state.roomSeq,
-    // });
-    // const imHost = state.isHost === 1 ? true : false;
-
-    // const imHost = true;
-    // const data = {
-    //   token: undefined,
-    //   battleInfo: [
-    //     {
-    //       isHost: "true",
-    //       tierId: 1,
-    //       userNick: "anonymous9",
-    //       tierName: "브론즈",
-    //       userScore: 999,
-    //       countryName: "korea",
-    //       tierNameE: "bronze",
-    //       userId: 2,
-    //       countryId: 3,
-    //       defaultLang: "K",
-    //     },
-    //     {
-    //       isHost: "false",
-    //       tierId: 1,
-    //       userNick: "anonymous11",
-    //       userProfilePath: "C:\\var\\lib\\jenkins\\upload\\캡처_2022_02_22_15_06_14_185.png",
-    //       tierName: "브론즈",
-    //       userScore: 999,
-    //       countryName: "korea",
-    //       tierNameE: "bronze",
-    //       userId: 12,
-    //       countryId: 1,
-    //       defaultLang: "K",
-    //     },
-    //   ],
-    //   battleSeq: "5",
-    //   message: "Success : Enter study room",
-    //   statusCode: 200,
-    // };
-
     const data = await axiosInstance.post("/api/battle", {
-      hostId: 3,
-      guestId: 4,
+      hostId: 11,
+      guestId: 12,
       isHost: 0,
-      roomSeq: "225",
+      roomSeq: 123,
     });
     let imHost = true;
     setInfo(data);
     console.log("data!!", data);
     setMyInfo(imHost ? data.battleInfo[0] : data.battleInfo[1]);
     otherNick = imHost ? data.battleInfo[1].userNick : data.battleInfo[0].userNick;
+
+    if (imHost) {
+      setRed(data.battleInfo[0]);
+      setBlue(data.battleInfo[1]);
+    } else {
+      setBlue(data.battleInfo[0]);
+      setRed(data.battleInfo[1]);
+    }
   };
 
   useEffect(() => {
     getInfoData();
+    setTimeout(() => {
+      setIntroduce(false);
+    }, 3000);
   }, []);
 
   useEffect(() => {
@@ -125,7 +97,8 @@ function GyeorugiNormalStage() {
 
   return (
     <>
-      {info && myInfo && (
+      {introduce && red && blue && <VSTemplate red={red} blue={blue} />}
+      {!introduce && info && myInfo && (
         <VideoRoomComponent
           setResult={setResult}
           setIsWin={setIsWin}
