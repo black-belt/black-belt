@@ -88,6 +88,7 @@ function NormalLobby() {
       },
     });
   };
+
   const onChangeNick = useCallback((e) => {
     setSearchInput(e.target.value);
   }, []);
