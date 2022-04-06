@@ -1,11 +1,12 @@
 import { useRecoilValue } from "recoil";
-import { userInfo } from "recoils";
+import { gyeorugiMsg, userInfo } from "recoils";
 import { Carousel } from "3d-react-carousal";
 import {
   BackgroundImg,
   Certification,
   // Carousel,
   GyeorugiInfo,
+  GyeorugiTR,
   ImgBox,
   ImgWrapper,
   Layout,
@@ -17,8 +18,11 @@ import {
   UserEmail,
   Username,
 } from "./Mypage.styled";
+import CountryIcon from "components/atoms/Icons/CountryIcon";
+import { useTranslation } from "react-i18next";
 
 function MyPage() {
+  const { t } = useTranslation();
   const user = useRecoilValue(userInfo);
   const tier = {
     1: "bronze",
@@ -40,6 +44,30 @@ function MyPage() {
   const callback = function (index) {
     console.log("callback", index);
   };
+
+  const infoTable = [
+    {
+      title: "score",
+      contents: `${user.userWin}Wins ${user.userLose}Loses ${user.userDraw}Draws`,
+    },
+    {
+      title: "recents",
+      contents: "",
+    },
+    {
+      title: "tier",
+      contents: tier[user.userTier],
+    },
+    {
+      title: "points",
+      contents: user.userScore,
+    },
+    {
+      title: "dan",
+      contents: user.levelName,
+    },
+  ];
+
   return (
     <div className="MyPage">
       <BackgroundImg src="/images/practiceBackground.jpg" alt="" />
@@ -48,14 +76,19 @@ function MyPage() {
           <ImgBox>
             <ImgWrapper>
               {user.userProfilePath ? (
-                <ProfileImg src={user.userProfilePath} alt="" />
+                <>
+                  <ProfileImg src={user.userProfilePath} alt="" />
+                </>
               ) : (
                 // <ProfileImg src="/images/IMG_4070.JPG" alt="" />
                 <ProfileImg src="images/defaultUser.png" alt="" />
               )}
+              <UserCountry>
+                {/* <CountryIcon icon={user.countryName} width="50" height="50" /> */}
+                {/* <img src="images/defaultUser.png" alt="" /> */}
+              </UserCountry>
             </ImgWrapper>
           </ImgBox>
-          <UserCountry></UserCountry>
           <Username>{user.userNick}</Username>
           <UserEmail>{user.userEmail}</UserEmail>
           <TierImg src={`/images/tier/${tier[user.userTier]}.png`} />
@@ -68,7 +101,14 @@ function MyPage() {
               onSlideChange={callback}
             />
           </Certification>
-          <GyeorugiInfo>here</GyeorugiInfo>
+          <GyeorugiInfo>
+            <GyeorugiTR>
+              <span>{t()}</span>
+              <span>
+                {user.userWin}승 {user.userLose}패 {user.userDraw}무
+              </span>
+            </GyeorugiTR>
+          </GyeorugiInfo>
         </MyInfo>
       </Layout>
     </div>

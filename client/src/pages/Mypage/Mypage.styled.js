@@ -60,7 +60,16 @@ export const ProfileImg = styled.img`
   width: auto;
 `;
 
-export const UserCountry = styled.div``;
+export const UserCountry = styled.div`
+  /* position: absolute; */
+  /* left: 0; */
+  /* right: 20%; */
+  /* top: 50%; */
+  /* position: relative; */
+  /* left: 70%; */
+  /* top: -50px; */
+  /* right: 100px; */
+`;
 
 export const Username = styled.div`
   font-size: ${fontSize.h4};
@@ -96,3 +105,5 @@ export const GyeorugiInfo = styled.div`
   padding-top: 2rem;
   height: 52%;
 `;
+
+export const GyeorugiTR = styled.div``;
