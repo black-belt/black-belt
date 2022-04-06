@@ -29,9 +29,11 @@ export const Invite = (props) => {
     type: "INVITE",
     hostId: props.hostId,
     guestId: props.guestId,
-    roomId: props.token,
+
+    token: props.token,
   };
   stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
+  navigate("/gyeorugi/normal");
 };
 
 export const Accept = (props) => {

@@ -90,6 +90,7 @@ public class ChatController {
 		logger.info("받는사람 :"+message.getHostId()+"   배틀룸 :" + sbattleRepo.findRoomById(message.getHostId()) +"    의 방번호 :"  + ((sbattleRepo.findRoomById(message.getHostId())).getRoomId()) );
         
         message.setRoomId((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
+
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
  		}
