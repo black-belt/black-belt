@@ -87,7 +87,10 @@ public class ChatController {
         //System.out.println((message.getHostId()));
         //System.out.println(sbattleRepo.findRoomById(message.getHostId()));
         //System.out.println((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
-		logger.info("받는사람 :"+message.getHostId()+"   배틀룸 :" + sbattleRepo.findRoomById(message.getHostId()) +"    의 방번호 :"  + ((sbattleRepo.findRoomById(message.getHostId())).getRoomId()) );
+		logger.info("받는사람 :" + message.getHostId());
+		logger.info("   배틀룸 :" + sbattleRepo.findRoomById(message.getHostId()));
+		logger.info("    의 방번호 :"  + ((sbattleRepo.findRoomById(message.getHostId())).getRoomId()) );
+		//logger.info("받는사람 :"+message.getHostId()+"   배틀룸 :" + sbattleRepo.findRoomById(message.getHostId()) +"    의 방번호 :"  + ((sbattleRepo.findRoomById(message.getHostId())).getRoomId()) );
         
         message.setRoomId((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
 
