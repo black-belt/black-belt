@@ -79,6 +79,7 @@ public class ChatController {
 		logger.info("초대 시: " + message);
 		String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
         message.setMessage(guestNick + "님이 수락하셨습니다.");
+	logger.info("받는사람 :"+message.getHostId()+"   배틀룸 :" + sbattleRepo.findRoomById(message.getHostId()) +"    의 방번호 :"  + ((sbattleRepo.findRoomById(message.getHostId())).getRoomId()) );
         message.setRoomId((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
         // room 
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
