@@ -39,16 +39,21 @@ function NormalLobby() {
   const [finishSearch, setFinishSearch] = useState(false);
   const [userList, setUserList] = useState(null);
   const [targetUser, setTargetUser] = useState("");
+
   const setGyeorugiToken = useSetRecoilState(battleToken);
   const acceptMsg = useRecoilValue(gyeorugiMsg);
-  const [counterInfo, setCounterInfo] = useState(null);
+
   const myInfo = useRecoilValue(userInfo);
   const ImgURL = process.env.REACT_APP_IMAGE_URL;
+
+  const [hostInfo, setHostInfo] = useState(null);
+  const [guestInfo, setGuestInfo] = useState(null);
 
   useEffect(() => {
     axiosInstance.get(`/api/que/select/ready/${myInfo.userId}`).then((res) => {
       setGyeorugiToken(res);
     });
+    setHostInfo(myInfo);
   }, []);
 
   useEffect(() => {
@@ -58,7 +63,10 @@ function NormalLobby() {
           hostId: acceptMsg.hostId,
           guestId: acceptMsg.guestId,
         })
-        .then((res) => console.log(res));
+        .then((res) => {
+          setHostInfo(res.Host);
+          setGuestInfo(res.Guest);
+        });
     }
   }, [acceptMsg]);
 
@@ -113,27 +121,55 @@ function NormalLobby() {
         <Standby>
           <ChampionBox>
             <Champion>
-              <ChampionInfo>
-                <Name>
-                  <Icon width={19} height={15} icon="crown" />
-                  <span>{myInfo.userNick}</span>
-                </Name>
-                <ProfileImgBox>
-                  <ImgWrapper>
-                    {myInfo.userProfilePath ? (
-                      <ProfileImg
-                        src={ImgURL + myInfo.userProfilePath}
-                        alt=""
-                      />
-                    ) : (
-                      <ProfileImg src="/images/defaultUser.png" alt="" />
-                    )}
-                  </ImgWrapper>
-                </ProfileImgBox>
-                <Tier language={t("language")}>{t(tier[myInfo.userTier])}</Tier>
-              </ChampionInfo>
+              {hostInfo && (
+                <ChampionInfo>
+                  <Name>
+                    <Icon width={19} height={15} icon="crown" />
+                    <span>{hostInfo.userNick}</span>
+                  </Name>
+                  <ProfileImgBox>
+                    <ImgWrapper>
+                      {hostInfo.userProfilePath ? (
+                        <ProfileImg
+                          src={ImgURL + hostInfo.userProfilePath}
+                          alt=""
+                        />
+                      ) : (
+                        <ProfileImg src="/images/defaultUser.png" alt="" />
+                      )}
+                    </ImgWrapper>
+                  </ProfileImgBox>
+                  <Tier language={t("language")}>
+                    {t(tier[hostInfo.userTier])}
+                  </Tier>
+                </ChampionInfo>
+              )}
             </Champion>
-            <Champion></Champion>
+            <Champion>
+              {guestInfo && (
+                <ChampionInfo>
+                  <Name>
+                    <Icon width={19} height={15} icon="crown" />
+                    <span>{guestInfo.userNick}</span>
+                  </Name>
+                  <ProfileImgBox>
+                    <ImgWrapper>
+                      {guestInfo.userProfilePath ? (
+                        <ProfileImg
+                          src={ImgURL + guestInfo.userProfilePath}
+                          alt=""
+                        />
+                      ) : (
+                        <ProfileImg src="/images/defaultUser.png" alt="" />
+                      )}
+                    </ImgWrapper>
+                  </ProfileImgBox>
+                  <Tier language={t("language")}>
+                    {t(tier[guestInfo.userTier])}
+                  </Tier>
+                </ChampionInfo>
+              )}
+            </Champion>
           </ChampionBox>
           <center>
             <InButton>{t("start")}</InButton>
