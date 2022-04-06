@@ -122,3 +122,5 @@ export const GyeorugiTR = styled.div`
 
   border-bottom: 1px solid ${colors.gray9};
 `;
+
+export const RecentGames = styled.div``;

@@ -13,6 +13,7 @@ import {
   MyInfo,
   ProfileBox,
   ProfileImg,
+  RecentGames,
   TierImg,
   UserCountry,
   UserEmail,
@@ -45,6 +46,17 @@ function MyPage() {
     console.log("callback", index);
   };
 
+  const recentGames = (game) => {
+    if (game) {
+      if (game.winLoseDraw === "W") {
+        return <img src="/images/win.png" alt="" />;
+      }
+      if (game.winLoseDraw === "L") {
+        return <img src="/images/lose.png" alt="" />;
+      }
+    }
+  };
+
   const infoTable = [
     {
       title: "score",
@@ -52,7 +64,7 @@ function MyPage() {
     },
     {
       title: "recents",
-      contents: "",
+      contents: [`${user.battleHistories}`],
     },
     {
       title: "tier",
@@ -105,8 +117,13 @@ function MyPage() {
             {user &&
               infoTable.map((info) => (
                 <GyeorugiTR key={info.title}>
-                  <span>{t(info.title)}</span>
-                  <span>{info.contents}</span>
+                  <div>{t(info.title)}</div>
+                  {/* <div>{info.contents}</div> */}
+                  {info.title === "recents" ? (
+                    <RecentGames>hi</RecentGames>
+                  ) : (
+                    <div>{info.contents}</div>
+                  )}
                 </GyeorugiTR>
               ))}
           </GyeorugiInfo>
