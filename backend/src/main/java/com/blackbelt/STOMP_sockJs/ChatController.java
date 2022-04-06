@@ -61,15 +61,15 @@ public class ChatController {
 	 
 	 if (ChatMessage.MessageType.LOGIN.equals(message.getType())) {		// 
 		logger.info("로그인 시: " + message);
-		//String UserNick = userRepo.finduserNickByuserId(message.getUserId());
-        //message.setMessage(UserNick + "님이 로그인해서, 유저세션에 추가되었습니다");
+		String UserNick = userRepo.finduserNickByuserId(message.getUserId());
+        message.setMessage(UserNick + "님이 로그인해서, 유저세션에 추가되었습니다");
 
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getUserId(), message);
          }
 	 // 신청 보냈을 때
 	 else if (ChatMessage.MessageType.INVITE.equals(message.getType())) {		// 
 		logger.info("신청 시: "+ message );
-		//String hostNick = userRepo.finduserNickByuserId(message.getHostId());
+		String hostNick = userRepo.finduserNickByuserId(message.getHostId());
         message.setMessage("님이 초대를 보냈습니다");
 
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
@@ -79,7 +79,7 @@ public class ChatController {
 		logger.info("초대 시: " + message);
 		String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
         message.setMessage(guestNick + "님이 수락하셨습니다.");
-        message.setRoomId(sbattleRepo.findRoomById(message.getHostId()).getRoomId());
+        message.setRoomId((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
         // room 
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
