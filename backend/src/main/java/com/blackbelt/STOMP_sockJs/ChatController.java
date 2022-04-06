@@ -21,23 +21,27 @@ import lombok.RequiredArgsConstructor;
 import com.blackbelt.model.UserDto;
 import com.blackbelt.model.CountryCrudRepository;
 import com.blackbelt.model.UserCrudRepository;
+import com.blackbelt.STOMP_sockJs.SBattleRoomRepository;
 
 // 데이터 전송 controller
 
 @Getter
-@Setter
+@Setter			//@RequiredArgsConstructor
 @RequiredArgsConstructor
 @Controller
 public class ChatController {
-
- public static final Logger logger = LoggerFactory.getLogger(ChatController.class);
- private final SimpMessageSendingOperations messagingTemplate;
+	
+private final SimpMessageSendingOperations messagingTemplate;
+public static final Logger logger = LoggerFactory.getLogger(ChatController.class);
  
- @Autowired
- SBattleRoomRepository sbattleRepo;
+    @Autowired
+    SBattleRoomRepository sbattleRepo;
  
 	@Autowired
 	UserCrudRepository userRepo;
+	
+	//@Autowired
+	//this.messagingTemplate = messagingTemplate;
 /*
  @MessageMapping("/api/que/message")
  public void message(ChatMessage message) {
@@ -58,37 +62,42 @@ public class ChatController {
  @MessageMapping("/api/que/user")
  public void userque(ChatMessage message) {
 	 logger.info("Socket Message '백'에서 수신" );
+	 System.out.println("메시지를 백에서 수신하긴 함  ");
 	 
 	 if (ChatMessage.MessageType.LOGIN.equals(message.getType())) {		// 
 		logger.info("로그인 시: " + message);
-		String UserNick = userRepo.finduserNickByuserId(message.getUserId());
-        message.setMessage(UserNick + "님이 로그인해서, 유저세션에 추가되었습니다");
+		//String UserNick = userRepo.finduserNickByuserId(message.getUserId());
+        //message.setMessage(UserNick + "님이 로그인해서, 유저세션에 추가되었습니다");
 
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getUserId(), message);
          }
 	 // 신청 보냈을 때
 	 else if (ChatMessage.MessageType.INVITE.equals(message.getType())) {		// 
 		logger.info("신청 시: "+ message );
-		String hostNick = userRepo.finduserNickByuserId(message.getHostId());
-        message.setMessage(hostNick + "님이 초대를 보냈습니다");
+		System.out.println("신청 들어옴 ");
+		//String hostNick = userRepo.finduserNickByuserId(message.getHostId());
+        message.setMessage("님이 초대를 보냈습니다");
 
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
          }
 	 // 수락 했을 때
 	 else if (ChatMessage.MessageType.ACCEPT.equals(message.getType()))	{	// 
 		logger.info("초대 시: " + message);
-		String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
-        message.setMessage(guestNick + "님이 수락하셨습니다.");
-        message.setRoomId(sbattleRepo.findRoomById(message.getHostId()).getRoomId());
-        // room 
+		//String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
+        //message.setMessage(guestNick + "님이 수락하셨습니다.");
+        
+        //System.out.println((message.getHostId()));
+        //System.out.println(sbattleRepo.findRoomById(message.getHostId()));
+        //System.out.println((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
+        //message.setRoomId((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
  		}
    	 // 거절 했을 때
    	 else if (ChatMessage.MessageType.REFUSE.equals(message.getType()))	{	// 
    		logger.info("거절 시: "+ message );
-   		String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
-        message.setMessage(guestNick + "님이 거절하셨습니다.");
+   		//String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
+        //message.setMessage(guestNick + "님이 거절하셨습니다.");
 
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
  	}
@@ -106,13 +115,13 @@ public class ChatController {
  public void battleready(ChatMessage message) {
 	 // 아직 미작성 
 	 if (ChatMessage.MessageType.ENTER.equals(message.getType())) {		// 
-         String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
-         message.setMessage(guestNick + "님이 들어왔습니다");
+         //String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
+         //message.setMessage(guestNick + "님이 들어왔습니다");
          messagingTemplate.convertAndSend("/sub/api/battle/" + message.getRoomId(), message);		// room id ? hostid ? 
          }
 	 else if (ChatMessage.MessageType.GAMESTART.equals(message.getType())) {		// 
-		 String hostNick = userRepo.finduserNickByuserId(message.getHostId());
-         message.setMessage(hostNick + "님이 게임을 시작합니다");
+		 //String hostNick = userRepo.finduserNickByuserId(message.getHostId());
+         //message.setMessage(hostNick + "님이 게임을 시작합니다");
          messagingTemplate.convertAndSend("/sub/api/battle/" + message.getRoomId(), message);
          }
 

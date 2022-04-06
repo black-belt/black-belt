@@ -84,7 +84,7 @@ public class BattleController {
 			Optional<UserDto> hostUser = userRepo.findById(hostId);
 			Optional<UserDto> guestUser = userRepo.findById(guestId);
 			if(isHost) {
-				if(!hostUser.isEmpty()) { 
+				if(!hostUser.isPresent()) { 
 					hostUser.get().setUserState('B');
 					userRepo.save(hostUser.get());
 				}else {
@@ -93,7 +93,7 @@ public class BattleController {
 					return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
 				}
 			}else {
-				if(!guestUser.isEmpty()) { 
+				if(!guestUser.isPresent()) { 
 					guestUser.get().setUserState('B');
 					userRepo.save(guestUser.get());
 				}else {
@@ -107,7 +107,7 @@ public class BattleController {
 			String battleUrl = "battle" + hostId +"vs" + guestId + roomSeq;
 			Optional<BattleHistoryDto> battlehis = battleRepo.findBysessionName(battleUrl);
 			BattleHistoryDto bhd = null;
-			if(!battlehis.isEmpty()) { //먼저 호출한 쪽이면
+			if(!battlehis.isPresent()) { //먼저 호출한 쪽이면
 				battleHistoryDto = new BattleHistoryDto();
 				battleHistoryDto.setEnemyId(guestUserInfo.getUserId());
 				battleHistoryDto.setEnemyTierId(guestUserInfo.getTierId());
