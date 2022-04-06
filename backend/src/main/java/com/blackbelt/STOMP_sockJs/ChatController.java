@@ -61,7 +61,7 @@ public class ChatController {
  public void userque(ChatMessage message) {
 	 logger.info("Socket Message '백'에서 수신" );
 	 System.out.println("메시지를 백에서 수신하긴 함  ");
-	 
+	 //
 	 if (ChatMessage.MessageType.LOGIN.equals(message.getType())) {		// 
 		logger.info("로그인 시: " + message);
 		String UserNick = userRepo.finduserNickByuserId(message.getUserId());
