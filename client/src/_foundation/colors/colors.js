@@ -4,6 +4,7 @@ const colors = {
   blue2: "#003C74",
 
   star: "#E5B560",
+  green: "#5AB46E",
 
   white: "#FFFFFF",
   black: "#292D32",

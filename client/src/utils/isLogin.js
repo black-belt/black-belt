@@ -1,5 +1,5 @@
 const isLogin = () => {
-  const token = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("blackbelt_token");
   // console.log(token);
   if (token === null) {
     // console.log(token);

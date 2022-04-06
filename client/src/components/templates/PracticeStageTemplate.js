@@ -1,13 +1,16 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { colors } from "../../_foundation/colors";
 import { fontFamily, fontSize, fontWeight } from "../../_foundation/typography";
+import { useTranslation } from "react-i18next";
 
 function PracticeStageTemplate({ title, desc, video, camera, partStage }) {
+  const { t } = useTranslation();
+
   return (
     <Container>
       <TextContainer>
-        <TitleContainer>
+        <TitleContainer language={t("language")}>
           {title}
           {partStage}
         </TitleContainer>
@@ -41,7 +44,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   height: calc(100% - 120px);
   width: 100%;
-  padding: 100px 100px 0 100px;
+  padding: 150px 100px 0 100px;
   font-family: ${fontFamily.sans};
   color: ${colors.gray0};
   // background-image: linear-gradient(black, black), url("../../images/practiceBackground.jpg");
@@ -61,11 +64,24 @@ const TextContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
+  ${(props) =>
+    props.language === "ENG" &&
+    css`
+      font-family: Dry Brush;
+      font-size: 5rem;
+      line-height: 150%;
+    `}
+  ${(props) =>
+    props.language === "KOR" &&
+    css`
+      font-family: Dokdo;
+      font-size: 6.5rem;
+      line-height: 120%;
+    `}
   width: 100%;
   height: 90px;
   margin-top: 10px;
   font-weight: ${fontWeight.extrabold};
-  font-size: ${fontSize.h1};
   display: flex;
   align-items: center;
 `;
@@ -75,7 +91,7 @@ const DescContainer = styled.div`
   height: 60px;
   padding-top: 40px;
   display: flex;
-  font-size: ${fontSize.lg};
+  font-size: ${fontSize.xl};
   align-items: flex-start;
 `;
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blackbelt.model.mapper.JudgeMapper">
+	<select id="getJudge" resultType="LevelPoomsaeDto">
+		select level.level_id, level_name, levelpoomsae.poomsae_id,
+		poomsae_name, poomsae_name_e, poomsae_time, is_essential, poomsae_answer, poomsae_answer_index, poomsae_explain, poomsae_explain_e 
+		from taekwondo.level, levelpoomsae, poomsaeaction
+        where
+        level.level_id = levelpoomsae.level_id
+        and levelpoomsae.poomsae_id = poomsaeaction.poomsae_id
+        and level.level_id = 
+		(select level_id from taekwondo.user where user_id=#{user_id});
+	</select>
+	<insert id="insertJudge" parameterType="JudgeDto">
+		insert into judge (user_id, level_id, judge_ox, judge_score, judge_date)
+		values (#{user_id}, #{level_id}, #{judge_ox}, #{judge_score}, now())
+	</insert>
+	<update id="updateuserState" parameterType="Map" >
+		update user
+		set
+		user_state = #{user_state}
+		where user_id= #{user_id}
+	</update>
+	
+</mapper>

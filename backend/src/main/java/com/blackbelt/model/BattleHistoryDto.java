@@ -23,19 +23,26 @@ import lombok.ToString;
 @AllArgsConstructor
 //@RequiredArgsConstructor
 @Entity
-@Table(name="judge")
+@Table(name="battlehistory")
 public class BattleHistoryDto {
 	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name="battlehistory_id")
 	private String battleHistoryId;
+	@Column(name = "user_blue_id")
 	private String enemyId;
-	private String enemyTier;
-	private String enemyTierE;
-	private String enemyTierPath;
-	private String enemyCountryName;
-	private String enemyCountryImagePath;
-	private String myTier;
-	private String myTierE;
-	private String myTierPath;
+	@Column(name = "blue_tier_id")
+	private String enemyTierId;
+	@Column(name = "blue_country_id")
+	private String enemyCountryId;
+	@Column(name = "user_red_id")
+	private String myId;
+	@Column(name = "red_tier_id")
+	private String myTierId;
+	@Column(name = "red_country_id")
+	private String myCountryId;
+	@Column(name = "red_win_lose_draw")
 	private char redWinLoseDraw;
-	private char enemyColor;
+	@Column(name = "end_time")
+	private Date endTime;
+	@Column(name = "session_name")
+	private String sessionName;
 }

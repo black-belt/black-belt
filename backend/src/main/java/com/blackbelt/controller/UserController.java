@@ -42,8 +42,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.blackbelt.model.CountryCrudRepository;
@@ -51,6 +53,7 @@ import com.blackbelt.model.CountryDto;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.model.UserDto;
 import com.blackbelt.model.service.UserService;
+import com.blackbelt.service.FileStorageService;
 import com.blackbelt.util.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -68,6 +71,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	HttpSession httpSession;
+	@Autowired
+    private FileStorageService fileStorageService;
 
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login( @RequestBody Map<String,String> map) {
@@ -79,7 +84,7 @@ public class UserController {
 			if (userEmail != null) {
 				Optional<UserDto> user = userRepo.findByuserEmail(userEmail);
 				String lastId = null; String userNick = null;
-				if(user.isEmpty()) {
+				if(user.isEmpty()) {					// isEmpty 를 바꿈 java version 차이
 					//회원가입 처리 추가할 부분
 					lastId = String.valueOf(Integer.parseInt(userRepo.findLastUser().getUserId()) + 1) ;
 					userNick = "anonymous" + lastId;
@@ -125,7 +130,7 @@ public class UserController {
 		try {
 			String userId = map.get("userId");
 			Optional<UserDto> updateUser = userRepo.findById(userId);
-			if(!updateUser.isEmpty()) {
+			if(!updateUser.isEmpty()) {					// isEmpty 를 바꿈 java version 차이
 				updateUser.get().setUserId(userId);
 				updateUser.get().setUserState('N');
 			}else {
@@ -165,7 +170,7 @@ public class UserController {
 	
 	@GetMapping("/userinfo")
 	public ResponseEntity<Map<String, Object>> getUserInfo( HttpServletRequest request) {
-		Map<String, Object> resultMap = null;
+		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.OK;
 		try {
 			String authorization = request.getHeader("Authorization");
@@ -195,8 +200,8 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			String nick = map.get("userNick");
-			Optional<UserDto> user = userRepo.findByuserNick(nick);
-			if(user.isEmpty()) resultMap.put("isUsed", false);
+			Optional<UserDto> user = userRepo.findByuserNick(nick);	
+			if(user.isEmpty()) resultMap.put("isUsed", false);			// isEmpty 를 바꿈 java version 차이
 			else resultMap.put("isUsed", true);
 			resultMap.put("statusCode", 200);
 			re = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
@@ -249,7 +254,6 @@ public class UserController {
 			}
 			if (tokenProvider.validateToken(authorization)) {// 유효하면
 				String userId = String.valueOf(tokenProvider.getSubject(authorization));
-				System.out.println(userId);
 				Optional<UserDto> user = userRepo.findByuserId(userId);
 				Set<String> updates =  map.keySet();
 				for(String s : updates) {
@@ -286,4 +290,42 @@ public class UserController {
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+	@PostMapping("/uploadprofile")
+    public ResponseEntity<Map<String, Object>> form(HttpServletRequest request, @RequestParam("uploadFile") MultipartFile file) throws IOException {
+		HttpStatus status = HttpStatus.OK;
+		Map<String, Object> resultMap = new HashMap<>();
+		try {
+			String authorization = request.getHeader("Authorization");
+			if(authorization.indexOf("Bearer") != -1) {
+				authorization = authorization.replaceAll("^Bearer\\s", "");
+			}
+			if (tokenProvider.validateToken(authorization)) {
+				 if (!file.isEmpty()) {
+					 	String[] fileInfo = fileStorageService.storeFile(file);
+			        	String fileName = fileInfo[0];
+			        	String fileDir = fileInfo[1];
+			        	String userId = String.valueOf(tokenProvider.getSubject(authorization));
+						Optional<UserDto> user = userRepo.findByuserId(userId);
+						user.get().setUserProfilePath(fileDir);
+						userRepo.save(user.get()); //바뀐내용으로 저장\
+						resultMap.put("profileSavePath", fileDir);
+						resultMap.put("statusCode", 200);
+			        }else {
+			        	status = HttpStatus.FAILED_DEPENDENCY;
+						resultMap.put("statusCode", 424);
+						new ResponseEntity<Map<String, Object>>(resultMap, status);
+			        }
+			}else {
+				status = HttpStatus.FAILED_DEPENDENCY;
+				resultMap.put("statusCode", 424);
+				new ResponseEntity<Map<String, Object>>(resultMap, status);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			resultMap.put("statusCode", 500);
+			return new ResponseEntity<Map<String, Object>>(resultMap, status);
+		}
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
 }

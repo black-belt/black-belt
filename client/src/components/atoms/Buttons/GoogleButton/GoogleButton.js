@@ -1,6 +1,11 @@
 import Icon from "components/atoms/Icons/Icon";
 import React from "react";
 import GoogleLogin from "react-google-login";
+import { useTranslation } from "react-i18next";
+// import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { token } from "recoils";
+import axiosInstance from "utils/API";
 import {
   GoogleContent,
   GoogleLoginBtn,
@@ -9,23 +14,31 @@ import {
 
 const clientId = process.env.REACT_APP_GOOGLE_API_KEY;
 
-export default function GoogleButton({ onSocial }) {
-  const onSuccess = async (response) => {
-    console.log(response);
+export default function GoogleButton() {
+  // const navigate = useNavigate();
+  const { t } = useTranslation();
+  const setToken = useSetRecoilState(token);
 
+  const onSuccess = async (response) => {
     const {
       googleId,
       profileObj: { email, name },
     } = response;
 
-    // await onSocial({
-    //   socialId: googleId,
-    //   socialType: "google",
-    //   email,
-    //   nickname: name,
-    // });
+    const googleLogin = async () => {
+      const data = await axiosInstance.post("/api/user/login", {
+        googleId: googleId,
+        userName: name,
+        userEmail: email,
+      });
+      await setToken({
+        accessToken: data.Authorization,
+      });
+      // await navigate("/");
+      await window.location.reload();
+    };
+    googleLogin();
   };
-
   const onFailure = (error) => {
     console.log(error);
   };
@@ -42,7 +55,7 @@ export default function GoogleButton({ onSocial }) {
             <GoogleWrapper className="googlewrapper">
               <GoogleContent>
                 <Icon icon="google" />
-                <span>Sign in with Google Account</span>
+                <span>{t("welcome google")}</span>
               </GoogleContent>
             </GoogleWrapper>
           </GoogleLoginBtn>
