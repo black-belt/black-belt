@@ -45,4 +45,6 @@ public class BattleHistoryDto {
 	private Date endTime;
 	@Column(name = "session_name")
 	private String sessionName;
+	private char winLoseDraw;
+	private char enemyColor;
 }

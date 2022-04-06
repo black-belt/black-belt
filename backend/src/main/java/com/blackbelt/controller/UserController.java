@@ -48,6 +48,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.blackbelt.model.BattleHistoryDto;
 import com.blackbelt.model.CountryCrudRepository;
 import com.blackbelt.model.CountryDto;
 import com.blackbelt.model.UserCrudRepository;
@@ -181,6 +182,24 @@ public class UserController {
 				
 				String userId = String.valueOf(tokenProvider.getSubject(authorization));
 				resultMap = userService.getUserInfo(userId);
+				ArrayList<BattleHistoryDto> barr = (ArrayList<BattleHistoryDto>)resultMap.get("battleHistories");
+				for(BattleHistoryDto bd : barr) {
+					if(bd.getRedWinLoseDraw() == 'D') {
+						bd.setWinLoseDraw('D');
+					}else if(bd.getRedWinLoseDraw() == 'W'){
+						if(bd.getEnemyColor() == 'R') {
+							bd.setWinLoseDraw('L');
+						}else {
+							bd.setWinLoseDraw('W');
+						}
+					}else if(bd.getRedWinLoseDraw() == 'L'){
+						if(bd.getEnemyColor() == 'R') {
+							bd.setWinLoseDraw('W');
+						}else {
+							bd.setWinLoseDraw('L');
+						}
+					}
+				}
 				resultMap.put("statusCode", 200);
 			} else {
 				resultMap.put("statusCode", 424);
