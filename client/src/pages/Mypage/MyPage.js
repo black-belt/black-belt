@@ -46,17 +46,6 @@ function MyPage() {
     console.log("callback", index);
   };
 
-  const recentGames = (game) => {
-    if (game) {
-      if (game.winLoseDraw === "W") {
-        return <img src="/images/win.png" alt="" />;
-      }
-      if (game.winLoseDraw === "L") {
-        return <img src="/images/lose.png" alt="" />;
-      }
-    }
-  };
-
   const infoTable = [
     {
       title: "score",
@@ -64,7 +53,7 @@ function MyPage() {
     },
     {
       title: "recents",
-      contents: [`${user.battleHistories}`],
+      contents: "",
     },
     {
       title: "tier",

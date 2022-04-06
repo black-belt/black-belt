@@ -117,10 +117,18 @@ export const GyeorugiInfo = styled.div`
 export const GyeorugiTR = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
-  padding: 0.8rem 0;
+  padding: 1rem 0;
 
   border-bottom: 1px solid ${colors.gray9};
 `;
 
-export const RecentGames = styled.div``;
+export const RecentGames = styled.div`
+  display: flex;
+
+  img {
+    width: 40px;
+    /* padding-top: 3px; */
+  }
+`;
