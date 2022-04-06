@@ -1,7 +1,7 @@
 import SockJs from "sockjs-client";
 import StompJs from "stompjs";
 
-const sock = new SockJs("https://j6a506.p.ssafy.io/stomp/");
+const sock = new SockJs("http://localhost:8000/ws-stomp/");
 const stomp = StompJs.over(sock);
 
 let Msg = [];
