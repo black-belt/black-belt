@@ -69,8 +69,8 @@ public class ChatController {
 	 // 신청 보냈을 때
 	 else if (ChatMessage.MessageType.INVITE.equals(message.getType())) {		// 
 		logger.info("신청 시: "+ message );
-		String hostNick = userRepo.finduserNickByuserId(message.getHostId());
-        message.setMessage(hostNick + "님이 초대를 보냈습니다");
+		//String hostNick = userRepo.finduserNickByuserId(message.getHostId());
+        message.setMessage("님이 초대를 보냈습니다");
 
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
          }
