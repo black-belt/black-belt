@@ -74,7 +74,7 @@ public class ChatRoomController {
 	public ResponseEntity<Map<String, Object>> battleready(@RequestBody Map<String, String> ids) {
 		HttpStatus status = null;
 		Map<String, Object> resultMap = new HashMap<>();
-		List<Object> usersList = new ArrayList<Object>();
+		//List<Object> usersList = new ArrayList<Object>();
 		// 배틀룸 아이디 찾음 
 		try {
 			String hostId = ids.get("hostId");
@@ -87,9 +87,8 @@ public class ChatRoomController {
 				Optional<UserDto> guestUser = userRepo.findByuserId(guestId);
 				//Optional<TierDto> hostUserTier = userRepo.findBytierId(hostTier);
 				//Optional<TierDto> guestUserTier = userRepo.findBytierId(guestTier);
-				usersList.add(hostUser);
-				usersList.add(guestUser);
-				resultMap.put("users",usersList);
+				resultMap.put("Host",hostUser);
+				resultMap.put("Guest",guestUser);
 				
 				status = HttpStatus.OK;
 			}else {
