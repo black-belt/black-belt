@@ -31,7 +31,7 @@ public class SBattleRoomRepository {
 
  public SBattleRoom createSBattleRoom(String userId) {	// 원래 name 임 
 	 SBattleRoom battleRoom = SBattleRoom.create(userId);
-	 sbattleRoomMap.put(battleRoom.getRoomId(), battleRoom);
+	 sbattleRoomMap.put(battleRoom.getUserId(), battleRoom);
      return battleRoom;
  }
 }
