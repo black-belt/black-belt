@@ -77,11 +77,8 @@ function MyPage() {
           <ImgBox>
             <ImgWrapper>
               {user.userProfilePath ? (
-                <>
-                  <ProfileImg src={user.userProfilePath} alt="" />
-                </>
+                <ProfileImg src={user.userProfilePath} alt="" />
               ) : (
-                // <ProfileImg src="/images/IMG_4070.JPG" alt="" />
                 <ProfileImg src="images/defaultUser.png" alt="" />
               )}
               <UserCountry>
