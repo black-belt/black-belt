@@ -14,10 +14,45 @@ import BackgroundVideo, {
 import { useTranslation } from "react-i18next";
 import InButton from "components/atoms/Buttons/in-btns";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import isLogin from "utils/isLogin";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { message, userInfo } from "recoils";
+
+import SockJs from "sockjs-client";
+import StompJs from "stompjs";
 
 function MainPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const userId = useRecoilValue(userInfo);
+  const msg = useSetRecoilState(message);
+  const resetMsg = useResetRecoilState(message);
+
+  const sock = new SockJs("https://j6a506.p.ssafy.io/stomp/");
+  const stomp = StompJs.over(sock);
+
+  const StartWS = (userId) => {
+    try {
+      stomp.connect({}, () => {
+        stomp.subscribe(`/sub/api/que/user/${userId}`, (data) => {
+          const newMessage = JSON.parse(data.body);
+          msg(newMessage);
+          if (newMessage.type === "REFUSE") {
+            resetMsg();
+          }
+        });
+      });
+    } catch (err) {
+      console.log("error");
+    }
+  };
+
+  useEffect(() => {
+    if (isLogin()) {
+      StartWS(userId.userId);
+    }
+  }, [isLogin]);
 
   const slides = [
     {
