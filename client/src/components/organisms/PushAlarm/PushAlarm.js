@@ -1,14 +1,8 @@
 import PushAlarmBtn from "components/atoms/Buttons/pushAlarmBtn";
 import Icon from "components/atoms/Icons/Icon";
-// import { Accept } from "pages/MainPage/startWS";
 import { useNavigate } from "react-router-dom";
-import {
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState,
-} from "recoil";
-import { gyeorugiMsg, gyeorugiMsgState, message } from "recoils";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { gyeorugiMsg, message } from "recoils";
 import {
   ButtonBox,
   ModalBox,
