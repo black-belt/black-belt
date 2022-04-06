@@ -47,4 +47,8 @@
 		 
 	</select>
 	
+	<select id="clearcount" parameterType="int" resultType="String" >
+		select count(*) from basicstage where basic_clear="Y" and user_id=#{user_id};
+	</select>
+	
 </mapper>

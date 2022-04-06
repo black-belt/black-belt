@@ -12,6 +12,7 @@ public interface BasicMapper {
 	List<BasicDto> listBasicuser(String user_id) throws Exception;
 	void levelup(String user_id) throws Exception;
 	String nowlevel(int user_id) throws Exception;
+	String clearcount(int user_id) throws Exception;
 	
 //	UserDto login(Map<String, String> map) throws Exception;
 //	
