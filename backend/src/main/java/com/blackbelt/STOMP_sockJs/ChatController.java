@@ -61,7 +61,7 @@ public class ChatController {
  public void userque(ChatMessage message) {
 	 logger.info("Socket Message '백'에서 수신" );
 	 System.out.println("메시지를 백에서 수신하긴 함  ");
-	 
+	 //
 	 if (ChatMessage.MessageType.LOGIN.equals(message.getType())) {		// 
 		logger.info("로그인 시: " + message);
 		String UserNick = userRepo.finduserNickByuserId(message.getUserId());
@@ -87,7 +87,10 @@ public class ChatController {
         //System.out.println((message.getHostId()));
         //System.out.println(sbattleRepo.findRoomById(message.getHostId()));
         //System.out.println((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
-		logger.info("받는사람 :"+message.getHostId()+"   배틀룸 :" + sbattleRepo.findRoomById(message.getHostId()) +"    의 방번호 :"  + ((sbattleRepo.findRoomById(message.getHostId())).getRoomId()) );
+		logger.info("받는사람 :" + message.getHostId());
+		logger.info("   배틀룸 :" + sbattleRepo.findRoomById(message.getHostId()));
+		logger.info("    의 방번호 :"  + ((sbattleRepo.findRoomById(message.getHostId())).getRoomId()) );
+		//logger.info("받는사람 :"+message.getHostId()+"   배틀룸 :" + sbattleRepo.findRoomById(message.getHostId()) +"    의 방번호 :"  + ((sbattleRepo.findRoomById(message.getHostId())).getRoomId()) );
         
         message.setRoomId((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
 
