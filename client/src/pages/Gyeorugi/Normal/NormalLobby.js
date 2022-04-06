@@ -190,7 +190,9 @@ function NormalLobby() {
             </Champion>
           </ChampionBox>
           <center>
-            <InButton onClick={startGyeorugi}>{t("start")}</InButton>
+            {isHost && (
+              <InButton onClick={startGyeorugi}>{t("start")}</InButton>
+            )}
           </center>
         </Standby>
         <SearchLayout>
