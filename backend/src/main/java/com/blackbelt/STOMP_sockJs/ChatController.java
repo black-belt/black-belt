@@ -19,26 +19,24 @@ import lombok.Setter;
 import lombok.RequiredArgsConstructor;
 
 import com.blackbelt.model.UserDto;
-import com.blackbelt.model.CountryCrudRepository;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.STOMP_sockJs.SBattleRoomRepository;
 
 // 데이터 전송 controller
 
 @Getter
-@Setter			//@RequiredArgsConstructor
+@Setter			
 @RequiredArgsConstructor
 @Controller
 public class ChatController {
 	
-private final SimpMessageSendingOperations messagingTemplate;
-public static final Logger logger = LoggerFactory.getLogger(ChatController.class);
- 
-    @Autowired
-    SBattleRoomRepository sbattleRepo;
- 
-	@Autowired
-	UserCrudRepository userRepo;
+	private final SimpMessageSendingOperations messagingTemplate;
+	public static final Logger logger = LoggerFactory.getLogger(ChatController.class);
+	// @RequiredArgsConstructor 어노테이션에는, @Autowired 사용 불가 (지양)
+	private final SBattleRoomRepository sbattleRepo;
+	private final UserCrudRepository userRepo;
+
+
 	
 	//@Autowired
 	//this.messagingTemplate = messagingTemplate;
@@ -66,8 +64,8 @@ public static final Logger logger = LoggerFactory.getLogger(ChatController.class
 	 
 	 if (ChatMessage.MessageType.LOGIN.equals(message.getType())) {		// 
 		logger.info("로그인 시: " + message);
-		//String UserNick = userRepo.finduserNickByuserId(message.getUserId());
-        //message.setMessage(UserNick + "님이 로그인해서, 유저세션에 추가되었습니다");
+		String UserNick = userRepo.finduserNickByuserId(message.getUserId());
+        message.setMessage(UserNick + "님이 로그인해서, 유저세션에 추가되었습니다");
 
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getUserId(), message);
          }
@@ -75,7 +73,7 @@ public static final Logger logger = LoggerFactory.getLogger(ChatController.class
 	 else if (ChatMessage.MessageType.INVITE.equals(message.getType())) {		// 
 		logger.info("신청 시: "+ message );
 		System.out.println("신청 들어옴 ");
-		//String hostNick = userRepo.finduserNickByuserId(message.getHostId());
+		String hostNick = userRepo.finduserNickByuserId(message.getHostId());
         message.setMessage("님이 초대를 보냈습니다");
 
         messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
@@ -89,7 +87,9 @@ public static final Logger logger = LoggerFactory.getLogger(ChatController.class
         //System.out.println((message.getHostId()));
         //System.out.println(sbattleRepo.findRoomById(message.getHostId()));
         //System.out.println((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
-        //message.setRoomId((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
+		logger.info("받는사람 :"+message.getHostId()+"   배틀룸 :" + sbattleRepo.findRoomById(message.getHostId()) +"    의 방번호 :"  + ((sbattleRepo.findRoomById(message.getHostId())).getRoomId()) );
+        
+        message.setRoomId((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
      	messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
  		}
