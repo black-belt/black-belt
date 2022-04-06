@@ -105,7 +105,9 @@ function MainPage() {
   return (
     <div className="MainPage">
       <Background>
-        <BackgroundVideo url="/videos/background.mp4"></BackgroundVideo>
+        <BackgroundVideo
+          url={`${process.env.REACT_APP_IMAGE_URL}/background.mp4`}
+        ></BackgroundVideo>
         <Layer></Layer>
       </Background>
       <Layout>
