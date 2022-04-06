@@ -33,6 +33,13 @@ public class ChatMessage {
     private String hostId;
     private String guestId;
     private String roomId; // 방번호
+    // for 메시지 추가정보 
+    private String userNick;
+    private String hostNick;
+    private String guestNick;
+    
+    
+    
     // 랜덤큐
     private String userTier;
     // 게임시작
