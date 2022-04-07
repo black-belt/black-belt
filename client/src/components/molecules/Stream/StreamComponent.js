@@ -67,7 +67,11 @@ export default class StreamComponent extends Component {
               isRed={this.props.isRed}
             />
           </div>
-        ) : null}
+        ) : (
+          <div className="streamComponent">
+            <OvVideoComponent user={this.props.user} mutedSound={this.state.mutedSound} />
+          </div>
+        )}
       </div>
     );
   }

@@ -24,12 +24,14 @@ function OvVideoComponent({
   let playone = 0;
 
   useEffect(() => {
-    console.log("!!useEffect");
+    console.log("!!useEffect", videoRef);
     if (user && user.streamManager && !!videoRef) {
+      console.log("!!1", videoRef);
       user.getStreamManager().addVideoElement(videoRef.current);
     }
 
     if (user && user.streamManager.session && !!videoRef) {
+      console.log("!!2", videoRef);
       user.streamManager.session.on("signal:userChanged", (event) => {
         const data = JSON.parse(event.data);
         if (data.isScreenShareActive !== undefined) {
@@ -124,13 +126,6 @@ function OvVideoComponent({
   };
 
   const run = async () => {
-    // let maxProbability = 0.0;
-    // let testSum = 0.0;
-    // while (!isEnd) {
-    //   console.log("!!while");
-    //   await judgeMotion();
-    // }
-    // end();
     let totalCnt = 0;
     let prevMotion = "";
     let difCnt = 0;
@@ -166,29 +161,6 @@ function OvVideoComponent({
   useEffect(() => {
     if (endGame) end();
   }, [endGame]);
-
-  // const judgeMotion = async () => {
-  //   let curMotion = await analyzeImage();
-  //   if (curMotion !== "" && curMotion === prevMotion) {
-  //     prevCnt++;
-  //     difCnt = 0;
-  //     if (prevCnt === 3) {
-  //       if (answerAttack.includes(curMotion)) {
-  //         attack(curMotion);
-  //       } else if (answerDefence.includes(curMotion)) {
-  //         defence(curMotion);
-  //       }
-  //     }
-  //   } else {
-  //     difCnt++;
-  //     if (difCnt === 3) {
-  //       reset();
-  //       prevCnt = 1;
-  //       prevMotion = curMotion;
-  //       difCnt = 0;
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
     console.log("!!isStart", isStart);
