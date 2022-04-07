@@ -1,10 +1,11 @@
 import { GetUserInfo, UserProfileSelector } from "api";
 import Icon from "components/atoms/Icons/CustomIcon";
+import TaekwonDoModal from "components/organisms/TaekwondoModal/TaekwondoModal";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useResetRecoilState, useSetRecoilState } from "recoil";
-import { language, token } from "recoils";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import { language, taekwondoModal, token } from "recoils";
 import axiosInstance from "utils/API";
 import {
   DropdownItem,
@@ -26,6 +27,7 @@ const Dropdown = () => {
   const userData = GetUserInfo();
   const resetToken = useResetRecoilState(token);
   const setLang = useSetRecoilState(language);
+  const [isOpen, setIsOpen] = useRecoilState(taekwondoModal);
 
   useEffect(() => {
     if (userData.data) {
@@ -81,11 +83,14 @@ const Dropdown = () => {
         </IconBox>
       </LangBox>
       <MenuBox>
-        {menus.map((menu) => (
+        <DropdownItem onClick={() => setIsOpen(true)}>
+          {t("about tkd")}
+        </DropdownItem>
+        {/* {menus.map((menu) => (
           <DropdownItem key={menu.title} onClick={() => navigate(menu.url)}>
             {t(menu.title)}
           </DropdownItem>
-        ))}
+        ))} */}
       </MenuBox>
       <Logout onClick={UserLogout}>{t("logout")}</Logout>
     </Layout>
