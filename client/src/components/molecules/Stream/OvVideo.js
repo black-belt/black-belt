@@ -136,7 +136,7 @@ function OvVideoComponent({
     let difCnt = 0;
     let prevCnt = 0;
     const loop = setInterval(async () => {
-      if (++totalCnt === 60 * 20) {
+      if (++totalCnt === 30 * 20) {
         clearInterval(loop);
         endGame = true;
       }
@@ -190,7 +190,7 @@ function OvVideoComponent({
 
   return (
     <video
-      // className="local-video"
+      className="ov-video"
       autoPlay={true}
       id={"video-" + user.getStreamManager().stream.streamId}
       ref={videoRef}

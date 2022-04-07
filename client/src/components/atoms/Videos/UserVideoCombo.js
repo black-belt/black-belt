@@ -72,7 +72,7 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass, aiId }) 
         //하던동작, 더 높은 일치율
         maxProbability = probability;
         updateNextAction(nextAction);
-      } else if (answer[nextAction].slice(1, answer[curAction].length - 1) === className) {
+      } else if (answer[nextAction].slice(1, answer[nextAction].length - 1) === className) {
         //다음동작 발견됨 -> 다음동작으로 넘어감
         // console.log("!!저장", curAction, maxProbability);
         testSum += maxProbability;

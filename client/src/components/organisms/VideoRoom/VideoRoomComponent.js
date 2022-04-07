@@ -45,11 +45,6 @@ function VideoRoomComponent({ setResult, setIsWin, info, token, otherNick }) {
   const answerAttack = ["Punch", "Kick"];
   const answerDefence = ["Defence"];
   const damages = {
-    1: 100, //상단발차기
-    2: 60, //중단발차기
-    3: 30, //하단발차기
-    11: 70, //상단주먹
-    12: 50, //중단주먹
     Punch: 50,
     Kick: 70,
   };

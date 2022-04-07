@@ -37,12 +37,13 @@
     height: 100%;
 }
 
-video {
+video .ov-video{
     -o-object-fit: cover;
     object-fit: cover;
     width: 100%;
     height: 100%;
     color: #ffffff;
+    border-radius: 10px;
     margin: 0;
     padding: 0;
     border: 0;
