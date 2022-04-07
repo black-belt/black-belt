@@ -1,5 +1,6 @@
 import StageBtn from "components/atoms/Buttons/stage-btn";
 import EvaluationTemplateGyeorugi from "components/templates/EvaluationTemplateGyeorugi";
+import VSTemplate from "components/templates/VSTemplate";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "utils/API";
@@ -11,6 +12,9 @@ function GyeorugiNormalStage() {
   const [isWin, setIsWin] = useState(undefined);
   const [info, setInfo] = useState(undefined);
   const [myInfo, setMyInfo] = useState(undefined);
+  const [red, setRed] = useState(undefined);
+  const [blue, setBlue] = useState(undefined);
+  const [introduce, setIntroduce] = useState(true);
   const navigate = useNavigate();
   const state = useLocation().state;
   let otherNick;
@@ -36,10 +40,21 @@ function GyeorugiNormalStage() {
     setInfo(data);
     setMyInfo(imHost ? data.battleInfo[0] : data.battleInfo[1]);
     otherNick = imHost ? data.battleInfo[1].userNick : data.battleInfo[0].userNick;
+
+    if (imHost) {
+      setRed(data.battleInfo[0]);
+      setBlue(data.battleInfo[1]);
+    } else {
+      setBlue(data.battleInfo[0]);
+      setRed(data.battleInfo[1]);
+    }
   };
 
   useEffect(() => {
     getInfoData();
+    setTimeout(() => {
+      setIntroduce(false);
+    }, 3000);
   }, []);
 
   useEffect(() => {
@@ -72,7 +87,8 @@ function GyeorugiNormalStage() {
 
   return (
     <>
-      {info && myInfo && (
+      {introduce && red && blue && <VSTemplate red={red} blue={blue} />}
+      {!introduce && info && myInfo && (
         <VideoRoomComponent
           setResult={setResult}
           setIsWin={setIsWin}
