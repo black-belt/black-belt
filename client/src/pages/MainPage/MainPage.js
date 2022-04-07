@@ -127,7 +127,7 @@ function MainPage() {
       title: "gyeorugi",
       description: "gyeorugi explanation",
       description2: "gyeorugi explanation2",
-      description3: "gyeorugi explanation2",
+      description3: "gyeorugi explanation3",
       image: "/images/main/gyeorugi.png",
       button: [
         {
