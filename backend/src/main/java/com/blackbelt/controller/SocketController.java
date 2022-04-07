@@ -82,6 +82,24 @@ public class SocketController {
    	 		message.setMessage(guestNick + "님이 거절함");
    	 		messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
    	 	}
+		// 대기방 입장 
+   	 	else if (SocketMessage.MessageType.ENTER.equals(message.getType())) {		// 
+			String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
+			String hostNick = userRepo.finduserNickByuserId(message.getHostId());
+			message.setGuestNick(guestNick);
+			message.setHostNick(hostNick);
+			// guest 에게 보냄 
+			message.setIsHost("0");
+			//message.setMessage(hostNick + "님이 들어왔습니다");
+			messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);		// room id ? hostid ? 
+			// host 에게 보냄 
+			message.setIsHost("1");
+			//message.setMessage(guestNick + "님이 들어왔습니다");
+			messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
+			
+		}
+		
+		
 		
 		// @MessageMapping("/api/que/random")
 		// [랜덤큐] 매칭됨
@@ -96,32 +114,18 @@ public class SocketController {
 		
 	}
 
- 
+	/*
 	// [배틀 대기방] 메시지 핸들러
 	@MessageMapping("/api/battle")
 	public void battleready(SocketMessage message) {
 		// 아직 미작성 
-		if (SocketMessage.MessageType.ENTER.equals(message.getType())) {		// 
-			String guestNick = userRepo.finduserNickByuserId(message.getGuestId());
-			String hostNick = userRepo.finduserNickByuserId(message.getHostId());
-			message.setGuestNick(guestNick);
-			message.setHostNick(hostNick);
-			// guest 에게 보냄 
-			message.setIsHost("0");
-			//message.setMessage(hostNick + "님이 들어왔습니다");
-			messagingTemplate.convertAndSend("/sub/api/battle/" + message.getGuestId(), message);		// room id ? hostid ? 
-			// host 에게 보냄 
-			message.setIsHost("1");
-			//message.setMessage(guestNick + "님이 들어왔습니다");
-			messagingTemplate.convertAndSend("/sub/api/battle/" + message.getHostId(), message);
-			
-		}
+
 		else if (SocketMessage.MessageType.GAMESTART.equals(message.getType())) {		// 
 			//String hostNick = userRepo.finduserNickByuserId(message.getHostId());
 			//message.setMessage(hostNick + "님이 게임을 시작합니다");
-			messagingTemplate.convertAndSend("/sub/api/battle/" + message.getRoomId(), message);
+			messagingTemplate.convertAndSend("/sub/api/battle/" + message.getGuestId(), message);
          }
 
-	}
+	}*/
  
 }
