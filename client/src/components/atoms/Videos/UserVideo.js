@@ -47,7 +47,7 @@ function UserVideo({ answer, testResult, isPass, aiId }) {
       const probability = prediction[0].probability;
       console.log(className, probability, answer, answer === className);
       if (isFindMax && answerNum >= 5) {
-        if (++frameCnt > 20) {
+        if (++frameCnt > 10) {
           isFindMax = false;
           frameCnt = 0;
           testResult(maxProbability);

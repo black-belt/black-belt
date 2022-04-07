@@ -79,7 +79,7 @@ function UserVideoPoomsae({
           maxProbability = imageResult.probability;
         }
 
-        if (frameCnt > 40) {
+        if (frameCnt > 10) {
           // console.log("!!저장", curPart, curAction, nextPart, nextAction, maxProbability);
           testSum += maxProbability;
           frameCnt = 0;
