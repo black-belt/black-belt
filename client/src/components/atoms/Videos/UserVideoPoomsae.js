@@ -90,10 +90,21 @@ function UserVideoPoomsae({
     // await changeModel(2, 2);
     let imageResult1, imageResult2;
     while (answer[0].length > 0 && !isPass) {
+      console.log(
+        "!!",
+        curPart,
+        curAction,
+        nextPart,
+        nextAction,
+        answer[nextPart][nextAction],
+        "len",
+        answer[curPart].length
+      );
       imageResult1 = await analyzeImage1();
       // imageResult2 = await analyzeImage2();
       if (curAction === 0) {
         await changeModel(1, nextPart + 1);
+        maxProbability = 0;
       }
       if (isLastAction) {
         //마지막 파트, 마지막 동작
@@ -101,7 +112,6 @@ function UserVideoPoomsae({
         if (answer[curPart][curAction] === imageResult1.className) {
           maxProbability = imageResult1.probability;
         }
-
         if (frameCnt > 10) {
           // console.log("!!저장", curPart, curAction, nextPart, nextAction, maxProbability);
           testSum += maxProbability;
@@ -142,6 +152,8 @@ function UserVideoPoomsae({
             //다음단락으로 넘어감
             nextPart++;
             nextAction = 0;
+            updateNextAction(nextAction);
+            updatePartIndex(nextPart);
           }
         }
       }
