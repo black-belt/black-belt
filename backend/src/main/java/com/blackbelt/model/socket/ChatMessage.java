@@ -1,4 +1,4 @@
-package com.blackbelt.STOMP_sockJs;
+package com.blackbelt.model.socket;
 
 import lombok.Getter;
 import lombok.Setter;
