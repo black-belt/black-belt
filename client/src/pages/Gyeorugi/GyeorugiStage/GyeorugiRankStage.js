@@ -12,7 +12,7 @@ function GyeorugiRankStage() {
   const [info, setInfo] = useState(undefined);
   const [myInfo, setMyInfo] = useState(undefined);
   const navigate = useNavigate();
-  const state = useLocation();
+  const state = useLocation().state;
   let otherNick;
 
   const tiers = {

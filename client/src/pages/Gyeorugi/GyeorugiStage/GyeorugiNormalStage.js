@@ -12,7 +12,7 @@ function GyeorugiNormalStage() {
   const [info, setInfo] = useState(undefined);
   const [myInfo, setMyInfo] = useState(undefined);
   const navigate = useNavigate();
-  const state = useLocation();
+  const state = useLocation().state;
   let otherNick;
 
   const tiers = {
@@ -25,7 +25,7 @@ function GyeorugiNormalStage() {
   };
 
   const getInfoData = async () => {
-    console.log(state);
+    // console.log(state, state.hostId, state.guestId, state.isHost, state.roomSeq);
     const data = await axiosInstance.post("/api/battle", {
       hostId: state.hostId,
       guestId: state.guestId,
