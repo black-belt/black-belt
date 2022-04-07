@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./StreamComponent.css";
 
-function OvVideoComponent({ user, mutedSound }) {
+function OvVideoComponentSub({ user, mutedSound }) {
   const videoRef = useRef(null);
   console.log("난 subscribe");
 
@@ -58,4 +58,4 @@ function OvVideoComponent({ user, mutedSound }) {
   );
 }
 
-export default OvVideoComponent;
+export default OvVideoComponentSub;
