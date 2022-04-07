@@ -88,10 +88,11 @@ public class SocketController {
 			String hostNick = userRepo.finduserNickByuserId(message.getHostId());
 			message.setGuestNick(guestNick);
 			message.setHostNick(hostNick);
+			message.setRoomId((sbattleRepo.findRoomById(message.getHostId())).getRoomId());
 			// guest 에게 보냄 
 			message.setIsHost("0");
 			//message.setMessage(hostNick + "님이 들어왔습니다");
-			messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);		// room id ? hostid ? 
+			messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);	
 			// host 에게 보냄 
 			message.setIsHost("1");
 			//message.setMessage(guestNick + "님이 들어왔습니다");
