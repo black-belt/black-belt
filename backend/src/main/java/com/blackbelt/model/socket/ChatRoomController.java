@@ -23,16 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 import com.blackbelt.model.service.UserService;
-import com.google.gson.JsonObject;
-import com.blackbelt.model.UserDto;
-import com.blackbelt.model.TierDto;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.STOMP_sockJs.RBattleRoomRepository;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 
 // 세션 방 컨트롤러
@@ -40,15 +32,10 @@ import com.google.gson.JsonObject;
 //@RequiredArgsConstructor
 @Controller					// @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/api/que")			//chat
+@RequestMapping("/api/que")			
 public class ChatRoomController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-	
-	//private final RBattleRoomRepository rBattleRoomRepository;
-	//private final SBattleRoomRepository sBattleRoomRepository;
-	//private final UserSessionRepository userSessionRepository;
-	//private final UserCrudRepository userRepo;
 	
 	@Autowired
 	SBattleRoomRepository sBattleRoomRepository;
@@ -58,11 +45,8 @@ public class ChatRoomController {
 	UserSessionRepository userSessionRepository;
 	@Autowired
 	UserCrudRepository userRepo;
-	
 	@Autowired
 	UserService userService;
-	//@Autowired
-	//UserCrudRepository userRepo;
 
 	
 	// [일반모드] 대기방 입장 API 
@@ -82,9 +66,6 @@ public class ChatRoomController {
 		Map<String, Object> resultMap = new HashMap<>();
 		Map<String, Object> hostMap = new HashMap<>();
 		Map<String, Object> guestMap = new HashMap<>();
-		//List<Object> usersList = new ArrayList<Object>();
-		//JsonObject UserTier = new JsonObject();
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		// 배틀룸 아이디 찾음 
 		try {
 			String hostId = ids.get("hostId");
@@ -103,7 +84,6 @@ public class ChatRoomController {
 			}else {
 				resultMap.put("msg","배틀룸이 존재하지 않습니다");
 				status = HttpStatus.ACCEPTED;
-				
 			}
 			
 			
@@ -135,7 +115,6 @@ public class ChatRoomController {
 			// 상대 찾기 
 			String userTier = userRepo.findtierNameBytierId(userRepo.finduserTierByuserId(userId));
 			
-			
 			RBattleRoom other= rBattleRoomRepository.matchRBattle(userId, userTier);
 			if(other.getUserId()!=null) {
 				resultMap.put("otherId",other.getUserId());
@@ -156,49 +135,4 @@ public class ChatRoomController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	/*
-	// 채팅 리스트 화면
-	@GetMapping("/room")				// responsebody 어노테이션 붙어있으면 절대 안됨 !!! 
-	public String rooms(Model model) {
-		System.out.println("룸에 왔다 ");
-		return "room";			//"/chat/room";
-	}
-	// 모든 채팅방 목록 반환
-	@GetMapping("/rooms")
-	@ResponseBody
-	public List<SBattleRoom> room() {
-		return sBattleRoomRepository.findAllRoom();
-	}
-	// 채팅방 생성
-	@PostMapping("/room")
-	@ResponseBody
-	public SBattleRoom createRoom(@RequestParam String name) {
-		return sBattleRoomRepository.createSBattleRoom(name);
-	}
-	// 채팅방 입장 화면
-	@GetMapping("/room/enter/{roomId}")
-	public String roomDetail(Model model, @PathVariable String roomId) {
-		model.addAttribute("roomId", roomId);
-		return "roomdetail";	///chat/roomdetail
-	}
-	// 특정 채팅방 조회
-	@GetMapping("/room/{roomId}")
-	@ResponseBody
-	public SBattleRoom roomInfo(@PathVariable String roomId) {
-		return sBattleRoomRepository.findRoomById(roomId);
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////
-	// 채팅방 생성
-	@PostMapping("/user")
-	@ResponseBody
-	public UserSession createUser(@RequestParam String userId) {
-		return userSessionRepository.createUserSession(userId);
-	}
-	// 모든 채팅방 목록 반환
-	@GetMapping("/users")
-	@ResponseBody
-	public List<UserSession> users() {
-		return userSessionRepository.findAllRoom();
-	}*/
 }
