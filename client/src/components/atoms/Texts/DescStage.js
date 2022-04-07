@@ -6,7 +6,11 @@ function DescStage({ descArray, curIdx }) {
   return (
     <Container>
       {descArray.map((desc, index) =>
-        index === curIdx ? <CurDesc key={index}>{desc}</CurDesc> : <Desc key={index}>{desc}</Desc>
+        index === Number(curIdx) ? (
+          <CurDesc key={index}>{desc}</CurDesc>
+        ) : (
+          <Desc key={index}>{desc}</Desc>
+        )
       )}
     </Container>
   );

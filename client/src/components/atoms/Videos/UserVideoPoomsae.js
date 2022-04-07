@@ -11,7 +11,6 @@ function UserVideoPoomsae({
   poomsaeId,
 }) {
   const videoRef = useRef(null);
-  let net;
   let testSum = 0.0;
   let nextAction = 1;
   let curAction = 0;
@@ -43,7 +42,7 @@ function UserVideoPoomsae({
     const size = 200;
     const flip = true;
     let webcam = await new tmPose.Webcam(size, size, flip);
-    await changeModel(1);
+    // await changeModel(1);
     setWebCamElement(() => webcam);
   };
 
@@ -52,23 +51,24 @@ function UserVideoPoomsae({
       `/models/combos/${(poomsaeId - 1) * 4 + chapter}/model.json`,
       `/models/combos/${(poomsaeId - 1) * 4 + chapter}/metadata.json`
     );
-    // console.log("!!change", model, poomsae, chapter);
     // setModel(() => m);
   };
 
   const analyzeImage = async () => {
     webCamElement.update(); // update the webcam frame
+    // console.log("!!change", model);
     const { posenetOutput } = await model.estimatePose(webCamElement.canvas);
     const prediction = await model.predictTopK(posenetOutput, 1);
     const className = prediction[0].className;
     const probability = prediction[0].probability;
-    // console.log(className, probability);
+    console.log(className, probability);
     return { className: className, probability: probability };
   };
 
   const run = async () => {
     await webCamElement.setup();
     await webCamElement.play();
+    await changeModel(1);
     let imageResult;
     while (answer[0].length > 0 && !isPass) {
       imageResult = await analyzeImage();
@@ -153,7 +153,7 @@ function UserVideoPoomsae({
 export default UserVideoPoomsae;
 
 const VideoContainer = styled.video`
-  height: 22vw;
+  height: 26vw;
   width: 35vw;
   margin-bottom: 60px;
   border-radius: 10px;
