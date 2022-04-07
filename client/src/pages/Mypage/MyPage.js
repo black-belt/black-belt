@@ -38,8 +38,18 @@ function MyPage() {
     6: "master",
   };
 
-  const [fileImg, setFileImg] = useState("");
-  const [profileImg, setProfileImg] = useState("/images/defaultUser.png");
+  const [profileImg, setProfileImg] = useState("");
+  const [defaultImg, setDefaultImg] = useState("");
+
+  useEffect(() => {
+    if (user.userProfilePath) {
+      setProfileImg(user.userProfilePath);
+      setDefaultImg(user.userProfilePath);
+    } else {
+      setProfileImg("/images/defaultUser.png");
+      setDefaultImg("/images/defaultUser.png");
+    }
+  }, []);
 
   // const saveFileImg = (e) => {
   //   setFileImg(URL.createObjectURL(e.target.files[0]));
@@ -48,16 +58,16 @@ function MyPage() {
 
   let imgData = new FormData();
   imgData.append("uploadFile", profileImg);
-  console.log(imgData);
 
   // useEffect(() => {
   //   imgData.append("uploadFile", profileImg);
   // }, [profileImg]);
 
   useEffect(() => {
-    if (profileImg !== "/images/defaultUser.png") {
+    if (profileImg !== defaultImg) {
       axiosImage.post("/api/user/uploadprofile", imgData).then((res) => {
         console.log(res);
+        // window.location.reload();
       });
     }
   }, [profileImg]);
@@ -148,7 +158,7 @@ function MyPage() {
                   onClick={() => {
                     fileInput.current.click();
                   }}
-                  src={user.userProfilePath}
+                  src={profileImg}
                   alt=""
                 />
               ) : (
@@ -169,7 +179,6 @@ function MyPage() {
           <input
             type="file"
             style={{ display: "none" }}
-            id="file"
             accept="image/*"
             onChange={uploadImg}
             ref={fileInput}
