@@ -55,6 +55,10 @@
   "normal": "일반 모드",
   "rank": "랭크 모드",
 
+  "push alarm request": "님이 겨루기를 신청했습니다",
+  "yes": "수락",
+  "no": "거절",
+
   "start": "겨루기 시작",
   "online": "온라인",
   "offline": "로그아웃",

@@ -55,6 +55,10 @@
   "normal": "Normal",
   "rank": "Rank",
 
+  "push alarm request": "sent a request for gyeorugi",
+  "yes": "Accept",
+  "no": "Refuse",
+
   "start": "Start Match",
   "online": "Online",
   "offline": "Offline",

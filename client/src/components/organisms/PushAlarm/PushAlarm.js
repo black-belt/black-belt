@@ -14,14 +14,18 @@ import {
 
 import SockJs from "sockjs-client";
 import StompJs from "stompjs";
+import { useTranslation } from "react-i18next";
 
 const PushAlarm = () => {
   const sock = new SockJs("https://j6a506.p.ssafy.io/stomp/");
   const stomp = StompJs.over(sock);
 
+  const { t } = useTranslation();
   const savedMsg = useRecoilValue(gyeorugiMsg);
   const resetMsg = useResetRecoilState(message);
   const navigate = useNavigate();
+
+  console.log(savedMsg);
 
   const data = {
     hostId: savedMsg.hostId,
@@ -57,10 +61,14 @@ const PushAlarm = () => {
               <span>BlackBelt</span>
               <Icon icon="xBtn" onClick={resetMsg} />
             </ModalHeader>
-            <ModalContent>{savedMsg.message}</ModalContent>
+            <ModalContent>
+              {savedMsg.hostNick} {t("push alarm request")}
+            </ModalContent>
             <ButtonBox>
-              <PushAlarmBtn onClick={() => Accept(data)}>Yes</PushAlarmBtn>
-              <PushAlarmBtn onClick={() => Deny(data)}>No</PushAlarmBtn>
+              <PushAlarmBtn onClick={() => Accept(data)}>
+                {t("yes")}
+              </PushAlarmBtn>
+              <PushAlarmBtn onClick={() => Deny(data)}>{t("no")}</PushAlarmBtn>
             </ButtonBox>
           </ModalSection>
         </ModalBox>

@@ -130,13 +130,14 @@ export const ImgBox = styled.div`
   display: flex;
   align-items: center;
 
-  height: 400px;
+  padding: 1rem 3rem;
+  height: 420px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px) saturate(167%);
   -webkit-backdrop-filter: blur(10px) saturate(167%);
 
   img {
-    width: 400px;
+    width: 350px;
   }
 `;
