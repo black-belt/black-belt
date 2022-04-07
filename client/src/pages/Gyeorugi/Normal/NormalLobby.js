@@ -106,7 +106,10 @@ function NormalLobby() {
   }, []);
 
   const searchUserInfo = async () => {
-    const userInfo = await axiosInstance.get(`/api/que/select/${searchInput}`);
+    const userInfo = await axiosInstance.post("/api/que/select", {
+      userId: myInfo.userId,
+      search: searchInput,
+    });
     setUserList(userInfo);
     setFinishSearch(true);
   };
