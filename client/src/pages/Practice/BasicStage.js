@@ -80,7 +80,7 @@ function BasicStage() {
     setIsPass(false);
   };
   const homeFunc = () => {
-    navigate("/");
+    navigate("/basics");
   };
 
   return (

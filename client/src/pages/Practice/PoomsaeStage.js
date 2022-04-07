@@ -119,7 +119,7 @@ function PoomsaeStage() {
     setIsPass(false);
   };
   const homeFunc = () => {
-    navigate("/");
+    navigate("/poomsae");
   };
 
   return (
