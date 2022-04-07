@@ -21,7 +21,6 @@ import {
 } from "./Mypage.styled";
 import CountryIcon from "components/atoms/Icons/CountryIcon";
 import { useTranslation } from "react-i18next";
-import axiosInstance from "utils/API";
 import { useEffect, useRef, useState } from "react";
 import axiosImage from "utils/imageAPI";
 import ChangeNickModal from "components/organisms/ChangeNickModal/ChangeNickModal";
@@ -31,7 +30,6 @@ function MyPage() {
   const user = useRecoilValue(userInfo);
   const fileInput = useRef(null);
   const [isOpen, setIsOpen] = useRecoilState(changeNickname);
-  console.log(isOpen);
 
   const tier = {
     1: "bronze",
@@ -112,7 +110,6 @@ function MyPage() {
       contents: `${t(user.levelName)}`,
     },
   ];
-  console.log(user);
 
   return (
     <div className="MyPage">
