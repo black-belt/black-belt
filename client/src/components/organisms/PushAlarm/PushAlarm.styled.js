@@ -17,8 +17,8 @@ export const OverLay = styled.div`
 export const ModalBox = styled.div`
   position: fixed;
 
-  top: 150px;
-  right: 15px;
+  top: 180px;
+  right: 25px;
   /* bottom: 0; */
   /* left: 0; */
   z-index: 10000;
