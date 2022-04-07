@@ -45,7 +45,7 @@ function UserVideo({ answer, testResult, isPass, aiId }) {
       const prediction = await model.predictTopK(posenetOutput, 1);
       const className = prediction[0].className;
       const probability = prediction[0].probability;
-      console.log(className, probability);
+      console.log(className, probability, answer, answer === className);
       if (isFindMax && answerNum >= 5) {
         if (++frameCnt > 20) {
           isFindMax = false;
@@ -99,7 +99,7 @@ function UserVideo({ answer, testResult, isPass, aiId }) {
 export default UserVideo;
 
 const VideoContainer = styled.video`
-  height: 22vw;
+  height: 26vw;
   width: 35vw;
   margin-bottom: 60px;
   border-radius: 10px;

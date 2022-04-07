@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 function PoomsaeCard({ img, clear, onClick, locked }) {
   return (
     <Card>
-      <ImageContainer onClick={locked ? null : onClick}>
+      <ImageContainer onClick={locked === "Y" ? null : onClick}>
         <Image img={img} locked={locked}></Image>
       </ImageContainer>
       {/* <InfoContainer>
