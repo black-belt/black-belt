@@ -114,7 +114,7 @@ function UserVideoPromotion({ testResult, isPass, startTimer, curNum, info, setC
     // console.log("!!answer", answer);
     // console.log("!!time, motionCnt", time, motionCnt);
     const loop = setInterval(async () => {
-      if (++totalCnt % 20 === 0) {
+      if (++totalCnt % 40 === 0) {
         // console.log("!!answer", curChapter, curIdx, answer[curChapter][curIdx], maxProbability);
         probSum += maxProbability;
         maxProbability = 0;
