@@ -103,7 +103,7 @@ function MainPage() {
       button: [
         {
           name: "combos",
-          url: "/practice/combos",
+          url: "/promotion",
         },
       ],
     },
