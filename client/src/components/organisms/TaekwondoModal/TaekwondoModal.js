@@ -22,10 +22,18 @@ const TaekwonDoModal = () => {
           <ModalHeader>
             <Icon icon="xBtn" onClick={() => isOpen(false)} />
           </ModalHeader>
-          <Title>ABOUT TAEKWONDO</Title>
           <ModalContent>
+            <Title>ABOUT TAEKWONDO</Title>
             <ContentTitle>{t("taekwondo1")}</ContentTitle>
             <Contents>{t("taekwondo1-description")} </Contents>
+
+            <ContentTitle>{t("taekwondo2")}</ContentTitle>
+            <Contents>{t("taekwondo2-description1")}</Contents>
+            <Contents>{t("taekwondo2-description2")}</Contents>
+            <Contents>{t("taekwondo2-description3")}</Contents>
+
+            <Title>{t("service")}</Title>
+            <ContentTitle>{t("service1")}</ContentTitle>
           </ModalContent>
         </ModalSection>
       </ModalBox>
