@@ -1,10 +1,9 @@
 import { GetUserInfo, UserProfileSelector } from "api";
 import Icon from "components/atoms/Icons/CustomIcon";
-import TaekwonDoModal from "components/organisms/TaekwondoModal/TaekwondoModal";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { language, taekwondoModal, token } from "recoils";
 import axiosInstance from "utils/API";
 import {
@@ -27,7 +26,7 @@ const Dropdown = () => {
   const userData = GetUserInfo();
   const resetToken = useResetRecoilState(token);
   const setLang = useSetRecoilState(language);
-  const [isOpen, setIsOpen] = useRecoilState(taekwondoModal);
+  const setIsOpen = useSetRecoilState(taekwondoModal);
 
   useEffect(() => {
     if (userData.data) {
