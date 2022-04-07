@@ -21,7 +21,7 @@ function UserVideoPoomsae({
   let isLastAction = false;
   let maxProbability = 0.0;
   let frameCnt = 0;
-  let model;
+  let model1, model2;
   // let frameGoal = 5;
   const [webCamElement, setWebCamElement] = useState();
 
@@ -46,19 +46,37 @@ function UserVideoPoomsae({
     setWebCamElement(() => webcam);
   };
 
-  const changeModel = async (chapter) => {
-    model = await tmPose.load(
+  const changeModel = async (modelNum, chapter) => {
+    // if (modelNum === 1) {
+    model1 = await tmPose.load(
       `/models/combos/${(poomsaeId - 1) * 4 + chapter}/model.json`,
       `/models/combos/${(poomsaeId - 1) * 4 + chapter}/metadata.json`
     );
+    // } else {
+    //   model2 = await tmPose.load(
+    //     `/models/combos/${(poomsaeId - 1) * 4 + chapter}/model.json`,
+    //     `/models/combos/${(poomsaeId - 1) * 4 + chapter}/metadata.json`
+    //   );
+    // }
     // setModel(() => m);
   };
 
-  const analyzeImage = async () => {
+  const analyzeImage1 = async () => {
     webCamElement.update(); // update the webcam frame
     // console.log("!!change", model);
-    const { posenetOutput } = await model.estimatePose(webCamElement.canvas);
-    const prediction = await model.predictTopK(posenetOutput, 1);
+    const { posenetOutput } = await model1.estimatePose(webCamElement.canvas);
+    const prediction = await model1.predictTopK(posenetOutput, 1);
+    const className = prediction[0].className;
+    const probability = prediction[0].probability;
+    console.log(className, probability);
+    return { className: className, probability: probability };
+  };
+
+  const analyzeImage2 = async () => {
+    webCamElement.update(); // update the webcam frame
+    // console.log("!!change", model);
+    const { posenetOutput } = await model2.estimatePose(webCamElement.canvas);
+    const prediction = await model2.predictTopK(posenetOutput, 1);
     const className = prediction[0].className;
     const probability = prediction[0].probability;
     console.log(className, probability);
@@ -68,15 +86,20 @@ function UserVideoPoomsae({
   const run = async () => {
     await webCamElement.setup();
     await webCamElement.play();
-    await changeModel(1);
-    let imageResult;
+    // await changeModel(1, 1);
+    // await changeModel(2, 2);
+    let imageResult1, imageResult2;
     while (answer[0].length > 0 && !isPass) {
-      imageResult = await analyzeImage();
+      imageResult1 = await analyzeImage1();
+      // imageResult2 = await analyzeImage2();
+      if (curAction === 0) {
+        await changeModel(1, nextPart + 1);
+      }
       if (isLastAction) {
         //마지막 파트, 마지막 동작
         frameCnt++;
-        if (answer[curPart][curAction] === imageResult.className) {
-          maxProbability = imageResult.probability;
+        if (answer[curPart][curAction] === imageResult1.className) {
+          maxProbability = imageResult1.probability;
         }
 
         if (frameCnt > 10) {
@@ -92,18 +115,18 @@ function UserVideoPoomsae({
           break;
         }
       } else if (
-        answer[curPart][curAction] === imageResult.className &&
-        imageResult.probability > maxProbability
+        answer[curPart][curAction] === imageResult1.className &&
+        imageResult1.probability > maxProbability
       ) {
         //하던동작, 더 높은 일치율
-        maxProbability = imageResult.probability;
+        maxProbability = imageResult1.probability;
         updateNextAction(nextAction);
         updatePartIndex(nextPart);
-      } else if (answer[nextPart][nextAction] === imageResult.className) {
+      } else if (answer[nextPart][nextAction] === imageResult1.className) {
         //다음동작 발견됨 -> 다음동작으로 넘어감
         // console.log("!!저장", curPart, curAction, nextPart, nextAction, maxProbability);
         testSum += maxProbability;
-        maxProbability = imageResult.probability;
+        maxProbability = imageResult1.probability;
         curAction = nextAction++;
         if (curPart !== nextPart) {
           testResult(curPart, testSum);
@@ -119,7 +142,6 @@ function UserVideoPoomsae({
             //다음단락으로 넘어감
             nextPart++;
             nextAction = 0;
-            changeModel(nextPart + 1);
           }
         }
       }
