@@ -106,9 +106,16 @@ public class SocketController {
 			String hostNick = userRepo.finduserNickByuserId(message.getHostId());
 			message.setGuestNick(guestNick);
 			message.setHostNick(hostNick);
-			message.setMessage(guestNick + "님이 들어왔습니다");
-			messagingTemplate.convertAndSend("/sub/api/battle/" + message.getRoomId(), message);		// room id ? hostid ? 
-         }
+			// guest 에게 보냄 
+			message.setIsHost("0");
+			//message.setMessage(hostNick + "님이 들어왔습니다");
+			messagingTemplate.convertAndSend("/sub/api/battle/" + message.getGuestId(), message);		// room id ? hostid ? 
+			// host 에게 보냄 
+			message.setIsHost("1");
+			//message.setMessage(guestNick + "님이 들어왔습니다");
+			messagingTemplate.convertAndSend("/sub/api/battle/" + message.getHostId(), message);
+			
+		}
 		else if (SocketMessage.MessageType.GAMESTART.equals(message.getType())) {		// 
 			//String hostNick = userRepo.finduserNickByuserId(message.getHostId());
 			//message.setMessage(hostNick + "님이 게임을 시작합니다");
