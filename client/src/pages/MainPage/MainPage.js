@@ -45,7 +45,7 @@ function MainPage() {
           }
           if (newMessage.type === "ENTER") {
             if (newMessage.isHost === "0") {
-              setTimeout(
+              setTimeout(() => {
                 navigate("/gyeorugi/normal/stage", {
                   state: {
                     isHost: newMessage.isHost,
@@ -53,9 +53,8 @@ function MainPage() {
                     guestId: newMessage.guestId,
                     roomSeq: newMessage.roomId,
                   },
-                }),
-                3000
-              );
+                });
+              }, 1500);
             } else {
               navigate("/gyeorugi/normal/stage", {
                 state: {
@@ -161,7 +160,10 @@ function MainPage() {
                 <Contents>{t(slide.description3)}</Contents>
                 <ButtonBox>
                   {slide["button"].map((menus) => (
-                    <InButton key={menus.name} onClick={() => FilterUser(menus.url)}>
+                    <InButton
+                      key={menus.name}
+                      onClick={() => FilterUser(menus.url)}
+                    >
                       {t(menus.name)}
                     </InButton>
                   ))}
