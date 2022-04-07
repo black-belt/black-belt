@@ -47,10 +47,12 @@ function MainPage() {
             console.log(newMessage);
             console.log("navigate");
             navigate("/gyeorugi/normal/stage", {
-              isHost: newMessage.isHost,
-              hostId: newMessage.hostId,
-              guestId: newMessage.guestId,
-              roomSeq: newMessage.roomId,
+              state: {
+                isHost: newMessage.isHost,
+                hostId: newMessage.hostId,
+                guestId: newMessage.guestId,
+                roomSeq: newMessage.roomId,
+              },
             });
           }
         });
