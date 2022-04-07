@@ -40,7 +40,7 @@ function OvVideoComponent({
 
     getWebcam((stream) => {
       videoRef.current.srcObject = stream;
-      // setWebCamElement(videoRef.current);
+      setWebCamElement(videoRef.current);
     });
   }, []);
 
