@@ -106,6 +106,7 @@ public class JudgeController {
 		}
 		Random rand = new Random();
 		int rint = rand.nextInt(randomPoomsaeId.size());
+		rint = 0;//test용으로 1로 고정.(0번째가 id 1임) 랜덤으로 할 거면 이 부분 주석 처리. 
 		result.put("randomPoomsaeId", randomPoomsaeId.get(rint));
 		result.put("randomPoomsaeName", randomPoomsaeName.get(rint));
 		result.put("randomPoomsaeNameE", randomPoomsaeName_e.get(rint));
