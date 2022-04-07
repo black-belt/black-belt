@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import isLogin from "utils/isLogin";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
-import { message, userInfo } from "recoils";
+import { loginModalState, message, userInfo } from "recoils";
 
 import SockJs from "sockjs-client";
 import StompJs from "stompjs";
@@ -25,6 +25,7 @@ import StompJs from "stompjs";
 function MainPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const loginModal = useSetRecoilState(loginModalState);
   const userId = useRecoilValue(userInfo);
   const msg = useSetRecoilState(message);
   const resetMsg = useResetRecoilState(message);
@@ -45,6 +46,14 @@ function MainPage() {
       });
     } catch (err) {
       console.log("error");
+    }
+  };
+
+  const FilterUser = (url) => {
+    if (isLogin()) {
+      navigate(url);
+    } else {
+      loginModal("login");
     }
   };
 
@@ -124,7 +133,7 @@ function MainPage() {
                   {slide["button"].map((menus) => (
                     <InButton
                       key={menus.name}
-                      onClick={() => navigate(menus.url)}
+                      onClick={() => FilterUser(menus.url)}
                     >
                       {t(menus.name)}
                     </InButton>
