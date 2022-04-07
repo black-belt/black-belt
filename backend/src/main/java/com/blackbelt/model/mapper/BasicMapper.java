@@ -9,8 +9,10 @@ public interface BasicMapper {
 	List<BasicDto> listBasic() throws Exception;
 	BasicDto getBasic(int user_id, int basicid) throws Exception;
 	void updateBasicStage(BasicStageDto basicStageDto) throws Exception;
-	List<BasicDto> listBasicuser(String user_id);
-	void levelup(String user_id);
+	List<BasicDto> listBasicuser(String user_id) throws Exception;
+	void levelup(String user_id) throws Exception;
+	String nowlevel(int user_id) throws Exception;
+	String clearcount(int user_id) throws Exception;
 	
 //	UserDto login(Map<String, String> map) throws Exception;
 //	

@@ -38,7 +38,7 @@ export const ProfileBox = styled.div`
 `;
 
 export const ImgBox = styled.div`
-  padding-top: 30%;
+  padding-top: 26%;
   padding-bottom: 0.8rem;
   width: 60%;
 `;
@@ -58,13 +58,26 @@ export const ProfileImg = styled.img`
   bottom: 0;
   max-height: 100%;
   width: auto;
+
+  cursor: pointer;
 `;
 
-export const UserCountry = styled.div``;
+export const UserCountry = styled.div`
+  /* position: absolute; */
+  /* left: 0; */
+  /* right: 20%; */
+  /* top: 50%; */
+  /* position: relative; */
+  /* left: 70%; */
+  /* top: -50px; */
+  /* right: 100px; */
+`;
 
 export const Username = styled.div`
   font-size: ${fontSize.h4};
   font-weight: ${fontWeight.medium};
+
+  cursor: pointer;
 `;
 
 export const UserEmail = styled.div`
@@ -93,6 +106,33 @@ export const Certification = styled.div`
 export const GyeorugiInfo = styled.div`
   /* background-color: blue; */
   /* margin-top: 2rem; */
-  padding-top: 2rem;
-  height: 52%;
+  /* padding-top: 2rem; */
+  /* height: 52%; */
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+
+  border-radius: 6px;
+
+  background-color: rgba(248, 249, 250, 0.15);
+  /* backdrop-filter: blur(4px) saturate(10%);
+  -webkit-backdrop-filter: blur(4px) saturate(10%); */
+`;
+
+export const GyeorugiTR = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem 0;
+
+  border-bottom: 1px solid ${colors.gray9};
+`;
+
+export const RecentGames = styled.div`
+  display: flex;
+  gap: 0.6rem;
+
+  img {
+    width: 30px;
+  }
 `;

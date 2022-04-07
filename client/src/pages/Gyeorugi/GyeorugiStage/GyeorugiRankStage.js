@@ -16,7 +16,7 @@ function GyeorugiRankStage() {
   const [blue, setBlue] = useState(undefined);
   const [introduce, setIntroduce] = useState(true);
   const navigate = useNavigate();
-  const state = useLocation();
+  const state = useLocation().state;
   let otherNick;
 
   const tiers = {
@@ -29,15 +29,15 @@ function GyeorugiRankStage() {
   };
 
   const getInfoData = async () => {
+    console.log(state, state.hostId, state.guestId, state.isHost, state.roomSeq);
     const data = await axiosInstance.post("/api/battle", {
-      hostId: 1,
-      guestId: 2,
-      isHost: 1,
-      roomSeq: 100,
+      hostId: state.hostId,
+      guestId: state.guestId,
+      isHost: state.isHost ? 0 : 1,
+      roomSeq: state.roomSeq,
     });
-    let imHost = true;
+    let imHost = state.isHost;
     setInfo(data);
-    console.log("data!!", data);
     setMyInfo(imHost ? data.BattleInfo[0] : data.BattleInfo[1]);
     otherNick = imHost ? data.BattleInfo[1].userNick : data.BattleInfo[0].userNick;
 
@@ -68,7 +68,7 @@ function GyeorugiRankStage() {
 
   const getResultData = async () => {
     const data = await axiosInstance.post("/api/battle/end", {
-      team: "red",
+      team: state.isHost ? "red" : "blue",
       redWinLoseDraw: isWin ? "W" : "L",
       battleSeq: info.BattleInfo,
       token: info.token,

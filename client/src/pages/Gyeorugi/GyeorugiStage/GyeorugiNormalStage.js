@@ -16,7 +16,7 @@ function GyeorugiNormalStage() {
   const [blue, setBlue] = useState(undefined);
   const [introduce, setIntroduce] = useState(true);
   const navigate = useNavigate();
-  const state = useLocation();
+  const state = useLocation().state;
   let otherNick;
 
   const tiers = {
@@ -29,15 +29,15 @@ function GyeorugiNormalStage() {
   };
 
   const getInfoData = async () => {
+    console.log(state, state.hostId, state.guestId, state.isHost, state.roomSeq);
     const data = await axiosInstance.post("/api/battle", {
-      hostId: 11,
-      guestId: 12,
-      isHost: 0,
-      roomSeq: 123,
+      hostId: state.hostId,
+      guestId: state.guestId,
+      isHost: state.isHost ? 0 : 1,
+      roomSeq: state.roomSeq,
     });
-    let imHost = true;
+    let imHost = state.isHost;
     setInfo(data);
-    console.log("data!!", data);
     setMyInfo(imHost ? data.battleInfo[0] : data.battleInfo[1]);
     otherNick = imHost ? data.battleInfo[1].userNick : data.battleInfo[0].userNick;
 
@@ -58,27 +58,17 @@ function GyeorugiNormalStage() {
   }, []);
 
   useEffect(() => {
-    console.log(result, isWin, "!!??");
     if (result === 1 && isWin !== undefined) {
       getResultData().then((result) => {
-        // setIsWin(false);
         setTier({ tier: tiers[result.tierId], score: result.userScore });
       });
-      // const data = getResultData();
-      // console.log(data);
-      // console.log(data, tiers[data.tierId], data.userScore);
-      // setTier({ tier: tiers[data.tierId], score: data.userScore });
     }
   }, [result, isWin]);
 
   const getResultData = async () => {
-    // const imHost = state.isHost === 1 ? true : false;
-    // let data = {};
     const data = await axiosInstance.post("/api/battle/end", {
-      // team: info.isHost === 1 ? "red" : "blue",
-      team: "red",
+      team: state.isHost ? "red" : "blue",
       redWinLoseDraw: isWin ? "W" : "L",
-      // battleSeq: info.battleInfo,
       battleSeq: info.battleSeq,
       token: info.token,
       isRank: 0,

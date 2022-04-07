@@ -4,8 +4,8 @@ import { Enter } from "pages/MainPage/startWS";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { battleToken, gyeorugiMsg, userInfo } from "recoils";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { battleToken, gyeorugiMsg, message, userInfo } from "recoils";
 import axiosInstance from "utils/API";
 import { colors } from "_foundation";
 import {
@@ -44,6 +44,7 @@ function NormalLobby() {
 
   const setGyeorugiToken = useSetRecoilState(battleToken);
   const acceptMsg = useRecoilValue(gyeorugiMsg);
+  const resetMsg = useResetRecoilState(message);
 
   const myInfo = useRecoilValue(userInfo);
   const ImgURL = process.env.REACT_APP_IMAGE_URL;
@@ -57,8 +58,18 @@ function NormalLobby() {
     axiosInstance.get(`/api/que/select/ready/${myInfo.userId}`).then((res) => {
       setGyeorugiToken(res);
     });
-    setHostInfo(myInfo);
   }, []);
+
+  useEffect(() => {
+    setHostInfo(myInfo);
+  }, [myInfo]);
+
+  useEffect(() => {
+    if (hostInfo && hostInfo.userNick === myInfo.userNick) {
+      setIsHost(true);
+    }
+  }, [hostInfo]);
+  console.log(hostInfo);
 
   useEffect(() => {
     if (acceptMsg.type === "ACCEPT") {
@@ -72,13 +83,14 @@ function NormalLobby() {
           setGuestInfo(res.Guest);
         });
     }
-    if (hostInfo && hostInfo.userNick === myInfo.userNick) {
-      setIsHost(true);
-    }
+    // if (hostInfo && hostInfo.userNick === myInfo.userNick) {
+    //   setIsHost(true);
+    // }
   }, [acceptMsg]);
 
   const startGyeorugi = () => {
     Enter();
+    resetMsg();
     navigate(`/gyeorugi/normal/stage`, {
       state: {
         isHost: isHost,
@@ -94,7 +106,10 @@ function NormalLobby() {
   }, []);
 
   const searchUserInfo = async () => {
-    const userInfo = await axiosInstance.get(`/api/que/select/${searchInput}`);
+    const userInfo = await axiosInstance.post("/api/que/select", {
+      userId: myInfo.userId,
+      search: searchInput,
+    });
     setUserList(userInfo);
     setFinishSearch(true);
   };
@@ -132,6 +147,7 @@ function NormalLobby() {
     5: "diamond",
     6: "master",
   };
+  console.log(hostInfo, guestInfo);
 
   return (
     <div className="NormalLobby">
@@ -149,10 +165,7 @@ function NormalLobby() {
                   <ProfileImgBox>
                     <ImgWrapper>
                       {hostInfo.userProfilePath ? (
-                        <ProfileImg
-                          src={ImgURL + hostInfo.userProfilePath}
-                          alt=""
-                        />
+                        <ProfileImg src={hostInfo.userProfilePath} alt="" />
                       ) : (
                         <ProfileImg src="/images/defaultUser.png" alt="" />
                       )}
@@ -173,10 +186,7 @@ function NormalLobby() {
                   <ProfileImgBox>
                     <ImgWrapper>
                       {guestInfo.userProfilePath ? (
-                        <ProfileImg
-                          src={ImgURL + guestInfo.userProfilePath}
-                          alt=""
-                        />
+                        <ProfileImg src={guestInfo.userProfilePath} alt="" />
                       ) : (
                         <ProfileImg src="/images/defaultUser.png" alt="" />
                       )}
@@ -190,7 +200,7 @@ function NormalLobby() {
             </Champion>
           </ChampionBox>
           <center>
-            {isHost && (
+            {isHost && guestInfo && (
               <InButton onClick={startGyeorugi}>{t("start")}</InButton>
             )}
           </center>
@@ -228,7 +238,7 @@ function NormalLobby() {
                       <ImgWrapper>
                         <UserImg
                           state={user.userState}
-                          src={ImgURL + user.userProfilePath}
+                          src={user.userProfilePath}
                           alt=""
                         />
                       </ImgWrapper>

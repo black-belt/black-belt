@@ -17,7 +17,7 @@ function Combos() {
 
   const getComboData = async () => {
     const data = await axiosInstance.get("/api/combo", {});
-    // console.log(data);
+    console.log(data);
     setPoomsaeList(() => data);
     setSelectedPoomsaeInfo(data[0]);
     setImageList(makeRandom());

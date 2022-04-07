@@ -21,6 +21,7 @@ import com.blackbelt.model.CountryCrudRepository;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.model.UserDto;
 import com.blackbelt.model.service.BattleRoomService;
+import com.blackbelt.model.socket.SBattleRoomRepository;
 import com.blackbelt.service.BattleService;
 import com.blackbelt.util.JwtTokenProvider;
 
@@ -38,6 +39,8 @@ public class BattleController {
 	BattleCrudRepository battleRepo;
 	@Autowired
 	CountryCrudRepository countryRepo;
+	@Autowired
+	SBattleRoomRepository sbattleRepo;
 	@Autowired
 	UserCrudRepository userRepo;
 	@Autowired
@@ -107,7 +110,7 @@ public class BattleController {
 			String battleUrl = "battle" + hostId +"vs" + guestId + roomSeq;
 			Optional<BattleHistoryDto> battlehis = battleRepo.findBysessionName(battleUrl);
 			BattleHistoryDto bhd = null;
-			if(!battlehis.isEmpty()) { //먼저 호출한 쪽이면
+			if(!battlehis.isPresent()) { //먼저 호출한 쪽이면
 				battleHistoryDto = new BattleHistoryDto();
 				battleHistoryDto.setEnemyId(guestUserInfo.getUserId());
 				battleHistoryDto.setEnemyTierId(guestUserInfo.getTierId());
@@ -192,8 +195,13 @@ public class BattleController {
 		}
 		if(isRank)
 			resultMap = battleService.manageBattleHistory(bhd.get(), winOrLose, team.equals("red"));
-		
+		else {
+			resultMap = battleService.manageBattleHistoryUnranked(bhd.get(), winOrLose, team.equals("red"));
+		}
 
+     // 대기방 세션 삭제 
+		sbattleRepo.clearSBattleRoom(bhd.get().getMyId());
+      
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 	

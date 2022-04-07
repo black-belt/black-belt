@@ -51,15 +51,15 @@
 		where lvDate is not null;
 	</select>
 	<select id="getBattleHistories" resultType="com.blackbelt.model.BattleHistoryDto">
-		SELECT battlehistory_id AS battleHistoryId, end_time, enemyId,enemyColor, et.tier_name AS enemyTier, et.tier_name_e AS enemyTierE
+		SELECT bt.myId, bt.myTierId,bt.myCountryId, battlehistory_id AS battleHistoryId, end_time as endTime, enemyId,enemyColor, bt.enemyTierId, et.tier_name AS enemyTier, et.tier_name_e AS enemyTierE
 		, et.tier_img_path AS enemyTierPath, mt.tier_name AS myTier, mt.tier_name_e AS myTierE, mt.tier_img_path AS myTierPath,
-        bt.red_win_lose_draw AS redWinLoseDraw, c.country_name AS enemyCountryName, c.country_image_path AS enemyCountryImagePath
+        bt.red_win_lose_draw AS redWinLoseDraw, c.country_id AS enemyCountryId, c.country_name AS enemyCountryName, c.country_image_path AS enemyCountryImagePath
 		FROM
-			(SELECT battlehistory_id, end_time, user_blue_id AS enemyId, red_win_lose_draw, red_tier_id as myTierId, blue_tier_id AS enemyTierId , 'B' AS enemyColor 
+			(SELECT user_red_id AS myId, battlehistory_id, end_time, user_blue_id AS enemyId, red_win_lose_draw, red_tier_id as myTierId,red_country_id AS myCountryId, blue_tier_id AS enemyTierId, 'B' AS enemyColor 
 			FROM battlehistory
 			WHERE user_red_id = #{userid}
 			UNION ALL
-			SELECT battlehistory_id, end_time, user_red_id AS enemyId, red_win_lose_draw, blue_tier_id as myTierId, red_tier_id AS enemyTierId , 'R' AS enemyColor 
+			SELECT user_blue_id AS myId, battlehistory_id, end_time, user_red_id AS enemyId, red_win_lose_draw, blue_tier_id as myTierId,blue_country_id AS myCountryId, red_tier_id AS enemyTierId , 'R' AS enemyColor 
 			FROM battlehistory
 			WHERE user_blue_id = #{userid}) bt
 		    LEFT JOIN tier et on bt.enemyTierId = et.tier_id

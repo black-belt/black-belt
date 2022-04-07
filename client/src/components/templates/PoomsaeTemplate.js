@@ -55,8 +55,8 @@ function PoomsaeTemplate({
             {selectedPoomsaeInfo && (
               <Description>
                 {t("language") === "KOR"
-                  ? selectedPoomsaeInfo.poomsae_explain
-                  : selectedPoomsaeInfo.poomsae_explain_e}
+                  ? selectedPoomsaeInfo.poomsae_desc
+                  : selectedPoomsaeInfo.poomsae_desc_e}
               </Description>
             )}
           </TextContainer>
@@ -70,6 +70,7 @@ function PoomsaeTemplate({
               img={`/images/combo/combo${imageNum}.png`}
               clear={selectedPoomsaeInfo.poomsae_clear}
               score={selectedPoomsaeInfo.poomsae_score}
+              locked={selectedPoomsaeInfo.poomsae_locked}
               onClick={goToStage}
             />
           </CardContainer>
@@ -114,7 +115,7 @@ const Title = styled.div`
     props.language === "ENG" &&
     css`
       font-family: Dry Brush;
-      font-size: 5rem;
+      font-size: 4rem;
       line-height: 150%;
     `}
   ${(props) =>
@@ -140,6 +141,7 @@ const Description = styled.div`
   font-family: inherit;
   font-size: ${fontSize.xl};
   letter-spacing: 0.5px;
+  line-height: 1.8rem;
 `;
 
 const CardContainer = styled.div`

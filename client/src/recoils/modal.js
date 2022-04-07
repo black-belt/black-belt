@@ -19,3 +19,8 @@ export const gyeorugiMsgState = atom({
   key: "gyeorugiMsgState",
   default: false,
 });
+
+export const changeNickname = atom({
+  key: "changeNickname",
+  default: false,
+});

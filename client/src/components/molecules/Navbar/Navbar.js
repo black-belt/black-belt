@@ -13,11 +13,12 @@ import {
   Logo,
   NavItemBox,
   NavItemBtn,
-  // NavItemLink,
   ProfileBox,
   ProfileImg,
+  ProfileImgBox,
   UserDropdown,
   Welcome,
+  ImgWrapper,
 } from "./Navbar.styled";
 import { useNavigate } from "react-router-dom";
 
@@ -60,7 +61,6 @@ function Navbar() {
   return (
     <Layout ref={dropdownRef}>
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
-
       {isLogin() ? (
         <Suspense fallback={<div>Loading ...</div>}>
           {user && (
@@ -69,15 +69,23 @@ function Navbar() {
                 {t("welcome")} {user?.userNick}
                 {t("welcome_korean")}
               </Welcome>
-              {user.profileImg ? (
-                <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>
-                  <img src={user.profileImg} alt="" />
-                </ProfileImg>
-              ) : (
-                <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>
-                  <Icon width={40} height={40} icon="defaultUser" />
-                </ProfileImg>
-              )}
+              <ProfileImgBox>
+                <ImgWrapper>
+                  {user.userProfilePath ? (
+                    <ProfileImg
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
+                      src={user.userProfilePath}
+                      alt=""
+                    />
+                  ) : (
+                    <ProfileImg
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
+                      src="/images/defaultUser.png"
+                      alt=""
+                    />
+                  )}
+                </ImgWrapper>
+              </ProfileImgBox>
             </ProfileBox>
           )}
           {dropdownOpen && <UserDropdown />}
