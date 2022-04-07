@@ -43,7 +43,7 @@ public class SocketController {
 	@MessageMapping("/api/que/user")
 	public void userque(SocketMessage message) {
 		logger.info("Socket Message '백'에서 수신" );
-		System.out.println("메시지를 백에서 수신하긴 함  ");
+		System.out.println("메시지를 백에서 수신함  ");
 		// 로그인 했을 때
 		if (SocketMessage.MessageType.LOGIN.equals(message.getType())) {		// 
 			logger.info("로그인 시: " + message);
@@ -82,14 +82,20 @@ public class SocketController {
    	 		message.setMessage(guestNick + "님이 거절함");
    	 		messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getHostId(), message);
    	 	}
+		
+		// @MessageMapping("/api/que/random")
+		// [랜덤큐] 매칭됨
+   	 	else if (SocketMessage.MessageType.RandomMatched.equals(message.getType())) {		// 
+			logger.info("매칭됨: " + message);
+			message.setIsMatched("1");
+			message.setIsHost("0");
+			message.setMessage("랜덤큐 매칭됨");
+			messagingTemplate.convertAndSend("/sub/api/que/user/" + message.getGuestId(), message);
+         }
+		
+		
 	}
 
- 
-	// [랜덤 큐] 메시지 핸들러
-	@MessageMapping("/api/que/random")
-	public void randomque(SocketMessage message) {
-		// 아직 미작성 
-	}
  
 	// [배틀 대기방] 메시지 핸들러
 	@MessageMapping("/api/battle")

@@ -17,7 +17,12 @@ public class SBattleRoomRepository {
  private void init() {
      sbattleRoomMap = new LinkedHashMap<>();
  }
-
+ 
+ // 배틀룸 초기화 
+ public void clearSBattleRoom(String userId) {
+	 sbattleRoomMap.remove(userId);		// 경기 끝나면, 해당 hostId로 된 배틀룸 삭제 
+ }
+ 
  public List<SBattleRoom> findAllRoom() {
      // 채팅방 생성순서 최근 순으로 반환
      List battlerooms = new ArrayList<>(sbattleRoomMap.values());
