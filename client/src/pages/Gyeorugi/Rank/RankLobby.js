@@ -2,6 +2,7 @@ import InButton from "components/atoms/Buttons/in-btns";
 import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { userInfo } from "recoils";
+import axiosInstance from "utils/API";
 import {
   Background,
   Champion,
@@ -26,7 +27,13 @@ function RankLobby() {
     5: "diamond",
     6: "master",
   };
-  console.log(myInfo);
+
+  const StartQue = () => {
+    axiosInstance
+      .get(`/api/que/random/${myInfo.userId}`, {})
+      .then((res) => console.log(res));
+  };
+
   return (
     <Layout>
       <Background src="/images/practiceBackground.jpg" />
@@ -50,7 +57,7 @@ function RankLobby() {
         </Champion>
       </ChampionBox>
       <center>
-        <InButton>{t("start")}</InButton>
+        <InButton onClick={StartQue}>{t("start")}</InButton>
       </center>
     </Layout>
   );
