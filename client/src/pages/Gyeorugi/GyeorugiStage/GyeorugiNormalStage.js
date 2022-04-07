@@ -80,7 +80,7 @@ function GyeorugiNormalStage() {
   };
 
   const restartFunc = () => {
-    navigate("/");
+    navigate("/gyeorugi/normal");
   };
   const homeFunc = () => {
     navigate("/");

@@ -77,7 +77,7 @@ function GyeorugiRankStage() {
   };
 
   const restartFunc = () => {
-    navigate("/");
+    navigate("/gyeorugi/rank");
   };
   const homeFunc = () => {
     navigate("/");
