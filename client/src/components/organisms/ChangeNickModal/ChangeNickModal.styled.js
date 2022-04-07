@@ -34,7 +34,7 @@ export const ModalSection = styled.div`
   top: 50%;
 
   width: 400px;
-  height: 360px;
+  height: 280px;
   margin: auto;
   padding: 1rem;
   border-radius: 10px;
@@ -58,17 +58,31 @@ export const ModalHeader = styled.div`
   }
 `;
 
+export const Title = styled.div`
+  color: ${colors.gray9};
+`;
+
 export const ModalContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  padding-top: 3rem;
+  padding-top: 1rem;
 `;
 
 export const NicknameInput = styled.input`
-  width: 60%;
+  width: 100%;
   height: 30px;
+`;
+
+export const ErrorMsg = styled.div`
+  color: ${colors.error};
+  position: absolute;
+  /* top: 10px; */
+`;
+
+export const InputBox = styled.div`
+  width: 65%;
 `;
 
 export const ButtonLight = styled.button`
