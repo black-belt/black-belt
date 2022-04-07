@@ -1,5 +1,5 @@
-import { useRecoilValue } from "recoil";
-import { gyeorugiMsg, userInfo } from "recoils";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { changeNickname, gyeorugiMsg, userInfo } from "recoils";
 import { Carousel } from "3d-react-carousal";
 import {
   BackgroundImg,
@@ -24,11 +24,15 @@ import { useTranslation } from "react-i18next";
 import axiosInstance from "utils/API";
 import { useEffect, useRef, useState } from "react";
 import axiosImage from "utils/imageAPI";
+import ChangeNickModal from "components/organisms/ChangeNickModal/ChangeNickModal";
 
 function MyPage() {
   const { t } = useTranslation();
   const user = useRecoilValue(userInfo);
   const fileInput = useRef(null);
+  const [isOpen, setIsOpen] = useRecoilState(changeNickname);
+  console.log(isOpen);
+
   const tier = {
     1: "bronze",
     2: "silver",
@@ -150,6 +154,7 @@ function MyPage() {
     <div className="MyPage">
       <BackgroundImg src="/images/practiceBackground.jpg" alt="" />
       <Layout>
+        {isOpen && <ChangeNickModal />}
         <ProfileBox>
           <ImgBox>
             <ImgWrapper>
@@ -183,7 +188,7 @@ function MyPage() {
             onChange={uploadImg}
             ref={fileInput}
           />
-          <Username>{user.userNick}</Username>
+          <Username onClick={() => setIsOpen(true)}>{user.userNick}</Username>
           <UserEmail>{user.userEmail}</UserEmail>
           <TierImg src={`/images/tier/${tier[user.userTier]}.png`} />
         </ProfileBox>
