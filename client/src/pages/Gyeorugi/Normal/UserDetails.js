@@ -58,7 +58,7 @@ const UserDetail = (props) => {
             <UserTier>{t(tier[user.tierId])}</UserTier>
           </TextBox>
           <BasicButton
-            width="115px"
+            width="125px"
             height="36px"
             able={user.userState}
             onClick={() => Invite(data)}
