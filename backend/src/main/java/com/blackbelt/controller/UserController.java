@@ -214,11 +214,12 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	@GetMapping("/usernick/{userNick}")
-	public ResponseEntity<Map<String, Object>> nickCheck(@PathVariable("userNick") String nick, @RequestBody Map<String,String> map){
+	public ResponseEntity<Map<String, Object>> nickCheck(@PathVariable("userNick") String nick){
 		ResponseEntity<Map<String, Object>> re = null;
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
-			Optional<UserDto> user = userRepo.findByuserNick(nick);	
+			String name = URLDecoder.decode(nick, "UTF-8");
+			Optional<UserDto> user = userRepo.findByuserNick(name);
 			if(user.isEmpty()) resultMap.put("isUsed", false);			// isEmpty 를 바꿈 java version 차이
 			else resultMap.put("isUsed", true);
 			resultMap.put("statusCode", 200);
