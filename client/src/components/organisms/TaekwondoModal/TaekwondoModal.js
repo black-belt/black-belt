@@ -32,7 +32,7 @@ const TaekwonDoModal = () => {
             <Contents>{t("taekwondo2-description2")}</Contents>
             <Contents>{t("taekwondo2-description3")}</Contents>
 
-            <Title>{t("service")}</Title>
+            <Title>SERVICE INSTRUCTION</Title>
             <ContentTitle>[{t("service1")}]</ContentTitle>
             <ContentTitle>{t("service1-1")}</ContentTitle>
             <Contents>{t("service1-1 description1")}</Contents>
@@ -59,6 +59,7 @@ const TaekwonDoModal = () => {
             <Contents>{t("service2 description2")}</Contents>
             <Contents>{t("service2 description3")}</Contents>
             <Contents>{t("service2 description4")}</Contents>
+            <br></br>
 
             <ContentTitle>[{t("service3")}]</ContentTitle>
             <Contents>{t("service3 description1")}</Contents>

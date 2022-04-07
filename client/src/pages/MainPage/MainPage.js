@@ -102,7 +102,7 @@ function MainPage() {
       image: "/images/main/practice.png",
       button: [
         {
-          name: "combos",
+          name: "test start",
           url: "/promotion",
         },
       ],

@@ -28,15 +28,17 @@ export const ModalBox = styled.div`
 export const ModalSection = styled.div`
   display: flex;
   flex-direction: column;
+
+  overflow-x: auto;
   /* justify-content: center; */
   gap: 1rem;
   position: relative;
   top: 50%;
 
-  width: 800px;
-  /* height: 250px; */
+  width: 900px;
+  height: 70%;
   margin: auto;
-  padding: 1rem;
+  padding: 1rem 1rem 5rem 1rem;
   border-radius: 10px;
 
   background-color: ${colors.gray3};
@@ -62,7 +64,7 @@ export const Title = styled.div`
   color: ${colors.gray9};
   font-family: "Dokdo";
   font-size: ${fontSize.h1};
-  padding: 1rem 1rem 0 1rem;
+  padding: 3rem 1rem 0 1rem;
   /* ${(props) => {
     if (props.language === "ENG") {
       return css`
@@ -82,7 +84,7 @@ export const ModalContent = styled.div`
   /* display: flex; */
   /* justify-content: center; */
   /* align-items: center; */
-  padding: 0 1rem;
+  padding: 0 1.2rem;
   /* gap: 1.2rem; */
   /* padding-top: 1rem; */
 `;
