@@ -54,13 +54,16 @@ const ChangeNickModal = () => {
           <ModalHeader>
             <Icon icon="xBtn" onClick={() => isOpen(false)} />
           </ModalHeader>
-          <Title>{t("edit nickname")}</Title>
+          <Title language={t("language")}>{t("edit nickname")}</Title>
           <ModalContent>
             <InputBox>
               <NicknameInput onChange={onChangeNickname} />
               <ErrorMsg>{t(nicknameMsg)}</ErrorMsg>
             </InputBox>
-            <ButtonLight onClick={onClickNicknameChange}>
+            <ButtonLight
+              disabled={isNickname ? false : true}
+              onClick={onClickNicknameChange}
+            >
               {t("change")}
             </ButtonLight>
           </ModalContent>
