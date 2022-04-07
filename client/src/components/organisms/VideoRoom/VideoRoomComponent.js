@@ -6,6 +6,7 @@ import UserModel from "pages/Gyeorugi/GyeorugiStage/models/user-model";
 import OpenViduLayout from "components/molecules/Layout/openvidu-layout";
 import DialogExtensionComponent from "components/molecules/DialogExtension/DialogExtension";
 import GyeorugiStageTempalte from "components/templates/GyeorugiStageTemplate";
+import { useTranslation } from "react-i18next";
 
 var localUser = new UserModel();
 
@@ -54,6 +55,7 @@ function VideoRoomComponent({
   const [otherAttack, setOtherAttack] = useState(0);
   const [myDefence, setMyDefence] = useState(0);
   const [otherDefence, setOtherDefence] = useState(0);
+  const { t } = useTranslation();
   const answerAttack = ["Inward Punch"];
   const answerDefence = ["Inward Block"];
   const damages = {
@@ -703,7 +705,11 @@ function VideoRoomComponent({
         }
         localUser={newLocalUser}
         subscribers={subscribers}
-        guide={"상대방에 대한 예의를 갖추고 인사를 하면 겨루기가 시작됩니다."}
+        guide={
+          t("language") === "KOR"
+            ? "상대방에 대한 예의를 갖추고 기본 준비 자세를 취하면 겨루기가 시작됩니다."
+            : "The competition begins when you take the basic ready position politely."
+        }
         isTimer={isTimer}
         setIsTimer={setIsTimer}
         leftPercent={leftPercent}
@@ -721,6 +727,7 @@ function VideoRoomComponent({
         otherDefence={otherDefence}
         myAttack={myAttack}
         otherAttack={otherAttack}
+        isRed={info.isHost}
       />
     </>
   );

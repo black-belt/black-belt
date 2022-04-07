@@ -26,7 +26,7 @@ function VSTemplate({ red, blue }) {
       {/* <RecordRed></RecordRed> */}
       <RedProfile>
         <BackgroundProfileRed
-          src={red.userProfilePath ? red.userProfilePath : "/images/gyeorugiNormalBackground.jpg"}
+          src={red.userProfilePath ? red.userProfilePath : "/images/gyeorugiNormalBackground.png"}
         />
       </RedProfile>
       <InfoBlue>

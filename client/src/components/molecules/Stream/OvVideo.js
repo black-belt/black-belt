@@ -14,10 +14,9 @@ function OvVideoComponent({
   defence,
   end,
   reset,
+  isRed,
 }) {
   const videoRef = useRef(null);
-  const modelURL = `/models/gyeorugi/model.json`;
-  const metadataURL = `/models/gyeorugi/metadata.json`;
 
   const [model, setModel] = useState(undefined);
   const [webCamElement, setWebCamElement] = useState(undefined);
@@ -66,6 +65,19 @@ function OvVideoComponent({
   };
 
   const setWebcam = async () => {
+    let modelURL, metadataURL;
+    if (isRed) {
+      if (isRed === "true") {
+        modelURL = `/models/gyeorugi/red/model.json`;
+        metadataURL = `/models/gyeorugi/red/metadata.json`;
+      } else {
+        modelURL = `/models/gyeorugi/blue/model.json`;
+        metadataURL = `/models/gyeorugi/blue/metadata.json`;
+      }
+    } else {
+      modelURL = `/models/gyeorugi/blue/model.json`;
+      metadataURL = `/models/gyeorugi/blue/metadata.json`;
+    }
     let m = await tmPose.load(modelURL, metadataURL);
     setModel(() => m);
     const size = 200;

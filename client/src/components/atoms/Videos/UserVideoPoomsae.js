@@ -42,7 +42,7 @@ function UserVideoPoomsae({
     const size = 200;
     const flip = true;
     let webcam = await new tmPose.Webcam(size, size, flip);
-    // await changeModel(1);
+    // await changeModel(1, 1);
     setWebCamElement(() => webcam);
   };
 
@@ -86,9 +86,11 @@ function UserVideoPoomsae({
   const run = async () => {
     await webCamElement.setup();
     await webCamElement.play();
-    // await changeModel(1, 1);
+    await changeModel(1, 1);
     // await changeModel(2, 2);
     let imageResult1, imageResult2;
+    let curModel = 1;
+    let isLast = false;
     while (answer[0].length > 0 && !isPass) {
       console.log(
         "!!",
@@ -96,14 +98,20 @@ function UserVideoPoomsae({
         curAction,
         nextPart,
         nextAction,
+        answer[curPart][curAction],
         answer[nextPart][nextAction],
         "len",
-        answer[curPart].length
+        answer[curPart].lengths,
+        "curModel",
+        curModel
       );
       imageResult1 = await analyzeImage1();
       // imageResult2 = await analyzeImage2();
-      if (curAction === 0) {
+      if (isLast) {
+        console.log("!!모델넘김");
         await changeModel(1, nextPart + 1);
+        isLast = false;
+        curModel = nextPart + 1;
         maxProbability = 0;
       }
       if (isLastAction) {
@@ -128,33 +136,42 @@ function UserVideoPoomsae({
         answer[curPart][curAction] === imageResult1.className &&
         imageResult1.probability > maxProbability
       ) {
+        console.log("!!하던동작", curPart, curAction, answer[curPart][curAction]);
         //하던동작, 더 높은 일치율
         maxProbability = imageResult1.probability;
         updateNextAction(nextAction);
         updatePartIndex(nextPart);
       } else if (answer[nextPart][nextAction] === imageResult1.className) {
+        console.log("!!다음동작", nextPart, nextAction, answer[nextPart][nextAction]);
         //다음동작 발견됨 -> 다음동작으로 넘어감
         // console.log("!!저장", curPart, curAction, nextPart, nextAction, maxProbability);
         testSum += maxProbability;
         maxProbability = imageResult1.probability;
         curAction = nextAction++;
         if (curPart !== nextPart) {
+          console.log("!!다음파트", curPart, nextPart);
           testResult(curPart, testSum);
           testSum = 0;
           curPart = nextPart;
         }
         if (nextAction === answer[curPart].length) {
+          console.log("!!마지막동작");
           //마지막 동작이었음
           if (nextPart === 3) {
             //마지막단락이었음
+            console.log("!!마지막동작의 마지막단락");
             isLastAction = true;
           } else {
             //다음단락으로 넘어감
+            console.log("!!마지막동작 - 다음단락으로");
             nextPart++;
             nextAction = 0;
             updateNextAction(nextAction);
             updatePartIndex(nextPart);
+            isLast = true;
           }
+        } else {
+          updateNextAction(nextAction);
         }
       }
     }

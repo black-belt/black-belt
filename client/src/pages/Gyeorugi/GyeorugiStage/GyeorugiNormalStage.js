@@ -29,7 +29,7 @@ function GyeorugiNormalStage() {
   };
 
   const getInfoData = async () => {
-    console.log(state, state.hostId, state.guestId, state.isHost, state.roomSeq);
+    // console.log(state, state.hostId, state.guestId, state.isHost, state.roomSeq);
     const data = await axiosInstance.post("/api/battle", {
       hostId: state.hostId,
       guestId: state.guestId,
@@ -38,6 +38,7 @@ function GyeorugiNormalStage() {
     });
     let imHost = state.isHost;
     setInfo(data);
+    // console.log("!!data", data, data.battleInfo[0].isHost, data.battleInfo[0].isHost === true);
     setMyInfo(imHost ? data.battleInfo[0] : data.battleInfo[1]);
     otherNick = imHost ? data.battleInfo[1].userNick : data.battleInfo[0].userNick;
 
@@ -79,7 +80,7 @@ function GyeorugiNormalStage() {
   };
 
   const restartFunc = () => {
-    navigate("/");
+    navigate("/gyeorugi/normal");
   };
   const homeFunc = () => {
     navigate("/");
