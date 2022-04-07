@@ -12,7 +12,6 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
-import com.blackbelt.websocket.SocketHandler;
 
 import lombok.RequiredArgsConstructor;
 
