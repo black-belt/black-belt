@@ -1,6 +1,6 @@
 import { rand } from "@tensorflow/tfjs";
 import ScoreBar from "components/molecules/Gyeorugi/ScoreBar";
-import StreamComponent from "components/molecules/Stream/StreamComponent";
+import StreamComponent from "components/molecules/Stream2/StreamComponent";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { colors, fontWeight } from "../../_foundation";

@@ -4,7 +4,7 @@ import VSTemplate from "components/templates/VSTemplate";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "utils/API";
-import VideoRoomComponent from "../../../components/organisms/VideoRoom/VideoRoomComponent";
+import VideoRoomComponent from "../../../components/organisms/VideoRoom2/VideoRoomComponent";
 
 function GyeorugiNormalStage() {
   const [result, setResult] = useState(0);
