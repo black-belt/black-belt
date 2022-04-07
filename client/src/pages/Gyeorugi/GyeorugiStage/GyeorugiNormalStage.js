@@ -36,7 +36,7 @@ function GyeorugiNormalStage() {
       isHost: state.isHost,
       roomSeq: state.roomSeq,
     });
-    let imHost = state.isHost === "0" ? true : false;
+    let imHost = state.isHost === "1" ? true : false;
     setInfo(data);
     // console.log("!!data", data, data.battleInfo[0].isHost, data.battleInfo[0].isHost === true);
     setMyInfo(imHost ? data.battleInfo[0] : data.battleInfo[1]);
