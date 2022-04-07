@@ -44,17 +44,6 @@ const Dropdown = () => {
     window.location.reload();
   };
 
-  const menus = [
-    {
-      title: "about tkd",
-      url: "",
-    },
-    {
-      title: "mypage",
-      url: "/mypage",
-    },
-  ];
-
   return (
     <Layout>
       {user && (
@@ -86,11 +75,9 @@ const Dropdown = () => {
         <DropdownItem onClick={() => setIsOpen(true)}>
           {t("about tkd")}
         </DropdownItem>
-        {/* {menus.map((menu) => (
-          <DropdownItem key={menu.title} onClick={() => navigate(menu.url)}>
-            {t(menu.title)}
-          </DropdownItem>
-        ))} */}
+        <DropdownItem onClick={() => navigate("/mypage")}>
+          {t("mypage")}
+        </DropdownItem>
       </MenuBox>
       <Logout onClick={UserLogout}>{t("logout")}</Logout>
     </Layout>
