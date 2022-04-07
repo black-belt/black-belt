@@ -56,8 +56,8 @@ function VideoRoomComponent({
   const [myDefence, setMyDefence] = useState(0);
   const [otherDefence, setOtherDefence] = useState(0);
   const { t } = useTranslation();
-  const answerAttack = ["Inward Punch"];
-  const answerDefence = ["Inward Block"];
+  const answerAttack = ["Punch", "Kick"];
+  const answerDefence = ["Defence"];
   const damages = {
     1: 100, //상단발차기
     2: 60, //중단발차기

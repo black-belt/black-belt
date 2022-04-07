@@ -153,10 +153,10 @@ const VideoContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  width: 30%;
+  width: 35%;
   height: 100%;
   min-height: 300px;
-  min-width: 500px;
+  min-width: 400px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -164,7 +164,7 @@ const InfoContainer = styled.div`
 
 const UserContainer = styled.div`
   position: relative;
-  width: 70%;
+  width: 65%;
   height: 100%;
   min-height: 300px;
   min-width: 500px;

@@ -67,7 +67,7 @@ function UserVideoPromotion({ testResult, isPass, startTimer, curNum, info, setC
     const className = prediction[0].className;
     const probability = prediction[0].probability;
     // console.log(className, probability);
-    if (className === "no one" && probability >= 0.8) {
+    if (className === "Basic Ready Stance" && probability >= 0.8) {
       // console.log(className, probability);
       return 1;
     }
@@ -168,8 +168,8 @@ function UserVideoPromotion({ testResult, isPass, startTimer, curNum, info, setC
 export default UserVideoPromotion;
 
 const VideoContainer = styled.video`
-  height: 60vh;
-  width: 50vw;
+  height: 55vh;
+  width: 45vw;
   // margin-bottom: 60px;
   border-radius: 10px;
 `;

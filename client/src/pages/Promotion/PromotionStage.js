@@ -30,12 +30,12 @@ function PromotionStage() {
 
   const getAnswerData = async () => {
     const data = await axiosInstance.get(`/api/judge`, {});
-    console.log(data);
-    data.randomPoomsaeTime = 30;
-    data.essentialPoomsaeTime = 30;
-    data.randomPoomsaeId = 1;
-    data.randomAnswer = [["abaya"], []];
-    data.essentialAnswer = [["abaya"]];
+    // console.log(data);
+    // data.randomPoomsaeTime = 30;
+    // data.essentialPoomsaeTime = 30;
+    // data.randomPoomsaeId = 1;
+    // data.randomAnswer = [["abaya"], []];
+    // data.essentialAnswer = [["abaya"]];
     t("language") === "KOR"
       ? setCurMotion(data.randomPoomsaeExplain[0])
       : setCurMotion(data.randomPoomsaeExplainE[0]);
