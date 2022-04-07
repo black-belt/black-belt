@@ -97,6 +97,7 @@ function UserVideoPromotion({ testResult, isPass, startTimer, curNum, info, setC
     let answer, answerIndex;
     let explain;
     let poomsaeId;
+    let isEnd = false;
     if (curNum === 0) {
       time = info.randomPoomsaeTime;
       info.randomAnswer.forEach((value) => (motionCnt += value.length));
@@ -115,27 +116,33 @@ function UserVideoPromotion({ testResult, isPass, startTimer, curNum, info, setC
     // console.log("!!time, motionCnt", time, motionCnt);
     const loop = setInterval(async () => {
       if (++totalCnt % 40 === 0) {
-        // console.log("!!answer", curChapter, curIdx, answer[curChapter][curIdx], maxProbability);
+        console.log("!!answer", curChapter, curIdx, answer[curChapter - 1][curIdx], maxProbability);
         probSum += maxProbability;
         maxProbability = 0;
         setCurMotion(explain[++explainIdx]);
-        if (++curIdx === answer[curChapter].length) {
-          curIdx = 0;
-          curChapter++;
-          await changeModel(poomsaeId, curChapter);
+        if (++curIdx === answer[curChapter - 1].length) {
+          if (curChapter === 4) {
+            isEnd = true;
+          } else {
+            curIdx = 0;
+            curChapter++;
+            await changeModel(poomsaeId, curChapter);
+          }
         }
       }
       if (totalCnt === time * 20) {
         clearInterval(loop);
-        // console.log("!!end", probSum, motionCnt, probSum / motionCnt);
+        console.log("!!end", probSum, motionCnt, probSum / motionCnt);
         testResult(probSum / motionCnt);
       }
-      let imageResult = await analyzeImage();
-      if (
-        answer[curChapter][curIdx] === imageResult.className &&
-        maxProbability < imageResult.probability
-      ) {
-        maxProbability = imageResult.probability;
+      if (!isEnd) {
+        let imageResult = await analyzeImage();
+        if (
+          answer[curChapter - 1][curIdx] === imageResult.className &&
+          maxProbability < imageResult.probability
+        ) {
+          maxProbability = imageResult.probability;
+        }
       }
     }, 50);
   };

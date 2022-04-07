@@ -24,7 +24,8 @@ function Timer({ initialSeconds, totalSeconds, onChange, interval, isTimer, setI
     let time = 0;
     clear(intervalId);
     const newIntervalId = setInterval(() => {
-      if (time + initialSeconds === totalSeconds) {
+      // console.log(time, initialSeconds, time + initialSeconds, totalSeconds);
+      if (time + initialSeconds === Number(totalSeconds)) {
         setIsTimer(false);
         clear(newIntervalId);
         if (end) end();
