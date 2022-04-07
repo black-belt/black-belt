@@ -23,11 +23,32 @@ export const Logo = styled.img`
   cursor: pointer;
 `;
 
-export const ProfileImg = styled.div`
+export const ProfileImgBox = styled.div`
+  width: 50px;
+`;
+
+export const ImgWrapper = styled.div`
+  position: relative;
+  padding-top: 100%;
+  border-radius: 100%;
+  overflow: hidden;
+`;
+
+export const ProfileImg = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 100%;
+  width: auto;
   cursor: pointer;
 `;
 
-export const Welcome = styled.span`
+// export const ProfileImg = styled.div`
+// `;
+
+export const Welcome = styled.div`
   color: ${colors.gray0};
 `;
 
