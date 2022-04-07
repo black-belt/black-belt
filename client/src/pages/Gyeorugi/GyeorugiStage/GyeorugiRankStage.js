@@ -28,7 +28,7 @@ function GyeorugiRankStage() {
     const data = await axiosInstance.post("/api/battle", {
       hostId: state.hostId,
       guestId: state.guestId,
-      isHost: state.isHost,
+      isHost: state.isHost ? 0 : 1,
       roomSeq: state.roomSeq,
     });
     let imHost = state.isHost;
