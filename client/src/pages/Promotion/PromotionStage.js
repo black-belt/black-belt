@@ -47,13 +47,13 @@ function PromotionStage() {
   }, []);
 
   const updateIsPass = async (g) => {
+    console.log(userId, info.judgeLevelId, g, g);
     await axiosInstance.post(`/api/judge`, {
-      user_id: userId,
+      user_id: userId.userId,
       level_id: info.judgeLevelId,
       fail: g === 0 ? "0" : "1",
       judge_score: g,
     });
-
     setIsStar(true);
     setIsPass(true);
     if (tempGrade > 0) {
