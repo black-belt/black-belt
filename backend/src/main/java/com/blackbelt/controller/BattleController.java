@@ -192,8 +192,9 @@ public class BattleController {
 		}
 		if(isRank)
 			resultMap = battleService.manageBattleHistory(bhd.get(), winOrLose, team.equals("red"));
-		
-
+		else {
+			resultMap = battleService.manageBattleHistoryUnranked(bhd.get(), winOrLose, team.equals("red"));
+		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 	
