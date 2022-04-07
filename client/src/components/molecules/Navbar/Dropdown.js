@@ -39,6 +39,7 @@ const Dropdown = () => {
     });
     // localStorage.removeItem("blackbelt_token");
     resetToken();
+    navigate("/");
     window.location.reload();
   };
 
