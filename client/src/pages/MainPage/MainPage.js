@@ -54,7 +54,7 @@ function MainPage() {
                     roomSeq: newMessage.roomId,
                   },
                 });
-              }, 5000);
+              }, 3500);
             } else {
               navigate("/gyeorugi/normal/stage", {
                 state: {
