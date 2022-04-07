@@ -118,6 +118,7 @@ public class QueController {
 		
 		try {
 			// 상대 찾기 
+
 			String userTier = userRepo.findtierNameBytierId(userRepo.finduserTierByuserId(userId));
 			
 			RBattleRoom other= rBattleRoomRepository.matchRBattle(userId, userTier);
