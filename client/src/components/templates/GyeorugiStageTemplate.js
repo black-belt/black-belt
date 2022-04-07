@@ -27,6 +27,7 @@ function GyeorugiStageTempalte({
   myDefence,
   otherDefence,
   reset,
+  isRed,
 }) {
   let leftLeft = Math.floor(Math.random() * (90 - 10)) + 10;
   let leftTop = Math.floor(Math.random() * (90 - 10)) + 10;
@@ -77,6 +78,7 @@ function GyeorugiStageTempalte({
                 defence={defence}
                 reset={reset}
                 end={end}
+                isRed={isRed}
               />
               {myDefence !== 0 && <MyDefence defence={myDefence} src="/images/shield.png" />}
               {myAttack !== 0 && (

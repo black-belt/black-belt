@@ -71,7 +71,7 @@ function ComboStage() {
     setIsPass(false);
   };
   const homeFunc = () => {
-    navigate("/combos");
+    navigate("/practice/combos");
   };
   return (
     <>

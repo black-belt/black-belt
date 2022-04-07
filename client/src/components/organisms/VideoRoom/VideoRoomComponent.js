@@ -721,6 +721,7 @@ function VideoRoomComponent({
         otherDefence={otherDefence}
         myAttack={myAttack}
         otherAttack={otherAttack}
+        isRed={info.isHost}
       />
     </>
   );
