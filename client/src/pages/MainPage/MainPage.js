@@ -96,7 +96,7 @@ function MainPage() {
         },
         {
           name: "rank",
-          url: "",
+          url: "gyeorugi/rank",
         },
       ],
     },
