@@ -66,6 +66,12 @@ export const ModalContent = styled.div`
   padding-top: 3rem;
 `;
 
-export const NicknameInput = styled.input``;
+export const NicknameInput = styled.input`
+  width: 60%;
+  height: 30px;
+`;
 
-export const ButtonLight = styled.button``;
+export const ButtonLight = styled.button`
+  height: 35px;
+  /* border: none; */
+`;
