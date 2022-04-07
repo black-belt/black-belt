@@ -56,6 +56,7 @@ function Navbar() {
       setSelectedLang("ko");
     }
   };
+  console.log(user);
 
   return (
     <Layout ref={dropdownRef}>
@@ -69,9 +70,9 @@ function Navbar() {
                 {t("welcome")} {user?.userNick}
                 {t("welcome_korean")}
               </Welcome>
-              {user.profileImg ? (
+              {user.userProfilePath ? (
                 <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>
-                  <img src={user.profileImg} alt="" />
+                  <img src={user.userProfilePath} alt="" />
                 </ProfileImg>
               ) : (
                 <ProfileImg onClick={() => setDropdownOpen(!dropdownOpen)}>
