@@ -47,7 +47,7 @@ function UserVideoCombo({ answer, testResult, updateNextAction, isPass, aiId }) 
       const prediction = await model.predictTopK(posenetOutput, 1);
       const className = prediction[0].className;
       const probability = prediction[0].probability;
-      console.log(className, probability);
+      console.log(className, probability, answer[curAction].slice(1, answer[curAction].length - 1));
       if (isLastAction) {
         //마지막 동작
         frameCnt++;
