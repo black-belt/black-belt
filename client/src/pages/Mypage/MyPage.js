@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { changeNickname, gyeorugiMsg, userInfo } from "recoils";
+import { changeNickname, userInfo } from "recoils";
 import { Carousel } from "3d-react-carousal";
 import {
   BackgroundImg,
@@ -21,7 +21,6 @@ import {
 } from "./Mypage.styled";
 import CountryIcon from "components/atoms/Icons/CountryIcon";
 import { useTranslation } from "react-i18next";
-import axiosInstance from "utils/API";
 import { useEffect, useRef, useState } from "react";
 import axiosImage from "utils/imageAPI";
 import ChangeNickModal from "components/organisms/ChangeNickModal/ChangeNickModal";
@@ -31,7 +30,6 @@ function MyPage() {
   const user = useRecoilValue(userInfo);
   const fileInput = useRef(null);
   const [isOpen, setIsOpen] = useRecoilState(changeNickname);
-  console.log(isOpen);
 
   const tier = {
     1: "bronze",
@@ -55,24 +53,12 @@ function MyPage() {
     }
   }, []);
 
-  // const saveFileImg = (e) => {
-  //   setFileImg(URL.createObjectURL(e.target.files[0]));
-  //   setProfileImg(e.target.files[0]);
-  // };
-
   let imgData = new FormData();
   imgData.append("uploadFile", profileImg);
 
-  // useEffect(() => {
-  //   imgData.append("uploadFile", profileImg);
-  // }, [profileImg]);
-
   useEffect(() => {
     if (profileImg !== defaultImg) {
-      axiosImage.post("/api/user/uploadprofile", imgData).then((res) => {
-        console.log(res);
-        // window.location.reload();
-      });
+      axiosImage.post("/api/user/uploadprofile", imgData);
     }
   }, [profileImg]);
 
@@ -81,24 +67,6 @@ function MyPage() {
       console.log("selected");
       setProfileImg(e.target.files[0]);
       imgData.append("uploadFile", profileImg);
-      //   axiosImage
-      //     .post("/api/user/uploadprofile", {
-      //       imgData,
-      //     })
-      //     .then((res) => {
-      //       console.log(res);
-      //     });
-      //   // }
-      //   if (profileImg) {
-      //     console.log("axios");
-      //     axiosImage
-      //       .post("/api/user/uploadprofile", {
-      //         profileImg,
-      //       })
-      //       .then((res) => {
-      //         console.log(res);
-      //       });
-      //   }
     }
     const reader = new FileReader();
     reader.onload = () => {
@@ -109,12 +77,6 @@ function MyPage() {
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  // const uploadImg = async () => {
-  //   const res = await axiosImage.post("/api/user/uploadprofile", {
-  //     profileImg,
-  //   });
-  //   console.log(res);
-  // };
   const slides = [
     <img src="/certifications/belt1.png" alt="" />,
     <img src="/certifications/belt2.png" alt="" />,
@@ -148,7 +110,6 @@ function MyPage() {
       contents: `${t(user.levelName)}`,
     },
   ];
-  console.log(user);
 
   return (
     <div className="MyPage">

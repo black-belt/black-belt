@@ -24,3 +24,8 @@ export const changeNickname = atom({
   key: "changeNickname",
   default: false,
 });
+
+export const taekwondoModal = atom({
+  key: "taekwondoModal",
+  default: false,
+});

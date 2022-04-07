@@ -80,5 +80,52 @@
   "apply": "겨루기 신청",
 
   "basics description": "태권도는 무기 없이 손과 발을 이용해 공격 또는 방어하는 무도로, 빠르고 강력한 발차기 기술을 특징으로 하는 현대에 형성된 한국의 전통무예 무술입니다. 기본동작을 학습해보세요.",
-  "combos description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."
+  "combos description": "한글설명 sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+
+  "taekwondo1": "태권도 개요",
+  "taekwondo1-description": "태권도는 대한민국에서 창안되고 발전한 현대 무술로, 발차기를 중심으로 손과 발 및 기타 다른 신체 부위를 이용해서 상대방을 효과적으로 제압하는 것을 지향한다. 매년 9월 4일은 태권도의 날로 지정되어 있다.",
+
+  "taekwondo2": "태권도 특징",
+  "taekwondo2-description1": "태권도는 후퇴는 물론 좌우 이동과 속임동작을 다채롭게 사용하는 유연한 움직임을 선호한다. 상대의 공격에 대한 대응법도 차이가 나는데, 타 무술은 상대의 공격을 방어기술로 막거나 아예 맷집으로 버티는 것을 선호하지만, 태권도는 피하거나 살짝 받아서 그 힘을 역이용해 반격하는 쪽을 선호한다.",
+  "taekwondo2-description2": "태권도가 격투기로써 가지는 가장 큰 단점은 스텝을 밟을 수 없는 시간이 길다는 특징에서 오는 불안정성이다. 일반적으로 인체에 타격을 가할만한 위력의 기술은 다른 무술에도 충분히 많고 그렇기에 강력하지만 사용하기는 어려운 태권도식 발차기가 쓸모없다는 인식이 존재하기도 한다. 하지만 화려하고 다양한 발차기는 다른 무술과 차별화되는 태권도만의 특징이기도 하다.",
+  "taekwondo2-description3": "결론적으로 태권도가 추구하는 무술철학은, '강맹하되 무모하지 아니하며, 신중하되 소극적이지 아니한다'로 요약 가능하다.",
+
+  "service": "서비스 소개",
+  "service1": "연습모드",
+  "service1-1": "기본동작",
+  "service1-1 description1": "기본동작에서는 흰띠부터 시작하여 노란띠/파란띠/빨간띠를 얻을 수 있습니다.",
+  "service1-1 description2": "기본동작 스테이지는 총 7개로 이루어져 있고 스테이지 2개를 클리어 시 노란띠, 4개를 클리어 시 파란띠, 7개 전부를 클리어 한 경우 빨간띠를 최종적으로 얻을 수 있습니다.",
+  "service1-1 description3": "페이지 좌측 동작 예시 영상을 보고 우측 녹화 화면에 자세를 취하여 일정 이상의 일치도를 달성할 경우 스테이지를 클리어하게 됩니다.",
+  "service1-1 description4": "최종적으로 빨간띠를 획득한 경우 연속동작과 품새 스테이지의 잠금이 해제돼 품새를 연습할 수 있게 됩니다.",
+  "service1-1 description5": "연속동작과 품새를 활용해 승단을 도전해보세요!",
+
+  "service1-2": "연결동작",
+  "service1-2 description1": "연속동작에서는 품새를 단락별로 연습할 수 있습니다.",
+  "service1-2 description2": "연속동작 스테이지에는 품새별 총 4단락으로 나누어진 동작들이 제공돼 품새에서 부족한 부분을 더 집중해서 학습할 수 있도록 해줍니다.",
+  "service1-2 description3": "페이지 상단에 해당 단락의 동작들이 순서에 맞게 나열되며 녹화 화면에 자세를 취하여 일정 이상의 일치도를 달성할 경우 다음 동작으로 넘어가게 됩니다.",
+  "service1-2 description4": "동작을 모두 마무리하였을 때 학습이 종료가 됩니다.",
+  "service1-2 description5": "모든 단락에 대한 학습을 마치셨다면 품새 스테이지를 통해 전체 동작을 한번에 수행해 보세요!",
+
+  "service1-3": "품새",
+  "service1-3 description1": "품새에서는 해당 품새의 모든 동작들을 연습할 수 있습니다.",
+  "service1-3 description2": "품새 스테이지에서는 품새의 전체 동작들을 한번에 수행하게 하여 해당 품새에 대한 숙련도를 높이도록 해줍니다.",
+  "service1-3 description3": "페이지 상단에 4가지 단락과 해당 단락의 동작들이 나열되어 현재 동작이 몇 번째 단락의 어떤 동작인지를 확인을 할 수 있습니다.",
+  "service1-3 description4": "연속동작과 마찬가지로 일정 이상의 일치도를 달성해야 다음 동작으로 넘어가게 됩니다. 모든 동작을 마무리하였을 때 학습이 종료가 됩니다.",
+  "service1-3 description5": "품새의 모든 동작에 대한 숙련도를 높였다면 심사를 통해 승단을 해보세요!",
+
+  "service2": "심사모드",
+  "service2 description1": "심사에서는 해당 품새의 모든 동작들을 테스트합니다.",
+  "service2 description2": "해당 품새의 전체 동작들을 일정 시간으로 연속해 측정하여 전체 동작이 마무리된 후 일치도 평균으로 합격 불합격을 판단해 줍니다.",
+  "service2 description3": "페이지 상단에 현재 취해야 하는 동작을 확인할 수 있으며 해당 동작에 맞는 자세를 취해보세요!",
+  "service2 description4": "만약 심사를 합격하게 된다면 다음 단으로 승단을 할 수 있습니다.",
+
+  "service3": "겨루기",
+  "service3 description1": "겨루기에서는 학습한 동작들을 사용해 상대방과 겨루어 볼 수 있습니다.",
+  "service3 description2": "겨루기에서는 상대 지정과 랜덤 매칭이 있으며 랜덤 매칭만 티어를 올릴 수 있습니다.",
+  "service3 description3": "먼저 상대 지정 겨루기를 알아보면 닉네임을 검색해 온라인중인 상대에게 겨루기 신청을 보낼 수 있습니다.",
+  "service3 description4": "만약 상대방이 심사 혹은 겨루기중이라면 온라인 상태여도 겨루기 신청을 보낼 수 없습니다.",
+  "service3 description5": "상대방이 겨루기 신청을 수락하면 겨루기 대기방으로 이동하게 되며 경기시작 버튼을 누르면 겨루기가 시작됩니다.",
+  "service3 description6": "랜덤 매칭 겨루기는 본인과 가까운 티어를 가진 유저를 우선적으로 상대를 매칭해줍니다. 매칭에 성공했다면 바로 겨루기가 시작됩니다.",
+  "service3 description7": "한쪽이 제압당하거나 타이머가 끝나면 겨루기가 종료되며 랜덤 매칭의 경우 승패 여부에 따라 티어 점수가 조정됩니다.",
+  "service3 description8": "많은 상대와 겨루어 티어를 높여보세요!"
 }

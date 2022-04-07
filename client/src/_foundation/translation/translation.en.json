@@ -80,5 +80,52 @@
   "apply": "Invite",
 
   "basics description": "Taekwondo is a martial art that attacks or defends using hands and feet without weapons, and is a traditional Korean martial art formed in modern times featuring fast and powerful kicking techniques. Learn the basic actions.",
-  "combos description": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat."
+  "combos description": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+
+  "taekwondo1": "Taekwondo Overview",
+  "taekwondo1-description": "Taekwondo is a modern martial art created and developed in South Korea that aims to effectively overpower the opponent by using hands, feet and other body parts, focusing on kicking. September 4th is designated as Taekwondo Day every year.",
+
+  "taekwondo2": "Features of Taekwondo",
+  "taekwondo2-description1": "Taekwondo prefers flexible movements that use various movements such as left and right movements as well as retreats. There is also a difference in how to respond to the opponent's attack, and Tamusul prefers to block the opponent's attack with defense techniques or hold out with a millhouse at all, but Taekwondo prefers to avoid or slightly take advantage of its power to counterattack.",
+  "taekwondo2-description2": "The biggest disadvantage of Taekwondo as a martial arts is its instability that comes from the long time when it cannot take steps. In general, there is a perception that Taekwondo-style kicks, which are powerful but difficult to use, are useless because there are enough techniques to damage the human body in other martial arts. However, colorful and diverse kicks are also a feature of Taekwondo that differentiates itself from other martial arts.",
+  "taekwondo2-description3": "In conclusion, the martial arts philosophy pursued by Taekwondo can be summarized as \"strong but not reckless, cautious but not passive.\"",
+
+  "service": "Service Introduction",
+  "service1": "Practice Mode",
+  "service1-1": "Basics",
+  "service1-1 description1": "The default behavior is to get a yellow/blue/red band, starting with a white band.",
+  "service1-1 description2": "There are a total of 7 basic motion stages, and you can finally get a yellow belt when you clear 2 stages, a blue belt when you clear 4 stages, and a red belt when you clear all 7 stages.",
+  "service1-1 description3": "If you view the left-hand side motion example image of the page and pose on the right-hand recording screen to achieve a certain degree of agreement, the stage will be cleared.",
+  "service1-1 description4": "If you finally get the red belt, the continuous movement and poomsae stage will be unlocked, allowing you to practice poomsae.",
+  "service1-1 description5": "Try to make a winning decision using continuous movements and poomsae!",
+
+  "service1-2": "Combos",
+  "service1-2 description1": "In continuous movements, you can practice poomsae by paragraph.",
+  "service1-2 description2": "The continuous motion stage is provided with movements divided into a total of 4 paragraphs for each poomsae so that you can focus more on what you lack in poomsae.",
+  "service1-2 description3": "At the top of the page, the actions of the corresponding paragraph are listed in order, and if you are positioned on the recording screen to achieve a certain degree of consistency, you will move on to the next action.",
+  "service1-2 description4": "When you finish all the movements, the learning ends.",
+  "service1-2 description5": "Once you've finished learning all the paragraphs, take the Poomsae Stage and do the whole thing at once!",
+
+  "service1-3": "Poomsae",
+  "service1-3 description1": "In Poomsae, you can practice all the movements of the Poomsae.",
+  "service1-3 description2": "The Poomsae Stage allows you to perform the entire Poomsae movement at once to increase your proficiency in the Poomsae.",
+  "service1-3 description3": "Four paragraphs and their actions are listed at the top of the page so you can see what action the current action is in which paragraph.",
+  "service1-3 description4": "As with continuous actions, you must achieve at least a certain degree of agreement before moving on to the next action. When you finish all the movements, the learning ends.",
+  "service1-3 description5": "If you've improved your proficiency in all of Poomsae's movements, make a decision through screening!",
+
+  "service2": "Promotion Test",
+  "service2 description1": "Every movement of screening, Poomsae of the test.",
+  "service2 description2": "Poomsae of the full movements of the continuous for a period of time to measure the overall behavior has been settled match, the average to fail to pass judgment, too.",
+  "service2 description3": "Current actions that must be taken at the top of the page can be found, and posed for Its behavior!",
+  "service2 description4": "If the passing move up to a higher level in the next paragraph if you can.",
+
+  "service3": "Gyeorugi",
+  "service3 description1": "In the Gyeorugi, you can compete with the opponent using the movements you have learned.",
+  "service3 description2": "In a contest, there are relative designations and random matching, and only random matching can raise the tier.",
+  "service3 description3": "First, you can search for a nickname and send a contest application to an online opponent.",
+  "service3 description4": "If the other party is judging or competing, you cannot send a contest application even if it is online.",
+  "service3 description5": "If the opponent accepts the application for the competition, you will be moved to the waiting room for the competition, and the competition begins when you press the start button.",
+  "service3 description6": "In the random matching contest, users who have a tier close to them will be matched first. If the match is successful, the competition will begin immediately.",
+  "service3 description7": "The competition ends when one side is overpowered or the timer is over, and in the case of random matching, the tier score is adjusted based on winning or losing.",
+  "service3 description8": "Increase your tier against many opponents!"
 }

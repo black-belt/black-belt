@@ -38,11 +38,14 @@ function MainPage() {
       stomp.connect({}, () => {
         stomp.subscribe(`/sub/api/que/user/${userId}`, (data) => {
           const newMessage = JSON.parse(data.body);
+          console.log(newMessage);
           msg(newMessage);
           if (newMessage.type === "REFUSE") {
             resetMsg();
           }
           if (newMessage.type === "Enter") {
+            console.log(newMessage);
+            console.log("navigate");
             navigate("/gyeorugi/normal/stage", {
               isHost: newMessage.isHost,
               hostId: newMessage.hostId,

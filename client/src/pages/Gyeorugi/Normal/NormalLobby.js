@@ -1,6 +1,6 @@
 import InButton from "components/atoms/Buttons/in-btns";
 import Icon from "components/atoms/Icons/CustomIcon";
-import { Enter } from "pages/MainPage/startWS";
+// import { Enter } from "pages/MainPage/startWS";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -34,8 +34,13 @@ import {
   UserTextBox,
 } from "./NormalLobby.styled";
 import UserDetail from "./UserDetails";
+import SockJs from "sockjs-client";
+import StompJs from "stompjs";
+// import { useNavigate } from "react-router-dom";
 
 function NormalLobby() {
+  const sock = new SockJs("https://j6a506.p.ssafy.io/stomp/");
+  const stomp = StompJs.over(sock);
   const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState("");
   const [finishSearch, setFinishSearch] = useState(false);
@@ -87,18 +92,46 @@ function NormalLobby() {
     //   setIsHost(true);
     // }
   }, [acceptMsg]);
+  const data = {
+    hostId: acceptMsg.hostId,
+    guestId: acceptMsg.guestId,
+    token: acceptMsg.roomId,
+  };
+  const Enter = (props) => {
+    const data = {
+      type: "ENTER",
+      hostId: props.hostId,
+      guestId: props.guestId,
+      roodId: props.token,
+    };
+    stomp.send("/pub/api/que/user", {}, JSON.stringify(data));
+    // const msg = useSetRecoilState(message);
+    // const test = useRecoilValue(gyeorugiMsg);
+    // try {
+    //   stomp.connect({}, () => {
+    //     stomp.subscribe(`/sub/api/battle/${roomId}`, (data) => {
+    //       const newMessage = JSON.parse(data.body);
+    //       console.log(newMessage);
+    //       // msg(newMessage);
+    //     });
+    //   });
+    // } catch (err) {}
+    // stomp.onopen = function (event) {
+    //   console.log("connected");
+    // };
+  };
 
-  const startGyeorugi = () => {
-    Enter();
-    resetMsg();
-    navigate(`/gyeorugi/normal/stage`, {
-      state: {
-        isHost: isHost,
-        hostId: acceptMsg.hostId,
-        guestId: acceptMsg.guestId,
-        roomSeq: acceptMsg.roomId,
-      },
-    });
+  const startGyeorugi = (data) => {
+    Enter(data);
+    // resetMsg();
+    // navigate(`/gyeorugi/normal/stage`, {
+    //   state: {
+    //     isHost: isHost,
+    //     hostId: acceptMsg.hostId,
+    //     guestId: acceptMsg.guestId,
+    //     roomSeq: acceptMsg.roomId,
+    //   },
+    // });
   };
 
   const onChangeNick = useCallback((e) => {
@@ -200,7 +233,9 @@ function NormalLobby() {
           </ChampionBox>
           <center>
             {isHost && guestInfo && (
-              <InButton onClick={startGyeorugi}>{t("start")}</InButton>
+              <InButton onClick={() => startGyeorugi(data)}>
+                {t("start")}
+              </InButton>
             )}
           </center>
         </Standby>
