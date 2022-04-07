@@ -190,7 +190,7 @@ function OvVideoComponent({
 
   return (
     <video
-      // className="local-video"
+      className="ov-video"
       autoPlay={true}
       id={"video-" + user.getStreamManager().stream.streamId}
       ref={videoRef}

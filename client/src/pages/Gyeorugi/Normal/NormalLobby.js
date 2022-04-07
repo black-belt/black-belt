@@ -67,8 +67,11 @@ function NormalLobby() {
   useEffect(() => {
     if (myInfo && !hostInfo) {
       setHostInfo(myInfo);
+    } else if (myInfo && hostInfo) {
+      if (myInfo.userId === hostInfo.userId) setHostInfo(myInfo);
+      else setHostInfo(hostInfo);
     }
-  }, [myInfo]);
+  }, [myInfo, hostInfo]);
 
   useEffect(() => {
     if (hostInfo && hostInfo.userNick === myInfo.userNick) {
@@ -203,9 +206,7 @@ function NormalLobby() {
                       )}
                     </ImgWrapper>
                   </ProfileImgBox>
-                  <Tier language={t("language")}>
-                    {t(tier[hostInfo.userTier])}
-                  </Tier>
+                  <Tier language={t("language")}>{t(tier[hostInfo.userTier])}</Tier>
                 </ChampionInfo>
               )}
             </Champion>
@@ -224,18 +225,14 @@ function NormalLobby() {
                       )}
                     </ImgWrapper>
                   </ProfileImgBox>
-                  <Tier language={t("language")}>
-                    {t(tier[guestInfo.userTier])}
-                  </Tier>
+                  <Tier language={t("language")}>{t(tier[guestInfo.userTier])}</Tier>
                 </ChampionInfo>
               )}
             </Champion>
           </ChampionBox>
           <center>
             {isHost && guestInfo && (
-              <InButton onClick={() => startGyeorugi(data)}>
-                {t("start")}
-              </InButton>
+              <InButton onClick={() => startGyeorugi(data)}>{t("start")}</InButton>
             )}
           </center>
         </Standby>
@@ -246,35 +243,20 @@ function NormalLobby() {
               onChange={onChangeNick}
               placeholder={t("search")}
             />
-            <Icon
-              icon="search"
-              onClick={searchUserInfo}
-              width={27}
-              height={27}
-            />
+            <Icon icon="search" onClick={searchUserInfo} width={27} height={27} />
           </SearchBox>
           {userList && userList.length ? (
             <SearchList>
               {userList.map((user) => (
                 <UserProfile
                   key={user.userId}
-                  onClick={() =>
-                    setTargetUser(user.userId === targetUser ? "" : user.userId)
-                  }
+                  onClick={() => setTargetUser(user.userId === targetUser ? "" : user.userId)}
                 >
-                  <UserDetail
-                    userData={user}
-                    target={targetUser}
-                    hostId={myInfo.userId}
-                  />
+                  <UserDetail userData={user} target={targetUser} hostId={myInfo.userId} />
                   {user.userProfilePath ? (
                     <ImgSize>
                       <ImgWrapper>
-                        <UserImg
-                          state={user.userState}
-                          src={user.userProfilePath}
-                          alt=""
-                        />
+                        <UserImg state={user.userState} src={user.userProfilePath} alt="" />
                       </ImgWrapper>
                     </ImgSize>
                   ) : (
@@ -296,12 +278,7 @@ function NormalLobby() {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <circle
-                          cx="3.5"
-                          cy="3.5"
-                          r="3.5"
-                          fill={status[user.userState].color}
-                        />
+                        <circle cx="3.5" cy="3.5" r="3.5" fill={status[user.userState].color} />
                       </svg>
                       <UserStatus state={status[user.userState].color}>
                         {t(status[user.userState].state)}

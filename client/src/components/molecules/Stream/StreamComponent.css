@@ -37,7 +37,7 @@
     height: 100%;
 }
 
-video {
+video .ov-video{
     -o-object-fit: cover;
     object-fit: cover;
     width: 100%;
