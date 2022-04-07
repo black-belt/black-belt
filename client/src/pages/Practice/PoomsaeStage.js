@@ -32,19 +32,6 @@ function PoomsaeStage() {
   const getPoomsaeData = async () => {
     const data = await axiosInstance.get(`/api/poomsae/${state.stageId}`, {});
     console.log(data);
-    // data.poomsae_answer = [
-    //   ["abaya", "coffee mug", "abaya"],
-    //   ["abaya", "coffee mug", "abaya"],
-    //   ["abaya", "coffee mug", "abaya"],
-    //   ["abaya", "coffee mug", "abaya"],
-    // ];
-    // data.poomsae_movie_path = "https://youtu.be/o9JvP-A4TvY";
-    // data.poomsae_answer_index = [
-    //   [0, 2, 4],
-    //   [1, 3, 5],
-    //   [0, 2, 4],
-    //   [1, 3, 5],
-    // ];
     data.poomsae_part = ["1단락", "2단락", "3단락", "4단락"];
     data.poomsae_part_e = ["Part1", "Part2", "Part3", "Part4"];
     setInfo(data);
