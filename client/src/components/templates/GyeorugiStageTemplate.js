@@ -44,6 +44,8 @@ function GyeorugiStageTempalte({
     rightTop = Math.floor(Math.random() * (90 - 10)) + 10;
   }, [otherAttack]);
 
+  console.log("!!localUser, subscribers", localUser, subscribers);
+
   return (
     <>
       <Container>
