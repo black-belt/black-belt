@@ -42,6 +42,14 @@ function MainPage() {
           if (newMessage.type === "REFUSE") {
             resetMsg();
           }
+          if (newMessage.type === "Enter") {
+            navigate("/gyeorugi/normal/stage", {
+              isHost: newMessage.isHost,
+              hostId: newMessage.hostId,
+              guestId: newMessage.guestId,
+              roomSeq: newMessage.roomId,
+            });
+          }
         });
       });
     } catch (err) {

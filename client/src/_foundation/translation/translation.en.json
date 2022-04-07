@@ -48,6 +48,10 @@
   "tier": "Tier",
   "points": "Points",
   "dan": "Dan",
+  "edit nickname": "Edit Nickname",
+  "less than 20": "Nickname must be less than 20 characters",
+  "used": "Already Used",
+  "change": "Edit",
 
   "gyeorugi": "Gyeorugi",
   "gyeorugi explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",

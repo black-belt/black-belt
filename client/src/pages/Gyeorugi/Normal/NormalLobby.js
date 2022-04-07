@@ -47,7 +47,6 @@ function NormalLobby() {
   const resetMsg = useResetRecoilState(message);
 
   const myInfo = useRecoilValue(userInfo);
-  const ImgURL = process.env.REACT_APP_IMAGE_URL;
 
   const [isHost, setIsHost] = useState(false);
   const [hostInfo, setHostInfo] = useState(null);
@@ -61,7 +60,9 @@ function NormalLobby() {
   }, []);
 
   useEffect(() => {
-    setHostInfo(myInfo);
+    if (myInfo && !hostInfo) {
+      setHostInfo(myInfo);
+    }
   }, [myInfo]);
 
   useEffect(() => {
@@ -69,7 +70,6 @@ function NormalLobby() {
       setIsHost(true);
     }
   }, [hostInfo]);
-  console.log(hostInfo);
 
   useEffect(() => {
     if (acceptMsg.type === "ACCEPT") {
@@ -147,7 +147,6 @@ function NormalLobby() {
     5: "diamond",
     6: "master",
   };
-  console.log(hostInfo, guestInfo);
 
   return (
     <div className="NormalLobby">
