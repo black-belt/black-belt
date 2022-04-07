@@ -21,6 +21,7 @@ import com.blackbelt.model.CountryCrudRepository;
 import com.blackbelt.model.UserCrudRepository;
 import com.blackbelt.model.UserDto;
 import com.blackbelt.model.service.BattleRoomService;
+import com.blackbelt.model.socket.SBattleRoomRepository;
 import com.blackbelt.service.BattleService;
 import com.blackbelt.util.JwtTokenProvider;
 
@@ -38,6 +39,8 @@ public class BattleController {
 	BattleCrudRepository battleRepo;
 	@Autowired
 	CountryCrudRepository countryRepo;
+	@Autowired
+	SBattleRoomRepository sbattleRepo;
 	@Autowired
 	UserCrudRepository userRepo;
 	@Autowired
@@ -84,7 +87,7 @@ public class BattleController {
 			Optional<UserDto> hostUser = userRepo.findById(hostId);
 			Optional<UserDto> guestUser = userRepo.findById(guestId);
 			if(isHost) {
-				if(!hostUser.isEmpty()) { 
+				if(!hostUser.isPresent()) { 
 					hostUser.get().setUserState('B');
 					userRepo.save(hostUser.get());
 				}else {
@@ -93,7 +96,7 @@ public class BattleController {
 					return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
 				}
 			}else {
-				if(!guestUser.isEmpty()) { 
+				if(!guestUser.isPresent()) { 
 					guestUser.get().setUserState('B');
 					userRepo.save(guestUser.get());
 				}else {
@@ -193,6 +196,8 @@ public class BattleController {
 		if(isRank)
 			resultMap = battleService.manageBattleHistory(bhd.get(), winOrLose, team.equals("red"));
 		
+		// 대기방 세션 삭제 
+		sbattleRepo.clearSBattleRoom(bhd.get().getMyId());
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }

@@ -2,6 +2,8 @@ package com.blackbelt.controller;
 
 import java.util.*;
 
+import javax.persistence.Enumerated;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,21 +45,31 @@ public class QueController {
 	UserCrudRepository userRepo;
 	@Autowired
 	UserService userService;
-
+	
 	
 	// [지정큐] 닉네임 검색
-	@GetMapping("/select/{search}")	
-	public ResponseEntity<List<UserDto>> searchUserList(
-			@PathVariable("search") String search)	throws Exception{			
+	@PostMapping("/select")	
+	@ResponseBody
+	public ResponseEntity<List<UserDto>> searchUserList(@RequestBody Map<String, String> values) throws Exception{	
+		String search = values.get("search");
+		String userId = values.get("userId");
+
 		List<UserDto> userlist = queService.searchUserList(search);
 		
+		// 본인 id제외 
+		for(Iterator<UserDto> it = userlist.iterator() ; it.hasNext() ; ) {
+			UserDto user = it.next();
+			if(user.getUserId().equals(userId)) {
+			    it.remove();
+			}
+		}
 		return new ResponseEntity<List<UserDto>>(userlist,HttpStatus.OK);
 	}
 
 	// [지정큐] 대기방 입장 API 
 	@GetMapping("/select/ready/{userId}")
 	@ResponseBody
-	public ResponseEntity<String> readyroom(@PathVariable String userId) {
+	public ResponseEntity<String> readyroom(@PathVariable String userId) throws Exception{
 		// Map에 저장 
 		SBattleRoom battleRoom= sBattleRoomRepository.createSBattleRoom(userId);
 		return new ResponseEntity<String>(battleRoom.getRoomId(), HttpStatus.OK);
@@ -103,18 +115,18 @@ public class QueController {
 	
 	// [랜덤큐] 상대 찾기 API
 	@GetMapping("/random/{userId}")
-	public ResponseEntity<Map<String, Object>> queRandom(@PathVariable String userId){
+	public ResponseEntity<Map<String, Object>> queRandom(@PathVariable String userId) throws Exception{
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		// 실패, 성공 여부 , 상대 userId + 상대 user 정보 
 		
 		// 임시 더미 데이터 저장 (TEST용)
 		//rBattleRoomRepository.clearRBattleRoom();
-		//rBattleRoomRepository.createRBattleRoom("bronze", "bronze");
-		//rBattleRoomRepository.createRBattleRoom("silver", "silver"); 
-		//rBattleRoomRepository.createRBattleRoom("gold", "gold"); 
-		//rBattleRoomRepository.createRBattleRoom("pla", "platinum"); 
-		//rBattleRoomRepository.createRBattleRoom("dia", "Diamond"); 
+		//rBattleRoomRepository.createRBattleRoom("브론즈", "브론즈");
+		//rBattleRoomRepository.createRBattleRoom("실버", "실버"); 
+		//rBattleRoomRepository.createRBattleRoom("골드", "골드"); 
+		//rBattleRoomRepository.createRBattleRoom("플래티넘", "플래티넘"); 
+		//rBattleRoomRepository.createRBattleRoom("다이아", "다이아"); 
 		
 		try {
 			// 상대 찾기 
@@ -122,8 +134,9 @@ public class QueController {
 			String userTier = userRepo.findtierNameBytierId(userRepo.finduserTierByuserId(userId));
 			
 			RBattleRoom other= rBattleRoomRepository.matchRBattle(userId, userTier);
-			if(other.getUserId()!=null) {
+			if(other.getUserId()!=null && !(other.getUserId().equals(userId))) {
 				resultMap.put("otherId",other.getUserId());
+				resultMap.put("roomId", UUID.randomUUID().toString());			// 따로 저장 x
 				resultMap.put("msg", "매칭되었습니다!");
 				status = HttpStatus.OK;
 			}else {

@@ -7,6 +7,8 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Repository;
 
+import com.blackbelt.model.socket.RBattleRoom;
+
 // [랜덤큐] 관리
 
 @Repository
@@ -93,7 +95,7 @@ public class RBattleRoomRepository {
 		if(j>4 && i>4)
 			break;
 		else if(j<5) {
-			if(!tierRoom.get(j).isEmpty()) {
+			if((!tierRoom.get(j).isEmpty())) {
 				rival = (RBattleRoom) tierRoom.get(j).poll();
 				break;
 			}
