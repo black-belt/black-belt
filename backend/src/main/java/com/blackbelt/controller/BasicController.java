@@ -101,14 +101,22 @@ public class BasicController {
 			 }else if(map.get("basicClear").equals("N")){
 				 basic_clear = "2";
 			 }
-			
-
+			String levelpre = basicService.nowlevel(user_id);//이전 레벨 추출
 			BasicStageDto basicStageDto = new BasicStageDto(user_id, basic_id, basic_score, basic_clear);
+			//기존 유저 레벨 기록
+			//score로 점수 비교해서 더 높으면 체크.
+			System.out.println("test2");
 			basicService.updateBasicStage(basicStageDto);
-			
+			System.out.println("test3");
+			//count 2/2/3 이게 새로 깬건지.
+			//프로시저 호출.
 			Map<String,String> result = new HashMap<>();//Map<String,String> map=new HashMap<>();
-			result.put("levelpre", (Integer.parseInt(basic_clear)-1)+"");
-			result.put("levelafter", basic_clear);					
+			
+			System.out.println("test4");
+			String prelevel = basicService.nowlevel(user_id);//update 이후 현재 레벨 추출	
+			
+			result.put("levelpre", levelpre);
+			result.put("levelafter", prelevel);					
 			
 			return ResponseEntity.status(200).body(result);
 		}

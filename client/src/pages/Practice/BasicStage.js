@@ -34,8 +34,6 @@ function BasicStage() {
   const getBasicData = async () => {
     const data = await axiosInstance.get(`/api/basic/${state.stageId}`, {});
     console.log(data);
-    data.basic_answer = "Front Kick";
-    data.basic_movie_path = "https://youtu.be/o9JvP-A4TvY";
     setInfo(data);
   };
 
@@ -82,7 +80,7 @@ function BasicStage() {
     setIsPass(false);
   };
   const homeFunc = () => {
-    navigate("/");
+    navigate("/basics");
   };
 
   return (

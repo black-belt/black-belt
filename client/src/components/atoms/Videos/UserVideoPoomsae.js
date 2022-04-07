@@ -1,11 +1,16 @@
 import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import * as mobilenet from "@tensorflow-models/mobilenet";
-import * as tf from "@tensorflow/tfjs";
+import * as tmPose from "@teachablemachine/pose";
 
-function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartIndex, isPass }) {
+function UserVideoPoomsae({
+  answer,
+  testResult,
+  updateNextAction,
+  updatePartIndex,
+  isPass,
+  poomsaeId,
+}) {
   const videoRef = useRef(null);
-  let net;
   let testSum = 0.0;
   let nextAction = 1;
   let curAction = 0;
@@ -16,6 +21,7 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
   let isLastAction = false;
   let maxProbability = 0.0;
   let frameCnt = 0;
+  let model1, model2;
   // let frameGoal = 5;
   const [webCamElement, setWebCamElement] = useState();
 
@@ -32,27 +38,81 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
     }
   };
 
+  const setWebcam = async () => {
+    const size = 200;
+    const flip = true;
+    let webcam = await new tmPose.Webcam(size, size, flip);
+    // await changeModel(1);
+    setWebCamElement(() => webcam);
+  };
+
+  const changeModel = async (modelNum, chapter) => {
+    // if (modelNum === 1) {
+    model1 = await tmPose.load(
+      `/models/combos/${(poomsaeId - 1) * 4 + chapter}/model.json`,
+      `/models/combos/${(poomsaeId - 1) * 4 + chapter}/metadata.json`
+    );
+    // } else {
+    //   model2 = await tmPose.load(
+    //     `/models/combos/${(poomsaeId - 1) * 4 + chapter}/model.json`,
+    //     `/models/combos/${(poomsaeId - 1) * 4 + chapter}/metadata.json`
+    //   );
+    // }
+    // setModel(() => m);
+  };
+
+  const analyzeImage1 = async () => {
+    webCamElement.update(); // update the webcam frame
+    // console.log("!!change", model);
+    const { posenetOutput } = await model1.estimatePose(webCamElement.canvas);
+    const prediction = await model1.predictTopK(posenetOutput, 1);
+    const className = prediction[0].className;
+    const probability = prediction[0].probability;
+    console.log(className, probability);
+    return { className: className, probability: probability };
+  };
+
+  const analyzeImage2 = async () => {
+    webCamElement.update(); // update the webcam frame
+    // console.log("!!change", model);
+    const { posenetOutput } = await model2.estimatePose(webCamElement.canvas);
+    const prediction = await model2.predictTopK(posenetOutput, 1);
+    const className = prediction[0].className;
+    const probability = prediction[0].probability;
+    console.log(className, probability);
+    return { className: className, probability: probability };
+  };
+
   const run = async () => {
-    net = await mobilenet.load();
-    const webcam = await tf.data.webcam(webCamElement, {
-      resizeWidth: 220,
-      resizeHeight: 227,
-    });
+    await webCamElement.setup();
+    await webCamElement.play();
+    // await changeModel(1, 1);
+    // await changeModel(2, 2);
+    let imageResult1, imageResult2;
     while (answer[0].length > 0 && !isPass) {
-      const img = await webcam.capture();
-      const result = await net.classify(img);
-      const className = result[0].className.split(",")[0];
-      const probability = result[0].probability;
-      console.log(curPart, curAction, answer[curPart], result[0].className, result[0].probability);
-      img.dispose();
+      console.log(
+        "!!",
+        curPart,
+        curAction,
+        nextPart,
+        nextAction,
+        answer[nextPart][nextAction],
+        "len",
+        answer[curPart].length
+      );
+      imageResult1 = await analyzeImage1();
+      // imageResult2 = await analyzeImage2();
+      if (curAction === 0) {
+        await changeModel(1, nextPart + 1);
+        maxProbability = 0;
+      }
       if (isLastAction) {
         //마지막 파트, 마지막 동작
         frameCnt++;
-        if (answer[curPart][curAction] === className) {
-          maxProbability = probability;
+        if (answer[curPart][curAction] === imageResult1.className) {
+          maxProbability = imageResult1.probability;
         }
-
-        if (frameCnt > 40) {
+        if (frameCnt > 10) {
           // console.log("!!저장", curPart, curAction, nextPart, nextAction, maxProbability);
           testSum += maxProbability;
           frameCnt = 0;
@@ -64,16 +124,19 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
           maxProbability = 0;
           break;
         }
-      } else if (answer[curPart][curAction] === className && probability > maxProbability) {
+      } else if (
+        answer[curPart][curAction] === imageResult1.className &&
+        imageResult1.probability > maxProbability
+      ) {
         //하던동작, 더 높은 일치율
-        maxProbability = probability;
+        maxProbability = imageResult1.probability;
         updateNextAction(nextAction);
         updatePartIndex(nextPart);
-      } else if (answer[nextPart][nextAction] === className) {
+      } else if (answer[nextPart][nextAction] === imageResult1.className) {
         //다음동작 발견됨 -> 다음동작으로 넘어감
         // console.log("!!저장", curPart, curAction, nextPart, nextAction, maxProbability);
         testSum += maxProbability;
-        maxProbability = probability;
+        maxProbability = imageResult1.probability;
         curAction = nextAction++;
         if (curPart !== nextPart) {
           testResult(curPart, testSum);
@@ -89,22 +152,29 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
             //다음단락으로 넘어감
             nextPart++;
             nextAction = 0;
+            updateNextAction(nextAction);
+            updatePartIndex(nextPart);
           }
         }
       }
-      await tf.nextFrame();
     }
   };
 
   useEffect(() => {
     getWebcam((stream) => {
       videoRef.current.srcObject = stream;
-      setWebCamElement(videoRef.current);
+      // setWebCamElement(videoRef.current);
     });
   }, []);
 
   useEffect(() => {
-    if (!isPass) run();
+    if (webCamElement !== undefined) {
+      run();
+    }
+  }, [webCamElement]);
+
+  useEffect(() => {
+    if (!isPass) setWebcam();
   }, [answer, isPass]);
 
   return (
@@ -117,7 +187,7 @@ function UserVideoPoomsae({ answer, testResult, updateNextAction, updatePartInde
 export default UserVideoPoomsae;
 
 const VideoContainer = styled.video`
-  height: 22vw;
+  height: 26vw;
   width: 35vw;
   margin-bottom: 60px;
   border-radius: 10px;

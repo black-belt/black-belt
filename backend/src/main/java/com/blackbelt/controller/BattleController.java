@@ -195,10 +195,13 @@ public class BattleController {
 		}
 		if(isRank)
 			resultMap = battleService.manageBattleHistory(bhd.get(), winOrLose, team.equals("red"));
-		
-		// 대기방 세션 삭제 
-		sbattleRepo.clearSBattleRoom(bhd.get().getMyId());
+		else {
+			resultMap = battleService.manageBattleHistoryUnranked(bhd.get(), winOrLose, team.equals("red"));
+		}
 
+     // 대기방 세션 삭제 
+		sbattleRepo.clearSBattleRoom(bhd.get().getMyId());
+      
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 	
