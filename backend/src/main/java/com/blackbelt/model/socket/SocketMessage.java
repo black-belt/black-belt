@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ChatMessage {
+public class SocketMessage {
 
     // 메시지 타입 
     public enum MessageType {
