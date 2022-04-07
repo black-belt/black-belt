@@ -117,13 +117,14 @@ export const Title = styled.div`
 `;
 
 export const Contents = styled.div`
-  font-size: ${fontSize.xl};
+  /* font-size: ${fontSize.xl}; */
+  padding: 0.2rem 0;
 `;
 
 export const ButtonBox = styled.div`
   display: flex;
   gap: 1.2rem;
-  padding-top: 2.8rem;
+  padding-top: 2.4rem;
 `;
 
 export const ImgBox = styled.div`

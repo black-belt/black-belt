@@ -17,8 +17,9 @@
   "signupLink": "Create an Account",
 
   "practice mode": "연습모드",
-  "practice mode explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
-  "practice mode explanation2": "",
+  "practice mode explanation": "태권도의 다양한 기본 동작들을 연습할 수 있습니다.",
+  "practice mode explanation2": "모범영상을 따라 정확한 자세를 취할 경우 스테이지를 클리어하게 됩니다. 최종적으로 빨간띠를 획득한다면 연결동작과 품새 스테이지의 잠금이 해제됩니다. ",
+  "practice mode explanation3": "연습모드를 클리어한 뒤 승단에 도전해보세요!",
 
   "basics": "기본동작",
   "combos": "연결동작",
@@ -26,8 +27,9 @@
 
   "promotion test": "심사모드",
   "test start": "입장하기",
-  "promotion test explanation": "",
-  "promotion test explanation2": "",
+  "promotion test explanation": "지금까지 연습한 품새를 통해 승단 심사를 진행합니다",
+  "promotion test explanation2": "승단 심사는 국기원의 방식과 동일하게 이루어집니다. 지정품새 및 기본품새를 둘 다 통과하면 승단할 수 있으며, 페이지 상단에서 현재 취해야 하는 동작을 확인할 수 있습니다.",
+  "promotion test explanation3": "정확한 동작을 통해 다음 단으로 승단해봅시다!",
   "white belt": "흰띠",
   "yellow belt": "노란띠",
   "blue belt": "빨간띠",
@@ -55,8 +57,9 @@
   "change": "수정",
 
   "gyeorugi": "겨루기",
-  "gyeorugi explanation": "",
-  "gyeorugi explanation2": "",
+  "gyeorugi explanation": "품새를 통해 익힌 공격, 방어의 기술을 응용하여 실제로 상대방과 겨루어봅니다",
+  "gyeorugi explanation2": "태권도 경기는 겨루기의 기술을 충분히 습득한 청·홍 두 선수가 일정한 경기 규칙을 지키면서 승패를 가리는 방법입니다. 다른 사람과 겨루어 자신의 태권도 실력을 확인할 수 있습니다.",
+  "gyeorugi explanation3": "",
   "normal": "일반 모드",
   "rank": "랭크 모드",
 
