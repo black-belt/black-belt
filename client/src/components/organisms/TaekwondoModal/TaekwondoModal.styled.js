@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { colors } from "_foundation";
+import styled, { css } from "styled-components";
+import { colors, fontSize, fontWeight } from "_foundation";
 
 export const OverLay = styled.div`
   position: fixed;
@@ -22,19 +22,19 @@ export const ModalBox = styled.div`
   left: 0;
   z-index: 10000;
 
-  text-align: center;
+  /* text-align: center; */
 `;
 
 export const ModalSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   gap: 1rem;
   position: relative;
   top: 50%;
 
-  width: 400px;
-  height: 250px;
+  width: 800px;
+  /* height: 250px; */
   margin: auto;
   padding: 1rem;
   border-radius: 10px;
@@ -57,3 +57,40 @@ export const ModalHeader = styled.div`
     cursor: pointer;
   }
 `;
+
+export const Title = styled.div`
+  color: ${colors.gray9};
+  font-family: "Dokdo";
+  font-size: ${fontSize.h1};
+  padding: 1rem 1rem 0 1rem;
+  /* ${(props) => {
+    if (props.language === "ENG") {
+      return css`
+        font-family: "Dry Brush";
+        font-size: ${fontSize.h1};
+      `;
+    } else {
+      return css`
+        font-family: "Dokdo";
+        font-size: ${fontSize.h2};
+      `;
+    }
+  }} */
+`;
+
+export const ModalContent = styled.div`
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  padding: 0 1rem;
+  /* gap: 1.2rem; */
+  /* padding-top: 1rem; */
+`;
+
+export const ContentTitle = styled.div`
+  font-size: ${fontSize.xl};
+  font-weight: ${fontWeight.medium};
+  padding: 1rem 0 0.5rem 0;
+`;
+
+export const Contents = styled.div``;
