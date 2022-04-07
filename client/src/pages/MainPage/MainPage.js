@@ -44,16 +44,28 @@ function MainPage() {
             resetMsg();
           }
           if (newMessage.type === "ENTER") {
-            console.log(newMessage);
-            console.log("navigate");
-            navigate("/gyeorugi/normal/stage", {
-              state: {
-                isHost: newMessage.isHost,
-                hostId: newMessage.hostId,
-                guestId: newMessage.guestId,
-                roomSeq: newMessage.roomId,
-              },
-            });
+            if (newMessage.isHost === "0") {
+              setTimeout(
+                navigate("/gyeorugi/normal/stage", {
+                  state: {
+                    isHost: newMessage.isHost,
+                    hostId: newMessage.hostId,
+                    guestId: newMessage.guestId,
+                    roomSeq: newMessage.roomId,
+                  },
+                }),
+                500
+              );
+            } else {
+              navigate("/gyeorugi/normal/stage", {
+                state: {
+                  isHost: newMessage.isHost,
+                  hostId: newMessage.hostId,
+                  guestId: newMessage.guestId,
+                  roomSeq: newMessage.roomId,
+                },
+              });
+            }
           }
         });
       });
@@ -81,6 +93,7 @@ function MainPage() {
       title: "practice mode",
       description: "practice mode explanation",
       description2: "practice mode explanation2",
+      description3: "practice mode explanation3",
       image: "/images/main/basics.png",
       button: [
         {
@@ -101,6 +114,7 @@ function MainPage() {
       title: "promotion test",
       description: "promotion test explanation",
       description2: "promotion test explanation2",
+      description3: "promotion test explanation3",
       image: "/images/main/practice.png",
       button: [
         {
@@ -113,6 +127,7 @@ function MainPage() {
       title: "gyeorugi",
       description: "gyeorugi explanation",
       description2: "gyeorugi explanation2",
+      description3: "gyeorugi explanation2",
       image: "/images/main/gyeorugi.png",
       button: [
         {
@@ -142,6 +157,8 @@ function MainPage() {
               <TextBox>
                 <Title language={t("language")}>{t(slide.title)}</Title>
                 <Contents>{t(slide.description)}</Contents>
+                <Contents>{t(slide.description2)}</Contents>
+                <Contents>{t(slide.description3)}</Contents>
                 <ButtonBox>
                   {slide["button"].map((menus) => (
                     <InButton
