@@ -43,7 +43,7 @@ function MainPage() {
           if (newMessage.type === "REFUSE") {
             resetMsg();
           }
-          if (newMessage.type === "Enter") {
+          if (newMessage.type === "ENTER") {
             console.log(newMessage);
             console.log("navigate");
             navigate("/gyeorugi/normal/stage", {
