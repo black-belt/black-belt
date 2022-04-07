@@ -1,5 +1,5 @@
-import { useRecoilValue } from "recoil";
-import { gyeorugiMsg, userInfo } from "recoils";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { changeNickname, gyeorugiMsg, userInfo } from "recoils";
 import { Carousel } from "3d-react-carousal";
 import {
   BackgroundImg,
@@ -21,10 +21,18 @@ import {
 } from "./Mypage.styled";
 import CountryIcon from "components/atoms/Icons/CountryIcon";
 import { useTranslation } from "react-i18next";
+import axiosInstance from "utils/API";
+import { useEffect, useRef, useState } from "react";
+import axiosImage from "utils/imageAPI";
+import ChangeNickModal from "components/organisms/ChangeNickModal/ChangeNickModal";
 
 function MyPage() {
   const { t } = useTranslation();
   const user = useRecoilValue(userInfo);
+  const fileInput = useRef(null);
+  const [isOpen, setIsOpen] = useRecoilState(changeNickname);
+  console.log(isOpen);
+
   const tier = {
     1: "bronze",
     2: "silver",
@@ -33,8 +41,80 @@ function MyPage() {
     5: "diamond",
     6: "master",
   };
-  console.log(user);
 
+  const [profileImg, setProfileImg] = useState("");
+  const [defaultImg, setDefaultImg] = useState("");
+
+  useEffect(() => {
+    if (user.userProfilePath) {
+      setProfileImg(user.userProfilePath);
+      setDefaultImg(user.userProfilePath);
+    } else {
+      setProfileImg("/images/defaultUser.png");
+      setDefaultImg("/images/defaultUser.png");
+    }
+  }, []);
+
+  // const saveFileImg = (e) => {
+  //   setFileImg(URL.createObjectURL(e.target.files[0]));
+  //   setProfileImg(e.target.files[0]);
+  // };
+
+  let imgData = new FormData();
+  imgData.append("uploadFile", profileImg);
+
+  // useEffect(() => {
+  //   imgData.append("uploadFile", profileImg);
+  // }, [profileImg]);
+
+  useEffect(() => {
+    if (profileImg !== defaultImg) {
+      axiosImage.post("/api/user/uploadprofile", imgData).then((res) => {
+        console.log(res);
+        // window.location.reload();
+      });
+    }
+  }, [profileImg]);
+
+  const uploadImg = (e) => {
+    if (e.target.files[0]) {
+      console.log("selected");
+      setProfileImg(e.target.files[0]);
+      imgData.append("uploadFile", profileImg);
+      //   axiosImage
+      //     .post("/api/user/uploadprofile", {
+      //       imgData,
+      //     })
+      //     .then((res) => {
+      //       console.log(res);
+      //     });
+      //   // }
+      //   if (profileImg) {
+      //     console.log("axios");
+      //     axiosImage
+      //       .post("/api/user/uploadprofile", {
+      //         profileImg,
+      //       })
+      //       .then((res) => {
+      //         console.log(res);
+      //       });
+      //   }
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setProfileImg(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  };
+
+  // const uploadImg = async () => {
+  //   const res = await axiosImage.post("/api/user/uploadprofile", {
+  //     profileImg,
+  //   });
+  //   console.log(res);
+  // };
   const slides = [
     <img src="/certifications/belt1.png" alt="" />,
     <img src="/certifications/belt2.png" alt="" />,
@@ -43,7 +123,7 @@ function MyPage() {
   ];
 
   const callback = function (index) {
-    console.log("callback", index);
+    // console.log("callback", index);
   };
 
   const infoTable = [
@@ -68,18 +148,32 @@ function MyPage() {
       contents: `${t(user.levelName)}`,
     },
   ];
+  console.log(user);
 
   return (
     <div className="MyPage">
       <BackgroundImg src="/images/practiceBackground.jpg" alt="" />
       <Layout>
+        {isOpen && <ChangeNickModal />}
         <ProfileBox>
           <ImgBox>
             <ImgWrapper>
               {user.userProfilePath ? (
-                <ProfileImg src={user.userProfilePath} alt="" />
+                <ProfileImg
+                  onClick={() => {
+                    fileInput.current.click();
+                  }}
+                  src={profileImg}
+                  alt=""
+                />
               ) : (
-                <ProfileImg src="images/defaultUser.png" alt="" />
+                <ProfileImg
+                  onClick={() => {
+                    fileInput.current.click();
+                  }}
+                  src={profileImg}
+                  alt=""
+                />
               )}
               <UserCountry>
                 {/* <CountryIcon icon={user.countryName} width="50" height="50" /> */}
@@ -87,7 +181,14 @@ function MyPage() {
               </UserCountry>
             </ImgWrapper>
           </ImgBox>
-          <Username>{user.userNick}</Username>
+          <input
+            type="file"
+            style={{ display: "none" }}
+            accept="image/*"
+            onChange={uploadImg}
+            ref={fileInput}
+          />
+          <Username onClick={() => setIsOpen(true)}>{user.userNick}</Username>
           <UserEmail>{user.userEmail}</UserEmail>
           <TierImg src={`/images/tier/${tier[user.userTier]}.png`} />
         </ProfileBox>
@@ -107,7 +208,11 @@ function MyPage() {
                   {info.title === "recents" ? (
                     <RecentGames>
                       {user.battleHistories.map((battle) => (
-                        <img src={`/images/${battle.winLoseDraw}.png`} alt="" />
+                        <img
+                          key={battle.battleHistoryId}
+                          src={`/images/${battle.winLoseDraw}.png`}
+                          alt=""
+                        />
                       ))}{" "}
                     </RecentGames>
                   ) : (

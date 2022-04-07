@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "_foundation";
 import Dropdown from "./Dropdown";
@@ -23,11 +22,29 @@ export const Logo = styled.img`
   cursor: pointer;
 `;
 
-export const ProfileImg = styled.div`
+export const ProfileImgBox = styled.div`
+  width: 50px;
+`;
+
+export const ImgWrapper = styled.div`
+  position: relative;
+  padding-top: 100%;
+  border-radius: 100%;
+  overflow: hidden;
+`;
+
+export const ProfileImg = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 100%;
+  width: auto;
   cursor: pointer;
 `;
 
-export const Welcome = styled.span`
+export const Welcome = styled.div`
   color: ${colors.gray0};
 `;
 
@@ -37,11 +54,6 @@ export const UserDropdown = styled(Dropdown)`
   right: 3.6rem;
 
   animation: 0.3s cubic-bezier(0.3, 0, 0, 1);
-`;
-
-export const NavItemLink = styled(Link)`
-  text-decoration: none;
-  color: ${colors.gray0};
 `;
 
 export const NavItemBtn = styled.div`

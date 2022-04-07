@@ -58,6 +58,8 @@ export const ProfileImg = styled.img`
   bottom: 0;
   max-height: 100%;
   width: auto;
+
+  cursor: pointer;
 `;
 
 export const UserCountry = styled.div`
@@ -74,6 +76,8 @@ export const UserCountry = styled.div`
 export const Username = styled.div`
   font-size: ${fontSize.h4};
   font-weight: ${fontWeight.medium};
+
+  cursor: pointer;
 `;
 
 export const UserEmail = styled.div`

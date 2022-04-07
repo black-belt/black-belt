@@ -144,6 +144,7 @@ function NormalLobby() {
     5: "diamond",
     6: "master",
   };
+  console.log(hostInfo, guestInfo);
 
   return (
     <div className="NormalLobby">
@@ -161,10 +162,7 @@ function NormalLobby() {
                   <ProfileImgBox>
                     <ImgWrapper>
                       {hostInfo.userProfilePath ? (
-                        <ProfileImg
-                          src={ImgURL + hostInfo.userProfilePath}
-                          alt=""
-                        />
+                        <ProfileImg src={hostInfo.userProfilePath} alt="" />
                       ) : (
                         <ProfileImg src="/images/defaultUser.png" alt="" />
                       )}
@@ -185,10 +183,7 @@ function NormalLobby() {
                   <ProfileImgBox>
                     <ImgWrapper>
                       {guestInfo.userProfilePath ? (
-                        <ProfileImg
-                          src={ImgURL + guestInfo.userProfilePath}
-                          alt=""
-                        />
+                        <ProfileImg src={guestInfo.userProfilePath} alt="" />
                       ) : (
                         <ProfileImg src="/images/defaultUser.png" alt="" />
                       )}
@@ -240,7 +235,7 @@ function NormalLobby() {
                       <ImgWrapper>
                         <UserImg
                           state={user.userState}
-                          src={ImgURL + user.userProfilePath}
+                          src={user.userProfilePath}
                           alt=""
                         />
                       </ImgWrapper>
