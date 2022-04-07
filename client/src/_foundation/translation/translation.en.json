@@ -17,8 +17,9 @@
   "signupLink": "Create an Account",
 
   "practice mode": "Practice",
-  "practice mode explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
-  "practice mode explanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "practice mode explanation": "You can practice various basic TaeKwonDo movements",
+  "practice mode explanation2": "The stage will be cleared if you do the accurate postures. If the red belt is acquired, the Combos Stage and Poomsae stage are unlocked.",
+  "practice mode explanation3": "Clear the practice mode and try the Promotion Test!",
 
   "basics": "Basics",
   "combos": "Combos",
@@ -26,8 +27,9 @@
 
   "promotion test": "Promotion Test",
   "test start": "Enter",
-  "promotion test explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
-  "promotion test explanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "promotion test explanation": "You will be tested by the poomsae that you've practiced",
+  "promotion test explanation2": "The promotion test is conducted in the same way as the Kukkiwon. You can be promoted if you pass the both applicated and the qualified poomsae.",
+  "promotion test explanation3": "Let's move on to the next level!",
   "white belt": "White Belt",
   "yellow belt": "Yellow Belt",
   "blue belt": "Blue Belt",
@@ -55,8 +57,9 @@
   "change": "Edit",
 
   "gyeorugi": "Gyeorugi",
-  "gyeorugi explanation": "Sodales sagittis urna laoreet in. In et, facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
-  "gyeorugiexplanation2": "facilisi dictum egestas sit suspendisse feugiat vehicula. Porttitor et fermentum elementum feugiat praesent metus hac. Suspendisse et, nunc natoque diam, sollicitudin et dolor pretium consequat.",
+  "gyeorugi explanation": "They actually compete with opponents by applying attack and defense techniques learned through Poomsae.",
+  "gyeorugi explanation2": "Taekwondo matches are a way for two players, Red and Blue, who have fully mastered their performance, to decide the game by following certain game rules. In Normal mode, you can compete with anyone you want, and in Rank mode, you can raise the tier.",
+  "gyeorugi explanation3": "Compete with other people and check your Taekwondo skills!",
   "normal": "Normal",
   "rank": "Rank",
 
