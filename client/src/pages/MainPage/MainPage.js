@@ -59,6 +59,7 @@ function MainPage() {
       title: "practice mode",
       description: "practice mode explanation",
       description2: "practice mode explanation2",
+      image: "/images/main/basics.png",
       button: [
         {
           name: "basics",
@@ -78,6 +79,7 @@ function MainPage() {
       title: "promotion test",
       description: "promotion test explanation",
       description2: "promotion test explanation2",
+      image: "/images/main/practice.png",
       button: [
         {
           name: "combos",
@@ -89,6 +91,7 @@ function MainPage() {
       title: "gyeorugi",
       description: "gyeorugi explanation",
       description2: "gyeorugi explanation2",
+      image: "/images/main/gyeorugi.png",
       button: [
         {
           name: "normal",
@@ -129,7 +132,7 @@ function MainPage() {
                 </ButtonBox>
               </TextBox>
               <ImgBox>
-                <img src="/images/practice.png" alt="" />
+                <img src={slide.image} alt="" />
               </ImgBox>
             </Carousel>
           ))}
