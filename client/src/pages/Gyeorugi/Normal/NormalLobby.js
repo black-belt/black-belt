@@ -146,7 +146,6 @@ function NormalLobby() {
       userId: myInfo.userId,
       search: searchInput,
     });
-    console.log(userInfo);
     setUserList(userInfo);
     setFinishSearch(true);
   };
