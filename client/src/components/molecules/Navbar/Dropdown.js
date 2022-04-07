@@ -37,7 +37,6 @@ const Dropdown = () => {
     await axiosInstance.put("/api/user/logout", {
       userId: user.id,
     });
-    // localStorage.removeItem("blackbelt_token");
     resetToken();
     navigate("/");
     window.location.reload();
