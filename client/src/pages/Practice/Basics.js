@@ -43,7 +43,7 @@ function Basics() {
                 stageId={value.basic_id}
                 title={t("language") === "KOR" ? value.basic_name : value.basic_name_e}
                 desc={t("language") === "KOR" ? value.basic_explain : value.basic_explain_e}
-                img="/images/card2.png"
+                img={`/images/basic/basic${index}.png`}
                 clear={value.basic_clear}
                 score={value.basic_score}
                 locked={value.basic_locked}

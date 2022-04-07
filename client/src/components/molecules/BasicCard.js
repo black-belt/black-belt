@@ -2,33 +2,19 @@ import styled, { css } from "styled-components";
 import { colors, fontSize } from "_foundation";
 import CustomIcon from "../atoms/Icons/Icon";
 
-function BasicCard({
-  title,
-  desc,
-  img,
-  clear,
-  score,
-  locked,
-  onClick,
-  stageId,
-}) {
+function BasicCard({ title, desc, img, clear, score, locked, onClick, stageId }) {
   const selectStage = () => {
     onClick(stageId);
   };
 
   return (
     <Card>
-      <ImageContainer onClick={selectStage}>
-        <Image img={img} clear={clear}></Image>
+      <ImageContainer onClick={locked === "N" ? selectStage : null}>
+        <Image img={img} locked={locked}></Image>
         <DescriptionContainer>
-          <Description>{desc}</Description>
+          <Description>{desc.length > 73 ? desc.substr(0, 73) + "..." : desc}</Description>
           <Arrow>
-            <CustomIcon
-              icon="inPointer"
-              viewBox="0 0 50 50"
-              width="55"
-              height="55"
-            />
+            <CustomIcon icon="inPointer" viewBox="0 0 50 50" width="55" height="55" />
           </Arrow>
         </DescriptionContainer>
       </ImageContainer>
@@ -111,7 +97,7 @@ const Image = styled.div`
   width: 100%;
   height: 100%;
   ${(props) =>
-    props.clear === "Y"
+    props.locked === "N"
       ? css`
           background: rgb(100, 100, 100, 0.7);
           filter: grayscale(100%) brightness(100%);
@@ -127,6 +113,14 @@ const Image = styled.div`
   background-size: contain;
   background-origin: content-box;
   background-position: center;
+  ${(props) =>
+    props.locked === "N"
+      ? css`
+          filter: grayscale(100%) brightness(100%);
+        `
+      : css`
+          filter: grayscale(100%) brightness(55%);
+        `}
   filter: gray;
   border-radius: 5px;
 

@@ -22,6 +22,7 @@ function SmallCarousel({ items, active, setActive, goToStage, imageList }) {
         onClick={() => goToStage(active)}
         title={t("language") === "KOR" ? items[active].combo_name : items[active].combo_name_e}
         score={items[active].combo_score}
+        locked={items[active].combo_locked === "Y"}
         imageNum={imageList[active]}
       />
     );
@@ -43,6 +44,7 @@ function SmallCarousel({ items, active, setActive, goToStage, imageList }) {
           }}
           title={t("language") === "KOR" ? items[index].combo_name : items[index].combo_name_e}
           score={items[index].combo_score}
+          locked={items[index].combo_locked === "Y"}
           imageNum={imageList[index]}
         />
       );
@@ -89,19 +91,19 @@ function SmallCarousel({ items, active, setActive, goToStage, imageList }) {
 }
 export default SmallCarousel;
 
-function NewItem({ level, onClick, title, score, imageNum }) {
+function NewItem({ level, onClick, title, score, locked, imageNum }) {
   return (
     <>
       <div
         className={`item level${level}`}
-        onClick={onClick}
+        onClick={locked ? null : onClick}
         style={{
           // padding: "10px",
-          backgroundColor: score > 0 ? "rgba(100,100,100,0.6)" : "rgba(0, 0, 0, 0.6)",
+          backgroundColor: locked ? "rgba(100,100,100,0.6)" : "rgba(0, 0, 0, 0.6)",
           backgroundImage: `url("/images/combo/combo${imageNum}.png")`,
           // backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
-          filter: score > 0 ? "grayscale(0%)" : "grayscale(100%) brightness(50%)",
+          filter: locked ? "grayscale(100%) brightness(50%)" : "grayscale(0%)",
           backgroundSize: "contain",
           backgroundPosition: "center center",
           backgroundOrigin: "padding-box",

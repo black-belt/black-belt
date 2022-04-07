@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 // import { fontSize } from "_foundation";
 
-function PoomsaeCard({ img, clear, onClick }) {
+function PoomsaeCard({ img, clear, onClick, locked }) {
   return (
     <Card>
-      <ImageContainer onClick={onClick}>
-        <Image img={img} clear={clear}></Image>
+      <ImageContainer onClick={locked === "Y" ? null : onClick}>
+        <Image img={img} locked={locked}></Image>
       </ImageContainer>
       {/* <InfoContainer>
         <Title>{title}</Title>
@@ -59,7 +59,7 @@ const ImageContainer = styled.div`
 
 const Image = styled.div`
   ${(props) =>
-    props.clear === "N"
+    props.locked === "Y"
       ? css`
           background: rgba(0, 0, 0, 0.7);
           filter: grayscale(100%) brightness(50%);

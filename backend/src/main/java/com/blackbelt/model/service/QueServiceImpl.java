@@ -22,11 +22,5 @@ public class QueServiceImpl implements QueService{
 
 		return user;
 	}
-	/*
-	@Transactional
-	public String searchUserTier(String userNick){
-		String userTier = userCrudRepository.finduserTierByuserNick(userNick);	// Containing 포함=>다중검색 가능 
 
-		return userTier;
-	}*/
 }
