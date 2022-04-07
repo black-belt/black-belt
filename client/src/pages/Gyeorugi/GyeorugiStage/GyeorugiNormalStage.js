@@ -106,7 +106,7 @@ function GyeorugiNormalStage() {
       {isWin !== undefined ? (
         <EvaluationTemplateGyeorugi
           isWin={isWin}
-          // tier={tier}
+          tier={tier}
           restart={<StageBtn onClick={restartFunc}>다시하기</StageBtn>}
           home={
             <StageBtn onClick={homeFunc} isHome>
