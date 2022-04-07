@@ -54,7 +54,7 @@ function MainPage() {
                     roomSeq: newMessage.roomId,
                   },
                 }),
-                500
+                3000
               );
             } else {
               navigate("/gyeorugi/normal/stage", {
@@ -161,10 +161,7 @@ function MainPage() {
                 <Contents>{t(slide.description3)}</Contents>
                 <ButtonBox>
                   {slide["button"].map((menus) => (
-                    <InButton
-                      key={menus.name}
-                      onClick={() => FilterUser(menus.url)}
-                    >
+                    <InButton key={menus.name} onClick={() => FilterUser(menus.url)}>
                       {t(menus.name)}
                     </InButton>
                   ))}
