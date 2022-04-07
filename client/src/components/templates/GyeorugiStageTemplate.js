@@ -1,6 +1,5 @@
-import { rand } from "@tensorflow/tfjs";
 import ScoreBar from "components/molecules/Gyeorugi/ScoreBar";
-import StreamComponent from "components/molecules/Stream2/StreamComponent";
+import StreamComponent from "components/molecules/Stream/StreamComponent";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { colors, fontWeight } from "../../_foundation";
@@ -91,20 +90,20 @@ function GyeorugiStageTempalte({
             </LocalUser>
           )}
           {subscribers.map((sub, i) => (
-            <RemoteUser key={i}>
+            <RemoteUser>
               <StreamComponent
                 user={sub}
                 streamId={sub.streamManager.stream.streamId}
                 start={start}
               />
-              {otherDefence !== 0 && (
+              {/* {otherDefence !== 0 && (
                 <OtherDefence defence={otherDefence} src="/images/shield.png" />
               )}
               {otherAttack !== 0 && (
                 <Attack left={rightLeft} top={rightTop}>
                   -{otherAttack}
                 </Attack>
-              )}
+              )} */}
             </RemoteUser>
           ))}
         </VideoLayout>

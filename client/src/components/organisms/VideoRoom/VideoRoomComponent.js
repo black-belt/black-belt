@@ -1,5 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "./VideoRoomComponent.css";
 import { OpenVidu, Subscriber } from "openvidu-browser";
 import UserModel from "pages/Gyeorugi/GyeorugiStage/models/user-model";
@@ -7,64 +6,58 @@ import OpenViduLayout from "components/molecules/Layout/openvidu-layout";
 import DialogExtensionComponent from "components/molecules/DialogExtension/DialogExtension";
 import GyeorugiStageTempalte from "components/templates/GyeorugiStageTemplate";
 import { useTranslation } from "react-i18next";
-import StreamComponent from "components/molecules/Stream/StreamComponent";
 
 var localUser = new UserModel();
 
-class VideoRoomComponent extends Component {
-  constructor(props) {
-    super(props);
-    // this.OPENVIDU_SERVER_URL = this.props.openviduServerUrl
-    //   ? this.props.openviduServerUrl
-    //   : "https://" + window.location.hostname + ":4443";
-    // this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret
-    //   ? this.props.openviduSecret
-    //   : "MY_SECRET";
-    this.hasBeenUpdated = false;
-    this.layout = new OpenViduLayout();
-    // let sessionName = this.props.sessionName ? this.props.sessionName : "SessionA";
-    let userName = this.props.info.userNick;
-    let userCountry = this.props.info.countryName ? this.props.info.countryName : "korea";
-    this.remotes = [];
-    this.localUserAccessAllowed = false;
-    this.state = {
-      //   mySessionId: sessionName,
-      myUserName: userName,
-      myCountry: userCountry,
-      session: undefined,
-      localUser: undefined,
-      subscribers: [],
-      chatDisplay: "none",
-      currentVideoDevice: undefined,
-      isTimer: false,
-      ready: 0,
-      isEnd: false,
-      leftPercent: 1000,
-      rightPercent: 1000,
-      myAttack: 0,
-      otherAttack: 0,
-      myDefence: 0,
-      otherDefence: 0,
-    };
+function VideoRoomComponent({ setResult, setIsWin, info, token, otherNick }) {
+  // const OPENVIDU_SERVER_URL = openviduServerUrl
+  //   ? openviduServerUrl
+  //   : "https://" + window.location.hostname + ":4443";
+  // const OPENVIDU_SERVER_SECRET = openviduSecret ? openviduSecret : "MY_SECRET";
+  let hasBeenUpdated = false;
+  let layout = new OpenViduLayout();
+  // let sessionId = sessionName ? sessionName : "SessionTE";
+  let userName = info.userNick ? info.userNick : "OpenVidu_User" + Math.floor(Math.random() * 100);
+  let userCountry = info.countryName ? info.countryName : "korea";
+  let remotes = [];
+  let localUserAccessAllowed = false;
+  // const [mySessionId, setMySessionId] = useState(sessionId);
+  const [myUserName, setMyUserName] = useState(userName);
+  const [myCountry, setMyCountry] = useState(userCountry);
+  const [session, setSession] = useState(undefined);
+  const [myLocalUser, setMyLocalUser] = useState(undefined);
+  const [subscribers, setSubscribers] = useState([]);
+  const [chatDisplay, setChatDisplay] = useState("none");
+  const [currentVideoDevice, setCurrentVideoDevice] = useState(undefined);
+  const [messageReceived, setMessageReceived] = useState("");
+  const [showExtensionDialog, setShowExtensionDialog] = useState(false);
+  const [OV, setOV] = useState(undefined);
+  const [isTimer, setIsTimer] = useState(false);
+  const [ready, setReady] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
+  const [leftPercent, setLeftPercent] = useState(1000);
+  const [rightPercent, setRightPercent] = useState(1000);
+  const [myAttack, setMyAttack] = useState(0);
+  const [otherAttack, setOtherAttack] = useState(0);
+  const [myDefence, setMyDefence] = useState(0);
+  const [otherDefence, setOtherDefence] = useState(0);
+  const { t } = useTranslation();
+  const answerAttack = ["Punch", "Kick"];
+  const answerDefence = ["Defence"];
+  const damages = {
+    1: 100, //상단발차기
+    2: 60, //중단발차기
+    3: 30, //하단발차기
+    11: 70, //상단주먹
+    12: 50, //중단주먹
+    Punch: 50,
+    Kick: 70,
+  };
+  let publisher;
+  let myHP = 1000;
+  let otherHP = 1000;
 
-    this.joinSession = this.joinSession.bind(this);
-    this.leaveSession = this.leaveSession.bind(this);
-    this.onbeforeunload = this.onbeforeunload.bind(this);
-    this.updateLayout = this.updateLayout.bind(this);
-    this.camStatusChanged = this.camStatusChanged.bind(this);
-    this.micStatusChanged = this.micStatusChanged.bind(this);
-    this.nicknameChanged = this.nicknameChanged.bind(this);
-    this.toggleFullscreen = this.toggleFullscreen.bind(this);
-    this.switchCamera = this.switchCamera.bind(this);
-    this.screenShare = this.screenShare.bind(this);
-    this.stopScreenShare = this.stopScreenShare.bind(this);
-    this.closeDialogExtension = this.closeDialogExtension.bind(this);
-    this.toggleChat = this.toggleChat.bind(this);
-    this.checkNotification = this.checkNotification.bind(this);
-    this.checkSize = this.checkSize.bind(this);
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const openViduLayoutOptions = {
       maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
       minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
@@ -78,51 +71,59 @@ class VideoRoomComponent extends Component {
       animate: true, // Whether you want to animate the transitions
     };
 
-    this.layout.initLayoutContainer(document.getElementById("layout"), openViduLayoutOptions);
-    window.addEventListener("beforeunload", this.onbeforeunload);
-    window.addEventListener("resize", this.updateLayout);
-    window.addEventListener("resize", this.checkSize);
-    this.joinSession();
-  }
+    layout.initLayoutContainer(document.getElementById("layout"), openViduLayoutOptions);
+    window.addEventListener("beforeunload", onbeforeunload);
+    window.addEventListener("resize", updateLayout);
+    window.addEventListener("resize", checkSize);
+    myJoinSession();
 
-  componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.onbeforeunload);
-    window.removeEventListener("resize", this.updateLayout);
-    window.removeEventListener("resize", this.checkSize);
-    this.leaveSession();
-  }
+    return () => {
+      window.removeEventListener("beforeunload", onbeforeunload);
+      window.removeEventListener("resize", updateLayout);
+      window.removeEventListener("resize", checkSize);
+      // console.log("BB", OV);
+      // console.log("BB", session);
+      myLeaveSession();
+    };
+  }, []);
 
-  onbeforeunload(event) {
-    this.leaveSession();
-  }
+  const onbeforeunload = (event) => {
+    myLeaveSession();
+  };
 
-  joinSession() {
-    this.OV = new OpenVidu();
+  const myJoinSession = () => {
+    let newOV = new OpenVidu();
+    setOV((current) => {
+      return newOV;
+    });
+    setSession((current) => {
+      return newOV.initSession();
+    });
+  };
 
-    this.setState(
-      {
-        session: this.OV.initSession(),
-      },
-      () => {
-        this.subscribeToStreamCreated();
-        this.connectToSession();
-      }
-    );
-  }
+  useEffect(() => {
+    if (session !== undefined && OV !== undefined) {
+      console.log("session useEffect");
+      subscribeToStreamCreated();
+      connectToSession();
+    }
+  }, [session, OV]);
 
-  connectToSession() {
-    if (this.props.token !== undefined) {
-      console.log("token received: ", this.props.token);
-      this.connect(this.props.token);
+  const connectToSession = () => {
+    //state.token
+    console.log("token!!", token);
+    if (token) {
+      console.log("token received: ", token);
+      connect(token);
     } else {
-      this.getToken()
+      getToken()
         .then((token) => {
           console.log(token);
-          this.connect(token);
+          connect(token);
         })
         .catch((error) => {
-          if (this.props.error) {
-            this.props.error({
+          if (error) {
+            error({
               error: error.error,
               messgae: error.message,
               code: error.code,
@@ -133,17 +134,20 @@ class VideoRoomComponent extends Component {
           alert("There was an error getting the token:", error.message);
         });
     }
-  }
+  };
 
-  connect(token) {
-    this.state.session
-      .connect(token, { clientData: this.state.myUserName })
+  const connect = (token) => {
+    console.log("!!connect", session);
+    session
+      .connect(token, { clientData: myUserName, country: myCountry })
       .then(() => {
-        this.connectWebCam();
+        console.log("!!!then", OV);
+        connectWebCam();
       })
       .catch((error) => {
-        if (this.props.error) {
-          this.props.error({
+        console.log("!!error");
+        if (error) {
+          error({
             error: error.error,
             messgae: error.message,
             code: error.code,
@@ -153,13 +157,13 @@ class VideoRoomComponent extends Component {
         alert("There was an error connecting to the session:", error.message);
         console.log("There was an error connecting to the session:", error.code, error.message);
       });
-  }
+  };
 
-  connectWebCam = async () => {
-    var devices = await this.OV.getDevices();
+  const connectWebCam = async () => {
+    var devices = await OV.getDevices();
     var videoDevices = devices.filter((device) => device.kind === "videoinput");
 
-    let publisher = this.OV.initPublisher(undefined, {
+    publisher = OV.initPublisher(undefined, {
       audioSource: undefined,
       videoSource: videoDevices[0].deviceId,
       publishAudio: localUser.isAudioActive(),
@@ -169,112 +173,113 @@ class VideoRoomComponent extends Component {
       insertMode: "APPEND",
     });
 
-    if (this.state.session.capabilities.publish) {
+    if (session.capabilities.publish) {
       publisher.on("accessAllowed", () => {
-        this.state.session.publish(publisher).then(() => {
-          this.updateSubscribers();
-          this.localUserAccessAllowed = true;
-          if (this.props.joinSession) {
-            this.props.joinSession();
-          }
+        session.publish(publisher).then(() => {
+          updateSubscribers();
+          localUserAccessAllowed = true;
+          // if (joinSession) {
+          //   joinSession();
+          // }
         });
       });
     }
-    localUser.setNickname(this.state.myUserName);
-    localUser.setConnectionId(this.state.session.connection.connectionId);
+
+    //state.name
+    localUser.setNickname(myUserName);
+    localUser.setConnectionId(session.connection.connectionId);
     localUser.setScreenShareActive(false);
     localUser.setStreamManager(publisher);
-    this.subscribeToUserChanged();
-    this.subscribeToStreamDestroyed();
-    this.sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
+    //state.country
+    localUser.setCountry(myCountry);
+    subscribeToUserChanged();
+    subscribeToStreamDestroyed();
+    subscribeToReady();
+    subscribeToAttack();
+    subscribeToDefence();
+    subscribeToHp();
+    subscribeToDamage();
+    subscribeToStart();
+    sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
 
-    this.setState({ currentVideoDevice: videoDevices[0], localUser: localUser }, () => {
-      this.state.localUser.getStreamManager().on("streamPlaying", (e) => {
-        this.updateLayout();
-        publisher.videos[0].video.parentElement.classList.remove("custom-class");
-      });
-    });
+    setCurrentVideoDevice(() => videoDevices[0]);
+    setMyLocalUser(() => localUser);
   };
 
-  updateSubscribers() {
-    var subscribers = this.remotes;
-    this.setState(
-      {
-        subscribers: subscribers,
-      },
-      () => {
-        if (this.state.localUser) {
-          this.sendSignalUserChanged({
-            isAudioActive: this.state.localUser.isAudioActive(),
-            isVideoActive: this.state.localUser.isVideoActive(),
-            nickname: this.state.localUser.getNickname(),
-            isScreenShareActive: this.state.localUser.isScreenShareActive(),
-          });
-        }
-        this.updateLayout();
-      }
-    );
-  }
+  useEffect(() => {
+    if (myLocalUser !== undefined && currentVideoDevice !== undefined) {
+      myLocalUser.getStreamManager().on("streamPlaying", (e) => {
+        updateLayout();
+        publisher.videos[0].video.parentElement.classList.remove("custom-class");
+      });
+    }
+  }, [myLocalUser, currentVideoDevice]);
 
-  leaveSession() {
-    const mySession = this.state.session;
+  let isUpdateSubscribers = false;
+  let isSubscribeToUserChanged = false;
+
+  const updateSubscribers = () => {
+    var subscribers = remotes;
+    isUpdateSubscribers = true;
+    setSubscribers(subscribers);
+  };
+
+  useEffect(() => {
+    // if (isUpdateSubscribers) {
+    //   isUpdateSubscribers = false;
+    //   if (myLocalUser) {
+    //     sendSignalUserChanged({
+    //       isAudioActive: myLocalUser.isAudioActive(),
+    //       isVideoActive: myLocalUser.isVideoActive(),
+    //       nickname: myLocalUser.getNickname(),
+    //       country: myLocalUser.getCountry(),
+    //       isScreenShareActive: myLocalUser.isScreenShareActive(),
+    //     });
+    //   }
+    //   updateLayout();
+    // }
+    // if (isSubscribeToUserChanged) {
+    //   isSubscribeToUserChanged = false;
+    //   checkSomeoneShareScreen();
+    // }
+  }, [subscribers]);
+
+  const myLeaveSession = () => {
+    const mySession = session;
 
     if (mySession) {
       mySession.disconnect();
     }
 
-    // Empty all properties...
-    this.OV = null;
-    this.setState({
-      session: undefined,
-      subscribers: [],
-      mySessionId: "SessionA",
-      myUserName: "OpenVidu_User" + Math.floor(Math.random() * 100),
-      localUser: undefined,
-    });
-    if (this.props.leaveSession) {
-      this.props.leaveSession();
-    }
-  }
-  camStatusChanged() {
-    localUser.setVideoActive(!localUser.isVideoActive());
-    localUser.getStreamManager().publishVideo(localUser.isVideoActive());
-    this.sendSignalUserChanged({ isVideoActive: localUser.isVideoActive() });
-    this.setState({ localUser: localUser });
-  }
+    // setOV(null);
+    OV = null;
+    setSession(undefined);
+    setSubscribers([]);
+    // setMySessionId("SessionA");
+    setMyUserName("OpenVidu_User" + Math.floor(Math.random() * 100));
+    setMyCountry("korea");
+    setMyLocalUser(undefined);
+    // if (leaveSession) leaveSession();
+  };
 
-  micStatusChanged() {
-    localUser.setAudioActive(!localUser.isAudioActive());
-    localUser.getStreamManager().publishAudio(localUser.isAudioActive());
-    this.sendSignalUserChanged({ isAudioActive: localUser.isAudioActive() });
-    this.setState({ localUser: localUser });
-  }
-
-  nicknameChanged(nickname) {
-    let localUser = this.state.localUser;
-    localUser.setNickname(nickname);
-    this.setState({ localUser: localUser });
-    this.sendSignalUserChanged({ nickname: this.state.localUser.getNickname() });
-  }
-
-  deleteSubscriber(stream) {
-    const remoteUsers = this.state.subscribers;
+  const deleteSubscriber = (stream) => {
+    const remoteUsers = subscribers;
     const userStream = remoteUsers.filter((user) => user.getStreamManager().stream === stream)[0];
     let index = remoteUsers.indexOf(userStream, 0);
     if (index > -1) {
       remoteUsers.splice(index, 1);
-      this.setState({
-        subscribers: remoteUsers,
-      });
+      setSubscribers(() => remoteUsers);
     }
-  }
+  };
 
-  subscribeToStreamCreated() {
-    this.state.session.on("streamCreated", (event) => {
-      const subscriber = this.state.session.subscribe(event.stream, undefined);
+  const subscribeToStreamCreated = () => {
+    // console.log("여기session", session);
+    session.on("streamCreated", (event) => {
+      const subscriber = session.subscribe(event.stream, undefined);
       // var subscribers = this.state.subscribers;
       subscriber.on("streamPlaying", (e) => {
-        this.checkSomeoneShareScreen();
+        checkSomeoneShareScreen();
+        console.log("!!상대", subscriber);
         subscriber.videos[0].video.parentElement.classList.remove("custom-class");
       });
       const newUser = new UserModel();
@@ -282,30 +287,32 @@ class VideoRoomComponent extends Component {
       newUser.setConnectionId(event.stream.connection.connectionId);
       newUser.setType("remote");
       const nickname = event.stream.connection.data.split("%")[0];
+      // console.log("여기!!", event.stream.connection.data.split("%")[0]);
       newUser.setNickname(JSON.parse(nickname).clientData);
-      this.remotes.push(newUser);
-      if (this.localUserAccessAllowed) {
-        this.updateSubscribers();
+      newUser.setCountry(JSON.parse(nickname).country);
+      remotes.push(newUser);
+      if (localUserAccessAllowed) {
+        updateSubscribers();
       }
     });
-  }
+  };
 
-  subscribeToStreamDestroyed() {
+  const subscribeToStreamDestroyed = () => {
     // On every Stream destroyed...
-    this.state.session.on("streamDestroyed", (event) => {
+    session.on("streamDestroyed", (event) => {
       // Remove the stream from 'subscribers' array
-      this.deleteSubscriber(event.stream);
+      deleteSubscriber(event.stream);
       setTimeout(() => {
-        this.checkSomeoneShareScreen();
+        checkSomeoneShareScreen();
       }, 20);
       event.preventDefault();
-      this.updateLayout();
+      updateLayout();
     });
-  }
+  };
 
-  subscribeToUserChanged() {
-    this.state.session.on("signal:userChanged", (event) => {
-      let remoteUsers = this.state.subscribers;
+  const subscribeToUserChanged = () => {
+    session.on("signal:userChanged", (event) => {
+      let remoteUsers = subscribers;
       remoteUsers.forEach((user) => {
         if (user.getConnectionId() === event.from.connectionId) {
           const data = JSON.parse(event.data);
@@ -319,155 +326,44 @@ class VideoRoomComponent extends Component {
           if (data.nickname !== undefined) {
             user.setNickname(data.nickname);
           }
+          if (data.country !== undefined) {
+            user.setCountry(data.country);
+          }
           if (data.isScreenShareActive !== undefined) {
             user.setScreenShareActive(data.isScreenShareActive);
           }
         }
       });
-      this.setState(
-        {
-          subscribers: remoteUsers,
-        },
-        () => this.checkSomeoneShareScreen()
-      );
+      isSubscribeToUserChanged = true;
+      setSubscribers(() => {
+        return remoteUsers;
+      });
     });
-  }
+  };
 
-  updateLayout() {
+  const updateLayout = () => {
     setTimeout(() => {
-      this.layout.updateLayout();
+      layout.updateLayout();
     }, 20);
-  }
+  };
 
-  sendSignalUserChanged(data) {
+  const sendSignalUserChanged = (data) => {
     const signalOptions = {
       data: JSON.stringify(data),
       type: "userChanged",
     };
-    this.state.session.signal(signalOptions);
-  }
+    session.signal(signalOptions);
+  };
 
-  toggleFullscreen() {
-    const document = window.document;
-    const fs = document.getElementById("container");
-    if (
-      !document.fullscreenElement &&
-      !document.mozFullScreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.msFullscreenElement
-    ) {
-      if (fs.requestFullscreen) {
-        fs.requestFullscreen();
-      } else if (fs.msRequestFullscreen) {
-        fs.msRequestFullscreen();
-      } else if (fs.mozRequestFullScreen) {
-        fs.mozRequestFullScreen();
-      } else if (fs.webkitRequestFullscreen) {
-        fs.webkitRequestFullscreen();
-      }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
-    }
-  }
+  const closeDialogExtension = () => {
+    setShowExtensionDialog(false);
+  };
 
-  async switchCamera() {
-    try {
-      const devices = await this.OV.getDevices();
-      var videoDevices = devices.filter((device) => device.kind === "videoinput");
-
-      if (videoDevices && videoDevices.length > 1) {
-        var newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== this.state.currentVideoDevice.deviceId
-        );
-
-        if (newVideoDevice.length > 0) {
-          // Creating a new publisher with specific videoSource
-          // In mobile devices the default and first camera is the front one
-          var newPublisher = this.OV.initPublisher(undefined, {
-            audioSource: undefined,
-            videoSource: newVideoDevice[0].deviceId,
-            publishAudio: localUser.isAudioActive(),
-            publishVideo: localUser.isVideoActive(),
-            mirror: true,
-          });
-
-          //newPublisher.once("accessAllowed", () => {
-          await this.state.session.unpublish(this.state.localUser.getStreamManager());
-          await this.state.session.publish(newPublisher);
-          this.state.localUser.setStreamManager(newPublisher);
-          this.setState({
-            currentVideoDevice: newVideoDevice,
-            localUser: localUser,
-          });
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  screenShare() {
-    const videoSource = navigator.userAgent.indexOf("Firefox") !== -1 ? "window" : "screen";
-    const publisher = this.OV.initPublisher(
-      undefined,
-      {
-        videoSource: videoSource,
-        publishAudio: localUser.isAudioActive(),
-        publishVideo: localUser.isVideoActive(),
-        mirror: false,
-      },
-      (error) => {
-        if (error && error.name === "SCREEN_EXTENSION_NOT_INSTALLED") {
-          this.setState({ showExtensionDialog: true });
-        } else if (error && error.name === "SCREEN_SHARING_NOT_SUPPORTED") {
-          alert("Your browser does not support screen sharing");
-        } else if (error && error.name === "SCREEN_EXTENSION_DISABLED") {
-          alert("You need to enable screen sharing extension");
-        } else if (error && error.name === "SCREEN_CAPTURE_DENIED") {
-          alert("You need to choose a window or application to share");
-        }
-      }
-    );
-
-    publisher.once("accessAllowed", () => {
-      this.state.session.unpublish(localUser.getStreamManager());
-      localUser.setStreamManager(publisher);
-      this.state.session.publish(localUser.getStreamManager()).then(() => {
-        localUser.setScreenShareActive(true);
-        this.setState({ localUser: localUser }, () => {
-          this.sendSignalUserChanged({ isScreenShareActive: localUser.isScreenShareActive() });
-        });
-      });
-    });
-    publisher.on("streamPlaying", () => {
-      this.updateLayout();
-      publisher.videos[0].video.parentElement.classList.remove("custom-class");
-    });
-  }
-
-  closeDialogExtension() {
-    this.setState({ showExtensionDialog: false });
-  }
-
-  stopScreenShare() {
-    this.state.session.unpublish(localUser.getStreamManager());
-    this.connectWebCam();
-  }
-
-  checkSomeoneShareScreen() {
+  const checkSomeoneShareScreen = () => {
     let isScreenShared;
     // return true if at least one passes the test
     isScreenShared =
-      this.state.subscribers.some((user) => user.isScreenShareActive()) ||
-      localUser.isScreenShareActive();
+      subscribers.some((user) => user.isScreenShareActive()) || localUser.isScreenShareActive();
     const openviduLayoutOptions = {
       maxRatio: 3 / 2,
       minRatio: 9 / 16,
@@ -480,147 +376,288 @@ class VideoRoomComponent extends Component {
       bigFirst: true,
       animate: true,
     };
-    this.layout.setLayoutOptions(openviduLayoutOptions);
-    this.updateLayout();
-  }
+    layout.setLayoutOptions(openviduLayoutOptions);
+    updateLayout();
+  };
 
-  toggleChat(property) {
+  const toggleChat = (property) => {
     let display = property;
 
     if (display === undefined) {
-      display = this.state.chatDisplay === "none" ? "block" : "none";
+      display = chatDisplay === "none" ? "block" : "none";
     }
     if (display === "block") {
-      this.setState({ chatDisplay: display, messageReceived: false });
+      setChatDisplay(display);
+      setMessageReceived(false);
     } else {
       console.log("chat", display);
-      this.setState({ chatDisplay: display });
+      setChatDisplay(display);
     }
-    this.updateLayout();
-  }
+    updateLayout();
+  };
 
-  checkNotification(event) {
-    this.setState({
-      messageReceived: this.state.chatDisplay === "none",
-    });
-  }
-  checkSize() {
-    if (document.getElementById("layout").offsetWidth <= 700 && !this.hasBeenUpdated) {
-      this.toggleChat("none");
-      this.hasBeenUpdated = true;
+  const checkSize = () => {
+    if (document.getElementById("layout").offsetWidth <= 700 && !hasBeenUpdated) {
+      toggleChat("none");
+      hasBeenUpdated = true;
     }
-    if (document.getElementById("layout").offsetWidth > 700 && this.hasBeenUpdated) {
-      this.hasBeenUpdated = false;
+    if (document.getElementById("layout").offsetWidth > 700 && hasBeenUpdated) {
+      hasBeenUpdated = false;
     }
-  }
+  };
 
-  render() {
-    const mySessionId = this.state.mySessionId;
-    const localUser = this.state.localUser;
-    var chatDisplay = { display: this.state.chatDisplay };
+  const getToken = async () => {};
 
-    return (
-      <div className="container" id="container">
-        <DialogExtensionComponent
-          showDialog={this.state.showExtensionDialog}
-          cancelClicked={this.closeDialogExtension}
-        />
-
-        <div id="layout" className="bounds">
-          {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-            <div className="OT_root OT_publisher custom-class" id="localUser">
-              <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
-            </div>
-          )}
-          {this.state.subscribers.map((sub, i) => (
-            <div key={i} className="OT_root OT_publisher custom-class" id="remoteUsers">
-              <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  /**
-   * --------------------------
-   * SERVER-SIDE RESPONSIBILITY
-   * --------------------------
-   * These methods retrieve the mandatory user token from OpenVidu Server.
-   * This behaviour MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
-   * the API REST, openvidu-java-client or openvidu-node-client):
-   *   1) Initialize a session in OpenVidu Server	(POST /api/sessions)
-   *   2) Generate a token in OpenVidu Server		(POST /api/tokens)
-   *   3) The token must be consumed in Session.connect() method
-   */
-
-  getToken() {
-    return this.createSession(this.state.mySessionId).then((sessionId) =>
-      this.createToken(sessionId)
-    );
-  }
-
-  createSession(sessionId) {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({ customSessionId: sessionId });
-      axios
-        .post(this.OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
-          headers: {
-            Authorization: "Basic " + btoa("OPENVIDUAPP:" + this.OPENVIDU_SERVER_SECRET),
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log("CREATE SESION", response);
-          resolve(response.data.id);
-        })
-        .catch((response) => {
-          var error = Object.assign({}, response);
-          if (error.response && error.response.status === 409) {
-            resolve(sessionId);
-          } else {
-            console.log(error);
-            console.warn(
-              "No connection to OpenVidu Server. This may be a certificate error at " +
-                this.OPENVIDU_SERVER_URL
-            );
-            if (
-              window.confirm(
-                'No connection to OpenVidu Server. This may be a certificate error at "' +
-                  this.OPENVIDU_SERVER_URL +
-                  '"\n\nClick OK to navigate and accept it. ' +
-                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                  this.OPENVIDU_SERVER_URL +
-                  '"'
-              )
-            ) {
-              window.location.assign(this.OPENVIDU_SERVER_URL + "/accept-certificate");
-            }
-          }
-        });
+  const sendSignalReady = () => {
+    console.log("!!내준비");
+    session.signal({
+      data: JSON.stringify({
+        streamId: localUser.getStreamManager().stream.streamId,
+      }),
+      type: "ready",
     });
-  }
+  };
 
-  createToken(sessionId) {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({});
-      axios
-        .post(
-          this.OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection",
-          data,
-          {
-            headers: {
-              Authorization: "Basic " + btoa("OPENVIDUAPP:" + this.OPENVIDU_SERVER_SECRET),
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((response) => {
-          console.log("TOKEN", response);
-          resolve(response.data.token);
-        })
-        .catch((error) => reject(error));
+  const subscribeToReady = () => {
+    session.on("signal:ready", (event) => {
+      const streamId = JSON.parse(event.data).streamId;
+      console.log(streamId, localUser.getStreamManager().stream.streamId);
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
+        console.log("!!상대 준비");
+        setReady((current) => current + 1);
+      }
     });
-  }
+  };
+
+  const sendSignalStart = () => {
+    console.log("!!시작보냄");
+    session.signal({
+      data: JSON.stringify({
+        streamId: localUser.getStreamManager().stream.streamId,
+      }),
+      type: "start",
+    });
+  };
+
+  const subscribeToStart = () => {
+    session.on("signal:start", (event) => {
+      const streamId = JSON.parse(event.data).streamId;
+      console.log(streamId, localUser.getStreamManager().stream.streamId);
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
+        console.log("!!상대 시작");
+        start();
+      }
+    });
+  };
+
+  const sendSignalHp = (hp) => {
+    session.signal({
+      data: JSON.stringify({
+        streamId: localUser.getStreamManager().stream.streamId,
+        hp: hp,
+      }),
+      type: "hp",
+    });
+  };
+
+  const subscribeToHp = () => {
+    session.on("signal:hp", (event) => {
+      const hp = JSON.parse(event.data).hp;
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
+        console.log("!!상대 HP", hp);
+        otherHP = hp;
+        setRightPercent(hp);
+      }
+    });
+  };
+
+  const sendSignalDamage = (damage) => {
+    console.log("데미지!!", damage);
+    session.signal({
+      data: JSON.stringify({
+        streamId: localUser.getStreamManager().stream.streamId,
+        damage: damage,
+      }),
+      type: "damage",
+    });
+  };
+
+  const subscribeToDamage = () => {
+    session.on("signal:damage", (event) => {
+      const damage = JSON.parse(event.data).damage;
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
+        console.log("!!상대 Damage", damage);
+        setOtherAttack(() => damage);
+        const clearOtherAttack = setInterval(() => {
+          setOtherAttack(0);
+          clearInterval(clearOtherAttack);
+        }, 1000);
+      }
+    });
+  };
+
+  const sendSignalAttack = (attackType) => {
+    console.log("공격함!!", attackType);
+    session.signal({
+      data: JSON.stringify({
+        streamId: localUser.getStreamManager().stream.streamId,
+        attackType: attackType,
+      }),
+      type: "attack",
+    });
+  };
+
+  const subscribeToAttack = () => {
+    session.on("signal:attack", (event) => {
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
+        console.log("!!상대 공격");
+        const attackType = JSON.parse(event.data).attackType;
+        let damage = damages[attackType];
+        if (myDefence !== 0) {
+          //myDefence === attackType % 10
+          //방어성공
+          damage = Math.floor(damage * 0.3);
+        }
+        // setOtherAttack((current) => attackType);
+        myHP -= damage;
+        sendSignalHp(myHP);
+        sendSignalDamage(damage);
+        setLeftPercent(myHP);
+        setMyAttack(damage);
+        const clearAttack = setInterval(() => {
+          setMyAttack(0);
+          clearInterval(clearAttack);
+        }, 1000);
+        console.log("!!내HP", leftPercent);
+      }
+    });
+  };
+
+  const sendSignalDefence = (defenceType) => {
+    console.log("방어함!!", defenceType);
+    session.signal({
+      data: JSON.stringify({
+        streamId: localUser.getStreamManager().stream.streamId,
+        defenceType: defenceType,
+      }),
+      type: "defence",
+    });
+  };
+
+  const subscribeToDefence = () => {
+    session.on("signal:defence", (event) => {
+      const defenceType = JSON.parse(event.data).defenceType;
+      const streamId = JSON.parse(event.data).streamId;
+      if (streamId !== localUser.getStreamManager().stream.streamId) {
+        console.log("!!상대 방어");
+        setOtherDefence(() => defenceType);
+      }
+    });
+  };
+
+  const attack = (attackType) => {
+    sendSignalAttack(attackType);
+    setMyDefence(() => 0);
+    sendSignalDefence(0);
+    // setMyAttack(() => attackType);
+  };
+
+  const defence = (defenceType) => {
+    sendSignalDefence(defenceType);
+    setMyDefence(() => defenceType);
+  };
+
+  const reset = () => {
+    setMyDefence(() => 0);
+    sendSignalDefence(0);
+  };
+
+  useEffect(() => {
+    if (ready === 2) {
+      start();
+    }
+  }, [ready]);
+
+  const startMe = () => {
+    setReady((current) => current + 1);
+    sendSignalReady();
+  };
+
+  const start = () => {
+    if (!isTimer && !isEnd) {
+      // sendSignalStart();
+      setIsTimer(true);
+    }
+  };
+
+  const end = () => {
+    setIsEnd(true);
+  };
+
+  useEffect(() => {
+    if (isEnd) {
+      let result = false;
+      if (leftPercent === rightPercent) {
+        if (myUserName > otherNick) {
+          result = true;
+        }
+      } else if (leftPercent > rightPercent) {
+        result = true;
+      }
+      console.log("!!결과", leftPercent, rightPercent);
+      setIsWin(result);
+      setResult((current) => current + 1);
+    }
+  }, [isEnd]);
+
+  // useEffect(() => {
+  //   if (isEnd && result === 1) {
+  //     const data = axiosInstance.post
+  //   }
+  // }, [isEnd, result]);
+
+  const newLocalUser = myLocalUser;
+
+  return (
+    <>
+      <GyeorugiStageTempalte
+        dialog={
+          <DialogExtensionComponent
+            showDialog={showExtensionDialog}
+            cancelClicked={closeDialogExtension}
+          />
+        }
+        localUser={newLocalUser}
+        subscribers={subscribers}
+        guide={
+          t("language") === "KOR"
+            ? "상대방에 대한 예의를 갖추고 기본 준비 자세를 취하면 겨루기가 시작됩니다."
+            : "The competition begins when you take the basic ready position politely."
+        }
+        isTimer={isTimer}
+        setIsTimer={setIsTimer}
+        leftPercent={leftPercent}
+        rightPercent={rightPercent}
+        answerAttack={answerAttack}
+        answerDefence={answerDefence}
+        isEnd={isEnd}
+        isStart={isTimer}
+        start={startMe}
+        attack={attack}
+        defence={defence}
+        end={end}
+        reset={reset}
+        myDefence={myDefence}
+        otherDefence={otherDefence}
+        myAttack={myAttack}
+        otherAttack={otherAttack}
+        isRed={info.isHost}
+      />
+    </>
+  );
 }
+
 export default VideoRoomComponent;
