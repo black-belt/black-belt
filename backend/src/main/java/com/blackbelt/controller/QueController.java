@@ -135,13 +135,16 @@ public class QueController {
 			
 			RBattleRoom other= rBattleRoomRepository.matchRBattle(userId, userTier);
 			if(other.getUserId()!=null && !(other.getUserId().equals(userId))) {
-				resultMap.put("otherId",other.getUserId());
+				resultMap.put("isMatched",1);
+				resultMap.put("hostId",userId);
+				resultMap.put("guestId",other.getUserId());
 				resultMap.put("roomId", UUID.randomUUID().toString());			// 따로 저장 x
+				resultMap.put("isHost",1);
 				resultMap.put("msg", "매칭되었습니다!");
 				status = HttpStatus.OK;
 			}else {
 				rBattleRoomRepository.queueRBattleRoom(userId, userTier);
-				resultMap.put("other", "");
+				resultMap.put("isMatched",0);
 				resultMap.put("msg", "매칭 상대를 찾는 중입니다(현재는 없음)");
 				status = HttpStatus.ACCEPTED;
 			}

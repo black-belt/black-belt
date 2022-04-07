@@ -87,7 +87,7 @@ public class BattleController {
 			Optional<UserDto> hostUser = userRepo.findById(hostId);
 			Optional<UserDto> guestUser = userRepo.findById(guestId);
 			if(isHost) {
-				if(!hostUser.isPresent()) { 
+				if(!hostUser.isEmpty()) { 
 					hostUser.get().setUserState('B');
 					userRepo.save(hostUser.get());
 				}else {
@@ -96,7 +96,7 @@ public class BattleController {
 					return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.FAILED_DEPENDENCY);
 				}
 			}else {
-				if(!guestUser.isPresent()) { 
+				if(!guestUser.isEmpty()) { 
 					guestUser.get().setUserState('B');
 					userRepo.save(guestUser.get());
 				}else {
