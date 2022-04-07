@@ -11,8 +11,6 @@ export const BackgroundImg = styled.img`
   z-index: -1;
 `;
 export const Layout = styled.div`
-  /* background-color: red; */
-
   padding: 0 12%;
   width: 100vw;
   height: 100vh;
@@ -24,7 +22,6 @@ export const Layout = styled.div`
 `;
 
 export const ProfileBox = styled.div`
-  /* background-color: blue; */
   padding-top: 92px;
   width: 30%;
 
@@ -92,30 +89,22 @@ export const TierImg = styled.img`
 `;
 
 export const MyInfo = styled.div`
-  /* background-color: yellow; */
   padding-top: 92px;
   width: 58%;
 `;
 
 export const Certification = styled.div`
-  /* background-color: red; */
   padding-top: 8%;
   height: 48%;
 `;
 
 export const GyeorugiInfo = styled.div`
-  /* background-color: blue; */
-  /* margin-top: 2rem; */
-  /* padding-top: 2rem; */
-  /* height: 52%; */
   margin-top: 2rem;
   padding: 1rem 1.5rem;
 
   border-radius: 6px;
 
   background-color: rgba(248, 249, 250, 0.15);
-  /* backdrop-filter: blur(4px) saturate(10%);
-  -webkit-backdrop-filter: blur(4px) saturate(10%); */
 `;
 
 export const GyeorugiTR = styled.div`
