@@ -74,7 +74,7 @@
 
 <br>
 
-![아키텍처 구성도](./assets/blackBeltArchitecture.png)
+![아키텍처 구성도](./README.assets/blackBeltArchitecture.png)
 
 <br>
 
