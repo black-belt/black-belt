@@ -13,7 +13,6 @@ import {
   Logo,
   NavItemBox,
   NavItemBtn,
-  // NavItemLink,
   ProfileBox,
   ProfileImg,
   ProfileImgBox,
@@ -62,7 +61,6 @@ function Navbar() {
   return (
     <Layout ref={dropdownRef}>
       <Logo src={t("logo url")} alt="" onClick={() => navigate("/")} />
-
       {isLogin() ? (
         <Suspense fallback={<div>Loading ...</div>}>
           {user && (
