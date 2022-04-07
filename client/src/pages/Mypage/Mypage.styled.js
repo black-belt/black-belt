@@ -86,7 +86,7 @@ export const UserEmail = styled.div`
 `;
 
 export const TierImg = styled.img`
-  filter: grayscale(100%) brightness(40%);
+  filter: grayscale(100%) brightness(30%);
   padding-top: 3rem;
   width: 65%;
 `;

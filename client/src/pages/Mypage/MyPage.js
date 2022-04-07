@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { changeNickname, gyeorugiMsg, userInfo } from "recoils";
+import { changeNickname, userInfo } from "recoils";
 import { Carousel } from "3d-react-carousal";
 import {
   BackgroundImg,
@@ -55,24 +55,12 @@ function MyPage() {
     }
   }, []);
 
-  // const saveFileImg = (e) => {
-  //   setFileImg(URL.createObjectURL(e.target.files[0]));
-  //   setProfileImg(e.target.files[0]);
-  // };
-
   let imgData = new FormData();
   imgData.append("uploadFile", profileImg);
 
-  // useEffect(() => {
-  //   imgData.append("uploadFile", profileImg);
-  // }, [profileImg]);
-
   useEffect(() => {
     if (profileImg !== defaultImg) {
-      axiosImage.post("/api/user/uploadprofile", imgData).then((res) => {
-        console.log(res);
-        // window.location.reload();
-      });
+      axiosImage.post("/api/user/uploadprofile", imgData);
     }
   }, [profileImg]);
 
@@ -81,24 +69,6 @@ function MyPage() {
       console.log("selected");
       setProfileImg(e.target.files[0]);
       imgData.append("uploadFile", profileImg);
-      //   axiosImage
-      //     .post("/api/user/uploadprofile", {
-      //       imgData,
-      //     })
-      //     .then((res) => {
-      //       console.log(res);
-      //     });
-      //   // }
-      //   if (profileImg) {
-      //     console.log("axios");
-      //     axiosImage
-      //       .post("/api/user/uploadprofile", {
-      //         profileImg,
-      //       })
-      //       .then((res) => {
-      //         console.log(res);
-      //       });
-      //   }
     }
     const reader = new FileReader();
     reader.onload = () => {
@@ -109,12 +79,6 @@ function MyPage() {
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  // const uploadImg = async () => {
-  //   const res = await axiosImage.post("/api/user/uploadprofile", {
-  //     profileImg,
-  //   });
-  //   console.log(res);
-  // };
   const slides = [
     <img src="/certifications/belt1.png" alt="" />,
     <img src="/certifications/belt2.png" alt="" />,
