@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import GyeorugiStage from "./pages/Gyeorugi/GyeorugiStage";
 import NormalLobby from "./pages/Gyeorugi/Normal/NormalLobby";
+import RankLobby from "./pages/Gyeorugi/Rank/RankLobby";
 import MainPage from "./pages/MainPage/MainPage";
 import MyPage from "./pages/Mypage/MyPage";
 import Basics from "./pages/Practice/Basics";
@@ -44,11 +45,19 @@ function App() {
                   <Route path="promotion" element={<PromotionStage />} />
 
                   <Route path="gyeorugi/normal" element={<NormalLobby />} />
+                  <Route path="gyeorugi/rank" element={<RankLobby />} />
+
                   <Route path="mypage" element={<MyPage />} />
                 </Route>
                 <Route path="gyeorugi/stage" element={<GyeorugiStage />} />
-                <Route path="gyeorugi/normal/stage" element={<GyeorugiNormalStage />} />
-                <Route path="gyeorugi/rank/stage" element={<GyeorugiRankStage />} />
+                <Route
+                  path="gyeorugi/normal/stage"
+                  element={<GyeorugiNormalStage />}
+                />
+                <Route
+                  path="gyeorugi/rank/stage"
+                  element={<GyeorugiRankStage />}
+                />
               </Routes>
             </BrowserRouter>
           </React.Suspense>

@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import isLogin from "utils/isLogin";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
-import { message, userInfo } from "recoils";
+import { loginModalState, message, userInfo } from "recoils";
 
 import SockJs from "sockjs-client";
 import StompJs from "stompjs";
@@ -25,6 +25,7 @@ import StompJs from "stompjs";
 function MainPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const loginModal = useSetRecoilState(loginModalState);
   const userId = useRecoilValue(userInfo);
   const msg = useSetRecoilState(message);
   const resetMsg = useResetRecoilState(message);
@@ -48,6 +49,14 @@ function MainPage() {
     }
   };
 
+  const FilterUser = (url) => {
+    if (isLogin()) {
+      navigate(url);
+    } else {
+      loginModal("login");
+    }
+  };
+
   useEffect(() => {
     if (isLogin()) {
       StartWS(userId.userId);
@@ -59,6 +68,7 @@ function MainPage() {
       title: "practice mode",
       description: "practice mode explanation",
       description2: "practice mode explanation2",
+      image: "/images/main/basics.png",
       button: [
         {
           name: "basics",
@@ -78,6 +88,7 @@ function MainPage() {
       title: "promotion test",
       description: "promotion test explanation",
       description2: "promotion test explanation2",
+      image: "/images/main/practice.png",
       button: [
         {
           name: "combos",
@@ -89,6 +100,7 @@ function MainPage() {
       title: "gyeorugi",
       description: "gyeorugi explanation",
       description2: "gyeorugi explanation2",
+      image: "/images/main/gyeorugi.png",
       button: [
         {
           name: "normal",
@@ -96,7 +108,7 @@ function MainPage() {
         },
         {
           name: "rank",
-          url: "",
+          url: "gyeorugi/rank",
         },
       ],
     },
@@ -121,7 +133,7 @@ function MainPage() {
                   {slide["button"].map((menus) => (
                     <InButton
                       key={menus.name}
-                      onClick={() => navigate(menus.url)}
+                      onClick={() => FilterUser(menus.url)}
                     >
                       {t(menus.name)}
                     </InButton>
@@ -129,7 +141,7 @@ function MainPage() {
                 </ButtonBox>
               </TextBox>
               <ImgBox>
-                <img src="/images/practice.png" alt="" />
+                <img src={slide.image} alt="" />
               </ImgBox>
             </Carousel>
           ))}

@@ -165,24 +165,36 @@ public class BattleService {
     	int afterScore = score;
     	if(winOrLose == 'D') {
     		resultMap.put("tierId", user.get().getTierId());
+    		int drawCnt = Integer.parseInt(user.get().getUserDraw());
+    		user.get().setUserDraw(drawCnt+1 + "");
         	resultMap.put("userScore", score);
     		return resultMap;
     	}
     	else if(winOrLose == 'W') {
-    		if(isRed)
+    		if(isRed) {
     			afterScore += 50;
+    			int winCnt = Integer.parseInt(user.get().getUserWin());
+    			user.get().setUserWin(winCnt+1 + "");
+    		}
     		else {
     			afterScore -= 50;
     			afterScore = afterScore < 500 ? 500 : afterScore;
+    			int loseCnt = Integer.parseInt(user.get().getUserLose());
+    			user.get().setUserLose(loseCnt + 1 + "");
     		}
     	}
     	else if(winOrLose == 'L') {
     		if(isRed) {
     			afterScore -= 50;
     			afterScore = afterScore < 500 ? 500 : afterScore;
+    			int loseCnt = Integer.parseInt(user.get().getUserLose());
+    			user.get().setUserLose(loseCnt + 1 + "");
     		}
-    		else
+    		else {
     			afterScore += 50;
+    			int winCnt = Integer.parseInt(user.get().getUserWin());
+    			user.get().setUserWin(winCnt+1 + "");
+    		}
     	}
     	char tierUp = 'N';
     	
@@ -226,6 +238,56 @@ public class BattleService {
     	userRepo.save(user.get());
     	resultMap.put("tierId", user.get().getTierId());
     	resultMap.put("userScore", afterScore);
+    	return resultMap;
+    }
+    public Map<String, Object> manageBattleHistoryUnranked(BattleHistoryDto bhd, char winOrLose, boolean isRed) {
+    	Map<String, Object> resultMap = new HashMap<>();
+    	// 1-1. 회원 겨루기 가능 상태로 돌리기
+    	String id = (isRed) ? bhd.getMyId() : bhd.getEnemyId();
+    	Optional<UserDto> user = userRepo.findById(id);
+    	user.get().setUserState('Y');
+    	// 2. 방에 종료날짜, 승패여부 업뎃
+    	if(isRed) {
+    		Date date = new Date();
+    		Calendar cal = Calendar.getInstance();
+    		cal.setTime(date);
+    		cal.add(Calendar.HOUR, +9);
+    		Date koreaDate = cal.getTime();
+    		
+    		bhd.setEndTime(koreaDate);
+    		bhd.setRedWinLoseDraw(winOrLose);
+    		battleRepo.save(bhd);
+    	}
+    	// 3. 유저 별 승패 업뎃
+    	int score = Integer.parseInt(user.get().getUserScore());
+    	if(winOrLose == 'D') {
+    		int drawCnt = Integer.parseInt(user.get().getUserDraw());
+    		user.get().setUserDraw(drawCnt+1 + "");
+    	}
+    	else if(winOrLose == 'W') {
+    		if(isRed) {
+    			int winCnt = Integer.parseInt(user.get().getUserWin());
+    			user.get().setUserWin(winCnt+1 + "");
+    		}
+    		else {
+    			int loseCnt = Integer.parseInt(user.get().getUserLose());
+    			user.get().setUserLose(loseCnt + 1 + "");
+    		}
+    	}
+    	else if(winOrLose == 'L') {
+    		if(isRed) {
+    			int loseCnt = Integer.parseInt(user.get().getUserLose());
+    			user.get().setUserLose(loseCnt + 1 + "");
+    		}
+    		else {
+    			int winCnt = Integer.parseInt(user.get().getUserWin());
+    			user.get().setUserWin(winCnt+1 + "");
+    		}
+    	}
+    	
+    	userRepo.save(user.get());
+    	resultMap.put("tierId", user.get().getTierId());
+    	resultMap.put("userScore", score);
     	return resultMap;
     }
 }
