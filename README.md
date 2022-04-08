@@ -47,22 +47,26 @@
 ## 1. 프론트
 
 # 서비스 소개  
-### 메인페이지
-![메인페이지](https://user-images.githubusercontent.com/67628725/162353823-01faf355-ec52-4404-ba73-d09e30f637a1.gif)  
+### a) 메인페이지
+ ![메인페이지](https://user-images.githubusercontent.com/67628725/162373797-3ebd14c9-af94-44f2-8f5c-f55c24ca27b1.gif)  
 
-### 연습모드  
-#### 기본동작
-![기본동작](https://user-images.githubusercontent.com/67628725/162353919-a5bdbad7-0b05-48b7-8c15-d55ac00c1811.gif)  
+### b) 연습모드  
+##### i) 기본동작
+ ![기본동작](https://user-images.githubusercontent.com/67628725/162373820-7bf5038f-36a6-4e6f-9a5c-5aa000e03a64.gif)  
   
-#### 연결동작  
-![연결동작](https://user-images.githubusercontent.com/67628725/162353937-2fb67ce5-21c0-4d12-a007-69eed428cac5.gif)  
+##### ii)연결동작+품새  
+  ![연결동작](https://user-images.githubusercontent.com/67628725/162373826-7df9dc07-5f34-4ce4-99f2-40270bd700c8.gif)  
   
+### c) 겨루기
+![겨루기시연](https://user-images.githubusercontent.com/67628725/162374002-2c09d55b-b4e0-46e7-b165-af8423d826a0.gif)  
+
   
- ### 마이페이지  
- ![마이페이지_1](https://user-images.githubusercontent.com/67628725/162354129-31ea5577-54b0-4dd8-b53a-4bd4a6f42097.gif)  
+### c)마이페이지  
+![마이페이지](https://user-images.githubusercontent.com/67628725/162374013-01e18f18-9203-492a-bea3-ac477c5141fa.gif)  
+
  
- ### 번역기능  
- ![번역](https://user-images.githubusercontent.com/67628725/162354140-5a7dec28-29ea-4cab-934c-a5ffbd87bc34.gif)
+### d)번역기능  
+![번역](https://user-images.githubusercontent.com/67628725/162374023-3c29aa64-4081-4c98-9487-800dd15c6509.gif)  
 
 
 ## 2. 백엔드
