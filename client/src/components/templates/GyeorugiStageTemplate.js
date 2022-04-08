@@ -96,14 +96,14 @@ function GyeorugiStageTempalte({
                 streamId={sub.streamManager.stream.streamId}
                 start={start}
               />
-              {/* {otherDefence !== 0 && (
+              {otherDefence !== 0 && (
                 <OtherDefence defence={otherDefence} src="/images/shield.png" />
               )}
               {otherAttack !== 0 && (
                 <Attack left={rightLeft} top={rightTop}>
                   -{otherAttack}
                 </Attack>
-              )} */}
+              )}
             </RemoteUser>
           ))}
         </VideoLayout>

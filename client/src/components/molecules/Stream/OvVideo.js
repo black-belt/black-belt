@@ -74,14 +74,11 @@ function OvVideoComponent({
   const setWebcam = async () => {
     let modelURL, metadataURL;
     if (isRed) {
-      if (isRed === "true") {
-        modelURL = `/models/gyeorugi/red/model.json`;
-        metadataURL = `/models/gyeorugi/red/metadata.json`;
-      } else {
-        modelURL = `/models/gyeorugi/blue/model.json`;
-        metadataURL = `/models/gyeorugi/blue/metadata.json`;
-      }
+      console.log("red model");
+      modelURL = `/models/gyeorugi/red/model.json`;
+      metadataURL = `/models/gyeorugi/red/metadata.json`;
     } else {
+      console.log("blue model");
       modelURL = `/models/gyeorugi/blue/model.json`;
       metadataURL = `/models/gyeorugi/blue/metadata.json`;
     }
@@ -98,7 +95,7 @@ function OvVideoComponent({
     await webCamElement.play();
 
     let cnt = 0;
-    if (!isStart) {
+    if (!isStart && start) {
       while (cnt < 5) {
         cnt += await isReady();
       }

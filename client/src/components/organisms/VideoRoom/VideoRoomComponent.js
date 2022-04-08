@@ -613,7 +613,6 @@ function VideoRoomComponent({ setResult, setIsWin, info, token, otherNick }) {
   //     const data = axiosInstance.post
   //   }
   // }, [isEnd, result]);
-
   const newLocalUser = myLocalUser;
 
   return (
@@ -649,7 +648,7 @@ function VideoRoomComponent({ setResult, setIsWin, info, token, otherNick }) {
         otherDefence={otherDefence}
         myAttack={myAttack}
         otherAttack={otherAttack}
-        isRed={info.isHost}
+        isRed={info.isHost === "true"}
       />
     </>
   );
