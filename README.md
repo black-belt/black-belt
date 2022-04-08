@@ -58,8 +58,8 @@
   ![연결동작](https://user-images.githubusercontent.com/67628725/162373826-7df9dc07-5f34-4ce4-99f2-40270bd700c8.gif)  
   
 ### c) 겨루기
-![겨루기시연](https://user-images.githubusercontent.com/67628725/162374002-2c09d55b-b4e0-46e7-b165-af8423d826a0.gif)  
-
+![겨루기신청](https://user-images.githubusercontent.com/67628725/162375948-7a05f544-af86-44a2-b4d9-8d1f588d13de.gif)  
+![겨루기배틀](https://user-images.githubusercontent.com/67628725/162375953-de380490-4eca-44ff-9886-24777b72ae69.gif)
   
 ### c)마이페이지  
 ![마이페이지](https://user-images.githubusercontent.com/67628725/162374013-01e18f18-9203-492a-bea3-ac477c5141fa.gif)  
