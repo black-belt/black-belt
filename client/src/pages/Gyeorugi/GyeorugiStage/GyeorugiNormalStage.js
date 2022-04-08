@@ -73,7 +73,7 @@ function GyeorugiNormalStage() {
 
   const getResultData = async () => {
     const data = await axiosInstance.post("/api/battle/end", {
-      team: state.isHost ? "red" : "blue",
+      team: state.isHost === "1" ? "red" : "blue",
       redWinLoseDraw: isWin ? "W" : "L",
       battleSeq: info.battleSeq,
       token: info.token,

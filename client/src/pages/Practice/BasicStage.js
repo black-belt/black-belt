@@ -78,6 +78,7 @@ function BasicStage() {
   const restartFunc = () => {
     setIsLevelUp(false);
     setIsPass(false);
+    setIsStar(false);
   };
   const homeFunc = () => {
     navigate("/practice/basics");
