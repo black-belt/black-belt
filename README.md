@@ -39,6 +39,13 @@
 | :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :black_square_button: Spring/Springboot |
 | | | :black_square_button: Kotlin | :black_square_button: Next.js |
 
+
+
+
+# 프로젝트 상세 설명
+
+## 1. 프론트
+
 # 서비스 소개  
 ### 메인페이지
 ![메인페이지](https://user-images.githubusercontent.com/67628725/162353823-01faf355-ec52-4404-ba73-d09e30f637a1.gif)  
@@ -57,14 +64,6 @@
  ### 번역기능  
  ![번역](https://user-images.githubusercontent.com/67628725/162354140-5a7dec28-29ea-4cab-934c-a5ffbd87bc34.gif)
 
-
-
-
-
-# 프로젝트 상세 설명
-
-## 1. 프론트
- // 여기에 각자한거 추가 엄청 긴거는 따로 빼서 하고 알맞게 메인에서 보여줬으면 하는것만 넣기!!!
 
 ## 2. 백엔드
 ### 웹소켓
