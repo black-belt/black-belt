@@ -1,20 +1,14 @@
 # 검은띠 휘날리며
 
+![BLACKBELT](https://user-images.githubusercontent.com/67628725/162347404-c4a0e973-aadd-4d3c-8167-aa6766ec69bf.png)
 
-## 카테고리
+## BlackBelt?  
+`BlackBelt`는 우리문화 `태권도`를 세계에 홍보하기 위한 웹 기반 `AI 체험형 콘텐츠` 서비스입니다.  
+집에서 쉽고 재미있게 태권도를 학습해보세요! AI pose detection 기술로 자연스럽게 올바른 태권도 동작을 따라하도록 유도합니다.    
+충분한 연습 후에는, 국기원과 동일한 방식으로 심사를 받아 단증을 획득할 수 있습니다. 겨루기로 원하는 상대와 1:1 배틀을 벌여 실력을 가릴 수도 있습니다.  태권도 짱이 되고 싶다면 BlackBelt로 수련을 시작하세요!    
 
-| Application | Domain | Language | Framework |
-| ---- | ---- | ---- | ---- |
-| :white_check_mark: Desktop Web | :white_check_mark: AI | :white_check_mark: JavaScript | :black_square_button: Vue.js |
-| :black_square_button: Mobile Web | :black_square_button: Big Data | :black_square_button: TypeScript | :white_check_mark: React |
-| :black_square_button: Responsive Web | :black_square_button: Blockchain | :black_square_button: C/C++ | :black_square_button: Angular |
-| :black_square_button: Android App | :black_square_button: IoT | :black_square_button: C# | :white_check_mark: Node.js |
-| :black_square_button: iOS App | :black_square_button: AR/VR/Metaverse | :black_square_button: ​Python | :black_square_button: Flask/Django |
-| :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :black_square_button: Spring/Springboot |
-| | | :black_square_button: Kotlin | :black_square_button: Next.js |
-
-
-* 프로젝트명: 검은띠 휘날리며
+## 게요  
+* 프로젝트명: 검은띠 휘날리며[black belt]
 * 서비스 특징: AI 모션인식을 통한 태권도 학습 web service
 * 주요 기능
   - 태권도 동작 학습 모델 기반 태권도 연습모드 및 심사
@@ -31,6 +25,24 @@
   - openvidu - webRtc
 * 배포 환경
   - URL: https://j6a506.p.ssafy.io//
+
+
+## 카테고리
+
+| Application | Domain | Language | Framework |
+| ---- | ---- | ---- | ---- |
+| :white_check_mark: Desktop Web | :white_check_mark: AI | :white_check_mark: JavaScript | :black_square_button: Vue.js |
+| :black_square_button: Mobile Web | :black_square_button: Big Data | :black_square_button: TypeScript | :white_check_mark: React |
+| :black_square_button: Responsive Web | :black_square_button: Blockchain | :black_square_button: C/C++ | :black_square_button: Angular |
+| :black_square_button: Android App | :black_square_button: IoT | :black_square_button: C# | :white_check_mark: Node.js |
+| :black_square_button: iOS App | :black_square_button: AR/VR/Metaverse | :black_square_button: ​Python | :black_square_button: Flask/Django |
+| :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :black_square_button: Spring/Springboot |
+| | | :black_square_button: Kotlin | :black_square_button: Next.js |
+
+# 서비스 소개  
+### 메인페이지
+
+
 
 # 프로젝트 상세 설명
 
