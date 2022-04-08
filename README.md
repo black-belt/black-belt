@@ -50,7 +50,68 @@
  // 여기에 각자한거 추가 엄청 긴거는 따로 빼서 하고 알맞게 메인에서 보여줬으면 하는것만 넣기!!!
 
 ## 2. 백엔드
- // 여기에 각자한거 추가
+ ## 웹소켓
+
+<br>
+
+### 개요
+
+1:1 배틀 [겨루기] 기능에서
+
+client-client 간 양방향 통신을 구현하기 위해 웹소켓 통신을 사용함.
+
+[ SockJs + STOMP ]
+
+### 기술스택 선정이유
+
+- Polling / Long Polling / SSE 방식을 고려했지만  ‘대용량, 실시간, 단기’ 통신인 우리 서비스와 맞지않아 기각
+- 웹소켓 라이브러리 [socket.io/](http://socket.io/) sockJs 등 중 Spring Framework 에서 더 안정적인 sockJs 라이브러리 선택
+- 통신규약을 위해 메시징 프로토콜 STOMP 사용
+
+### WebSocket
+
+- 서버↔클라이언트 간 양방향통신 가능
+- HTTP 환경에서 사용가능한 TCP 연결방식
+- HTML5 표준 (브라우저 별 지원현황 확인)
+
+### STOMP
+
+- Frame 기반 프로토콜
+- MessageBroker 인터페이스 사용
+- Sub/ Pub 구조
+
+![소켓메시지프로토콜2.png](./README.assets/%EC%86%8C%EC%BC%93%EB%A9%94%EC%8B%9C%EC%A7%80%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C2.png)
+
+### 동작방식
+
+1. Nginx 경로설정
+    1.  http→ws 통신 헤더 요청으로 프로토콜 upgrade
+
+![웹소켓서버설정.2png.png](./README.assets/%EC%9B%B9%EC%86%8C%EC%BC%93%EC%84%9C%EB%B2%84%EC%84%A4%EC%A0%95.2png.png)
+
+1. Server측 endpoiont 설정
+2. Client 측 지정 endpoint로 socket 객체생성
+3. Server 측 수신한 데이터 재발행하는 메서드 작성
+4. Client 소켓데이터 send, receive
+
+### Endpoint 경로
+
+[https://j6a506.p.ssafy.io/stomp/](https://j6a506.p.ssafy.io/stomp/)
+
+### WS API
+
+| 기능 | 프로토콜 | 동작 | api | 메시지 Type |
+| --- | --- | --- | --- | --- |
+| 개인세션 생성 | ws | sub | api/que/user | LOGIN |
+| 겨루기 신청 | ws | pub | api/que/user/{게스트 id} | INVITE |
+| 신청 수락/거절 | ws | pub | api/que/user/{호스트 id} | ACCEPT/REFUSE |
+| 대기방 입장 | ws | pub | api/que/user/{호스트 id} | ENTER |
+
+ 
+
+### [지정큐] 시퀀스 다이어그램
+
+![시퀀스다이어그램2.png](./README.assets/%EC%8B%9C%ED%80%80%EC%8A%A4%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A82.png)
 
 ## 3. 서버
  #### 1. 서버 접속 정보
