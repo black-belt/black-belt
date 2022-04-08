@@ -41,6 +41,23 @@
 
 # 서비스 소개  
 ### 메인페이지
+![메인페이지](https://user-images.githubusercontent.com/67628725/162353823-01faf355-ec52-4404-ba73-d09e30f637a1.gif)  
+
+### 연습모드  
+#### 기본동작
+![기본동작](https://user-images.githubusercontent.com/67628725/162353919-a5bdbad7-0b05-48b7-8c15-d55ac00c1811.gif)  
+  
+#### 연결동작  
+![연결동작](https://user-images.githubusercontent.com/67628725/162353937-2fb67ce5-21c0-4d12-a007-69eed428cac5.gif)  
+  
+  
+ ### 마이페이지  
+ ![마이페이지_1](https://user-images.githubusercontent.com/67628725/162354129-31ea5577-54b0-4dd8-b53a-4bd4a6f42097.gif)  
+ 
+ ### 번역기능  
+ ![번역](https://user-images.githubusercontent.com/67628725/162354140-5a7dec28-29ea-4cab-934c-a5ffbd87bc34.gif)
+
+
 
 
 
