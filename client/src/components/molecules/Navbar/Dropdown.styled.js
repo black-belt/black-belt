@@ -8,7 +8,7 @@ export const Layout = styled.div`
   top: 80px;
   right: 3.6rem;
 
-  width: 200px;
+  width: 240px;
   border-radius: 6px;
   border: 1px solid ${colors.gray5};
 
