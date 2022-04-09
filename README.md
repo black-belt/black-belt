@@ -36,7 +36,19 @@
 
 ## 목차
 
+[1. 개요](#개요)
 
+[2. 주요 기능](#주요-기능)
+
+[3. 기술스택](#기술-스택)
+
+​	[3-1. Front-end](#🎨-FrontEnd)
+
+​	[3-2. Back-end](#📊-Back-end)
+
+​	[3-3. AI](#💻-AI)
+
+[4. 멤버소개](#멤버-소개)
 
 <br>
 
@@ -151,7 +163,7 @@
 
 <br>
 
-### 🎨 Front-end
+### 🎨 FrontEnd
 
 <div align=left>
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
@@ -217,7 +229,7 @@
 
 <br>
 
-### 📊 Back-end
+### 📊 BackEnd
 
 <div align=left>
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> 
