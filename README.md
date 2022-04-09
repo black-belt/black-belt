@@ -100,6 +100,12 @@
 
 ### 🥋 겨루기
 
+<div>
+  ![image](README.assets/invite.png)
+</div>
+
+
+
 ![Picture1 2](README.assets/invite.png){: width="600" height="338"}
 
 - 겨루기 일반모드에서는 원하는 사용자를 지정해 겨루어볼 수 있습니다
