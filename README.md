@@ -1,17 +1,23 @@
-# 검은띠 휘날리며
+<div align="center">
+  <img src="https://github.com/black-belt/black-belt/blob/main/README.assets/logo.png?raw=true"/>
+  # 검은띠 휘날리며
+</div>
 
-![BLACKBELT](https://user-images.githubusercontent.com/67628725/162347404-c4a0e973-aadd-4d3c-8167-aa6766ec69bf.png)
 
-## BlackBelt?  
+
 `BlackBelt`는 우리문화 `태권도`를 세계에 홍보하기 위한 웹 기반 `AI 체험형 콘텐츠` 서비스입니다.  
 집에서 쉽고 재미있게 태권도를 학습해보세요! AI pose detection 기술로 자연스럽게 올바른 태권도 동작을 따라하도록 유도합니다.    
 충분한 연습 후에는, 국기원과 동일한 방식으로 심사를 받아 단증을 획득할 수 있습니다. 겨루기로 원하는 상대와 1:1 배틀을 벌여 실력을 가릴 수도 있습니다.  태권도 짱이 되고 싶다면 BlackBelt로 수련을 시작하세요!    
 
+<br>
+
+
+
 ## 개요  
-* 프로젝트명: 검은띠 휘날리며[black belt]
+* 프로젝트명: 검은띠 휘날리며 [Black Belt: Master of Taekwondo]
 * 서비스 특징: AI 모션인식을 통한 태권도 학습 web service
 * 주요 기능
-  - 태권도 동작 학습 모델 기반 태권도 연습모드 및 심사
+  - 태권도 동작 학습 모델 기반 태권도 연습 및 심사
   - WebSocket을 통한 겨루기 매칭
   - WebRtc기술을 활용한 겨루기 화면
 * 주요 기술
@@ -24,22 +30,13 @@
 * 참조 리소스
   - openvidu - webRtc
 * 배포 환경
-  - URL: https://j6a506.p.ssafy.io//
+  - URL: https://j6a506.p.ssafy.io/
+
+<br>
 
 
-## 카테고리
 
-| Application | Domain | Language | Framework |
-| ---- | ---- | ---- | ---- |
-| :white_check_mark: Desktop Web | :white_check_mark: AI | :white_check_mark: JavaScript | :black_square_button: Vue.js |
-| :black_square_button: Mobile Web | :black_square_button: Big Data | :black_square_button: TypeScript | :white_check_mark: React |
-| :black_square_button: Responsive Web | :black_square_button: Blockchain | :black_square_button: C/C++ | :black_square_button: Angular |
-| :black_square_button: Android App | :black_square_button: IoT | :black_square_button: C# | :white_check_mark: Node.js |
-| :black_square_button: iOS App | :black_square_button: AR/VR/Metaverse | :black_square_button: ​Python | :black_square_button: Flask/Django |
-| :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :black_square_button: Spring/Springboot |
-| | | :black_square_button: Kotlin | :black_square_button: Next.js |
-
-
+## 
 
 
 # 프로젝트 상세 설명
@@ -58,12 +55,12 @@
  태권도의 기본동작 7가지를 우선 학습합니다.  
  레벨에 따라 스트에징이 잠금 해제되고, 해당 스테이지를 클리어 하면 수행정도에 따라 평가(별)을 부여받습니다.  
  동작 카드에 마우스를 호버하면, 관련 동작의 자세한 설명을 입장전에 확인할 수 있습니다.  
-  
+
 ##### ii)연결동작+품새  
   ![연결동작](https://user-images.githubusercontent.com/67628725/162373826-7df9dc07-5f34-4ce4-99f2-40270bd700c8.gif)    
   연결동작은 기본동작의 모음이며, 동시에 '품새'를 4단락으로 나눈 부분 중 하나입니다.  
   상단에 동작의 순서가 명시되며, 앞동작을 정확히 인식했을 때만 다음 순서로 넘어갈 수 있습니다.  
-  
+
 ### c) 겨루기
 ![겨루기신청](https://user-images.githubusercontent.com/67628725/162375948-7a05f544-af86-44a2-b4d9-8d1f588d13de.gif)    
 겨루기 신청은 닉네임 검색을 통해 합니다. 검색창에 원하는 상대의 닉네임을 검색하면, 검색어가 포함된 모든 유저가 랜딩됩니다.  
@@ -75,12 +72,12 @@
   60초 내에 상대의 HP바를 모두 닳게 하여 상대를 쓰러뜨려 보세요!  
   앞서 학습했던 태권도 동작을 정확히 수행해야 공격이 들어갑니다. 방어동작을 하면 상대의 공격을 방어할 수 있습니다.  
   공격, 방어에 따라 적절한 이펙트가 화면에 표시됩니다.   
-  
+
 ### c)마이페이지  
 ![마이페이지](https://user-images.githubusercontent.com/67628725/162374013-01e18f18-9203-492a-bea3-ac477c5141fa.gif)      
 마이페이지에는 여태까지 땄던 단/띠를 예쁜 캐로셀로 확인할 수 있습니다.  
 겨루기 전적과, 배틀 히스토리, 티어 정보, 단/심사를 딴 날짜를 모두 확인할 수 있습니다!  
- 
+
 ### d)번역기능  
 ![번역](https://user-images.githubusercontent.com/67628725/162374023-3c29aa64-4081-4c98-9487-800dd15c6509.gif)   
 `글로벌 서비스` [태권도 휘날리며]는 영어 번역기능을 제공합니다!   
@@ -211,7 +208,7 @@ client-client 간 양방향 통신을 구현하기 위해 웹소켓 통신을 �
 - 프론트 / 백 도커
   - 노션 - [프론트 / 백 도커파일 보기](https://half-leather-4d3.notion.site/44e6651adb73413aba23f0fd6fa795a9)
 
- 
+
 ## 4. AI
 ### 프로젝트 요구사항
 
@@ -278,7 +275,7 @@ client-client 간 양방향 통신을 구현하기 위해 웹소켓 통신을 �
           <br />
           <b>최영운</b>
           <br/>
-          <span>Frontend | AI</span>
+          <span>AI</span>
         </p>
       </td>
     </tr>
@@ -323,7 +320,7 @@ client-client 간 양방향 통신을 구현하기 위해 웹소켓 통신을 �
           <br />
           <b>이지우</b>
           <br/>
-          <span>Backend | AI</span>
+          <span>Backend | CI/CD</span>
         </p>
       </td>
       <td align="center">
