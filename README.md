@@ -100,15 +100,16 @@
 
 ### 🥋 겨루기
 
-![겨루기신청](https://user-images.githubusercontent.com/67628725/162375948-7a05f544-af86-44a2-b4d9-8d1f588d13de.gif)    
+![Picture1 2](README.assets/invite.png){: width="600" height="338"}
 
 - 겨루기 일반모드에서는 원하는 사용자를 지정해 겨루어볼 수 있습니다
 - 상대의 닉네임을 검색하고 겨루기 신청을 보내보세요!
 
-![Picture1 2](README.assets/invite.png)
-
 - 단, 상대가 다른 사람과 겨루기중이거나 로그아웃이거나 혹은 심사중인 경우, 겨루기 신청을 보낼 수 없습니다
 - 유저의 상태는 닉네임 검색을 하면 이름 바로 아래에 나타납니다
+
+![겨루기신청](https://user-images.githubusercontent.com/67628725/162375948-7a05f544-af86-44a2-b4d9-8d1f588d13de.gif)   
+
 - 상대가 겨루기 신청을 수락하면, 페이지에 상대의 정보가 나타나고 겨루기 시작 버튼이 활성화됩니다
 - `겨루기 시작` 버튼을 눌러 겨루기를 시작해봅시다!
 
