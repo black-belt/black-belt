@@ -16,9 +16,9 @@ import { loginModalState } from "recoils";
 
 const LoginModal = ({ ...props }) => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(loginModalState);
-  const closeModal = useCallback(() => {
-    setIsModalOpen(null);
-  }, [setIsModalOpen]);
+  // const closeModal = useCallback(() => {
+  //   setIsModalOpen(null);
+  // }, [setIsModalOpen]);
   return (
     <>
       <Overlay>

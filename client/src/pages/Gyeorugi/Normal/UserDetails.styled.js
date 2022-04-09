@@ -30,7 +30,6 @@ export const Img = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* margin: 0.4rem 0.3rem; */
   background-color: black;
 `;
 
@@ -61,14 +60,6 @@ export const ProfileBox = styled.div`
   width: 55%;
   padding: 2rem;
 `;
-
-// export const TierImg = styled.div`
-//   /* width: 100%; */
-//   height: 70%;
-//   /* background-size: cover; */
-//   background-image: url(${(props) => props.url});
-//   filter: grayscale(100%) brightness(25%);
-// `;
 
 export const TierImg = styled.img`
   filter: grayscale(100%) brightness(30%);
