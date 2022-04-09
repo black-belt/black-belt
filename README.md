@@ -44,7 +44,7 @@
 
 ​	[3-1. Front-end](#🎨-FrontEnd)
 
-​	[3-2. Back-end](#📊-Back-end)
+​	[3-2. Back-end](#📊-BackEnd)
 
 ​	[3-3. AI](#💻-AI)
 
