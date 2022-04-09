@@ -55,14 +55,6 @@
 
 ### 🥋 번역 기능 제공
 
-<div align="center">
-  ![번역](https://user-images.githubusercontent.com/67628725/162374023-3c29aa64-4081-4c98-9487-800dd15c6509.gif)
-</div>
-
-
-
-  
-
 ![번역](https://user-images.githubusercontent.com/67628725/162374023-3c29aa64-4081-4c98-9487-800dd15c6509.gif)   
 
 - 글로벌 서비스를 지향하는 저희 블랙벨트는, 번역 서비스를 제공합니다
@@ -113,7 +105,7 @@
 - 겨루기 일반모드에서는 원하는 사용자를 지정해 겨루어볼 수 있습니다
 - 상대의 닉네임을 검색하고 겨루기 신청을 보내보세요!
 
-![Picture1 2](README.assets/Picture1 2.png)
+![Picture1 2](README.assets/invite.png)
 
 - 단, 상대가 다른 사람과 겨루기중이거나 로그아웃이거나 혹은 심사중인 경우, 겨루기 신청을 보낼 수 없습니다
 - 유저의 상태는 닉네임 검색을 하면 이름 바로 아래에 나타납니다
@@ -143,6 +135,65 @@
 ## 기술 스택
 
 ### 🎨 Front-end
+
+<div align=left>
+  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
+  <img src="https://img.shields.io/badge/recoil-764ABC?style=for-the-badge&logo=react&logoColor=black"> 
+  <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=black"> 
+  <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=black">
+  <img src="https://img.shields.io/badge/socket.io-010101?style=for-the-badge&logo=socket.io&logoColor=white">
+
+</div>
+
+
+
+```
+├── _foundation
+│   ├── colors
+│   ├── icons
+│   ├── translation
+│   └── typography
+├── api
+├── components
+│   ├── atoms
+│   │   ├── Buttons
+│   │   │   └── GoogleButton
+│   │   ├── Evaluation
+│   │   ├── Icons
+│   │   ├── Texts
+│   │   └── Videos
+│   ├── molecules
+│   │   ├── Carousel
+│   │   ├── DialogExtension
+│   │   ├── Gyeorugi
+│   │   ├── Layout
+│   │   ├── Navbar
+│   │   └── Stream
+│   ├── organisms
+│   │   ├── ChangeNickModal
+│   │   ├── LoginModal
+│   │   ├── PushAlarm
+│   │   ├── SignupModal
+│   │   ├── TaekwondoModal
+│   │   ├── Timer
+│   │   └── VideoRoom
+│   └── templates
+├── hooks
+├── pages
+│   ├── Gyeorugi
+│   │   ├── GyeorugiStage
+│   │   │   └── models
+│   │   ├── Normal
+│   │   └── Rank
+│   ├── MainPage
+│   │   └── SlideInfo
+│   ├── Mypage
+│   ├── Practice
+│   └── Promotion
+├── recoils
+├── style
+└── utils
+```
 
 
 
