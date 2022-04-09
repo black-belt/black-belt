@@ -134,18 +134,25 @@
 
 ## 기술 스택
 
+![아키텍처 구성도](./README.assets/blackBeltArchitecture.png)
+
+<br>
+
 ### 🎨 Front-end
 
 <div align=left>
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
-  <img src="https://img.shields.io/badge/recoil-764ABC?style=for-the-badge&logo=react&logoColor=black"> 
-  <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=black"> 
-  <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=black">
+  <img src="https://img.shields.io/badge/recoil-764ABC?style=for-the-badge&logo=react&logoColor=white"> 
+  <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"> 
+  <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
   <img src="https://img.shields.io/badge/socket.io-010101?style=for-the-badge&logo=socket.io&logoColor=white">
 
 </div>
 
-
+- React를 이용해 웹 페이지를 구현하고 Recoil 및 React Query를 이용해 상태관리를 진행했습니다
+- Styled Components를 이용해 css를 구현했습니다
+- 겨루기를 위한 웹소켓은 SockJS를 이용했습니다
+- Atomic 방식으로 개발을 진행하여 컴포넌트의 재사용성을 높이고 팀원과 디자인 통일성을 맞췄습니다
 
 ```
 ├── _foundation
@@ -195,65 +202,36 @@
 └── utils
 ```
 
+<br>
 
+### 📊 Back-end
 
+<div align=left>
+  <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> 
+  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+  <img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"> 
+  <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> 
+</div>
 
-# 프로젝트 상세 설명
+**Web Socket**
 
-## 1. 프론트
-
-# 서비스 소개  
-### a) 메인페이지
-
-
-## 2. 백엔드
-### 웹소켓
-
-### 개요
-
-1:1 배틀 [겨루기] 기능에서
-
-client-client 간 양방향 통신을 구현하기 위해 웹소켓 통신을 사용함.
-
-[ SockJs + STOMP ]
-
-### 기술스택 선정이유
-
-- Polling / Long Polling / SSE 방식을 고려했지만  ‘대용량, 실시간, 단기’ 통신인 우리 서비스와 맞지않아 기각
-- 웹소켓 라이브러리 [socket.io/](http://socket.io/) sockJs 등 중 Spring Framework 에서 더 안정적인 sockJs 라이브러리 선택
-- 통신규약을 위해 메시징 프로토콜 STOMP 사용
-
-### WebSocket
-
-- 서버↔클라이언트 간 양방향통신 가능
-- HTTP 환경에서 사용가능한 TCP 연결방식
-- HTML5 표준 (브라우저 별 지원현황 확인)
-
-### STOMP
-
-- Frame 기반 프로토콜
-- MessageBroker 인터페이스 사용
-- Sub/ Pub 구조
+- Spring Framework에서 더 안정적인 SockJS 라이브러리를 선택하여 웹소켓 통신을 구현했습니다
+- 통신규약을 위해 메시징 프로토콜 STOMP를 사용했습니다
 
 ![소켓메시지프로토콜2.png](./README.assets/%EC%86%8C%EC%BC%93%EB%A9%94%EC%8B%9C%EC%A7%80%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C2.png)  
 
-### 동작방식
+- 동작 방식
 
-1. Nginx 경로설정
-    1.  http→ws 통신 헤더 요청으로 프로토콜 upgrade
+  - http→ws 통신 헤더 요청으로 프로토콜 upgrade
 
-![웹소켓서버설정.2png.png](./README.assets/%EC%9B%B9%EC%86%8C%EC%BC%93%EC%84%9C%EB%B2%84%EC%84%A4%EC%A0%95.2png.png)  
+  ![웹소켓서버설정.2png.png](./README.assets/%EC%9B%B9%EC%86%8C%EC%BC%93%EC%84%9C%EB%B2%84%EC%84%A4%EC%A0%95.2png.png)  
 
-1. Server측 endpoiont 설정
-2. Client 측 지정 endpoint로 socket 객체생성
-3. Server 측 수신한 데이터 재발행하는 메서드 작성
-4. Client 소켓데이터 send, receive
+  - Server측 endpoiont 설정
+  - Client 측 지정 endpoint로 socket 객체생성
+  - Server 측 수신한 데이터 재발행하는 메서드 작성
+  - Client 소켓데이터 send, receive
 
-### Endpoint 경로
-
-[https://j6a506.p.ssafy.io/stomp/](https://j6a506.p.ssafy.io/stomp/)  
-
-### WS API
+- WebSocket API
 
 | 기능 | 프로토콜 | 동작 | api | 메시지 Type |
 | --- | --- | --- | --- | --- |
@@ -262,25 +240,21 @@ client-client 간 양방향 통신을 구현하기 위해 웹소켓 통신을 �
 | 신청 수락/거절 | ws | pub | api/que/user/{호스트 id} | ACCEPT/REFUSE |
 | 대기방 입장 | ws | pub | api/que/user/{호스트 id} | ENTER |
 
- 
-
-### [지정큐] 시퀀스 다이어그램
+- 시퀀스 다이어그램 (겨루기-일반모드)
 
 ![시퀀스다이어그램2.png](./README.assets/%EC%8B%9C%ED%80%80%EC%8A%A4%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A82.png)
 
-## 3. 서버
- #### 1. 서버 접속 정보
-
-> server ip : j6a506.p.ssafy.io  
-> client id : ubuntu  
-> client pw : pem파일로 대체 (MM첨부파일 확인, 팀원 이외에 공유 금지)
-
 <br>
 
-- 서버에서 사용하는 브랜치는 develop 브랜치 이용
-  - 서버에 변경사항 적용시 작업한 브랜치 develop에 merge한 뒤 pull하여 적용 확인
+**Server**
 
-#### 2. 포트 정보
+1. 서버 접속 정보
+
+>server ip : j6a506.p.ssafy.io  
+>client id : ubuntu  
+>client pw : pem파일로 대체 (MM첨부파일 확인, 팀원 이외에 공유 금지)
+
+2. 포트 정보
 
 | 포트 번호 |                   이름                    |
 | :-------: | :---------------------------------------: |
@@ -298,42 +272,33 @@ client-client 간 양방향 통신을 구현하기 위해 웹소켓 통신을 �
 |   8888    |        jupyter notebook (비활성화)        |
 |   50000   | Jenkins TCP Agent Listener Port (Docker)  |
 
-#### 3. 아키텍처 구성도
+<br>
+
+3. 서버 설계 상세 내용
+
+- 주피터 접속 정보 및 상세 설명 - >
+  -  server ip : j6a506.p.ssafy.io:8888
+    https로 하기위해 사설 cert 키로 진행해서 크롬에서 안전하지 못한 페이지로 인식합니다.
+  -  [주피터 노트북 설치과정](https://half-leather-4d3.notion.site/d066fbefa6c44f8ba407f4c77b1cf7d1)
+  
+
+
+-  [도커 및 도커 컴포즈 설치](https://half-leather-4d3.notion.site/4fcf091259e14df5bf60c13e837bf79d)
+
+
+-  [젠킨스-깃 연동 및 자동 빌드/배포](https://half-leather-4d3.notion.site/ce92c2f95e044c3b98cdd370b6c48bdc)
+
+
+-  [엔진엑스 세팅 및 프록시 설정](https://half-leather-4d3.notion.site/NGINX-CERTBOT-5271e86c1e9b4fe086c90c1eac482d66)
+
+
+- [서버 mysql 세팅 과정](https://half-leather-4d3.notion.site/mysql-f55c1ba091be4573aeb044e6b3f52517)
+- [프론트 / 백 도커](https://half-leather-4d3.notion.site/44e6651adb73413aba23f0fd6fa795a9)
 
 <br>
 
-![아키텍처 구성도](./README.assets/blackBeltArchitecture.png)
+### 💻 AI
 
-<br>
-
-#### 4. 서버 설계 상세내용
-
-- 주피터 접속 정보 및 상세 설명 - > server ip : j6a506.p.ssafy.io:8888
-  <br>설명 : https로 하기위해 사설 cert 키로 진행해서 크롬에서 안전하지 못한 페이지로 인식합니다.
-
-  - 노션 - [주피터 노트북 설치과정 보기](https://half-leather-4d3.notion.site/d066fbefa6c44f8ba407f4c77b1cf7d1)
-
-
-- 도커 및 도커 컴포즈 설치
-  - 노션 - [도커 설치과정 보기](https://half-leather-4d3.notion.site/4fcf091259e14df5bf60c13e837bf79d)
-
-
-- 젠킨스 활용
-  - 노션 - [젠킨스 깃 연동 자동 빌드/배포 보기](https://half-leather-4d3.notion.site/ce92c2f95e044c3b98cdd370b6c48bdc)
-
-
-- NGINX & CERTBOT
-  - 노션 - [엔진엑스 세팅 및 프록시 설정 보기](https://half-leather-4d3.notion.site/NGINX-CERTBOT-5271e86c1e9b4fe086c90c1eac482d66)
-
-
-- 서버 mysql 세팅
-  - 노션 - [서버 mysql 세팅 과정 보기](https://half-leather-4d3.notion.site/mysql-f55c1ba091be4573aeb044e6b3f52517)
-
-- 프론트 / 백 도커
-  - 노션 - [프론트 / 백 도커파일 보기](https://half-leather-4d3.notion.site/44e6651adb73413aba23f0fd6fa795a9)
-
-
-## 4. AI
 ### 프로젝트 요구사항
 
 1. 기본동작 - 13가지 기본동작을 판단해주는 인공지능 모델
