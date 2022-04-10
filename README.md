@@ -457,9 +457,9 @@ AI pose detection 기술이 올바른 태권도 동작을 학습할 수 있도�
   	<tr>
     	<td>
         <ul>
-          <li>추가예정</li>
-          <li>추가예정</li>
-          <li>추가예정</li>
+          <li>서버 설계 | 자동 빌드&배포</li>
+          <li>DB 설계 | 프로시저 등 기초작업</li>
+          <li>계정, WebRTC 관련 API 작성</li>
         </ul>
       </td>
       <td>
