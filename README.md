@@ -64,12 +64,19 @@ AI pose detection 기술이 올바른 태권도 동작을 학습할 수 있도�
   - WebSocket을 통한 겨루기 매칭
   - WebRtc기술을 활용한 겨루기 화면
 * 주요 기술
-  - React
-  - REST API
-  - Node.js
-  - MySQL
-  - AWS EC2 + NGINX
-  - Docker + Jenkins
+  - react 17.0.2
+  - recoil 0.6.1
+  - sockjs-client 1.6.0
+  - styled-components 5.3.3
+  - axios 0.26.1
+  - teachablemachine-pose 0.8.6
+  - spring boot 2.6.4
+  - maven 3.8.4
+  - nodejs 16.13.1
+  - openjdk 11
+  - ubuntu 20.04 LTS
+  - mysql 8.0.28
+  - docker + jenkins
 * 참조 리소스
   - openvidu - webRtc
 * 배포 환경
