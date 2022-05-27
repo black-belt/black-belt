@@ -479,4 +479,3 @@ AI pose detection 기술이 올바른 태권도 동작을 학습할 수 있도�
     </tr>
   </tbody>
 </table>
-
